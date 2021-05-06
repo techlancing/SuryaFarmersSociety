@@ -34,7 +34,22 @@ export class AddcarComponent implements OnInit {
     displayText:string,
     value:number
   }>;
-  aCarSeating  : Array<
+  aDistrict : Array<
+  {
+    displayText:string,
+    value:number
+  }>;
+  aMandal : Array<
+  {
+    displayText:string,
+    value:number
+  }>;
+  aVillage : Array<
+  {
+    displayText:string,
+    value:number
+  }>;
+  aBranchCode  : Array<
   {
     displayText:string,
     value:number
@@ -58,38 +73,45 @@ export class AddcarComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Car', active: true }];
+    this.aDistrict = [
+      {
+        displayText: 'Mahabubabad',
+        value:0
+      }
+    ];
+    this.aMandal = [
+      {
+        displayText: 'Gudur',
+        value:0
+      }
+    ];
+    this.aVillage = [
+      {
+        displayText: 'Gajulagattu',
+        value:0
+      }
+    ];
     this.aCarTypes = [
       {
-        displayText: 'Sedan',
+        displayText: 'Telangana',
+        value: 0
+      },
+      ];
+    this.aBranchCode = [
+      {
+        displayText: '010101',
         value: 0
       },
       {
-        displayText: 'Hatch Back',
+        displayText: '010102',
         value: 1
       },
       {
-        displayText: 'SUV',
+        displayText: '010103',
         value: 2
       },
       {
-        displayText: 'Luxury',
-        value: 3
-      }];
-    this.aCarSeating = [
-      {
-        displayText: '4 + 1',
-        value: 0
-      },
-      {
-        displayText: '5 + 1',
-        value: 1
-      },
-      {
-        displayText: '6 + 1',
-        value: 2
-      },
-      {
-        displayText: '7 + 1',
+        displayText: '010104',
         value: 3
       }
     ];
