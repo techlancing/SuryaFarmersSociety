@@ -1,0 +1,28 @@
+form,.card{
+  width:100%;
+}
+
+h4{
+  color: deeppink;
+}
+
+.add-round-btn{
+  width: 30px;
+    height: 30px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.add-category-btn-container{
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 10px;
+  align-items: center;
+  margin-top:10px;
+}
+
+.disable-category{
+  pointer-events: none;
+  opacity: 0.6;
+}

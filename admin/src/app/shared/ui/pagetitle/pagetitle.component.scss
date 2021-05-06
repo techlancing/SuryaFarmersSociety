@@ -1,0 +1,67 @@
+.header-img{
+  height: 250px;
+  background-image: url('../../../../assets/images/newsetup/admin_add_header.png');
+  background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.addproduct_header{
+  &.header-img{
+    height: 250px;
+    background-image: url('../../../../assets/images/newsetup/admin_add_header_product.png');
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}
+
+.addbrand_header{
+  &.header-img{
+    height: 250px;
+    background-image: url('../../../../assets/images/newsetup/admin_add_header_brand.png');
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}
+
+.addvendor_header{
+  &.header-img{
+    height: 250px;
+    background-image: url('../../../../assets/images/newsetup/admin_add_header_vendor.png');
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}
+
+.addconfig_header{
+  &.header-img{
+    height: 250px;
+    background-image: url('../../../../assets/images/newsetup/admin_add_header_config.png');
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}
+
+.addbanner_header{
+  &.header-img{
+    height: 250px;
+    background-image: url('../../../../assets/images/newsetup/admin_add_header_banner.png');
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}
+
+.products_header{
+  &.header-img{
+    height: 50px;
+    background-image: none;
+    background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+  }
+}

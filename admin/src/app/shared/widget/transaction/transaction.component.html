@@ -1,0 +1,114 @@
+<div class="table-responsive mb-0">
+  <table class="table table-centered table-nowrap">
+    <thead class="thead-light">
+      <tr>
+        <th style="width: 20px;">
+          <div class="custom-control custom-checkbox">
+            <label class="custom-control-label" for="customCheck">&nbsp;</label>
+          </div>
+        </th>
+        <th>Order ID</th>
+        <th>Billing Name</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Payment Status</th>
+        <th>Payment Method</th>
+        <th>View Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of transactions;let aindex=index">
+        <td>
+          <div class="custom-control custom-checkbox">
+            <label class="custom-control-label" for="customCheck{{data.index}}">&nbsp;</label>
+          </div>
+        </td>
+        <td>
+          <a href="javascript: void(0);" class="text-body font-weight-bold">{{data?.nOrderId}}</a>
+        </td>
+        <td>{{data.oBillingAddress?.sUserName}}</td>
+        <td>{{data.createdAt}}</td>
+        <td>{{data.oCartHistory.total}}</td>
+        <td>
+          <span class="badge badge-pill badge-soft-success font-size-12" [ngClass]=" { 'badge-soft-danger': data.sOrderStatus === 'Chargeback',
+                        'badge-soft-warning':data.sOrderStatus === 'Refund' }">{{data.sOrderStatus}}</span>
+        </td>
+        <td>
+          <!--i :class="`fab ${data.payment[0]} mr-1`"></i-->
+          {{data.oPaymentDetail?.method}}
+        </td>
+        <td>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-sm btn-rounded" (click)="openModal(content, aindex)">View
+            Details</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #content role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Order Details</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="mb-2">
+        Product id:
+        <span class="text-primary">#{{order.nOrderId}}</span>
+      </p>
+      <p class="mb-4">
+        Billing Name:
+        <span class="text-primary">{{order.oBillingAddress?.sUserName}}</span>
+      </p>
+      <div class="table-responsive">
+        <table class="table table-centered table-nowrap">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.oCartHistory.items; let i =index">
+              <th scope="row">
+                <div>
+                  <img src="assets/images/product/img-7.png" alt class="avatar-sm" />
+                </div>
+              </th>
+              <td>
+                <div>
+                  <h5 class="text-truncate font-size-14">{{ item.product.oBasicInfo.sProductName}}</h5>
+                  <p class="text-muted mb-0">{{ item.price }} x {{ item.quantity }}</p>
+                </div>
+              </td>
+              <td>{{ item.total }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <h6 class="m-0 text-right">Sub Total:</h6>
+              </td>
+              <td>{{ order.oCartHistory.subtotal}}</td>
+            </tr>
+            <tr *ngFor="let total of transactions[activeindex].oCartHistory.totals; let i =index">
+              <td colspan="2">
+                <h6 class="m-0 text-right">{{total.title}}:</h6>
+              </td>
+              <td>{{total.price}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <h6 class="m-0 text-right">Total:</h6>
+              </td>
+              <td>{{order.oCartHistory.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+</div>
+<!-- end table -->

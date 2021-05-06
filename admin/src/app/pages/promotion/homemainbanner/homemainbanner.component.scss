@@ -1,0 +1,41 @@
+form{
+  width:100%;
+}
+img{
+width: 150px;
+}
+
+h4{
+  color: deeppink;
+}
+
+.bxs-active{
+  color:deeppink;
+}
+
+.discount-container{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: flex-start;
+    grid-template-columns: min-content 100px 100px;
+    gap: 10px;
+    align-items: center;
+}
+.radio-btn-container{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  gap: 20px;
+  i{
+    font-size: 18px;
+  }
+}
+
+.preview-img-item{
+  border: 2px solid gainsboro;
+    cursor: pointer;
+    transition: 0.6s;
+    &:hover{
+      border:2px solid #556ee6;
+    }
+}

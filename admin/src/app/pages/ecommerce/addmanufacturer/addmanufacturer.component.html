@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title bgimageclass="addbrand_header" title="Add Manufacturer" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'></app-page-title>
+  
+    <div class="row">
+        <form novalidate #_brandFormElem="ngForm" (ngSubmit)="fnOnManufacturerInfoSubmit()">
+        <div class="card">
+            <div class="card-body" >
+              <h4 class="card-title">Manufacturer Information</h4>
+  
+              <div class="row" >
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Manufacturer Name</label>
+                    <input id="manufacturername"
+                    name="sManufacturerName" [(ngModel)]="oManufacturerModel.sManufacturerName"
+                    type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="col-sm-6 add-category-btn-container">
+                    <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                    >{{sButtonText}}</button>
+                    <button type="button" class="btn btn-secondary"
+                    (click)="fnResetManufacturerName()">Clear</button>
+                </div>
+  
+              </div>
+          </div>
+        </div>
+    </form>
+    <div class="card"  *ngIf="!bHideManufacturerList">
+      <div class="card-body" >
+        <h4 class="card-title">Manufacturer List</h4>
+        <div class="table-responsive mb-0">
+          <table class="table table-centered table-nowrap">
+            <thead class="thead-light">
+              <tr >
+                <th>S.No</th>
+                <th>Manufacturer ID</th>
+                <th>Manufacturer Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ngFor="let data of transactions" -->
+              <tr *ngFor="let manufacturer of aManufacturers;let indexOfelement=index;">
+                <td>{{indexOfelement+1}}</td>
+                <td>{{manufacturer.nManufacturerId}}</td>
+                <td>{{manufacturer.sManufacturerName}}</td>
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn"ngbtooltip="edit"
+                  (click)="openModal(editmanufacturer,indexOfelement)">
+                    <i class="bx bx-pencil"></i>
+                    </button>
+                </td>
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn"
+                  ngbtooltip="delete" (click)="fnDeleteManufacturer(indexOfelement)">
+                    <i class="bx bx-trash-alt"></i>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    </div>
+  </div>
+  
+  <ng-template #editmanufacturer role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Edit Manufacturer</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <app-addmanufacturer bHideBreadCrumb='true'
+      [bisEditMode]="true"
+      bHideManufacturerList='true'
+      [oEditManufacturer]='aManufacturers[nSelectedEditIndex]'
+      (updateClicked)="fnUpdateParentAfterEdit()"></app-addmanufacturer>
+  
+    </div>
+  </ng-template>
+  
+  

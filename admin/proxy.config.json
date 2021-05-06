@@ -1,0 +1,8 @@
+{
+   "/nodejs/*": {
+      "target": "http://localhost:2155",
+      "secure": false,
+      "changeOrigin": true
+   }   
+}
+
