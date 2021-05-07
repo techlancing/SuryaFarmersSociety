@@ -7,7 +7,7 @@
       <form class="col-12" novalidate #_carFormElem="ngForm" (ngSubmit)="fnOnCarInfoSubmit()">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Account Opening Form</h4>
+            <h2 >Account Opening Form</h2>
   
             <div class="row">
               <div class="col-sm-6">
@@ -69,13 +69,8 @@
                 <div class="add-container">
                   <div class="form-group">
                     <label for="manufacturer">Branch Code</label>
-                    <ng-select [items]="aBranchCode" name="sBranchCode"
-                      [(ngModel)]="oCarModel.sCarSeating" 
-                      bindLabel="displayText" bindValue="value">
-                      <ng-template ng-label-tmp let-item="item">
-                        {{item.displayText}}
-                      </ng-template>
-                    </ng-select>
+                    <input id="carrent" name="sCarRent" [(ngModel)]="oCarModel.sCarRent" type="text"
+                    class="form-control" >
                   </div>
                 </div>
               </div>
@@ -115,7 +110,22 @@
                 </div>
               </div>
               <div class="col-sm-6">
-              <label>Gender: <input type="radio">Male <input type="radio"> Female </label>
+                <label class="font-size-14 mb-4">Gender</label>
+              <div class="radio-container">
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                    checked>
+                  <span class="form-check-label" for="exampleRadios1">
+                    Male
+                  </span>
+                </div>
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                  <span class="form-check-label" for="exampleRadios2">
+                    Female
+                  </span>
+                </div>
+              </div>
               </div>
             <div class="col-sm-6">
               <div class="form-group">
@@ -229,18 +239,79 @@
                   class="form-control" >
               </div>
             </div>
+            
             <div class="col-sm-6">
-              <label>SMS Alert: <input type="radio">YES <input type="radio"> NO </label>
+              <label class="font-size-14 mb-4">SMS Alert</label>
+            <div class="radio-container">
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  checked>
+                <span class="form-check-label" for="exampleRadios1">
+                  YES
+                </span>
               </div>
-              <div class="col-sm-6">
-                <label>Account Category <input type="radio">Individual <input type="radio"> Joint </label>
-                </div> 
-              <div class="col-sm-6">
-                  <label>Types Of Share <input type="radio">Single Share <input type="radio"> Double Share </label>
-                  </div>
-              <div class="col-sm-6">
-                   <label>Type Of Account <input type="radio">Current Account <input type="radio"> Savings Account </label>
-                   </div>    
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <span class="form-check-label" for="exampleRadios2">
+                  NO
+                </span>
+              </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="font-size-14 mb-4">Account Category</label>
+            <div class="radio-container">
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  checked>
+                <span class="form-check-label" for="exampleRadios1">
+                  Individual Account
+                </span>
+              </div>
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <span class="form-check-label" for="exampleRadios2">
+                  Joint Account
+                </span>
+              </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="font-size-14 mb-4">Types Of Share</label>
+            <div class="radio-container">
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  checked>
+                <span class="form-check-label" for="exampleRadios1">
+                  Single Share
+                </span>
+              </div>
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <span class="form-check-label" for="exampleRadios2">
+                  Double Share
+                </span>
+              </div>
+            </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="font-size-14 mb-4">Type Of Account</label>
+            <div class="radio-container">
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  checked>
+                <span class="form-check-label" for="exampleRadios1">
+                  Current Account
+                </span>
+              </div>
+              <div class="form-check form-group">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <span class="form-check-label" for="exampleRadios2">
+                  Savings Account
+                </span>
+              </div>
+            </div>
+            </div> 
               <div class="col-sm-6">
                    <div class="form-group">
                    <label for="sCarTimeCost">Amount</label>                  

@@ -1,0 +1,10 @@
+.radio-container{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+label{
+    color:orange;
+}

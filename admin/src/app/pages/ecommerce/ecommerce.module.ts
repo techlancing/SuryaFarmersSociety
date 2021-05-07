@@ -17,26 +17,9 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 
-import { ShopsComponent } from './shops/shops.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { CartComponent } from './cart/cart.component';
-import { AddproductComponent } from './addproduct/addproduct.component';
-import { CustomersComponent } from './customers/customers.component';
-import { OrdersComponent } from './orders/orders.component';
-import { AddconfigurationtypeComponent } from './addconfigurationtype/addconfigurationtype.component';
-import { AddconfigurationvalueComponent } from './addconfigurationvalue/addconfigurationvalue.component';
 import { environment } from 'src/environments/environment';
-import { AddvendorComponent } from './addvendor/addvendor.component';
-import { AllordersComponent } from './allorders/allorders.component';
-import { AllusersComponent } from './allusers/allusers.component';
-import { AllretailersComponent } from './allretailers/allretailers.component';
-import { InvoicelistComponent } from './invoicelist/invoicelist.component';
-import { InvoicedetailsComponent } from './invoicedetails/invoicedetails.component';
-import { InvoicetransactionComponent } from './invoicetransaction/invoicetransaction.component';
-import { AddmanufacturerComponent } from './addmanufacturer/addmanufacturer.component';
 import { AddcarComponent } from './addcar/addcar.component';
 import { AdddriverComponent } from './adddriver/adddriver.component';
-import { AddtripComponent } from './addtrip/addtrip.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -46,7 +29,7 @@ const config: DropzoneConfigInterface = {
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [ ShopsComponent, CheckoutComponent, CartComponent, AddproductComponent, CustomersComponent, OrdersComponent, AddconfigurationtypeComponent, AddconfigurationvalueComponent, AddvendorComponent, AllordersComponent, AllusersComponent, AllretailersComponent, InvoicelistComponent, InvoicedetailsComponent, InvoicetransactionComponent, AddmanufacturerComponent, AddcarComponent, AdddriverComponent, AddtripComponent],
+  declarations: [  AddcarComponent, AdddriverComponent, ],
   imports: [
     CommonModule,
     EcommerceRoutingModule,
