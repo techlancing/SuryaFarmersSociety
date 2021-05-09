@@ -31,20 +31,20 @@ export const MENU: MenuItem[] = [
         subItems: [
             {
                 id: 19,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDCAR',
-                link: '/addcar',
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDACCOUNT',
+                link: '/newaccountform',
                 parentId: 10
             },
             {
                 id: 20,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDDRIVER',
-                link: '/adddriver',
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDDISTRICT',
+                link: '/adddistrict',
                 parentId: 10
             },
             {
                 id: 25,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDTRIP',
-                link: '/addtrip',
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDMANDAL',
+                link: '/addmandal',
                 parentId: 10
             }
         ]

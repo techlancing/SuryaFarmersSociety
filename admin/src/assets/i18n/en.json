@@ -105,9 +105,9 @@
     "ECOMMERCE": {
       "TEXT": "NEW SETUP",
       "LIST": {
-        "ADDCAR": "Cars",
-        "ADDDRIVER": " Drivers",
-        "ADDTRIP": "Trip Data"
+        "ADDACCOUNT": "Account Form",
+        "ADDDISTRICT": "New District",
+        "ADDMANDAL": "New Mandal"
       }
     },
     "PROMOTIONUSER": {

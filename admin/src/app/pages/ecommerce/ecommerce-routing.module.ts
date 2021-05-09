@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddaccountComponent } from './addaccount/addaccount.component';
 
-import { AddcarComponent } from './addcar/addcar.component';
 import { AdddriverComponent } from './adddriver/adddriver.component';
 
 const routes: Routes = [
     {
-        path: 'addcar',
-        component: AddcarComponent
+        path: 'newaccountform',
+        component: AddaccountComponent
     },
     {
-        path: 'adddriver',
-        component: AdddriverComponent
+        path: 'adddistrict',
+        component: AddaccountComponent
+    },
+    {
+        path: 'addmandal',
+        component: AddaccountComponent
     }
 ];
 
