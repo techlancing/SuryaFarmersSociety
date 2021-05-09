@@ -4,17 +4,17 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_carFormElem="ngForm" (ngSubmit)="fnOnCarInfoSubmit()">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" (ngSubmit)="fnOnBankAccountInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
-            <h2 >Account Opening Form</h2>
+            <h2>Account Opening Form</h2>
   
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="control-label">State</label>
-                  <ng-select [items]="aCarTypes" name="sCarType"
-                      [(ngModel)]="oCarModel.sCarType" 
+                  <ng-select [items]="aBankAccountTypes" name="sState"
+                      [(ngModel)]="oBankAccountModel.sState" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -28,7 +28,7 @@
                   <div class="form-group">
                     <label for="sDistrict">District</label>
                     <ng-select [items]="aDistrict" name="sDistrict"
-                      [(ngModel)]="oCarModel.sCarType" 
+                      [(ngModel)]="oBankAccountModel.sDistrict" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -40,9 +40,9 @@
               <div class="col-sm-6">
                 <div class="add-container">
                   <div class="form-group">
-                    <label for="sDistrict"> Mandal</label>
+                    <label for="sMandal">Mandal</label>
                     <ng-select [items]="aMandal" name="sMandal"
-                      [(ngModel)]="oCarModel.sCarSeating" 
+                      [(ngModel)]="oBankAccountModel.sMandal" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -54,9 +54,9 @@
               <div class="col-sm-6">
                 <div class="add-container">
                   <div class="form-group">
-                    <label for="sDistrict"> Village</label>
+                    <label for="sVillage">Village</label>
                     <ng-select [items]="aVillage" name="sVillage"
-                      [(ngModel)]="oCarModel.sCarSeating" 
+                      [(ngModel)]="oBankAccountModel.sVillage" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -68,45 +68,45 @@
               <div class="col-sm-4">
                 <div class="add-container">
                   <div class="form-group">
-                    <label for="manufacturer">Branch Code</label>
-                    <input id="carrent" name="sCarRent" [(ngModel)]="oCarModel.sCarRent" type="text"
+                    <label for="Branch">Branch Code</label>
+                    <input id="Branch" name="sBranchCode" [(ngModel)]="oBankAccountModel.sBranchCode" type="text"
                     class="form-control" >
                   </div>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="sCarRent">Account Number</label>
-                  <input id="carrent" name="sCarRent" [(ngModel)]="oCarModel.sCarRent" type="number"
+                  <label for="nAccountNo">Account Number</label>
+                  <input id="nAccountNo" name="nAccountNo" [(ngModel)]="oBankAccountModel.nAccountNo" type="number"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="sCarDistanceCost">Customer ID</label>
-                  <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                  <label for="nCustomerId">Customer ID</label>
+                  <input id="nCustomerId" name="nCustomerId" [(ngModel)]="oBankAccountModel.nCustomerId" type="number"
                     class="form-control" >
                 </div>
               </div>  
               <h2 class="col-sm-12">Personal Information</h2>                          
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="sCarTimeCost">Date</label>                  
-                  <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                  <label for="Date">Date</label>                  
+                  <input id="Date" name="sDate" [(ngModel)]="oBankAccountModel.sDate" type="number"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="sCarTimeCost">Applicant's Name</label>                  
-                  <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                  <label for="sApplicantName">Applicant's Name</label>                  
+                  <input id="sApplicantName" name="sApplicantName" [(ngModel)]="oBankAccountModel.sApplicantName" type="number"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label for="sCarTimeCost">Applicant's Surname</label>                  
-                  <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                  <label for="sApplicantSurName">Applicant's Surname</label>                  
+                  <input id="sApplicantSurName" name="sApplicantSurName" [(ngModel)]="oBankAccountModel.sApplicantSurName" type="number"
                     class="form-control" >
                 </div>
               </div>
@@ -130,15 +130,15 @@
               </div>
             <div class="col-sm-4">
               <div class="form-group">
-              <label for="sCarTimeCost">Date Of Birth</label>                
-              <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="date"
+              <label for="sDOB">Date Of Birth</label>                
+              <input id="sDOB" name="sDOB" [(ngModel)]="oBankAccountModel.sDOB" type="date"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="sCarTimeCost">Age</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sAge">Age</label>                  
+                <input id="sAge" name="sAge" [(ngModel)]="oBankAccountModel.sAge" type="number"
                   class="form-control" >
               </div>
             </div> 
@@ -218,101 +218,101 @@
             <h2 class="col-sm-12">Family Information</h2> 
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Father/Husband Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sFatherOrHusbandName">Father/Husband Name</label>                  
+                <input id="sFatherOrHusbandName" name="sFatherOrHusbandName" [(ngModel)]="oBankAccountModel.sFatherOrHusbandName" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Mother Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sMotherName">Mother Name</label>                  
+                <input id="sMotherName" name="sMotherName" [(ngModel)]="oBankAccountModel.sMotherName" type="text"
                   class="form-control" >
               </div>
             </div>   
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Nominee Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sNomineeName">Nominee Name</label>                  
+                <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oBankAccountModel.sNomineeName" type="text"
                   class="form-control" >
               </div>
             </div>   
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Nominee Relantionship</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sNomineeRelationship">Nominee Relantionship</label>                  
+                <input id="sNomineeRelationship" name="sNomineeRelationship" [(ngModel)]="oBankAccountModel.sNomineeRelationship" type="text"
                   class="form-control" >
               </div>
             </div>   
             <h2 class="col-sm-12">Identity Information</h2>   
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="sCarTimeCost">Voter ID Number</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sVoterIdNo">Voter ID Number</label>                  
+                <input id="sVoterIdNo" name="sVoterIdNo" [(ngModel)]="oBankAccountModel.sVoterIdNo" type="number"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="sCarTimeCost">Aadhar Number</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sAadharNo">Aadhar Number</label>                  
+                <input id="sAadharNo" name="sAadharNo" [(ngModel)]="oBankAccountModel.sAadharNo" type="number"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="sCarTimeCost">Ration Card Number</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sRationCardNo">Ration Card Number</label>                  
+                <input id="sRationCardNo" name="sRationCardNo" [(ngModel)]="oBankAccountModel.sCarDistanceCost" type="number"
                   class="form-control" >
               </div>
             </div>
             <h2 class="col-sm-12">Address</h2>  
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">House/Flat No</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sAddress">House/Flat No</label>                  
+                <input id="sAddress" name="sAddress" [(ngModel)]="oBankAccountModel.sAddress" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Street Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sStreetName">Street Name</label>                  
+                <input id="sStreetName" name="sStreetName" [(ngModel)]="oBankAccountModel.sStreetName" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Village Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sVillage">Village Name</label>                  
+                <input id="sVillage" name="sVillage" [(ngModel)]="oBankAccountModel.sVillage" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Mandal Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sMandal">Mandal Name</label>                  
+                <input id="sMandal" name="sMandal" [(ngModel)]="oBankAccountModel.sMandal" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">District Name</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sDistrict">District Name</label>                  
+                <input id="sDistrict" name="sDistrict" [(ngModel)]="oBankAccountModel.sDistrict" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Pin Code</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sPinCode">Pin Code</label>                  
+                <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="number"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sCarTimeCost">Mobile Number</label>                  
-                <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                <label for="sMobileNumber">Mobile Number</label>                  
+                <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="number"
                   class="form-control" >
               </div>
             </div>
@@ -320,8 +320,8 @@
             <h2 class="col-sm-12">Amount to be Deposited</h2> 
               <div class="col-sm-6">
                    <div class="form-group">
-                   <label for="sCarTimeCost">Amount</label>                  
-                   <input id="sCarDistanceCost" name="sCarDistanceCost" [(ngModel)]="oCarModel.sCarDistanceCost" type="number"
+                   <label for="nAmount">Amount</label>                  
+                   <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="number"
                     class="form-control" >
                    </div>
               </div>     

@@ -1,6 +1,8 @@
 import { ImageInfo } from './image.model';
 export class BankAccount {
     constructor(
+        public sAddress : string = '',
+        public sBranchCode : string = '',
         public nAccountId : number = null,//unique: true},
         public nAccountNo : number = null,
         public sState : string = '',

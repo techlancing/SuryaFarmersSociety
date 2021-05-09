@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Car } from '../../../core/models/car.model';
-import { CarService } from '../../../core/services/car.service';
+import { BankAccount } from '../../../core/models/bankaccount.model';
+import { BankAccountService } from '../../../core/services/account.service';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
@@ -13,23 +13,23 @@ import Swal from 'sweetalert2';
 })
 export class AddaccountComponent implements OnInit {
 
-  cars: Array<Car>;
+  bankaccounts: Array<BankAccount>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditCar: Car;
+  @Input() oEditBankAccount: BankAccount;
 
-  public oCarModel: Car;
+  public oBankAccountModel: BankAccount;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
 
-  @ViewChild('_CarFormElem')
-  public oCarfoFormElem: any;
+  @ViewChild('_BankAccountFormElem')
+  public oBankAccountfoFormElem: any;
 
   @ViewChild('addcardropzoneElem')
   public oDropZone: DropzoneComponent;
-  aCarTypes : Array<
+  aBankAccountTypes : Array<
   {
     displayText:string,
     value:number
@@ -56,7 +56,7 @@ export class AddaccountComponent implements OnInit {
   }>;
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
-  url: environment.apiUrl + "nodejs/car/upload_file",//"/nodejs/car/upload_file", 
+  url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
   maxFilesize: 100,
   maxFiles: 1
   };
@@ -68,7 +68,7 @@ export class AddaccountComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  constructor(private oCarService: CarService,
+  constructor(private oBankAccountService: BankAccountService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -91,7 +91,7 @@ export class AddaccountComponent implements OnInit {
         value:0
       }
     ];
-    this.aCarTypes = [
+    this.aBankAccountTypes = [
       {
         displayText: 'Telangana',
         value: 0
@@ -115,110 +115,110 @@ export class AddaccountComponent implements OnInit {
         value: 3
       }
     ];
-    this.oCarModel = new Car();
+    this.oBankAccountModel = new BankAccount();
     this.sButtonText = 'Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
-      const tempobj = JSON.parse(JSON.stringify(this.oEditCar));
-      this.oCarModel = tempobj;
+      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
+      // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oCarService.fngetCarInfo().subscribe((data) => {
-      this.cars = [...data as any];
+    this.oBankAccountService.fngetCarInfo().subscribe((data) => {
+      this.aBankAccountTypes = [...data as any];
 
     });
   }
 
-  fnResetCarName() {
-    this.oCarModel.sCarName = '';
+  fnResetState() {
+    this.oBankAccountModel.sState = '';
   }
 
-  fnOnCarInfoSubmit(): void {
-    if(this.cars != undefined && this.cars !== null){
-      if(this.oCarModel.sCarName.length === 0 || this.oCarModel.sCarName.trim().length === 0)
-      {
-        this.fnEmptyCarNameMessage();
-        return;
-      }
-      //Verification for Duplicate Car name
-        for(var i = 0; i < this.cars.length; i++) {
-          if(this.cars[i].sCarName.toLowerCase() === this.oCarModel.sCarName.toLowerCase().trim()) {
-            this.fnDuplicateCarNameMessage();
-            return;
-          }
-      }
-    }
+  // fnOnBankAccountInfoSubmit(): void {
+  //   if(this.bankaccounts != undefined && this.bankaccounts !== null){
+  //     if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
+  //     {
+  //       // this.fnEmptyStateMessage();
+  //       return;
+  //     }
+  //     //Verification for Duplicate Car name
+  //       for(var i = 0; i < this.bankaccounts.length; i++) {
+  //         if(this.bankaccounts[i].sState.toLowerCase() === this.oBankAccountModel.sState.toLowerCase().trim()) {
+  //           // this.fnDuplicateCarNameMessage();
+  //           return;
+  //         }
+  //     }
+  //   }
     
 
-    if (!this.bisEditMode) {
-      this.bIsAddActive = true;
-      this.oCarService.fnAddCarInfo(this.oCarModel).subscribe((data) => {
-        this.cars = [];
-        this.oCarService.fngetCarInfo().subscribe((cdata) => {
-          this.fnSucessMessage();
-          this.cars = [...cdata as any];
-          this.oCarModel.sCarName = '';
-          this.bIsAddActive = false;
-          this.addClicked.emit();
-        });
-      });
-    } else {
-      // Edit function from service here
-      this.bIsEditActive = true;
-      this.oCarService.fnEditCarInfo(this.oCarModel).subscribe((data) => {
-        this.updateClicked.emit();
-      });
-    }
-  }
+  //   if (!this.bisEditMode) {
+  //     this.bIsAddActive = true;
+  //     // this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
+  //       this.bankaccounts = [];
+  //       // this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+  //         // this.fnSucessMessage();
+  //         // this.bankaccounts = [...cdata as any];
+  //         this.oBankAccountModel.sState = '';
+  //         this.bIsAddActive = false;
+  //         this.addClicked.emit();
+  //       });
+  //     });
+  //   } else {
+  //     // Edit function from service here
+  //     this.bIsEditActive = true;
+  //     this.oBankAccountService.fnEditCarInfo(this.oBankAccountModel).subscribe((data) => {
+  //       this.updateClicked.emit();
+  //     });
+  //   }
+  // }
 
   fnUpdateParentAfterEdit() {
-    this.oCarService.fngetCarInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
       this.fnEditSucessMessage();
-      this.cars = [];
-      console.log(this.cars);
-      this.cars = [...cdata as any];
-      console.log(this.cars);
-      this.oCarModel.sCarName = '';
+      this.bankaccounts = [];
+      console.log(this.bankaccounts);
+      this.bankaccounts = [...cdata as any];
+      console.log(this.bankaccounts);
+      this.oBankAccountModel.sState = '';
       this.modalService.dismissAll();
     });
   }
 
-  fnonUploadImageSuccess(args: any){
-    this.oCarModel.oImageInfo = args[1].oImageRefId;
-  }
+  // fnonUploadImageSuccess(args: any){
+  //   this.oBankAccountModel.oImageInfo = args[1].oImageRefId;
+  // }
 
-  fnDeleteCar(nIndex) {
-    console.log(this.cars[nIndex] as Car);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won\'t be able to revert this!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#34c38f',
-      cancelButtonColor: '#f46a6a',
-      confirmButtonText: 'Yes, delete it!'
-    }).then(result => {
-      if (result.value) {
-        this.oCarService.fnDeleteCarInfo(this.cars[nIndex] as Car).subscribe((data) => {
-          this.cars = [];
-          this.oCarService.fngetCarInfo().subscribe((cdata) => {
-            Swal.fire((data as Car).sCarName, 'Car is deleted successfully.', 'success');
-            this.cars = [...cdata as any];
-            this.oCarModel.sCarName = '';
-          });
-        });
+  // fnDeleteCar(nIndex) {
+  //   console.log(this.bankaccounts[nIndex] as BankAccount);
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'You won\'t be able to revert this!',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#34c38f',
+  //     cancelButtonColor: '#f46a6a',
+  //     confirmButtonText: 'Yes, delete it!'
+  //   }).then(result => {
+  //     if (result.value) {
+  //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
+  //         this.bankaccounts = [];
+  //         this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+  //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
+  //           this.bankaccounts = [...cdata as any];
+  //           this.oBankAccountModel.sState = '';
+  //         });
+  //       });
 
-      }
-    });
+  //     }
+  //   });
 
-  }
+  // }
 
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Car is saved sucessfully.',
+      title: 'State is saved sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
