@@ -18,8 +18,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 
 import { environment } from 'src/environments/environment';
-import { AddcarComponent } from './addcar/addcar.component';
-import { AdddriverComponent } from './adddriver/adddriver.component';
 import { AddaccountComponent } from './addaccount/addaccount.component';
 
 const config: DropzoneConfigInterface = {
@@ -30,7 +28,7 @@ const config: DropzoneConfigInterface = {
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [  AddcarComponent, AdddriverComponent, AddaccountComponent, ],
+  declarations: [   AddaccountComponent, ],
   imports: [
     CommonModule,
     EcommerceRoutingModule,

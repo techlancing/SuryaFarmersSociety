@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RazorpayService } from '../../../core/services/razorpay.service';
 
 @Component({
   selector: 'app-transaction',
@@ -20,8 +19,7 @@ export class TransactionComponent implements OnInit {
     oPaymentDetail?: any
   }>;
 
-  constructor(private modalService: NgbModal,
-    private oRazorpayService : RazorpayService) { }
+  constructor(private modalService: NgbModal) { }
   activeindex : number;
   order: any;
   ngOnInit() {
@@ -32,13 +30,13 @@ export class TransactionComponent implements OnInit {
    * @param content modal content
    */
   openModal(content: any,index) {
-    this.activeindex = index;
-    this.oRazorpayService.fngetAdminOrderDetails(Number(this.transactions[this.activeindex].nOrderId)).subscribe((order : any)=>{
-      console.log(order);
-      this.order = order;
-    this.modalService.open(content, { centered: true });
+  //   this.activeindex = index;
+  //   this.oRazorpayService.fngetAdminOrderDetails(Number(this.transactions[this.activeindex].nOrderId)).subscribe((order : any)=>{
+  //     console.log(order);
+  //     this.order = order;
+  //   this.modalService.open(content, { centered: true });
 
-  });
+  // });
   }
 
 }

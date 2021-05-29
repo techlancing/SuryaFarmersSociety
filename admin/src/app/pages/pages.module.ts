@@ -18,7 +18,6 @@ import { PagesRoutingModule } from './pages-routing.module';
 
 import { DashboardsModule } from './dashboards/dashboards.module';
 import { EcommerceModule } from './ecommerce/ecommerce.module';
-import { PromotionModule } from './promotion/promotion.module';
 
 import { CryptoModule } from './crypto/crypto.module';
 import { EmailModule } from './email/email.module';
@@ -56,7 +55,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DashboardsModule,
     CryptoModule,
     EcommerceModule,
-    PromotionModule,
     EmailModule,
     InvoicesModule,
     HttpClientModule,

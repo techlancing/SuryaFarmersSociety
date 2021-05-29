@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddaccountComponent } from './addaccount/addaccount.component';
 
-import { AdddriverComponent } from './adddriver/adddriver.component';
 
 const routes: Routes = [
     {
