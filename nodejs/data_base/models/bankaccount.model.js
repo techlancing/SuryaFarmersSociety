@@ -5,7 +5,14 @@ const oSchema = oMongoose.Schema
 
 var oBankAccountSchema = new oSchema({
   nAccountId : {type: Number},
-  nAccountNo: { type: Number },//unique: true},
+  sBranchCode: { 
+    type: String,
+    trim: true
+   },
+  sAccountNo: { 
+    type: String,
+    trim: true
+   },//unique: true},
   sState: {
     type: String,
     trim: true
@@ -22,8 +29,9 @@ var oBankAccountSchema = new oSchema({
     type: String,
     trim: true
   },
-  nCustomerId: {
-    type: Number
+  sCustomerId: {
+    type: String,
+    trim: true
   },
   sDate: {
     type: String,

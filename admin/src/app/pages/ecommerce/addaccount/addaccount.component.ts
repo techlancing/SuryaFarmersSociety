@@ -29,30 +29,30 @@ export class AddaccountComponent implements OnInit {
 
   @ViewChild('addcardropzoneElem')
   public oDropZone: DropzoneComponent;
-  aBankAccountTypes : Array<
+  aState : Array<
   {
     displayText:string,
-    value:number
+    value:string
   }>;
   aDistrict : Array<
   {
     displayText:string,
-    value:number
+    value:string
   }>;
   aMandal : Array<
   {
     displayText:string,
-    value:number
+    value:string
   }>;
   aVillage : Array<
   {
     displayText:string,
-    value:number
+    value:string
   }>;
   aBranchCode  : Array<
   {
     displayText:string,
-    value:number
+    value:string
   }>;
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
@@ -76,45 +76,44 @@ export class AddaccountComponent implements OnInit {
     this.aDistrict = [
       {
         displayText: 'Mahabubabad',
-        value:0
+        value:'01'
       }
     ];
     this.aMandal = [
       {
         displayText: 'Gudur',
-        value:0
+        value:'01'
+      },
+      {
+        displayText: 'Kesamudram',
+        value:'02'
+      },
+      {
+        displayText: 'Kothaguda',
+        value:'03'
       }
     ];
     this.aVillage = [
       {
         displayText: 'Gajulagattu',
-        value:0
+        value:'01'
+      },
+      {
+        displayText: 'Gundenga',
+        value:'02'
+      },
+      {
+        displayText: 'Ayodyapuram',
+        value:'03'
       }
     ];
-    this.aBankAccountTypes = [
+    this.aState = [
       {
         displayText: 'Telangana',
-        value: 0
+        value: '01'
       },
       ];
-    this.aBranchCode = [
-      {
-        displayText: '010101',
-        value: 0
-      },
-      {
-        displayText: '010102',
-        value: 1
-      },
-      {
-        displayText: '010103',
-        value: 2
-      },
-      {
-        displayText: '010104',
-        value: 3
-      }
-    ];
+    
     this.oBankAccountModel = new BankAccount();
     this.sButtonText = 'Save & Submit';
     this.bIsAddActive = false;
@@ -125,9 +124,17 @@ export class AddaccountComponent implements OnInit {
       this.sButtonText = 'Update';
     }
     this.oBankAccountService.fngetCarInfo().subscribe((data) => {
-      this.aBankAccountTypes = [...data as any];
+      //this.aBankAccountTypes = [...data as any];
 
     });
+  }
+
+  fnCreateAccountDetails(){
+    this.oBankAccountModel.sBranchCode = this.oBankAccountModel.sState + 
+    this.oBankAccountModel.sDistrict + this.oBankAccountModel.sMandal + 
+    this.oBankAccountModel.sVillage;
+    this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode + '0001';
+    this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
   }
 
   fnResetState() {

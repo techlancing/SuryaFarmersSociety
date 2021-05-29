@@ -4,17 +4,17 @@ const multer = require('multer');
 var path = require('path');
 var fs = require('fs');
 
-const oCarModel = require("../data_base/models/car.model");
+const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oImageModel = require("../data_base/models/image.model");
 
-const oCarRouter = oExpress.Router();
+const obankaccountRouter = oExpress.Router();
 // SET STORAGE for  uploading images
 var storage = multer.diskStorage({
   destination: function (oReq, oFile, cb) {
     try {
       //console.dir(oReq);
       console.log('reached disk storage function');
-      var folderPath = path.join(process.env.UPLOAD_PATH, 'car');
+      var folderPath = path.join(process.env.UPLOAD_PATH, 'bankaccount');
       console.log(folderPath);
       if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
@@ -47,7 +47,7 @@ const asyncMiddleware = fn =>
   };
 
   // Upload images
-  oCarRouter.post("/upload_file", oUploadImage.array('file', 1), asyncMiddleware(async (req, res, oNext) => { 
+  obankaccountRouter.post("/upload_file", oUploadImage.array('file', 1), asyncMiddleware(async (req, res, oNext) => { 
     if(req.files)
     {
       const files = req.files;
@@ -72,12 +72,12 @@ const asyncMiddleware = fn =>
   }));
   
 
-// url: ..../Car/add_Car
-oCarRouter.post("/add_car", asyncMiddleware(async (oReq, oRes, oNext) => { 
-  const newCar = new oCarModel(oReq.body);
+// url: ..../bankaccount/add_bankaccount
+obankaccountRouter.post("/add_bankaccount", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  const newbankaccount = new obankaccountModel(oReq.body);
   try{
-    // Save Car Info
-    await newCar.save();    
+    // Save bankaccount Info
+    await newbankaccount.save();    
     oRes.json("Success");
 
   }catch(e){
@@ -87,12 +87,12 @@ oCarRouter.post("/add_car", asyncMiddleware(async (oReq, oRes, oNext) => {
   }
 }));
 
-// url: ..../car/edit_car
-oCarRouter.post("/edit_car", asyncMiddleware(async(oReq, oRes, oNext) => {
+// url: ..../bankaccount/edit_bankaccount
+obankaccountRouter.post("/edit_bankaccount", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    const oCar = await oCarModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
+    const obankaccount = await obankaccountModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
-    if(!oCar){
+    if(!obankaccount){
       return oRes.status(400).send();
     }
 
@@ -104,17 +104,17 @@ oCarRouter.post("/edit_car", asyncMiddleware(async(oReq, oRes, oNext) => {
 
 }));
 
-// url: ..../Car/delete_Car
-oCarRouter.post("/delete_car", asyncMiddleware(async (oReq, oRes, oNext) => { 
+// url: ..../bankaccount/delete_bankaccount
+obankaccountRouter.post("/delete_bankaccount", asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
-    const oCar = await oCarModel.findByIdAndDelete(oReq.body._id);
+    const obankaccount = await obankaccountModel.findByIdAndDelete(oReq.body._id);
 
-    if(!oCar){
+    if(!obankaccount){
       return oRes.status(400).send();
     }
 
-    oRes.json(oCar); 
+    oRes.json(obankaccount); 
   }catch(e){
     console.log(e);
     oRes.status(400).send(e);
@@ -122,24 +122,24 @@ oCarRouter.post("/delete_car", asyncMiddleware(async (oReq, oRes, oNext) => {
 
 }));
 
-oCarRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
   oRes.json('success');
 }));
 
-// url: ..../Car/Car_list
-oCarRouter.get("/car_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+// url: ..../bankaccount/bankaccount_list
+obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllCars = await oCarModel.find();
+      const oAllbankaccounts = await obankaccountModel.find();
 
-      if(!oAllCars){
+      if(!oAllbankaccounts){
         return oRes.status(400).send();
       }
 
-      oRes.json(oAllCars);
+      oRes.json(oAllbankaccounts);
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
     }
 }));
 
-module.exports = oCarRouter;
+module.exports = obankaccountRouter;

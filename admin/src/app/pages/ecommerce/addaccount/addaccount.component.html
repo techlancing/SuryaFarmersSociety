@@ -4,7 +4,7 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" (ngSubmit)="fnOnBankAccountInfoSubmit()">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
         <div class="card card-bg">
           <div class="card-body">
             <h2>Account Opening Form</h2>
@@ -13,7 +13,7 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="control-label">State</label>
-                  <ng-select [items]="aBankAccountTypes" name="sState"
+                  <ng-select [items]="aState" name="sState"
                       [(ngModel)]="oBankAccountModel.sState" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
@@ -65,48 +65,56 @@
                   </div>
                 </div>
               </div>
+              
+                <div class="col-sm-12 justify-content-end">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary mr-1" 
+                    [disabled]="bIsAddActive || bIsEditActive" (click)="fnCreateAccountDetails()"
+                >Generate Account Details</button>
+                  </div>
+                </div>
               <div class="col-sm-4">
                 <div class="add-container">
                   <div class="form-group">
                     <label for="Branch">Branch Code</label>
                     <input id="Branch" name="sBranchCode" [(ngModel)]="oBankAccountModel.sBranchCode" type="text"
-                    class="form-control" >
+                    class="form-control" disabled>
                   </div>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="nAccountNo">Account Number</label>
-                  <input id="nAccountNo" name="nAccountNo" [(ngModel)]="oBankAccountModel.nAccountNo" type="number"
-                    class="form-control" >
+                  <input id="nAccountNo" name="nAccountNo" [(ngModel)]="oBankAccountModel.sAccountNo" type="text"
+                    class="form-control" disabled>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="nCustomerId">Customer ID</label>
-                  <input id="nCustomerId" name="nCustomerId" [(ngModel)]="oBankAccountModel.nCustomerId" type="number"
-                    class="form-control" >
+                  <input id="nCustomerId" name="nCustomerId" [(ngModel)]="oBankAccountModel.sCustomerId" type="text"
+                    class="form-control" disabled>
                 </div>
               </div>  
               <h2 class="col-sm-12">Personal Information</h2>                          
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="Date">Date</label>                  
-                  <input id="Date" name="sDate" [(ngModel)]="oBankAccountModel.sDate" type="number"
+                  <input id="Date" name="sDate" [(ngModel)]="oBankAccountModel.sDate" type="date"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sApplicantName">Applicant's Name</label>                  
-                  <input id="sApplicantName" name="sApplicantName" [(ngModel)]="oBankAccountModel.sApplicantName" type="number"
+                  <input id="sApplicantName" name="sApplicantName" [(ngModel)]="oBankAccountModel.sApplicantName" type="text"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sApplicantSurName">Applicant's Surname</label>                  
-                  <input id="sApplicantSurName" name="sApplicantSurName" [(ngModel)]="oBankAccountModel.sApplicantSurName" type="number"
+                  <input id="sApplicantSurName" name="sApplicantSurName" [(ngModel)]="oBankAccountModel.sApplicantSurName" type="text"
                     class="form-control" >
                 </div>
               </div>
@@ -114,15 +122,15 @@
                 <label class="font-size-14 mb-3">Gender</label>
               <div class="radio-container">
                 <div class="form-check form-group">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Male"
                     checked>
-                  <label class="form-check-label" for="exampleRadios1">
+                  <label class="form-check-label" for="genderRadio1">
                     Male
                   </label>
                 </div>
                 <div class="form-check form-group">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                  <label class="form-check-label" for="exampleRadios2">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Female">
+                  <label class="form-check-label" for="genderRadio2">
                     Female
                   </label>
                 </div>
@@ -138,7 +146,7 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sAge">Age</label>                  
-                <input id="sAge" name="sAge" [(ngModel)]="oBankAccountModel.sAge" type="number"
+                <input id="sAge" name="sAge" [(ngModel)]="oBankAccountModel.sAge" type="text"
                   class="form-control" >
               </div>
             </div> 
@@ -146,15 +154,15 @@
               <label class="font-size-14 mb-4">Type Of Account</label>
             <div class="radio-container">
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                <input class="form-check-input" type="radio" name="accounttypeRadio" id="accounttypeRadio1" value="Current"
                   >
-                <label class="form-check-label" for="exampleRadios1">
+                <label class="form-check-label" for="accounttypeRadio1">
                   Current 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
+                <input class="form-check-input" type="radio" name="accounttypeRadio" id="accounttypeRadio2" value="Savings">
+                <label class="form-check-label" for="accounttypeRadio2">
                   Savings 
                 </label>
               </div>
@@ -165,15 +173,15 @@
               <label class="font-size-14 mb-4">Account Category</label>
             <div class="radio-container">
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
-                  checked>
-                <label class="form-check-label" for="exampleRadios1">
+                <input class="form-check-input" type="radio" name="accountcategoryRadio" id="accountcategoryRadio1" value="Individual"
+                  >
+                <label class="form-check-label" for="accountcategoryRadio1">
                   Individual 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
+                <input class="form-check-input" type="radio" name="accountcategoryRadio" id="accountcategoryRadio2" value="Joint">
+                <label class="form-check-label" for="accountcategoryRadio2">
                   Joint 
                 </label>
               </div>
@@ -183,15 +191,15 @@
               <label class="font-size-14 mb-4">Types Of Share</label>
             <div class="radio-container">
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
-                  checked>
-                <label class="form-check-label" for="exampleRadios1">
+                <input class="form-check-input" type="radio" name="shareRadio" id="shareRadio1" value="Single"
+                  >
+                <label class="form-check-label" for="shareRadio1">
                   Single 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
+                <input class="form-check-input" type="radio" name="shareRadio" id="shareRadio22" value="Double">
+                <label class="form-check-label" for="shareRadio2">
                   Double
                 </label>
               </div>
@@ -201,15 +209,15 @@
               <label class="font-size-14 mb-4">SMS Alert</label>
             <div class="radio-container">
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
+                <input class="form-check-input" type="radio" name="smsRadio" id="smsRadio1" value="Yes"
                   >
-                <label class="form-check-label" for="exampleRadios1">
+                <label class="form-check-label" for="smsRadio1">
                   YES
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
+                <input class="form-check-input" type="radio" name="smsRadio" id="smsRadio2" value="No">
+                <label class="form-check-label" for="smsRadio2">
                   NO
                 </label>
               </div>
@@ -248,21 +256,21 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sVoterIdNo">Voter ID Number</label>                  
-                <input id="sVoterIdNo" name="sVoterIdNo" [(ngModel)]="oBankAccountModel.sVoterIdNo" type="number"
+                <input id="sVoterIdNo" name="sVoterIdNo" [(ngModel)]="oBankAccountModel.sVoterIdNo" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sAadharNo">Aadhar Number</label>                  
-                <input id="sAadharNo" name="sAadharNo" [(ngModel)]="oBankAccountModel.sAadharNo" type="number"
+                <input id="sAadharNo" name="sAadharNo" [(ngModel)]="oBankAccountModel.sAadharNo" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sRationCardNo">Ration Card Number</label>                  
-                <input id="sRationCardNo" name="sRationCardNo" [(ngModel)]="oBankAccountModel.sCarDistanceCost" type="number"
+                <input id="sRationCardNo" name="sRationCardNo" [(ngModel)]="oBankAccountModel.sRationCardNo" type="text"
                   class="form-control" >
               </div>
             </div>
@@ -283,36 +291,36 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sVillage">Village Name</label>                  
-                <input id="sVillage" name="sVillage" [(ngModel)]="oBankAccountModel.sVillage" type="text"
+                <label for="sVillageAddress">Village Name</label>                  
+                <input id="sVillageAddress" name="sVillageAddress" [(ngModel)]="oBankAccountModel.sVillageAddress" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sMandal">Mandal Name</label>                  
-                <input id="sMandal" name="sMandal" [(ngModel)]="oBankAccountModel.sMandal" type="text"
+                <label for="sMandalAddress">Mandal Name</label>                  
+                <input id="sMandalAddress" name="sMandalAddress" [(ngModel)]="oBankAccountModel.sMandalAddress" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sDistrict">District Name</label>                  
-                <input id="sDistrict" name="sDistrict" [(ngModel)]="oBankAccountModel.sDistrict" type="text"
+                <label for="sDistrictAddress">District Name</label>                  
+                <input id="sDistrictAddress" name="sDistrictAddress" [(ngModel)]="oBankAccountModel.sDistrictAddress" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sPinCode">Pin Code</label>                  
-                <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="number"
+                <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="text"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sMobileNumber">Mobile Number</label>                  
-                <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="number"
+                <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="text"
                   class="form-control" >
               </div>
             </div>
@@ -321,7 +329,7 @@
               <div class="col-sm-6">
                    <div class="form-group">
                    <label for="nAmount">Amount</label>                  
-                   <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="number"
+                   <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="text"
                     class="form-control" >
                    </div>
               </div>     
@@ -367,7 +375,7 @@
                 <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
                 >{{sButtonText}}</button>
                 <button type="button" class="btn btn-secondary"
-                (click)="fnResetCarName()">Clear</button>
+                >Clear</button>
               </div>
             </div>
           </div>
@@ -417,7 +425,7 @@
     </div>
   </div> -->
   
-  <ng-template #editcategory role="document" let-modal>
+  <!-- <ng-template #editcategory role="document" let-modal>
     <div class="modal-header">
       <h5 class="modal-title mt-0">Edit Car</h5>
       <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
@@ -430,5 +438,5 @@
       (updateClicked)="fnUpdateParentAfterEdit()"></app-addcar>
   
     </div>
-  </ng-template>
+  </ng-template> -->
   

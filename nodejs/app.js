@@ -15,20 +15,8 @@ var oServer = express();
 const oDBConnection = require('./data_base/connection');
 
 // API endpoit controllers
-// const oProductController = require("./controllers/product.controller");
-// const oCategoryController = require("./controllers/category.controller");
-// const oSubCategoryController = require("./controllers/subcategory.controller");
-// const oConfigurationtypeController = require("./controllers/configurationtype.controller");
-// const oConfigurationvalueController = require("./controllers/configurationvalue.controller");
-const oCarController = require("./controllers/car.controller");
-// const oManufacturerController = require("./controllers/manufacturer.controller");
-// const oAddressController = require("./controllers/address.controller");
-// const oCartController = require("./controllers/cart.controller");
-// const oBannerController = require("./controllers/banner.controller");
+const oBankAccountController = require("./controllers/bankaccount.controller");
 const oAccountController = require("./controllers/account.controller");
-// const oVendorController = require("./controllers/vendor.controller");
-// const oProductListFiltersController = require("./controllers/productlist_filters.controller");
-// const oRazorPayController = require("./controllers/razorpay.controller");
 
 
 // catch 404 and forward to error handler
@@ -72,20 +60,9 @@ oServer.use(function (err, req, res, next) {
 });
 
 // Configure the routes
-// oServer.use(sRootPath + "/product", oProductController);
-// oServer.use(sRootPath + "/category", oCategoryController);
-// oServer.use(sRootPath + "/subcategory", oSubCategoryController);
-// oServer.use(sRootPath + "/configurationtype", oConfigurationtypeController);
-// oServer.use(sRootPath + "/configurationvalue", oConfigurationvalueController);
-oServer.use("/nodejs/car", oCarController);
-// oServer.use(sRootPath + "/manufacturer", oManufacturerController);
-// oServer.use(sRootPath + "/address", oAddressController);
-// oServer.use(sRootPath + "/cart", oCartController);
-// oServer.use(sRootPath + "/banner", oBannerController);
+
+oServer.use("/nodejs/bankaccount", oBankAccountController);
 oServer.use("/nodejs/account", oAccountController);
-// oServer.use(sRootPath + "/vendor", oVendorController);
-// oServer.use(sRootPath + "/razorpay", oRazorPayController);
-// oServer.use(sRootPath + "/productlistfilters", oProductListFiltersController);
 
 
 oServer.get("/", (req, res) => {
