@@ -19,6 +19,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { environment } from 'src/environments/environment';
 import { AddaccountComponent } from './addaccount/addaccount.component';
+import { AddBankEmployeeComponent } from './add-bank-employee/add-bank-employee.component';
+import { AddDistrictComponent } from './add-district/add-district.component';
+import { AddMandalComponent } from './add-mandal/add-mandal.component';
+import { AccountTransactionDebitComponent } from './account-transaction-debit/account-transaction-debit.component';
+import { AccountTransactionCreditComponent } from './account-transaction-credit/account-transaction-credit.component';
+import { AccountTransactionCreditLoanComponent } from './account-transaction-credit-loan/account-transaction-credit-loan.component';
+import { AccountTransactionDailysavingdebitComponent } from './account-transaction-dailysavingdebit/account-transaction-dailysavingdebit.component';
+import { AccountTransactionIntraTransitionComponent } from './account-transaction-intra-transition/account-transaction-intra-transition.component';
+import { PassbookPrintComponent } from './passbook-print/passbook-print.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -28,7 +37,7 @@ const config: DropzoneConfigInterface = {
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
-  declarations: [   AddaccountComponent, ],
+  declarations: [   AddaccountComponent, AddBankEmployeeComponent, AddDistrictComponent, AddMandalComponent, AccountTransactionDebitComponent, AccountTransactionCreditComponent, AccountTransactionCreditLoanComponent, AccountTransactionDailysavingdebitComponent, AccountTransactionIntraTransitionComponent, PassbookPrintComponent, ],
   imports: [
     CommonModule,
     EcommerceRoutingModule,
