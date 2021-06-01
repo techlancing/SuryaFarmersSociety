@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddBankEmployeeComponent } from './add-bank-employee/add-bank-employee.component';
 import { AddaccountComponent } from './addaccount/addaccount.component';
 
 
@@ -10,7 +11,7 @@ const routes: Routes = [
     },
     {
         path: 'adddistrict',
-        component: AddaccountComponent
+        component: AddBankEmployeeComponent
     },
     {
         path: 'addmandal',

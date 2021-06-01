@@ -1,1 +1,341 @@
-<p>add-bank-employee works!</p>
+<!-- <p>add-bank-employee works!</p> -->
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Add Employee</h2>
+  
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sEmployeeCallLetterID">Employee Call letter ID</label>                  
+                  <input id="sEmployeeCallLetterID" name="sEmployeeCallLetterID" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nEmployeeID">Employee ID</label>                  
+                  <input id="nEmployeeID" name="nEmployeeID" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sCallLetterIssuedDate">Call Letter Issued Date</label>                  
+                  <input id="sCallLetterIssuedDate" name="sCallLetterIssuedDate" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+               <!-- <div class="col-sm-6">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sDistrict">Employee ID</label>
+                    <ng-select [items]="aDistrict" name="sDistrict"
+                      [(ngModel)]="oBankAccountModel.sDistrict" 
+                      bindLabel="displayText" bindValue="value">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>  -->
+              <!-- <div class="col-sm-6">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sMandal">Call Letter Issued Date</label>
+                    <ng-select [items]="aMandal" name="sMandal"
+                      [(ngModel)]="oBankAccountModel.sMandal" 
+                      bindLabel="displayText" bindValue="value">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div> -->
+              <div class="col-sm-6">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sJoiningDate">Joining Date</label>
+                    <input id="Date" name="sJoiningDate" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="date"
+                    class="form-control" >
+                  </div>
+                </div>
+              </div>
+              
+                <!-- <div class="col-sm-12 justify-content-end">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary mr-1" 
+                    [disabled]="bIsAddActive || bIsEditActive" (click)="fnCreateAccountDetails()"
+                >Generate Account Details</button>
+                  </div>
+                </div> -->
+              <div class="col-sm-6">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sEmployeeName">Employee Name</label>
+                    <input id="EmployeeName" name="sEmployeeName" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nFatherOrHusbandName">Father/Husband Name</label>
+                  <input id="nFatherOrHusbandName" name="nFatherOrHusbandName" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sMotherName">Mother Name</label>
+                  <input id="sMotherName" name="sMotherName" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" disabled>
+                </div>
+              </div>  
+              <!-- <h2 class="col-sm-12">Personal Information</h2>                           -->
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sAadharNo">Aadhar No</label>                  
+                  <input id="sAadharNo" name="sAadnarNo" [(ngModel)]="oBankEmployeeModel.nBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sMobileNumber">Mobile No</label>                  
+                  <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sNationality">Nationality</label>                  
+                  <input id="sNationality" name="sNationality" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sReligion">Religion</label>                  
+                  <input id="sReligion" name="sReligion" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <!-- <div class="col-sm-4">
+                <label class="font-size-14 mb-3">Religion</label>
+              <div class="radio-container">
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Male"
+                    checked>
+                  <label class="form-check-label" for="genderRadio1">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Female">
+                  <label class="form-check-label" for="genderRadio2">
+                    Female
+                  </label>
+                </div>
+              </div>
+              </div> -->
+            <div class="col-sm-6">
+              <div class="form-group">
+              <label for="sSpeakLanguage">Speak Language</label>                
+              <input id="sSpeakLanguage" name="sSpeakLanguage" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                  class="form-control" >
+              </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="font-size-14 mb-3">Appointment Type</label>
+              <div class="radio-container">
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Trainee"
+                    checked>
+                  <label class="form-check-label" for="genderRadio1">
+                    Trainee
+                  </label>
+                </div>
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Regular">
+                  <label class="form-check-label" for="genderRadio2">
+                    Regular
+                  </label>
+                </div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sDesignation">Designation</label>
+                    <ng-select [items]="aDesignation" name="sDesignation"
+                      [(ngModel)]="oBankEmployeeModel.sBankEmployee" 
+                      bindLabel="displayText" bindValue="value">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sAccountNo">Employee Account No</label>                  
+                <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                  class="form-control" >
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sIfscCode">IFSC Code</label>                  
+                <input id="sIfscCode" name="sIfscCode" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                  class="form-control" >
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sBranchName">Name of the branch</label>                  
+                <input id="sBranchName" name="sBranchName" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                  class="form-control" >
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sPlace">Place of the branch</label>                  
+                <input id="sPlace" name="sPlace" [(ngModel)]="oBankEmployeeModel.sBankEmployee" type="text"
+                  class="form-control" >
+              </div>
+            </div> 
+                 
+              <h2 class="col-sm-6">Employee Photo Upload</h2> 
+              
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
+                    [message]="'PhotoUpload'"
+                    ></dropzone>
+                </div>
+              </div>
+              <h2 class="col-sm-6">Bank Passbook Upload</h2>
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
+                    [message]="'BankPassbookUpload'"
+                    ></dropzone>
+                </div>
+              </div>
+              <h2 class="col-sm-6">Call Letter Upload</h2>
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
+                    [message]="'CallLetterUpload'"
+                    ></dropzone>
+                </div>
+              </div>
+              <h2 class="col-sm-6">Aadhar Upload</h2>
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
+                    [message]="'AadharUpload'"
+                    ></dropzone>
+                </div>
+              </div>    
+                        
+              <div class="col-sm-12">
+                <label class="font-size-14 mb-3">Terms and Conditions </label>
+              <div class="radio-container">
+                <div class="form-check form-group">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Trainee"
+                    checked>
+                  <label class="form-check-label" for="genderRadio1">
+                    All of the above verification is true but the pairing of the left candidate will be discontinued. The Certificate of
+Educational Qualification of the applicant is to be given by all U Society Branch. Candidate will not be allowed to go to Jain
+Society even if he joins the branch. Anyone who joins the Employees Branch will be required to attend the Society Branch
+on a daily basis from my date.
+                  </label>
+                </div>                
+              </div>
+              </div>
+
+              <div class="col-sm-8 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+                <button type="button" class="btn btn-secondary"
+                >Submit</button>
+                <button type="button" class="btn btn-secondary"
+                >Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  
+      <!-- <div class="card" *ngIf="!bHideCateogryList">
+        <div class="card-body">
+          <h4 class="card-title">Car List</h4>
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="thead-light">
+                <tr>
+                  <th>S.No</th>
+                  <th>Car ID</th>
+                  <th>Car Name</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody> -->
+                <!-- ngFor="let data of transactions" -->
+                <!-- <tr *ngFor="let car of cars;let indexOfelement=index;">
+                  <td>{{indexOfelement+1}}</td>
+                  <td>{{car.nCarId}}</td>
+                  <td>{{car.sCarName}}</td>
+                  <td> -->
+                    <!-- Button trigger modal -->
+                    <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="edit"
+                    (click)="openModal(editcategory,indexOfelement)">
+                      <i class="bx bx-pencil"></i>
+                    </button>
+                  </td>
+                  <td> -->
+                    <!-- Button trigger modal -->
+                    <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="delete"
+                    (click)="fnDeleteCar(indexOfelement)">
+                      <i class="bx bx-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
+    </div>
+  </div> -->
+  
+  <!-- <ng-template #editcategory role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Edit Car</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <app-addcar bHideBreadCrumb='true'
+      [bisEditMode]="true"
+      bHideCateogryList='true'
+      [oEditCar]='cars[nSelectedEditIndex]'
+      (updateClicked)="fnUpdateParentAfterEdit()"></app-addcar>
+  
+    </div>
+  </ng-template> -->
+  
