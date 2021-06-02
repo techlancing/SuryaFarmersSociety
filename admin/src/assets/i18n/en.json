@@ -105,27 +105,39 @@
     "ECOMMERCE": {
       "TEXT": "NEW SETUP",
       "LIST": {
-        "ADDACCOUNT": "Account Form",
-        "ADDDISTRICT": "New District",
-        "ADDMANDAL": "New Mandal"
+        "ADDACCOUNT": "Add New Account",
+        "ADDDISTRICT": "Add District",
+        "ADDMANDAL": "Add Mandal",
+        "ADDEMPLOYEE": "Add Employee"
       }
     },
-    "PROMOTIONUSER": {
-      "TEXT": "PROMOTION - ENDUSER",
+    "PASSBOOK": {
+      "TEXT": "PASSBOOK",
       "LIST": {
-        "ADDHOMEMAINBANNER": "Home Main Banner"
+        "PASSBOOKPRINT": "Passbook Print"
       }
     },
-    "CUSTOMERS": {
-      "TEXT": "CUSTOMERS",
-      "LIST": {
-        "ENDUSERS": "EndUsers"
-      }
-    },
-    "TRANSACTIONS": {
+    "ACCOUNTTRANSACTION": {
       "TEXT": "TRANSACTIONS",
       "LIST": {
+        "DEBIT": "Debit",
+        "DAILYSAVINGDEBIT": "Daily saving Debit",
+        "CREDIT": "Credit",
+        "CREDITLOAN": "Credit Loan",
+        "INTRATRANSACTION": "Intra Transaction"
+      }
+    },
+    "ACCOUNTSTATEMENT": {
+      "TEXT": "ACCOUNT STATEMENT",
+      "LIST": {
         "ALLORDERS": "All Orders"
+      }
+    },
+    "REPORTS": {
+      "TEXT": "REPORTS",
+      "LIST": {
+        "INVOICELIST": "Invoice List",
+        "INVOICEDETAILS": "Invoice Details"
       }
     },
     "EMAIL": {
@@ -135,13 +147,7 @@
         "READEMAIL": "Read Email"
       }
     },
-    "INVOICES": {
-      "TEXT": "INVOICES",
-      "LIST": {
-        "INVOICELIST": "Invoice List",
-        "INVOICEDETAILS": "Invoice Details"
-      }
-    },
+    
     "PROJECTS": {
       "TEXT": "Projects",
       "LIST": {

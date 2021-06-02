@@ -69,7 +69,7 @@ bankaccounts: Array<BankEmployee>;
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  oBankEmployeeModel: any;
+  
   constructor(private oBankAccountService: BankAccountService,
               private modalService: NgbModal) { }
 

@@ -67,7 +67,7 @@ export class AccountTransactionCreditComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  oCreditModel: any;
+  
   constructor(private oBankAccountService: BankAccountService,
               private modalService: NgbModal) { }
 
@@ -154,7 +154,7 @@ export class AccountTransactionCreditComponent implements OnInit {
       console.log(this.bankaccounts);
       this.bankaccounts = [...cdata as any];
       console.log(this.bankaccounts);
-      this.oCreditModel.sState = '';
+      //this.oCreditModel.sState = '';
       this.modalService.dismissAll();
     });
   }
