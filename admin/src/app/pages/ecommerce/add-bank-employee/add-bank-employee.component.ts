@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankEmployee } from '../../../core/models/BankEmployee.Model';
 import { BankAccountService } from '../../../core/services/account.service';
+import { BankEmployee } from '../../../core/models/bankemployee.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-add-bank-employee',
@@ -19,7 +20,7 @@ bankaccounts: Array<BankEmployee>;
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankEmployee;
 
-  public oBankAccountModel: BankEmployee;
+  public oBankEmployeeModel: BankEmployee;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -135,15 +136,15 @@ bankaccounts: Array<BankEmployee>;
   }
 
   fnCreateAccountDetails(){
-    this.oBankAccountModel.sBranchCode = this.oBankAccountModel.sState + 
-    this.oBankAccountModel.sDesignation + this.oBankAccountModel.sMandal + 
-    this.oBankAccountModel.sVillage;
-    this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode + '0001';
-    this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
+    // this.oBankEmployeeModel.sBranchCode = this.oBankEmployeeModel.sState + 
+    // this.oBankEmployeeModel.sDesignation + this.oBankEmployeeModel.sMandal + 
+    // this.oBankEmployeeModel.sVillage;
+    // this.oBankEmployeeModel.sAccountNo = this.oBankEmployeeModel.sBranchCode + '0001';
+    // this.oBankEmployeeModel.sCustomerId = this.oBankEmployeeModel.sBranchCode + '0002';
   }
 
   fnResetState() {
-    this.oBankAccountModel.sState = '';
+    // this.oBankEmployeeModel.sState = '';
   }
 
   // fnOnBankAccountInfoSubmit(): void {
@@ -191,7 +192,7 @@ bankaccounts: Array<BankEmployee>;
       console.log(this.bankaccounts);
       this.bankaccounts = [...cdata as any];
       console.log(this.bankaccounts);
-      this.oBankAccountModel.sState = '';
+      // this.oBankEmployeeModel.sState = '';
       this.modalService.dismissAll();
     });
   }
