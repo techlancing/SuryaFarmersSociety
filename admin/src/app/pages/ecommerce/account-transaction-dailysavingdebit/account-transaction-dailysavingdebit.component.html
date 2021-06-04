@@ -1,1 +1,80 @@
-<p>account-transaction-dailysavingdebit works!</p>
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Daily Saving Deposit</h2>
+  
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sDate">Start Date</label>                  
+                  <input id="sDate" name="sDate" [(ngModel)]="odailysavingdebitmodel.sDate" type="date"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sDate">End Date</label>                  
+                  <input id="sDate" name="sDate" [(ngModel)]="odailysavingdebitmodel.sDate" type="date"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sTotaldays">Total Days</label>                  
+                  <input id="sTotaldays" name="sTotaldays" [(ngModel)]="odailysavingdebitmodel.sTotaldays" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sDayAmount">For Day Amount</label>
+                  <input id="sDayAmount" name="sDayAmount" [(ngModel)]="odailysavingdebitmodel.sDayAmount" type="text"
+                    class="form-control" disabled>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="nAmount">Total Amount</label>
+                  <input id="nAmount" name="nAmount" [(ngModel)]="odailysavingdebitmodel.nAmount" type="number"
+                    class="form-control" disabled>
+                </div>
+              </div> 
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sReceiverName">Received Employee</label>
+                  <input id="sReceiverName" name="sReceiverName" [(ngModel)]="odailysavingdebitmodel.sReceiverName" type="text"
+                    class="form-control" disabled>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="nTransactionId">Transaction ID</label>
+                    <input id="nTransactionId" name="nTransactionId" [(ngModel)]="odailysavingdebitmodel.nTransactionId" type="text"
+                    class="form-control" disabled>
+                  </div>
+                </div>
+              </div>             
+  
+              <div class="col-sm-8 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+                <button type="button" class="btn btn-secondary"
+                >Clear</button>
+                <!-- <button type="button" class="btn btn-secondary"
+                >Clear</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  
