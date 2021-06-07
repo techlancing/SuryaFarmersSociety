@@ -1,1 +1,163 @@
-<p>passbook-print works!</p>
+
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Pass Book Print</h2>
+  
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">Account Number:</label>                  
+                  <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="opassbookprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sSerialID">Serial ID:</label>                  
+                  <!-- <input id="sSerialID" name="sSerialID" [(ngModel)]="opassbookprintmodel.sSerialID" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Branch Code:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Customer Name:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Aadhar No:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Branch Name:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Father/Husband Name:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Mandal Level Society Branch Address:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Address</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Phone No:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Date Of Issue</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Email:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Type Of Account</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">www.suryacoperativesocietylimited.com</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                </div>
+              </div>
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sBranchCode">Society Branch Authorised
+                    Sign</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                </div>
+              </div>
+  
+              <!-- <div class="col-sm-8 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+                <button type="button" class="btn btn-secondary"
+                >Clear</button>
+                <button type="button" class="btn btn-secondary"
+                >Clear</button> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </form>
+  
