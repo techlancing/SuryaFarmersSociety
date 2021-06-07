@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { PassBookPrint } from '../../../core/models/passbookprint.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';

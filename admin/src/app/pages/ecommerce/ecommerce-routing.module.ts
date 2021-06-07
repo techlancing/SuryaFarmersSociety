@@ -8,7 +8,7 @@ import { PassbookPrintComponent } from './passbook-print/passbook-print.componen
 import { AccountTransactionDailysavingdebitComponent } from './account-transaction-dailysavingdebit/account-transaction-dailysavingdebit.component';
 import { AccountTransactionCreditLoanComponent } from './account-transaction-credit-loan/account-transaction-credit-loan.component';
 import { AccountTransactionIntraTransitionComponent } from './account-transaction-intra-transition/account-transaction-intra-transition.component';
-
+import { AllTransactionPrintComponent } from './all-transaction-print/all-transaction-print.component';
 
 
 
@@ -52,6 +52,10 @@ const routes: Routes = [
     {
         path:'intratransaction',
         component: AccountTransactionIntraTransitionComponent
+    },
+    {
+        path:'alltranactionprint',
+        component: AllTransactionPrintComponent
     }
     
 ];
