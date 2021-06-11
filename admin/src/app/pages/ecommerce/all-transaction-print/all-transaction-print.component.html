@@ -1,1 +1,513 @@
-<p>all-transaction-print works!</p>
+
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>All Transaction Print</h2>
+        <div class="col-sm-3 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+              </div>         
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo">Photo</label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo">Account No:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sDate">Date of Issue:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sDate">Loan Issue Date:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sCustomerName">Customer Name:</label>                  
+                  <!-- <input id="sCustomerName" name="sCustomerName" [(ngModel)]="oalltransactionprintmodel.sCustomerName" type="sCustomerName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sNomineeName">Nominee Name:</label>                  
+                  <!-- <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oalltransactionprintmodel.sNomineeName" type="sNomineeName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Type of Loan:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Father/Husband Name:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Mobile No:</label> 
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Sanction Amount:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Address:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="sBranchCode">Account Category:</label>  
+                    <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Installment Types:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group"></div>
+                </div>
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="sBranchCode">Types of Share:</label>
+                    <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->                     
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Loan Repayment Period:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Date Of Birth:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group"> 
+                    <label for="sBranchCode">Serial ID:</label>
+                    <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->                 
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Installment Amount:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Type Of Account</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Aadhar No:</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="sBranchCode">End of the Loan:</label>                  
+                    <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                      class="form-control" > -->                    
+                </div>
+              </div>             
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      
+<div class="container-fluid">
+    <!-- page title -->
+    <!-- <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title> -->
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <!-- <div class="card card-bg">
+          <div class="card-body">
+            <h2>All Transaction Print</h2>
+        <div class="col-sm-3 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+              </div>          -->
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">As on Date</label>                  
+                   </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <!-- <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div> -->
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">Credit:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sDate">Debit:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sDate">Balance:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sCustomerName">CONTACT</label>                  
+                  <!-- <input id="sCustomerName" name="sCustomerName" [(ngModel)]="oalltransactionprintmodel.sCustomerName" type="sCustomerName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sNomineeName">CALL:</label>                  
+                  <!-- <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oalltransactionprintmodel.sNomineeName" type="sNomineeName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">EMAIL</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">SMS</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">SHARE</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sCustomerName">ADD</label>                  
+                  <!-- <input id="sCustomerName" name="sCustomerName" [(ngModel)]="oalltransactionprintmodel.sCustomerName" type="sCustomerName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sNomineeName">CREDIT</label>                  
+                  <!-- <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oalltransactionprintmodel.sNomineeName" type="sNomineeName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">CREDIT LOAN</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">DEBIT</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">DAILY SAVING DEBIT</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-4" style="background-color: blue;">
+                <div class="form-group" >
+                  <label for="sCustomerName">SETTLE ACCOUNT</label>                  
+                  <!-- <input id="sCustomerName" name="sCustomerName" [(ngModel)]="oalltransactionprintmodel.sCustomerName" type="sCustomerName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2" style="background-color: blue;">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sNomineeName">As Per Zero</label>                  
+                  <!-- <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oalltransactionprintmodel.sNomineeName" type="sNomineeName"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">With Balance Amount</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <hr>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sBranchCode">Account Ledger</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="oalltransactionprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sBranchCode">Date</label> 
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sBranchCode">Transaction ID</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sAccountNo">Credit</label>                  
+                   </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sBranchCode">Debit</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="sBranchCode">Balance Amount</label>  
+                    <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label for="sBranchCode">Narration</label>                  
+                  <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+                           
+            </div>
+          <!-- </div>
+        </div> -->
+      </form>
+      
