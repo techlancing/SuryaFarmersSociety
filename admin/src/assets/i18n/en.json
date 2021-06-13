@@ -105,9 +105,10 @@
     "ECOMMERCE": {
       "TEXT": "NEW SETUP",
       "LIST": {
-        "ADDACCOUNT": "Add New Account",
         "ADDDISTRICT": "Add District",
         "ADDMANDAL": "Add Mandal",
+        "ADDVILLAGE": "Add Village",
+        "ADDACCOUNT": "Add New Account",
         "ADDEMPLOYEE": "Add Employee"
       }
     },

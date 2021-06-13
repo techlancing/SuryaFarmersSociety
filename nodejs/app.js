@@ -16,6 +16,9 @@ const oDBConnection = require('./data_base/connection');
 
 // API endpoit controllers
 const oBankAccountController = require("./controllers/bankaccount.controller");
+const oDistrictController = require("./controllers/district.controller");
+const oMandalController = require("./controllers/mandal.controller");
+const oVillageController = require("./controllers/village.controller");
 const oAccountController = require("./controllers/account.controller");
 
 
@@ -25,15 +28,15 @@ const oAccountController = require("./controllers/account.controller");
 // });
 
 
-var whitelist = [process.env.ORIGIN_USER, process.env.ORIGIN_ADMIN]
-oServer.use(cors({
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin)
-      callback(null, true);
-    else
-      callback(new Error('Not allowed by CORS'));
-  }
-}));
+// var whitelist = [process.env.ORIGIN_USER, process.env.ORIGIN_ADMIN]
+// oServer.use(cors({
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1 || !origin)
+//       callback(null, true);
+//     else
+//       callback(new Error('Not allowed by CORS'));
+//   }
+// }));
 
 oServer.use(logger('dev'));
 oServer.use(express.json());
@@ -62,13 +65,17 @@ oServer.use(function (err, req, res, next) {
 // Configure the routes
 
 oServer.use("/nodejs/bankaccount", oBankAccountController);
+oServer.use("/nodejs/district", oDistrictController);
+oServer.use("/nodejs/mandal", oMandalController);
+oServer.use("/nodejs/village", oVillageController);
+
 oServer.use("/nodejs/account", oAccountController);
 
 
 oServer.get("/", (req, res) => {
 
   console.log("Node js url is working");
-  res.send('<h1>Welcome to our Node js application</h1>');
+  res.send('<h1>Welcome to surya farmers application</h1>');
 });
 
 oServer.listen(oPort, () => {

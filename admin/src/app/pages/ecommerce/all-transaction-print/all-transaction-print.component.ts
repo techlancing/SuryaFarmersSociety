@@ -142,7 +142,7 @@ export class AllTransactionPrintComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetCarInfo().subscribe((data) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
 
     });
@@ -163,7 +163,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
 
   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.bankaccounts = [];
       console.log(this.bankaccounts);

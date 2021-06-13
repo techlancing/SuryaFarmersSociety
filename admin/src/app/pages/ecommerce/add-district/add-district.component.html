@@ -1,1 +1,91 @@
-<p>add-district works!</p>
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="Add District" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addDistrict_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-sm-12" novalidate #_DistrictFormElem="ngForm" (ngSubmit)="fnOnDistrictInfoSubmit()">
+        <div class="card card-bg align-items-start">
+          <div class="card-body">
+            <h2 >District Information</h2>
+  
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label">District Name</label>
+                  <input id="Districtname" name="sDistrictName" [(ngModel)]="oDistrictModel.sDistrictName" type="text"
+                    class="form-control">
+  
+                </div>
+              </div>
+  
+              <div class="col-sm-12 add-district-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+                <button type="button" class="btn btn-secondary"
+                (click)="fnResetDistrictName()">Clear</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </form>
+  
+      <div class="card col-sm-12" *ngIf="!bHideCateogryList">
+        <div class="card-body">
+          <h4 class="card-title">District List</h4>
+          <div class="table-responsive mb-0">
+            <table class="table table-centered table-nowrap">
+              <thead class="thead-light">
+                <tr>
+                  <th>S.No</th>
+                  <th>District ID</th>
+                  <th>District Name</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ngFor="let data of transactions" -->
+                <tr *ngFor="let District of districts;let indexOfelement=index;">
+                  <td>{{indexOfelement+1}}</td>
+                  <td>{{District.nDistrictId}}</td>
+                  <td>{{District.sDistrictName}}</td>
+                  <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="edit"
+                    (click)="openModal(editDistrict,indexOfelement)">
+                      <i class="bx bx-pencil"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="delete"
+                    (click)="fnDeleteDistrict(indexOfelement)">
+                      <i class="bx bx-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #editDistrict role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Edit District</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <app-add-district bHideBreadCrumb='true'
+      [bisEditMode]="true"
+      bHideCateogryList='true'
+      [oEditDistrict]='districts[nSelectedEditIndex]'
+      (updateClicked)="fnUpdateParentAfterEdit()"></app-add-district>
+  
+    </div>
+  </ng-template>
+  

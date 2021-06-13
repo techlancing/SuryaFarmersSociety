@@ -134,6 +134,6 @@ var oBankAccountSchema = new oSchema({
   oDocument1Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oDocument2Info: {type: oSchema.Types.ObjectId, ref: 'Image'}
 });
-oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'nAccountId', start_seq: 100 });
+oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'nAccountId', inc_amount: 2, start_seq: 100 });
 
 module.exports = oMongoose.model("Bankaccount", oBankAccountSchema);

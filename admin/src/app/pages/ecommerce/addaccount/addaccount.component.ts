@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BankAccount } from '../../../core/models/bankaccount.model';
+import { District } from '../../../core/models/district.model';
+import { Mandal } from '../../../core/models/mandal.model';
+import { Village } from '../../../core/models/village.model';
 import { BankAccountService } from '../../../core/services/account.service';
+import { DistrictService } from '../../../core/services/district.service';
+import { MandalService } from '../../../core/services/mandal.service';
+import { VillageService } from '../../../core/services/village.service';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
@@ -34,21 +40,9 @@ export class AddaccountComponent implements OnInit {
     displayText:string,
     value:string
   }>;
-  aDistrict : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
-  aMandal : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
-  aVillage : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
+  aDistrict : Array<District>;
+  aMandal : Array<Mandal>;
+  aVillage : Array<Village>;
   aBranchCode  : Array<
   {
     displayText:string,
@@ -69,44 +63,19 @@ export class AddaccountComponent implements OnInit {
   public sButtonText: string;
   @Input() bisEditMode: boolean;
   constructor(private oBankAccountService: BankAccountService,
+    private oDistrictService: DistrictService,
+    private oMandalService: MandalService,
+    private oVillageService: VillageService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-    this.aDistrict = [
-      {
-        displayText: 'Mahabubabad',
-        value:'01'
-      }
-    ];
-    this.aMandal = [
-      {
-        displayText: 'Gudur',
-        value:'01'
-      },
-      {
-        displayText: 'Kesamudram',
-        value:'02'
-      },
-      {
-        displayText: 'Kothaguda',
-        value:'03'
-      }
-    ];
-    this.aVillage = [
-      {
-        displayText: 'Gajulagattu',
-        value:'01'
-      },
-      {
-        displayText: 'Gundenga',
-        value:'02'
-      },
-      {
-        displayText: 'Ayodyapuram',
-        value:'03'
-      }
-    ];
+    
+    this.oDistrictService.fngetDistrictInfo().subscribe((data) => {
+      this.aDistrict = [...data as any];
+      
+    });
+    
     this.aState = [
       {
         displayText: 'Telangana',
@@ -115,6 +84,7 @@ export class AddaccountComponent implements OnInit {
       ];
     
     this.oBankAccountModel = new BankAccount();
+    this.oBankAccountModel.sDate = new Date().toJSON().slice(0,10).replace(/-/g,'-').split('').reverse().join('');
     this.sButtonText = 'Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -123,17 +93,56 @@ export class AddaccountComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetCarInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+      this.bankaccounts = [...data as any];
 
     });
   }
 
+  fnFetchMandalInfo(event, nDistrictId: number) {
+    this.aMandal = [];
+    this.oBankAccountModel.nMandalId = null;
+    let alocalmandal = {};
+    this.oMandalService.fngetMandalInfo().subscribe((data) => {
+      this.aMandal = [...data as any];
+      alocalmandal = this.aMandal.filter((mandal:any) => {
+        if (mandal.nDistrictId === nDistrictId) {
+          return mandal;
+        }
+      });
+      this.aMandal = [...alocalmandal as any];
+    });
+    
+  }
+
+  fnFetchVillageInfo(event, nMandalId: number) {
+    this.aVillage = [];
+    this.oBankAccountModel.nVillageId = null;
+    let alocalvillage = {};
+    this.oVillageService.fngetVillageInfo().subscribe((data) => {
+      this.aVillage = [...data as any];
+      alocalvillage = this.aVillage.filter((village:any) => {
+        if (village.nMandalId === nMandalId) {
+          return village;
+        }
+      });
+      this.aVillage = [...alocalvillage as any];
+    });
+    
+  }
+
   fnCreateAccountDetails(){
-    this.oBankAccountModel.sBranchCode = this.oBankAccountModel.sState + 
-    this.oBankAccountModel.sDistrict + this.oBankAccountModel.sMandal + 
-    this.oBankAccountModel.sVillage;
-    this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode + '0001';
+    let statecode = this.oBankAccountModel.sState;
+    let selecteddistrict = this.aDistrict.find(item=> item.nDistrictId === this.oBankAccountModel.nDistrictId);
+    let selectedmandal = this.aMandal.find(item=> item.nMandalId === this.oBankAccountModel.nMandalId);
+    let selectedvillage = this.aVillage.find(item=> item.nVillageId === this.oBankAccountModel.nVillageId);
+     this.oBankAccountModel.sBranchCode =  statecode 
+     + (selecteddistrict.nDistrictCode.toString().length > 1 ? selecteddistrict.nDistrictCode.toString() : '0'+selecteddistrict.nDistrictCode.toString())
+     + (selectedmandal.nMandalCode.toString().length > 1 ? selectedmandal.nMandalCode.toString() : '0'+selectedmandal.nMandalCode.toString())
+     + (selectedvillage.nVillageCode.toString().length > 1 ? selectedvillage.nVillageCode.toString() : '0'+selectedvillage.nVillageCode.toString())
+      
+     
+     this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode + '0001';
     this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
   }
 
@@ -141,59 +150,66 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.sState = '';
   }
 
-  // fnOnBankAccountInfoSubmit(): void {
-  //   if(this.bankaccounts != undefined && this.bankaccounts !== null){
-  //     if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
-  //     {
-  //       // this.fnEmptyStateMessage();
-  //       return;
-  //     }
-  //     //Verification for Duplicate Car name
-  //       for(var i = 0; i < this.bankaccounts.length; i++) {
-  //         if(this.bankaccounts[i].sState.toLowerCase() === this.oBankAccountModel.sState.toLowerCase().trim()) {
-  //           // this.fnDuplicateCarNameMessage();
-  //           return;
-  //         }
-  //     }
-  //   }
-    
-
-  //   if (!this.bisEditMode) {
-  //     this.bIsAddActive = true;
-  //     // this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
-  //       this.bankaccounts = [];
-  //       // this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-  //         // this.fnSucessMessage();
-  //         // this.bankaccounts = [...cdata as any];
-  //         this.oBankAccountModel.sState = '';
-  //         this.bIsAddActive = false;
-  //         this.addClicked.emit();
-  //       });
-  //     });
-  //   } else {
-  //     // Edit function from service here
-  //     this.bIsEditActive = true;
-  //     this.oBankAccountService.fnEditCarInfo(this.oBankAccountModel).subscribe((data) => {
-  //       this.updateClicked.emit();
-  //     });
-  //   }
-  // }
-
-  fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
-      this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      this.oBankAccountModel.sState = '';
-      this.modalService.dismissAll();
-    });
+  fnOnBankAccountInfoSubmit(): void {
+    if(this.bankaccounts != undefined && this.bankaccounts !== null){
+      if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
+      {
+        // this.fnEmptyStateMessage();
+        //return;
+      }
+      //Verification for Duplicate Car name
+        for(var i = 0; i < this.bankaccounts.length; i++) {
+          if(this.bankaccounts[i].sState.toLowerCase() === this.oBankAccountModel.sState.toLowerCase().trim()) {
+            // this.fnDuplicateCarNameMessage();
+            //return;
+          }
+      }
+    }
+ 
+      this.bIsAddActive = true;
+       this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
+        this.bankaccounts = [];
+         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+           this.fnSucessMessage();
+           this.bankaccounts = [...cdata as any];
+          //this.oBankAccountModel.sState = '';
+          this.bIsAddActive = false;
+          this.addClicked.emit();
+        });
+      });
   }
 
-  // fnonUploadImageSuccess(args: any){
-  //   this.oBankAccountModel.oImageInfo = args[1].oImageRefId;
+  // fnUpdateParentAfterEdit() {
+  //   this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+  //     this.fnEditSucessMessage();
+  //     this.bankaccounts = [];
+  //     console.log(this.bankaccounts);
+  //     this.bankaccounts = [...cdata as any];
+  //     console.log(this.bankaccounts);
+  //     this.oBankAccountModel.sState = '';
+  //     this.modalService.dismissAll();
+  //   });
   // }
+
+  fnonUploadPassportImageSuccess(args: any){
+    this.oBankAccountModel.oPassportImageInfo = args[1].oImageRefId;
+  }
+
+  fnonUploadSignature1ImageSuccess(args: any){
+    this.oBankAccountModel.oSignature1Info = args[1].oImageRefId;
+  }
+
+  fnonUploadSignature2ImageSuccess(args: any){
+    this.oBankAccountModel.oSignature2Info = args[1].oImageRefId;
+  }
+
+  fnonUploadDocument1ImageSuccess(args: any){
+    this.oBankAccountModel.oDocument1Info = args[1].oImageRefId;
+  }
+
+  fnonUploadDocument2ImageSuccess(args: any){
+    this.oBankAccountModel.oDocument2Info = args[1].oImageRefId;
+  }
 
   // fnDeleteCar(nIndex) {
   //   console.log(this.bankaccounts[nIndex] as BankAccount);
@@ -209,7 +225,7 @@ export class AddaccountComponent implements OnInit {
   //     if (result.value) {
   //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
   //         this.bankaccounts = [];
-  //         this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+  //         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
   //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
   //           this.bankaccounts = [...cdata as any];
   //           this.oBankAccountModel.sState = '';

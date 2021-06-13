@@ -128,7 +128,7 @@ export class AccountTransactionDebitComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetCarInfo().subscribe((data) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
 
     });
@@ -185,7 +185,7 @@ export class AccountTransactionDebitComponent implements OnInit {
   // }
 
   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.bankaccounts = [];
       console.log(this.bankaccounts);
@@ -214,7 +214,7 @@ export class AccountTransactionDebitComponent implements OnInit {
   //     if (result.value) {
   //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
   //         this.bankaccounts = [];
-  //         this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+  //         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
   //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
   //           this.bankaccounts = [...cdata as any];
   //           this.oBankAccountModel.sState = '';

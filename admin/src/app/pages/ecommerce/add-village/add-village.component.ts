@@ -1,37 +1,37 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
-import { Mandal } from '../../../core/models/mandal.model';
+import { Village } from '../../../core/models/village.model';
+import { VillageService } from '../../../core/services/village.service';
 import { MandalService } from '../../../core/services/mandal.service';
-import { DistrictService } from '../../../core/services/district.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { District } from 'src/app/core/models/district.model';
+import { Mandal } from 'src/app/core/models/mandal.model';
 
 @Component({
-  selector: 'app-add-mandal',
-  templateUrl: './add-mandal.component.html',
-  styleUrls: ['./add-mandal.component.scss']
+  selector: 'app-add-village',
+  templateUrl: './add-village.component.html',
+  styleUrls: ['./add-village.component.scss']
 })
-export class AddMandalComponent implements OnInit {
+export class AddVillageComponent implements OnInit {
 
-  @Input() oEditMandal: Mandal;
-  @Input() aEditDistricts: Array<District>;
+  @Input() oEditVillage: Village;
+  @Input() aEditMandals: Array<Mandal>;
 
-  public oMandalModel: Mandal;
-  nSelectedDistrictEditIndex: number;
+  public oVillageModel: Village;
   nSelectedMandalEditIndex: number;
+  nSelectedVillageEditIndex: number;
   @Input() bisEditMode: boolean;
-  @ViewChild('_MandalFormElem')
-  public oMandalfoFormElem: any;
+  @ViewChild('_VillageFormElem')
+  public oVillagefoFormElem: any;
 
   public nSelectedId: number = 1;
   hideme: boolean[] = [];
-  aAllDistricts: any;
+  aAllMandals: any;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
 
-  aMandals: Array<Mandal>;
+  aVillages: Array<Village>;
 
-  aDistricts: Array<District>;
+  aMandals: Array<Mandal>;
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -42,20 +42,20 @@ export class AddMandalComponent implements OnInit {
   @Output() addClicked = new EventEmitter();
 
   public sButtonText: string;
-  constructor(private oMandalService: MandalService, private oDistrictService: DistrictService,
+  constructor(private oVillageService: VillageService, private oMandalService: MandalService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Ecommerce' }, { label: 'Add Mandal', active: true }];
+    this.breadCrumbItems = [{ label: 'Ecommerce' }, { label: 'Add Village', active: true }];
 
-    this.oMandalModel = new Mandal();
+    this.oVillageModel = new Village();
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
       //dont need a new object as we dont manipulate it.
-      this.aDistricts = this.aEditDistricts;
-      let tempobj = JSON.parse(JSON.stringify(this.oEditMandal));
-      this.oMandalModel = tempobj;
+      this.aMandals = this.aEditMandals;
+      let tempobj = JSON.parse(JSON.stringify(this.oEditVillage));
+      this.oVillageModel = tempobj;
 
       this.sButtonText = 'Update';
     } else {
@@ -64,13 +64,13 @@ export class AddMandalComponent implements OnInit {
     }
   }
 
-  fnFetchDataFromServer(showmsg: boolean, MandalName?: string) {
-    this.oMandalService.fngetMandalInfo().subscribe((data) => {
-      this.aMandals = [...data as any];
-      this.oDistrictService.fngetDistrictInfo().subscribe((cdata) => {
-        this.aDistricts = [...cdata as any];
+  fnFetchDataFromServer(showmsg: boolean, VillageName?: string) {
+    this.oVillageService.fngetVillageInfo().subscribe((data) => {
+      this.aVillages = [...data as any];
+      this.oMandalService.fngetMandalInfo().subscribe((cdata) => {
+        this.aMandals = [...cdata as any];
         
-        this.oMandalModel.sMandalName = '';
+        this.oVillageModel.sVillageName = '';
 
         if (showmsg && (!this.bisEditMode) && (!this.bisDeleteMode)) {
           this.bIsAddActive = false;
@@ -82,49 +82,49 @@ export class AddMandalComponent implements OnInit {
           this.bisEditMode = false;
           this.bIsEditActive = false;
         } else if (showmsg && this.bisDeleteMode) {
-          Swal.fire(MandalName, 'Sub District is deleted successfully.', 'success');
+          Swal.fire(VillageName, 'Sub Mandal is deleted successfully.', 'success');
           this.bisDeleteMode = false;
         }
 
 
-        for (let i = 0; i <= this.aDistricts.length; i++) {
+        for (let i = 0; i <= this.aMandals.length; i++) {
           this.hideme.push(true);
         }
       });
     });
   }
 
-  fnResetMandalName() {
-    this.oMandalModel.sMandalName = '';
+  fnResetVillageName() {
+    this.oVillageModel.sVillageName = '';
   }
 
-  fnOnMandalInfoSubmit(): void {
-    console.log(this.oMandalModel.sMandalName.length)
-    console.log(this.oMandalModel.sMandalName.trim().length)
-    if(this.oMandalModel.sMandalName.length === 0 || this.oMandalModel.sMandalName.trim().length === 0)
+  fnOnVillageInfoSubmit(): void {
+    console.log(this.oVillageModel.sVillageName.length)
+    console.log(this.oVillageModel.sVillageName.trim().length)
+    if(this.oVillageModel.sVillageName.length === 0 || this.oVillageModel.sVillageName.trim().length === 0)
     {
-      this.fnEmptyMandalNameMessage();
+      this.fnEmptyVillageNameMessage();
       return;
     }
-    //Verification for Duplicate Sub District Name
-    for(var i = 0; i < this.aMandals.length; i++) {
-      if(this.aMandals[i].sMandalName.toLowerCase() === this.oMandalModel.sMandalName.toLowerCase().trim()) {
-        this.fnDuplicateMandalNameMessage();
+    //Verification for Duplicate Sub Mandal Name
+    for(var i = 0; i < this.aVillages.length; i++) {
+      if(this.aVillages[i].sVillageName.toLowerCase() === this.oVillageModel.sVillageName.toLowerCase().trim()) {
+        this.fnDuplicateVillageNameMessage();
         return;
       }
     }
       
     if (!this.bisEditMode) {
       this.bIsAddActive = true;
-      this.oMandalService.fnAddMandalInfo(this.oMandalModel).subscribe((data) => {
+      this.oVillageService.fnAddVillageInfo(this.oVillageModel).subscribe((data) => {
         console.log(data);
         this.fnFetchDataFromServer(true);
         this.addClicked.emit();
       });
     } else {
       this.bIsEditActive = true;
-      console.log(this.oMandalModel);
-      this.oMandalService.fnEditMandalInfo(this.oMandalModel).subscribe((data) => {
+      console.log(this.oVillageModel);
+      this.oVillageService.fnEditVillageInfo(this.oVillageModel).subscribe((data) => {
         console.log(data);
         this.updateClicked.emit();
       });
@@ -138,7 +138,7 @@ export class AddMandalComponent implements OnInit {
 
   }
 
-  fnDeleteMandal(cindex, scindex) {
+  fnDeleteVillage(cindex, scindex) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
@@ -149,9 +149,9 @@ export class AddMandalComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.value) {
-        // this.oMandalService.fnDeleteMandalInfo(this.aDistricts[cindex].aMandalsInfo[scindex] as Mandal).subscribe((data) => {
+        // this.oVillageService.fnDeleteVillageInfo(this.aMandals[cindex].aVillagesInfo[scindex] as Village).subscribe((data) => {
         //   this.bisDeleteMode = true;
-        //   this.fnFetchDataFromServer(true, (data as Mandal).sMandalName);
+        //   this.fnFetchDataFromServer(true, (data as Village).sVillageName);
         // });
 
       }
@@ -167,7 +167,7 @@ export class AddMandalComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Sub District is saved successfully.',
+      title: 'Sub Mandal is saved successfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -177,27 +177,27 @@ export class AddMandalComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Sub District is updated successfully.',
+      title: 'Sub Mandal is updated successfully.',
       showConfirmButton: false,
       timer: 1500
     });
   }
 
-  fnEmptyMandalNameMessage() {
+  fnEmptyVillageNameMessage() {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please enter a valid Sub District Name',
+      title: 'Please enter a valid Sub Mandal Name',
       showConfirmButton: false,
       timer: 1500
     })
   }
 
-  fnDuplicateMandalNameMessage() {
+  fnDuplicateVillageNameMessage() {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Sub District Name is already exists.',
+      title: 'Sub Mandal Name is already exists.',
       showConfirmButton: false,
       timer: 1500
     })
@@ -209,11 +209,11 @@ export class AddMandalComponent implements OnInit {
   * @param content modal content
   */
   openModal(content: any, catindex, subcatindex) {
-    this.nSelectedDistrictEditIndex = catindex;
-    this.nSelectedMandalEditIndex = subcatindex;
+    this.nSelectedMandalEditIndex = catindex;
+    this.nSelectedVillageEditIndex = subcatindex;
     this.modalService.open(content, { centered: true });
   }
-
 }
+
 
 

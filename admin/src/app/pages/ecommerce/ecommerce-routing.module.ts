@@ -9,6 +9,9 @@ import { AccountTransactionDailysavingdebitComponent } from './account-transacti
 import { AccountTransactionCreditLoanComponent } from './account-transaction-credit-loan/account-transaction-credit-loan.component';
 import { AccountTransactionIntraTransitionComponent } from './account-transaction-intra-transition/account-transaction-intra-transition.component';
 import { AllTransactionPrintComponent } from './all-transaction-print/all-transaction-print.component';
+import { AddDistrictComponent } from './add-district/add-district.component';
+import { AddMandalComponent } from './add-mandal/add-mandal.component';
+import { AddVillageComponent } from './add-village/add-village.component';
 
 
 
@@ -19,11 +22,15 @@ const routes: Routes = [
     },
     {
         path: 'adddistrict',
-        component: AddaccountComponent
+        component: AddDistrictComponent
     },
     {
         path: 'addmandal',
-        component: AddaccountComponent
+        component: AddMandalComponent
+    },
+    {
+        path: 'addvillage',
+        component: AddVillageComponent
     },
     {
         path: 'addemployee',

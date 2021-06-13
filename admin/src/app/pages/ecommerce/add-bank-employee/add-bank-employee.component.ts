@@ -129,7 +129,7 @@ bankaccounts: Array<BankEmployee>;
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetCarInfo().subscribe((data) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
 
     });
@@ -186,7 +186,7 @@ bankaccounts: Array<BankEmployee>;
   // }
 
   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.bankaccounts = [];
       console.log(this.bankaccounts);
@@ -215,7 +215,7 @@ bankaccounts: Array<BankEmployee>;
   //     if (result.value) {
   //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
   //         this.bankaccounts = [];
-  //         this.oBankAccountService.fngetCarInfo().subscribe((cdata) => {
+  //         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
   //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
   //           this.bankaccounts = [...cdata as any];
   //           this.oBankAccountModel.sState = '';

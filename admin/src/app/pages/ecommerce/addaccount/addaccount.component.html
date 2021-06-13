@@ -4,7 +4,8 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" 
+      (ngSubmit)="fnOnBankAccountInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Account Opening Form</h2>
@@ -28,10 +29,11 @@
                   <div class="form-group">
                     <label for="sDistrict">District</label>
                     <ng-select [items]="aDistrict" name="sDistrict"
-                      [(ngModel)]="oBankAccountModel.sDistrict" 
-                      bindLabel="displayText" bindValue="value">
+                      [(ngModel)]="oBankAccountModel.nDistrictId" 
+                      bindLabel="sDistrictName" bindValue="nDistrictId"
+                      (change)="fnFetchMandalInfo($event, oBankAccountModel.nDistrictId)">
                       <ng-template ng-label-tmp let-item="item">
-                        {{item.displayText}}
+                        {{item.sDistrictName}}
                       </ng-template>
                     </ng-select>
                   </div>
@@ -42,10 +44,11 @@
                   <div class="form-group">
                     <label for="sMandal">Mandal</label>
                     <ng-select [items]="aMandal" name="sMandal"
-                      [(ngModel)]="oBankAccountModel.sMandal" 
-                      bindLabel="displayText" bindValue="value">
+                      [(ngModel)]="oBankAccountModel.nMandalId" 
+                      bindLabel="sMandalName" bindValue="nMandalId"
+                      (change)="fnFetchVillageInfo($event, oBankAccountModel.nMandalId)">
                       <ng-template ng-label-tmp let-item="item">
-                        {{item.displayText}}
+                        {{item.sMandalName}}
                       </ng-template>
                     </ng-select>
                   </div>
@@ -56,10 +59,10 @@
                   <div class="form-group">
                     <label for="sVillage">Village</label>
                     <ng-select [items]="aVillage" name="sVillage"
-                      [(ngModel)]="oBankAccountModel.sVillage" 
-                      bindLabel="displayText" bindValue="value">
+                      [(ngModel)]="oBankAccountModel.nVillageId" 
+                      bindLabel="sVillageName" bindValue="nVillageId">
                       <ng-template ng-label-tmp let-item="item">
-                        {{item.displayText}}
+                        {{item.sVillageName}}
                       </ng-template>
                     </ng-select>
                   </div>
@@ -329,7 +332,7 @@
               <div class="col-sm-6">
                    <div class="form-group">
                    <label for="nAmount">Amount</label>                  
-                   <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="text"
+                   <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="number"
                     class="form-control" >
                    </div>
               </div>     
@@ -338,7 +341,7 @@
               <div class="col-sm-12">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
-                    [message]="'Photo Upload'"
+                    [message]="'Photo Upload'" (success)="fnonUploadPassportImageSuccess($event)"
                     ></dropzone>
                 </div>
               </div>
@@ -346,28 +349,28 @@
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Signature-1 Upload'"
-                    ></dropzone>
+                    (success)="fnonUploadSignature1ImageSuccess($event)"></dropzone>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Signature-2 Upload'"
-                    ></dropzone>
+                    (success)="fnonUploadSignature2ImageSuccess($event)"></dropzone>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Document-1 Upload'"
-                    ></dropzone>
+                    (success)="fnonUploadDocument1ImageSuccess($event)"></dropzone>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Document-2 Upload'"
-                    ></dropzone>
+                    (success)="fnonUploadDocument2ImageSuccess($event)"></dropzone>
                 </div>
               </div>
                                                   

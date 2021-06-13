@@ -11,23 +11,23 @@ export class BankAccountService {
 
     constructor(private http: HttpClient) { }
 
-    fnAddCarInfo(oCar: BankAccountService) {
+    fnAddBankAccountInfo(oBankAccount: BankAccount) {
         const sMethodUrl = `${this.sRootUrl}/add_bankaccount`;
-        return this.http.post(sMethodUrl, oCar);
+        return this.http.post(sMethodUrl, oBankAccount);
     }
 
-    fngetCarInfo(){
+    fngetBankAccountInfo(){
       const sMethodUrl = `${this.sRootUrl}/bankaccount_list`;
       return this.http.get(sMethodUrl);
     }
 
-    fnEditCarInfo(oCar: BankAccountService) {
+    fnEditBankAccountInfo(oBankAccount: BankAccount) {
       const sMethodUrl = `${this.sRootUrl}/edit_bankaccount`;
-      return this.http.post(sMethodUrl, oCar);
+      return this.http.post(sMethodUrl, oBankAccount);
   }
 
-    fnDeleteCarInfo(oCar: BankAccountService) {
+  fnDeleteBankAccountInfo(oBankAccount: BankAccount) {
       const sMethodUrl = `${this.sRootUrl}/delete_bankaccount`;
-      return this.http.post(sMethodUrl, oCar);
+      return this.http.post(sMethodUrl, oBankAccount);
   }
 }

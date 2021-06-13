@@ -1,0 +1,21 @@
+.radio-container{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    gap: 20px;
+    label{
+        color:black;
+    }
+}
+
+label{
+    color:orange;
+}
+
+.card-bg{
+background-color: antiquewhite;
+}
+
+h2{
+    margin:30px 0;
+}

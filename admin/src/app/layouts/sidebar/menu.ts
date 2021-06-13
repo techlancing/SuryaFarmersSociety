@@ -29,22 +29,29 @@ export const MENU: MenuItem[] = [
         label: 'MENUITEMS.ECOMMERCE.TEXT',
         icon: 'bx-store',
         subItems: [
+            
             {
                 id: 19,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDACCOUNT',
-                link: '/newaccountform',
-                parentId: 10
-            },
-            {
-                id: 20,
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDDISTRICT',
                 link: '/adddistrict',
                 parentId: 10
             },
             {
-                id: 21,
+                id: 20,
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDMANDAL',
                 link: '/addmandal',
+                parentId: 10
+            },
+            {
+                id: 21,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
+                link: '/addvillage',
+                parentId: 10
+            },
+            {
+                id: 22,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDACCOUNT',
+                link: '/newaccountform',
                 parentId: 10
             },
             {

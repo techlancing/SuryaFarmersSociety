@@ -1,22 +1,22 @@
 <div class="container-fluid">
     <!-- page title -->
-    <app-page-title title="Add Mandal" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    <app-page-title title="Add Village" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     >
     </app-page-title>
   
     <div class="row">
-      <form class="col-sm-12" novalidate #_MandalFormElem="ngForm" (ngSubmit)="fnOnMandalInfoSubmit()">
+      <form class="col-sm-12" novalidate #_VillageFormElem="ngForm" (ngSubmit)="fnOnVillageInfoSubmit()">
         <div class="card card-bg align-items-start">
           <div class="card-body">
-            <h4 class="card-title">Mandal Information</h4>
+            <h4 class="card-title">Village Information</h4>
             <div class='row'>
               <div class="col-sm-12">
-                <div class="form-group" [ngClass]="bisEditMode ? 'disable-District':''">
-                  <label class="control-label">Select District</label>
-                  <ng-select [items]="aDistricts" [(ngModel)]="oMandalModel.nDistrictId" name="nDistrictId"
-                    bindLabel="sDistrictName" bindValue="nDistrictId" aria-disabled={bisEditMode}>
+                <div class="form-group" [ngClass]="bisEditMode ? 'disable-Mandal':''">
+                  <label class="control-label">Select Mandal</label>
+                  <ng-select [items]="aMandals" [(ngModel)]="oVillageModel.nMandalId" name="nMandalId"
+                    bindLabel="sMandalName" bindValue="nMandalId" aria-disabled={bisEditMode}>
                     <ng-template ng-label-tmp let-item="item">
-                      {{item.sDistrictName}}
+                      {{item.sMandalName}}
                     </ng-template>
                   </ng-select>
                 </div>
@@ -25,14 +25,14 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label for="Mandalname">Mandal Name</label>
-                  <input id="Mandalname" [(ngModel)]="oMandalModel.sMandalName" name="sMandalName"
+                  <label for="Villagename">Village Name</label>
+                  <input id="Villagename" [(ngModel)]="oVillageModel.sVillageName" name="sVillageName"
                     type="text" class="form-control">
                 </div>
               </div>
-              <div class="col-sm-6 add-District-btn-container">
+              <div class="col-sm-6 add-Mandal-btn-container">
                 <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive">{{sButtonText}}</button>
-                <button type="button" class="btn btn-secondary" (click)="fnResetMandalName()">Clear</button>
+                <button type="button" class="btn btn-secondary" (click)="fnResetVillageName()">Clear</button>
               </div>
   
             </div>
@@ -41,18 +41,18 @@
       </form>
       <div class="card" *ngIf="!bHideSubCateogryList">
         <div class="card-body">
-          <h4 class="card-title">District List</h4>
+          <h4 class="card-title">Mandal List</h4>
           <div class="table-responsive mb-0">
             <table class="table table-centered table-nowrap">
               <thead class="thead-light">
                 <tr>
                   <th></th>
                   <th>S.No</th>
-                  <th>District ID</th>
-                  <th>District Name</th>
+                  <th>Mandal ID</th>
+                  <th>Mandal Name</th>
                 </tr>
               </thead>
-              <tbody *ngFor="let District of aDistricts;let indexOfelement=index;">
+              <tbody *ngFor="let mandal of aMandals;let indexOfelement=index;">
                 <!-- ngFor="let data of transactions" -->
                 <tr>
                   <td align="center">
@@ -62,8 +62,8 @@
                     </a>
                   </td>
                   <td>{{indexOfelement+1}}</td>
-                  <td>{{District.nDistrictId}}</td>
-                  <td>{{District.sDistrictName}}</td>
+                  <td>{{mandal.nMandalId}}</td>
+                  <td>{{mandal.sMandalName}}</td>
                 </tr>
                 <tr *ngIf="!hideme[indexOfelement]" class="sub-table no-bg">
                   <td align="center"> </td>
@@ -72,28 +72,28 @@
                       <thead class="thead-light">
                         <tr>
                           <th>S.No</th>
-                          <th>Mandal ID</th>
-                          <th>Mandal Name</th>
+                          <th>Village ID</th>
+                          <th>Village Name</th>
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let mandal of (aMandals | districtfilter : District.nDistrictId); let i = index">
+                        <tr *ngFor="let village of (aVillages | mandalfilter : mandal.nMandalId); let i = index">
                           <td>{{i}}</td>
-                          <td>{{mandal.nMandalId}}</td>
-                          <td>{{mandal.sMandalName}}</td>
+                          <td>{{village.nVillageId}}</td>
+                          <td>{{village.sVillageName}}</td>
                           <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="edit"
-                            (click)="openModal(editMandal,indexOfelement,i)">
+                            (click)="openModal(editVillage,indexOfelement,i)">
                               <i class="bx bx-pencil"></i>
                             </button>
                           </td>
                           <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn"
-                              ngbtooltip="delete" (click)="fnDeleteMandal(indexOfelement,i)">
+                              ngbtooltip="delete" (click)="fnDeleteVillage(indexOfelement,i)">
                               <i class="bx bx-trash-alt"></i>
                             </button>
                           </td>
@@ -110,18 +110,18 @@
     </div>
   </div>
   
-  <ng-template #editMandal role="document" let-modal>
+  <ng-template #editVillage role="document" let-modal>
     <div class="modal-header">
-      <h5 class="modal-title mt-0">Edit Mandal</h5>
+      <h5 class="modal-title mt-0">Edit Village</h5>
       <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
     </div>
     <div class="modal-body">
-      <app-add-mandal bHideBreadCrumb='true'
+      <app-add-village bHideBreadCrumb='true'
       [bisEditMode]="true"
       bHideSubCateogryList='true'
-      [aEditDistricts]='aDistricts'
-      [oEditMandal]='aDistricts[nSelectedDistrictEditIndex]'
-      (updateClicked)="fnUpdateParentAfterEdit()"></app-add-mandal>
+      [aEditMandals]='aMandals'
+      [oEditVillage]='aMandals[nSelectedMandalEditIndex]'
+      (updateClicked)="fnUpdateParentAfterEdit()"></app-add-village>
   
     </div>
   </ng-template>
