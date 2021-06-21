@@ -1,5 +1,5 @@
 import { ImageInfo } from './image.model';
-export class LastTransaction {
+export class DayMonthYearWise {
     constructor(       
         public sCredit : number = null,//unique: true},        
         public sDate : string = '',

@@ -1,0 +1,120 @@
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Intra Transaction</h2>
+            <p>Sender Account</p>
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sAccountNumber">Account Number</label>                  
+                  <input id="sAccountNumber" name="sSanctionAmount" [(ngModel)]="ointratransactionModel.sAccountNumber" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sAccountNumber">Account Number</label>                  
+                  <input id="sAccountNumber" name="sAccountNumber" [(ngModel)]="ointratransactionModel.sAccountNumber" type="sDate"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sBranchName">Branch Name</label>                  
+                  <input id="sBranchName" name="sBranchName" [(ngModel)]="ointratransactionModel.sDate" type="sBranchName"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sBranchName">Branch Name</label>                  
+                  <input id="sBranchName" name="sBranchName" [(ngModel)]="ointratransactionModel.sDate" type="sBranchName"
+                    class="form-control" >
+                </div>
+              </div>
+              
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sBranchCode">Branch Code</label>                  
+                  <input id="sBranchCode" name="sBranchCode" [(ngModel)]="ointratransactionModel.sBranchCode" type="text"
+                    class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sBranchCode">Branch Code</label>
+                  <input id="sBranchCode" name="sBranchCode" [(ngModel)]="ointratransactionModel.sBranchCode" type="text"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nAmount">Amount </label>
+                  <input id="nAmount" name="nAmount" [(ngModel)]="ointratransactionModel.nAmount" type="text"
+                    class="form-control">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nAmount">Amount</label>
+                  <input id="nAmount" name="nAmount" [(ngModel)]="ointratransactionModel.nAmount" type="text"
+                    class="form-control">
+                </div>
+              </div> 
+              <div class="col-sm-12">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sDate">Date</label>
+                    <input id="sDate" name="sDate" [(ngModel)]="ointratransactionModel.sDate" type="date"
+                    class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sNarration">Narration</label>
+                    <input id="sNarration" name="sNarration" [(ngModel)]="ointratransactionModel.sNarration" type="text"
+                    class="form-control" >
+                  </div>
+                </div>
+              </div>                           
+              <div class="col-sm-12">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sTransactionId">Transaction Id</label>
+                    <input id="sTransactionId" name="sTransactionId" [(ngModel)]="ointratransactionModel.sTransactionId" type="text"
+                    class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="add-container">
+                  <div class="form-group">
+                    <label for="sTransactionEmployee">Transaction Employee</label>
+                    <input id="sTransactionEmployee" name="sTransactionEmployee" [(ngModel)]="ointratransactionModel.sTransactionEmployee" type="text"
+                    class="form-control" >
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-8 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+                <button type="button" class="btn btn-secondary"
+                >Clear</button>
+                <!-- <button type="button" class="btn btn-secondary"
+                >Clear</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  

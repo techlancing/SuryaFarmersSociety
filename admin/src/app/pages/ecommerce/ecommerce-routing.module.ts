@@ -7,12 +7,20 @@ import { AddaccountComponent } from './addaccount/addaccount.component';
 import { PassbookPrintComponent } from './passbook-print/passbook-print.component';
 import { AccountTransactionDailysavingdebitComponent } from './account-transaction-dailysavingdebit/account-transaction-dailysavingdebit.component';
 import { AccountTransactionCreditLoanComponent } from './account-transaction-credit-loan/account-transaction-credit-loan.component';
-import { AccountTransactionIntraTransitionComponent } from './account-transaction-intra-transition/account-transaction-intra-transition.component';
+import { IntraTransactionComponent } from './account-transaction-intra-transaction/account-transaction-intra-transaction.component';
 import { AllTransactionPrintComponent } from './all-transaction-print/all-transaction-print.component';
 import { AddDistrictComponent } from './add-district/add-district.component';
 import { AddMandalComponent } from './add-mandal/add-mandal.component';
 import { AddVillageComponent } from './add-village/add-village.component';
-
+import { DaywiseTransactionComponent } from './daywise-transaction/daywise-transaction.component';
+// import { IntraTransactionComponent } from './intra-transaction/intratransaction.component';
+import { DaywiseCumulativeComponent } from './daywise-cumulative/daywise-cumulative.component';
+import { DaywiseCumulativeAccountComponent } from './daywise-cumulative-account/daywise-cumulative-account.component';
+import { LastTransactionComponent } from './last-transaction/last-transaction.component';
+import { Last12MonthsTransactionComponent } from './last12-months-transaction/last12-months-transaction.component';
+import { CategoryBalanceSummaryComponent } from './category-balance-summary/category-balance-summary.component';
+import { AllCategoryBalanceSummaryComponent } from './all-category-balance-summary/all-category-balance-summary.component';
+import { DayMonthYearWiseComponent } from './day-month-year-wise/day-month-year-wise.component'; 
 
 
 const routes: Routes = [
@@ -58,11 +66,43 @@ const routes: Routes = [
     },
     {
         path:'intratransaction',
-        component: AccountTransactionIntraTransitionComponent
+        component: IntraTransactionComponent
     },
     {
         path:'alltranactionprint',
         component: AllTransactionPrintComponent
+    },
+    {
+        path:'DayWiseTransaction',
+        component: DaywiseTransactionComponent
+    },
+    {
+        path:'DayWiseCumulative',
+        component: DaywiseCumulativeComponent
+    },
+    {
+        path:'DayWiseCumulativeAccount',
+        component: DaywiseCumulativeAccountComponent
+    },
+    {
+        path:'LastTransaction',
+        component: LastTransactionComponent
+    },
+    {
+        path:'Last12MonthsTransaction',
+        component: Last12MonthsTransactionComponent
+    },
+    {
+        path:'CategoryBalanceSummary',
+        component: CategoryBalanceSummaryComponent
+    },
+    {
+        path:'AllCategoryBalanceSummary',
+        component: AllCategoryBalanceSummaryComponent
+    },
+    {
+        path:'DayMonthYearWise',
+        component: DayMonthYearWiseComponent
     }
     
 ];

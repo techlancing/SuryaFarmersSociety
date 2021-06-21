@@ -132,15 +132,57 @@ export const MENU: MenuItem[] = [
     ]
 },
 {
-    id: 47,
+    id: 48,
     label: 'MENUITEMS.REPORTS.TEXT',
     icon: 'bxs-report',
     subItems: [
         {
-            id: 36,
-            label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
-            link: '/passbookprint',
-            parentId: 35
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.DAYWISETRANSACTIONREPORT',
+            link: '/DayWiseTransaction',
+            parentId: 48
+        },
+        {
+            id: 61,
+            label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVE',
+            link: '/DayWiseCumulative',
+            parentId: 49
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVEACCOUNT',
+            link: '/DayWiseCumulativeAccount',
+            parentId: 50
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.LASTTRANSACTION',
+            link: '/LastTransaction',
+            parentId: 51
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.LAST12MONTHSTRANSACTION',
+            link: '/Last12MonthsTransaction',
+            parentId: 52
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.CATEGORYBALANCESUMMARY',
+            link: '/CategoryBalanceSummary',
+            parentId: 53
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYBALANCESUMMARY',
+            link: '/AllCategoryBalanceSummary',
+            parentId: 54
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.DAYMONTHYEARWISE',
+            link: '/DayMonthYearWise',
+            parentId: 55
         }
     ]
 }

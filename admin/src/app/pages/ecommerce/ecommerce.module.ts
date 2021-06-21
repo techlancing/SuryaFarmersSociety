@@ -15,8 +15,6 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-
 import { environment } from 'src/environments/environment';
 import { AddaccountComponent } from './addaccount/addaccount.component';
 import { AddBankEmployeeComponent } from './add-bank-employee/add-bank-employee.component';
@@ -26,12 +24,21 @@ import { AccountTransactionDebitComponent } from './account-transaction-debit/ac
 import { AccountTransactionCreditComponent } from './account-transaction-credit/account-transaction-credit.component';
 import { AccountTransactionCreditLoanComponent } from './account-transaction-credit-loan/account-transaction-credit-loan.component';
 import { AccountTransactionDailysavingdebitComponent } from './account-transaction-dailysavingdebit/account-transaction-dailysavingdebit.component';
-import { AccountTransactionIntraTransitionComponent } from './account-transaction-intra-transition/account-transaction-intra-transition.component';
+import { IntraTransactionComponent } from './account-transaction-intra-transaction/account-transaction-intra-transaction.component';
 import { PassbookPrintComponent } from './passbook-print/passbook-print.component';
 import { AllTransactionPrintComponent } from './all-transaction-print/all-transaction-print.component';
 import { DistrictfilterPipe } from '../../pipes/districtfilter.pipe';
 import { AddVillageComponent } from './add-village/add-village.component';
 import { MandalfilterPipe } from '../../pipes/mandalfilter.pipe';
+import { DaywiseTransactionComponent } from './daywise-transaction/daywise-transaction.component';
+// import { IntraTransactionComponent } from './intra-transaction/intra-transaction.component';
+import { DaywiseCumulativeComponent } from './daywise-cumulative/daywise-cumulative.component';
+import { DaywiseCumulativeAccountComponent } from './daywise-cumulative-account/daywise-cumulative-account.component';
+import { LastTransactionComponent } from './last-transaction/last-transaction.component';
+import { Last12MonthsTransactionComponent } from './last12-months-transaction/last12-months-transaction.component';
+import { CategoryBalanceSummaryComponent } from './category-balance-summary/category-balance-summary.component';
+import { AllCategoryBalanceSummaryComponent } from './all-category-balance-summary/all-category-balance-summary.component';
+import { DayMonthYearWiseComponent } from './day-month-year-wise/day-month-year-wise.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -45,9 +52,18 @@ const config: DropzoneConfigInterface = {
     AddDistrictComponent, AddMandalComponent, 
     AccountTransactionDebitComponent, AccountTransactionCreditComponent, 
     AccountTransactionCreditLoanComponent, AccountTransactionDailysavingdebitComponent,
-     AccountTransactionIntraTransitionComponent, PassbookPrintComponent, 
+     IntraTransactionComponent, PassbookPrintComponent, 
      AllTransactionPrintComponent, DistrictfilterPipe, AddVillageComponent ,
-     MandalfilterPipe],
+     MandalfilterPipe,
+     DaywiseTransactionComponent,
+     IntraTransactionComponent,
+     DaywiseCumulativeComponent,
+     DaywiseCumulativeAccountComponent,
+     LastTransactionComponent,
+     Last12MonthsTransactionComponent,
+     CategoryBalanceSummaryComponent,
+     AllCategoryBalanceSummaryComponent,
+     DayMonthYearWiseComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,

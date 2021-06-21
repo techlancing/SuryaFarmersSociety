@@ -139,7 +139,15 @@
       "TEXT": "REPORTS",
       "LIST": {
         "INVOICELIST": "Invoice List",
-        "INVOICEDETAILS": "Invoice Details"
+        "INVOICEDETAILS": "Invoice Details",
+        "DAYWISETRANSACTIONREPORT": "Day wise Transaction",
+        "DAYWISECUMULATIVE": "Day Wise Cumulative",
+        "DAYWISECUMULATIVEACCOUNT": "Day Wise Cumulative Account",
+        "LASTTRANSACTION": "Last Transaction",
+        "LAST12MONTHSTRANSACTION": "Last 12-Months Transaction",
+        "CATEGORYBALANCESUMMARY": "Category Balance Summary",
+        "ALLCATEGORYBALANCESUMMARY": "All Category Balance Summary",
+        "DAYMONTHYEARWISE": "Day Month Year Wise"
       }
     },
     "EMAIL": {

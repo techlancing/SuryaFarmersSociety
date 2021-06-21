@@ -1,0 +1,267 @@
+
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Day Wise Transaction</h2>
+                 
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>                 
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      
+<div class="container-fluid">
+    <!-- page title -->
+    <!-- <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title> -->
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">From Date</label>
+                  <input id="sDate" name="sDate" [(ngModel)]="odaywisetransactionmodel.sDate" type="date"
+                    class="form-control" >                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">To Date</label>
+                  <input id="sDate" name="sDate" [(ngModel)]="odaywisetransactionmodel.sDate" type="date"
+                    class="form-control" >                  
+                   </div>
+              </div>
+              <div class="col-sm-4 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText2}}</button>
+                <!-- <button type="button" class="btn btn-secondary">Clear</button> -->
+                <!-- <button type="button" class="btn btn-secondary"
+                >Clear</button> -->
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label for="sAccountNo">As on Date: Saving Account Rs:500</label>                  
+                   </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <label for="sAccountNo"></label>                  
+                   </div>
+              </div>
+              
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Credit:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sDate">Debit:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+              
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sDate">Balance:</label>                  
+                  <!-- <input id="sDate" name="sDate" [(ngModel)]="oalltransactionprintmodel.sDate" type="sDate"
+                    class="form-control" > -->
+                </div>
+              </div>
+                  
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">Debit:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <!-- <label for="sAccountNo">Credit:</label>                   -->
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <!-- <label for="sAccountNo">Credit:</label>                   -->
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <!-- <label for="sAccountNo">Credit:</label>                   -->
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <label for="sAccountNo">₹</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">ID:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">Name:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sAccountNo">SAVINGS ACCOUNT:₹</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Date:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Narration:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Remarks:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Date:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Narration:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Remarks:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <hr>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Date:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Narration:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Remarks:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <hr>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Date:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Narration:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Remarks:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <hr>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Date:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Narration:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="sAccountNo">Remarks:</label>                  
+                   <!-- <input id="sAccountNo" name="sAccountNo" [(ngModel)]="oalltransactionprintmodel.sAccountNo" type="text"
+                    class="form-control" > -->
+                </div>
+              </div>
+              <div class="col-sm-8 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >{{sButtonText}}</button>
+              </div>        
+            </div>
+          <!-- </div>
+        </div> -->
+      </form>
+      
