@@ -142,4 +142,35 @@ obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oN
     }
 }));
 
+// url: ..../bankaccount/getaccountbyid
+obankaccountRouter.get("/getaccountbyid", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oAccountbyid = await obankaccountModel.find({nAccountId : oReq.body.nAccountId});
+
+    if(!oAccountbyid){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oAccountbyid);
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+// url: ..../bankaccount/getlastaccountinvillage
+obankaccountRouter.get("/getlastaccountinvillage", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await obankaccountModel.find({sVillage: oReq.body.sVillage}).sort({_id:-1}).limit(1).then((oLastaccount)  => {
+      if(oLastaccount.length > 0) {
+          oRes.json(oLastaccount[0].sAccountNo);
+         // oRes.send("Success");
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 module.exports = obankaccountRouter;

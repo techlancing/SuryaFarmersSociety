@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: "https://reddystravels.com/",
-  imagePath: "https://reddystravels.com/nodejs/",
+  apiUrl: "https://staging.adaptnext.com/",
+  imagePath: "https://staging.adaptnext.com/nodejs/",
   applicationName: "suryafarmerssociety",
   defaultauth: 'fackbackend',
   firebaseConfig: {
