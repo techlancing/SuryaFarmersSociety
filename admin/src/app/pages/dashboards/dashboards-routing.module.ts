@@ -4,11 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { DefaultComponent } from './default/default.component';
 import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
+import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
 
 const routes: Routes = [
     {
         path: 'default',
         component: DefaultComponent
+    },
+    {
+        path: 'allaccounts',
+        component: AllBankAccountsComponent
     },
     {
         path: 'saas',

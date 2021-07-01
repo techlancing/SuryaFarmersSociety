@@ -8,15 +8,16 @@ import { WidgetModule } from '../../shared/widget/widget.module';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from './saas/shared/shared.module'
-import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbDropdownModule, NgbTooltipModule, NgbNavModule ,NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap'
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { DefaultComponent } from './default/default.component';
 import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
+import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,6 +27,7 @@ import { CryptoComponent } from './crypto/crypto.component';
     NgbDropdownModule,
     NgbTooltipModule,
     NgbNavModule,
+    NgbTypeaheadModule,
     WidgetModule,
     NgApexchartsModule,
     SharedModule,

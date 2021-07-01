@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./daywise-transaction.component.scss']
 })
 export class DaywiseTransactionComponent implements OnInit {
-  [x: string]: string;
 
   bankaccounts: Array<DaywiseTransaction>;
 
@@ -111,7 +110,6 @@ export class DaywiseTransactionComponent implements OnInit {
     
     this.odaywisetransactionmodel = new DaywiseTransaction();
     this.sButtonText = 'Print';
-    this.sButtonText2 = 'Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {

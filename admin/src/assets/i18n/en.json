@@ -74,6 +74,7 @@
       "BADGE": "03",
       "LIST": {
         "DEFAULT": "Dashboard",
+        "ALLACCOUNTS": "All Accounts",
         "SAAS": "Saas",
         "CRYPTO": "Crypto"
       }

@@ -142,8 +142,18 @@ export class AddaccountComponent implements OnInit {
      + (selectedvillage.nVillageCode.toString().length > 1 ? selectedvillage.nVillageCode.toString() : '0'+selectedvillage.nVillageCode.toString())
       
      
-     this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode + '0001';
-    this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
+     
+    this.oBankAccountService.fngetLastBankAccountInfo(this.oBankAccountModel.nVillageId).subscribe((data:any) => {
+      
+      if(data.accno.toString().length === 1){
+        this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode +'000' + data.accno;
+      }else{
+        
+        this.oBankAccountModel.sAccountNo = (parseInt(data.accno) + 1).toString();
+      }
+      
+      //this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
+    });
   }
 
   fnResetState() {

@@ -159,14 +159,21 @@ obankaccountRouter.get("/getaccountbyid", asyncMiddleware(async(oReq, oRes, oNex
 }));
 
 // url: ..../bankaccount/getlastaccountinvillage
-obankaccountRouter.get("/getlastaccountinvillage", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.post("/getlastaccountinvillage", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    await obankaccountModel.find({sVillage: oReq.body.sVillage}).sort({_id:-1}).limit(1).then((oLastaccount)  => {
-      if(oLastaccount.length > 0) {
-          oRes.json(oLastaccount[0].sAccountNo);
-         // oRes.send("Success");
-      }
-    });
+    console.log(oReq.body.nVillageId);
+    const olastacc = await obankaccountModel.find({nVillageId: oReq.body.nVillageId}).sort({_id:-1}).limit(1);
+    console.log(olastacc[0]);
+    if(olastacc.length > 0) {
+      oRes.json({accno:olastacc[0].sAccountNo});
+     // oRes.send("Success");
+  }else {
+    oRes.json({accno:001});
+  }
+    /*.then((oLastaccount)  => {
+      
+      
+    });*/
   }catch(e){
     console.log(e);
     oRes.status(400).send(e);

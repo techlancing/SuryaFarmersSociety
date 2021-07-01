@@ -16,6 +16,12 @@ export const MENU: MenuItem[] = [
                 label: 'MENUITEMS.DASHBOARDS.LIST.DEFAULT',
                 link: '/dashboard',
                 parentId: 2
+            },
+            {
+                id: 4,
+                label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
+                link: '/allaccounts',
+                parentId: 2
             }
         ]
     },

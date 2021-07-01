@@ -11,27 +11,25 @@ var oBankAccountSchema = new oSchema({
    },
   sAccountNo: { 
     type: String,
-    trim: true
+    trim: true,
+    unique: true
    },//unique: true},
   sState: {
     type: String,
     trim: true
   },
-  sDistrict: {
-    type: String,
-    trim: true
+  nDistrictId: {
+    type: Number,
   },
-  sMandal: {
-    type: String,
-    trim: true
+  nMandalId: {
+    type: Number,
   },
-  sVillage: {
-    type: String,
-    trim: true
+  nVillageId: {
+    type: Number,
   },
   sCustomerId: {
-    type: String,
-    trim: true
+    type: Number,
+    unique: true
   },
   sDate: {
     type: String,
@@ -134,6 +132,7 @@ var oBankAccountSchema = new oSchema({
   oDocument1Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oDocument2Info: {type: oSchema.Types.ObjectId, ref: 'Image'}
 });
-oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'nAccountId', inc_amount: 2, start_seq: 100 });
+oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'nAccountId', inc_amount: 1, start_seq: 100 });
+oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'sCustomerId', inc_amount: -1, start_seq: 799999999 });
 
 module.exports = oMongoose.model("Bankaccount", oBankAccountSchema);
