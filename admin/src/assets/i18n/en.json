@@ -117,6 +117,7 @@
       "TEXT": "PASSBOOK",
       "LIST": {
         "PASSBOOKPRINT": "Passbook Print",
+        "NEWPASSBOOKPRINT": "New Passbook Print",
         "ALLTRANSACTIONPRINT": "All Transaction Print"
       }
     },
@@ -147,7 +148,9 @@
         "LASTTRANSACTION": "Last Transaction",
         "LAST12MONTHSTRANSACTION": "Last 12-Months Transaction",
         "CATEGORYBALANCESUMMARY": "Category Balance Summary",
+        "CATEGORYWISEBALANCESUMMARY": "Category Wise Balance Summary",
         "ALLCATEGORYBALANCESUMMARY": "All Category Balance Summary",
+        "ALLCATEGORYWISEBALANCESUMMARY": "All Category Wise Balance Summary",
         "DAYMONTHYEARWISE": "Day Month Year Wise"
       }
     },

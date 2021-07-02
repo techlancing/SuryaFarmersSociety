@@ -21,9 +21,13 @@ import { Last12MonthsTransactionComponent } from './last12-months-transaction/la
 import { CategoryBalanceSummaryComponent } from './category-balance-summary/category-balance-summary.component';
 import { AllCategoryBalanceSummaryComponent } from './all-category-balance-summary/all-category-balance-summary.component';
 import { DayMonthYearWiseComponent } from './day-month-year-wise/day-month-year-wise.component'; 
-
+import { NewPassbookPrintComponent } from './new-passbook-print/new-passbook-print.component';
+import { SelectPrintLineComponent } from './select-print-line/select-print-line.component';
+import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
+import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
 
 const routes: Routes = [
+    
     {
         path: 'newaccountform',
         component: AddaccountComponent
@@ -47,6 +51,10 @@ const routes: Routes = [
     {
         path: 'passbookprint',
         component: PassbookPrintComponent
+    },
+    {
+        path: 'newpassbookprint',
+        component: NewPassbookPrintComponent
     },
     {
         path: 'credit',
@@ -95,6 +103,14 @@ const routes: Routes = [
     {
         path:'CategoryBalanceSummary',
         component: CategoryBalanceSummaryComponent
+    },
+    {
+        path:'AllCategoryWiseBalanceSummary',
+        component: AllCategoryWiseBalanceSummaryComponent
+    },
+    {
+        path:'CategoryWiseBalanceSummary',
+        component: CategoryWiseBalanceSummaryComponent
     },
     {
         path:'AllCategoryBalanceSummary',

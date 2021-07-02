@@ -39,6 +39,10 @@ import { Last12MonthsTransactionComponent } from './last12-months-transaction/la
 import { CategoryBalanceSummaryComponent } from './category-balance-summary/category-balance-summary.component';
 import { AllCategoryBalanceSummaryComponent } from './all-category-balance-summary/all-category-balance-summary.component';
 import { DayMonthYearWiseComponent } from './day-month-year-wise/day-month-year-wise.component';
+import { NewPassbookPrintComponent } from './new-passbook-print/new-passbook-print.component';
+import { SelectPrintLineComponent } from './select-print-line/select-print-line.component';
+import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
+import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -63,7 +67,11 @@ const config: DropzoneConfigInterface = {
      Last12MonthsTransactionComponent,
      CategoryBalanceSummaryComponent,
      AllCategoryBalanceSummaryComponent,
-     DayMonthYearWiseComponent],
+     DayMonthYearWiseComponent,
+     NewPassbookPrintComponent,
+     SelectPrintLineComponent,
+     CategoryWiseBalanceSummaryComponent,
+     AllCategoryWiseBalanceSummaryComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,

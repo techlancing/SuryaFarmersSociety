@@ -65,7 +65,8 @@ export const MENU: MenuItem[] = [
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDEMPLOYEE',
                 link: '/addemployee',
                 parentId: 10
-            }
+            },
+            
         ]
     },
   {
@@ -134,6 +135,12 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
             link: '/passbookprint',
             parentId: 35
+        },
+        {
+            id: 37,
+            label: 'MENUITEMS.PASSBOOK.LIST.NEWPASSBOOKPRINT',
+            link: '/newpassbookprint',
+            parentId: 35
         }
     ]
 },
@@ -189,6 +196,18 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.REPORTS.LIST.DAYMONTHYEARWISE',
             link: '/DayMonthYearWise',
             parentId: 55
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYWISEBALANCESUMMARY',
+            link: '/AllCategoryWiseBalanceSummary',
+            parentId: 56
+        },
+        {
+            id: 60,
+            label: 'MENUITEMS.REPORTS.LIST.CATEGORYWISEBALANCESUMMARY',
+            link: '/CategoryWiseBalanceSummary',
+            parentId: 57
         }
     ]
 }

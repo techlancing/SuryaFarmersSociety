@@ -1,25 +1,24 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
-import { Last12MonthsTransaction } from '../../../core/models/last12monthstransactions.model'
+import { AllCategoryWiseBalanceSummary } from '../../../core/models/allcategorywisebalancesummary.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
 @Component({
-  selector: 'app-last12-months-transaction',
-  templateUrl: './last12-months-transaction.component.html',
-  styleUrls: ['./last12-months-transaction.component.scss']
+  selector: 'app-all-category-wise-balance-summary',
+  templateUrl: './all-category-wise-balance-summary.component.html',
+  styleUrls: ['./all-category-wise-balance-summary.component.scss']
 })
-export class Last12MonthsTransactionComponent implements OnInit {
+export class AllCategoryWiseBalanceSummaryComponent implements OnInit {
 
-  bankaccounts: Array<Last12MonthsTransaction>;
+  bankaccounts: Array<AllCategoryWiseBalanceSummary>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: Last12MonthsTransaction;
+  @Input() oEditBankAccount: AllCategoryWiseBalanceSummaryComponent;
 
-  public olast12monthstransactionsmodel: Last12MonthsTransaction;
+  public oallcategorywisebalancesummarymodel: AllCategoryWiseBalanceSummary;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -54,7 +53,7 @@ export class Last12MonthsTransactionComponent implements OnInit {
          value:'01'
        }
      ];
-     this.olast12monthstransactionsmodel = new Last12MonthsTransaction();
+     this.oallcategorywisebalancesummarymodel = new AllCategoryWiseBalanceSummary();
      this.sButtonText = 'Print';
      this.bIsAddActive = false;
      this.bIsEditActive = false;
