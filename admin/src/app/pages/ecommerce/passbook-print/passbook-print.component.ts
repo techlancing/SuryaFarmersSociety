@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
-import { PassBookPrint } from '../../../core/models/passbookprint.model'
+import { BankAccount } from '../../../core/models/bankaccount.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
@@ -13,13 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class PassbookPrintComponent implements OnInit {
 
-  bankaccounts: Array<PassBookPrint>;
+  bankaccounts: Array<BankAccount>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: PassBookPrint;
+  @Input() oEditBankAccount: BankAccount;
 
-  public opassbookprintmodel: PassBookPrint;
+  public opassbookprintmodel: BankAccount;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -62,7 +62,6 @@ export class PassbookPrintComponent implements OnInit {
   @Input() bHideBreadCrumb: boolean = false;
   @Input() bHideCateogryList: boolean = false;
 
-  public sButtonText: string;
   @Input() bisEditMode: boolean;
   
   constructor(private oBankAccountService: BankAccountService,
@@ -131,17 +130,15 @@ export class PassbookPrintComponent implements OnInit {
     //   },
     //   ];  
     
-    this.opassbookprintmodel = new PassBookPrint();
-    this.sButtonText = 'Send SMS & Save & Submit';
+    this.opassbookprintmodel = new BankAccount();
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
       // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
       // this.oBankAccountModel = tempobj;
-      this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
+    this.oBankAccountService.fngetBankAccountInfoById("010103010001").subscribe((data) => {
+      this.opassbookprintmodel = data as any;
 
     });
   }

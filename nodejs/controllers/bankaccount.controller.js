@@ -142,10 +142,10 @@ obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oN
     }
 }));
 
-// url: ..../bankaccount/getaccountbyid
-obankaccountRouter.get("/getaccountbyid", asyncMiddleware(async(oReq, oRes, oNext) => {
+// url: ..../bankaccount/getaccountbynumber
+obankaccountRouter.post("/getaccountbynumber", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    const oAccountbyid = await obankaccountModel.find({nAccountId : oReq.body.nAccountId});
+    const oAccountbyid = await obankaccountModel.findOne({sAccountNo : oReq.body.sAccountNo});
 
     if(!oAccountbyid){
       return oRes.status(400).send();

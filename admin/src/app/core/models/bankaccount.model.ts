@@ -3,6 +3,7 @@ export class BankAccount {
     constructor(
         public sAddress : string = '',
         public sBranchCode : string = '',
+        public sBranchName : string = '',
         public nAccountId : number = null,//unique: true},
         public sAccountNo : string = null,
         public sState : string = '',
@@ -33,6 +34,7 @@ export class BankAccount {
         public sDistrictAddress : string = '',
         public sPinCode : string = '',
         public sMobileNumber : string = '',
+        public sEmail : string = '',
         public nAmount : number = null,
         public oPassportImageInfo: ImageInfo = null,
         public oSignature1Info: ImageInfo = null,

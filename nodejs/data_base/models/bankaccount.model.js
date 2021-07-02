@@ -9,6 +9,10 @@ var oBankAccountSchema = new oSchema({
     type: String,
     trim: true
    },
+   sBranchName: { 
+    type: String,
+    trim: true
+   },
   sAccountNo: { 
     type: String,
     trim: true,
@@ -120,6 +124,10 @@ var oBankAccountSchema = new oSchema({
     trim: true
   },
   sMobileNumber: {
+    type: String,
+    trim: true
+  },
+  sEmail: {
     type: String,
     trim: true
   },

@@ -26,6 +26,11 @@ export class BankAccountService {
       return this.http.post(sMethodUrl,{nVillageId:nVillageId});
     }
 
+    fngetBankAccountInfoById(sAccountNo: string) {
+      const sMethodUrl = `${this.sRootUrl}/getaccountbynumber`;
+      return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
+  }
+
     fnEditBankAccountInfo(oBankAccount: BankAccount) {
       const sMethodUrl = `${this.sRootUrl}/edit_bankaccount`;
       return this.http.post(sMethodUrl, oBankAccount);
