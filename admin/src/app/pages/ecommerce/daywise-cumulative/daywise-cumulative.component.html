@@ -1,1 +1,72 @@
-<p>daywise-cumulative works!</p>
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        <div class="card card-bg">
+          <div class="card-body">
+            <h2>Day Wise Cumulative Report</h2>
+                 
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>                 
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      
+<div class="container-fluid">
+    <!-- page title -->
+    <!-- <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title> -->
+  
+    <div class="row">
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+        
+             <div class="row">
+              <div class="col-sm-12">                
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sDate">From Date</label>
+                  <input id="sDate" name="sDate" [(ngModel)]="odaywisecumulativemodel.sDate" type="date"
+                    class="form-control" >                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="sDate">To Date</label>
+                  <input id="sDate" name="sDate" [(ngModel)]="odaywisecumulativemodel.sDate" type="date"
+                    class="form-control" >                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                   </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">                  
+                   </div>
+              </div>
+              <div class="col-sm-4 add-category-btn-container">
+                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                >submit</button>
+                <!-- <button type="button" class="btn btn-secondary">Clear</button> -->
+                <!-- <button type="button" class="btn btn-secondary"
+                >Clear</button> -->
+              </div>
