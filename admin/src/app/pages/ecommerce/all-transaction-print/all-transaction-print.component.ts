@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
-import { AllTransactionPrint } from '../../../core/models/alltransactionprint.model'
+import { BankAccount } from '../../../core/models/bankaccount.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
@@ -14,13 +14,13 @@ import Swal from 'sweetalert2';
 })
 export class AllTransactionPrintComponent implements OnInit {
 
-  bankaccounts: Array<AllTransactionPrint>;
+  bankaccounts: Array<BankAccount>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: AllTransactionPrint;
+  @Input() oEditBankAccount: BankAccount;
 
-  public oalltransactionprintmodel: AllTransactionPrint;
+  public oAlltransactionprintmodel: BankAccount;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -65,7 +65,6 @@ export class AllTransactionPrintComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  // oalltransactionprintmodel: AllTransactionPrint;
   
   constructor(private oBankAccountService: BankAccountService,
               private modalService: NgbModal) { }
@@ -133,7 +132,7 @@ export class AllTransactionPrintComponent implements OnInit {
     //   },
     //   ];  
     
-    this.oalltransactionprintmodel = new AllTransactionPrint();
+    this.oAlltransactionprintmodel = new BankAccount();
     this.sButtonText = 'Print';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -142,8 +141,8 @@ export class AllTransactionPrintComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
+    this.oBankAccountService.fngetBankAccountInfoByNumber("010103010001").subscribe((data) => {
+      this.oAlltransactionprintmodel = data as any;
 
     });
   }

@@ -26,7 +26,7 @@ export class BankAccountService {
       return this.http.post(sMethodUrl,{nVillageId:nVillageId});
     }
 
-    fngetBankAccountInfoById(sAccountNo: string) {
+    fngetBankAccountInfoByNumber(sAccountNo: string) {
       const sMethodUrl = `${this.sRootUrl}/getaccountbynumber`;
       return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
   }
