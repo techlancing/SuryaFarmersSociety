@@ -4,3 +4,21 @@
     align-items: center;
     margin-top: 10px;
 }
+
+.passbook-border{
+    border: 2px solid grey;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.account-detail{
+    color: orange;
+    margin-left: 15px;
+}
+
+@media print {
+    .passbook-heading, .passbook-acc-input{
+        display: none!important;
+    }
+    
+}

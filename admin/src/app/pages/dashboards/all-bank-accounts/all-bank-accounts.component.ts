@@ -24,6 +24,7 @@ export class AllBankAccountsComponent implements OnInit {
   constructor(private oBankAccountService : BankAccountService,
     public service: AdvancedService) {
       this.tables$ = service.tables$;
+      console.log(this.tables$);
     this.total$ = service.total$;
      }
 

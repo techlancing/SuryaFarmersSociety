@@ -2,7 +2,7 @@ import { Component, OnInit , Input} from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model'
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-passbook-print',
   templateUrl: './passbook-print.component.html',
@@ -10,8 +10,9 @@ import Swal from 'sweetalert2';
 })
 export class PassbookPrintComponent implements OnInit {
 
-
+  public aBankAccounts: Array<BankAccount>;
   public opassbookprintmodel: BankAccount;
+  public sSelectedAccount: string;
   
   bIsBtnActive: boolean;
   bIsPassbookData: boolean;
@@ -29,20 +30,27 @@ export class PassbookPrintComponent implements OnInit {
     this.opassbookprintmodel = new BankAccount();
     this.bIsBtnActive = false;
     this.bIsPassbookData = false;
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+      this.aBankAccounts = [...data as any];
+    });
+    
   }
 
-  fnGetAccountNumber(accountno): void{
-    console.log(accountno);
-    if(accountno.length >= 12 ){
+  fnGetAccountNumber(): void{
+    if(this.sSelectedAccount.length > 0 ){
       this.bIsBtnActive = true;
     }
   }
 
-  fnFecthAccountDetails(accountno): void{
-    this.oBankAccountService.fngetBankAccountInfoByNumber(accountno).subscribe((data) => {
+  fnFecthAccountDetails(): void{
+    this.oBankAccountService.fngetBankAccountInfoByNumber(this.sSelectedAccount).subscribe((data) => {
       this.opassbookprintmodel = data as any;
       this.bIsPassbookData = true;
     });
+  }
+
+  fnPrintPassBook(): void{
+    window.print();
   }
 
 

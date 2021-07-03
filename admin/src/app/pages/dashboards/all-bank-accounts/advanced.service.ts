@@ -92,8 +92,11 @@ export class AdvancedService {
             ).subscribe(result => {
                 this._tables$.next(result.tables);
                 this._total$.next(result.total);
+                
             });
-            this._search$.next();
+            this._tables$.next(this.tableData);
+            console.log('next call');
+            //this._search$.next();
           });
          
     }
@@ -144,7 +147,7 @@ export class AdvancedService {
 
         // 1. sort
         let tables = sort(this.tableData, sortColumn, sortDirection);
-
+        console.log(tables);
         // 2. filter
         tables = tables.filter(table => matches(table, searchTerm, this.pipe));
         const total = tables.length;

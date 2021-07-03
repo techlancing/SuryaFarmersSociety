@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid passbook-root-layout">
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
@@ -8,67 +8,78 @@
       <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
         <div class="card card-bg">
           <div class="card-body">
-            <h2>Pass Book Print</h2>
-            <div  class="row">
+            <h2 class="passbook-heading">Pass Book Print</h2>
+            <div  class="row passbook-acc-input">
               <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="accountno">Account Number</label>
-                  <input id="accountno" #accountnumber name="accountno"
-                    type="text" class="form-control" (input)="fnGetAccountNumber(accountnumber.value)">
+                <div class="form-group" >
+                  <label class="control-label">Account Number</label>
+                  <ng-select [items]="aBankAccounts" name="accountno" [(ngModel)]="sSelectedAccount"
+                    bindLabel="sAccountNo" bindValue="sAccountNo" (change)="fnGetAccountNumber()">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.sAccountNo}}
+                    </ng-template>
+                  </ng-select>
                 </div>
               </div>
-              <div class="col-sm-6 btn-container">
+              <div class="col-sm-5 btn-container">
                 <button type="button" class="btn btn-primary mr-1" 
                 [disabled]="!bIsBtnActive" 
-                (click)="fnFecthAccountDetails(accountnumber.value)">
+                (click)="fnFecthAccountDetails()">
                 Show Account Details</button>
                 
               </div>
+              <div class="col-sm-1 btn-container">
+                <button type="button" class="btn btn-primary mr-1" 
+                [disabled]="!bIsBtnActive" 
+                (click)="fnPrintPassBook()">
+                print</button>
+                
+              </div>
             </div>
-             <div *ngIf="bIsPassbookData" class="row">
+             <div *ngIf="bIsPassbookData" class="row passbook-border">
               <div class="col-sm-12">                
               </div>
               
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sAccountNo">Account Number : </label>
-                  <label>{{opassbookprintmodel.sAccountNo}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sAccountNo}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sCustomerId">Customer ID : </label>                  
-                  <label>{{opassbookprintmodel.sCustomerId}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sCustomerId}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sBranchCode">Branch Code : </label>                  
-                  <label>{{opassbookprintmodel.sBranchCode}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sBranchCode}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sApplicantName">Customer Name : </label>                  
-                  <label>{{opassbookprintmodel.sApplicantName}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sApplicantName}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sAadharNo">Aadhar No : </label>                  
-                  <label>{{opassbookprintmodel.sAadharNo}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sAadharNo}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sBranchName">Branch Name : </label>                  
-                  <label>{{opassbookprintmodel.sBranchName}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sBranchName}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sFatherOrHusbandName">Father/Husband Name : </label>                  
-                  <label>{{opassbookprintmodel.sFatherOrHusbandName}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sFatherOrHusbandName}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -79,13 +90,13 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sMandalAddress">Mandal Level Society Branch Address : </label>                  
-                  <label>{{opassbookprintmodel.sMandalAddress}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sMandalAddress}}</span>
                 </div>
               </div>
               <div class="col-sm-4">  
                 <div class="form-group">
                   <label for="sAddress">Address : </label>                  
-                  <label>{{opassbookprintmodel.sAddress}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sAddress}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -96,13 +107,13 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sMobileNumber">Phone No : </label>                  
-                  <label>{{opassbookprintmodel.sMobileNumber}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sMobileNumber}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sDate">Date Of Issue : </label>                  
-                  <label>{{opassbookprintmodel.sDate}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sDate}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -112,13 +123,13 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sEmail">Email : </label>                  
-                  <label>{{opassbookprintmodel.sEmail}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sEmail}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="sAccountType">Type Of Account : </label>                  
-                  <label>{{opassbookprintmodel.sAccountType}}</label>
+                  <span class="account-detail">{{opassbookprintmodel.sAccountType}}</span>
                 </div>
               </div>
               <div class="col-sm-4">
