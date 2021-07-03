@@ -92,13 +92,7 @@
                     class="form-control" disabled>
                 </div>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nCustomerId">Customer ID</label>
-                  <input id="nCustomerId" name="nCustomerId" [(ngModel)]="oBankAccountModel.sCustomerId" type="text"
-                    class="form-control" disabled>
-                </div>
-              </div>  
+               
               <h2 class="col-sm-12">Personal Information</h2>                          
               <div class="col-sm-4">
                 <div class="form-group">
@@ -126,13 +120,14 @@
               <div class="radio-container">
                 <div class="form-check form-group">
                   <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Male"
-                    checked>
+                  [(ngModel)]="oBankAccountModel.sGender">
                   <label class="form-check-label" for="genderRadio1">
                     Male
                   </label>
                 </div>
                 <div class="form-check form-group">
-                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Female">
+                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Female"
+                  [(ngModel)]="oBankAccountModel.sGender">
                   <label class="form-check-label" for="genderRadio2">
                     Female
                   </label>
@@ -158,13 +153,14 @@
             <div class="radio-container">
               <div class="form-check form-group">
                 <input class="form-check-input" type="radio" name="accounttypeRadio" id="accounttypeRadio1" value="Current"
-                  >
+                [(ngModel)]="oBankAccountModel.sAccountType" >
                 <label class="form-check-label" for="accounttypeRadio1">
                   Current 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="accounttypeRadio" id="accounttypeRadio2" value="Savings">
+                <input class="form-check-input" type="radio" name="accounttypeRadio" id="accounttypeRadio2" value="Savings"
+                [(ngModel)]="oBankAccountModel.sAccountType">
                 <label class="form-check-label" for="accounttypeRadio2">
                   Savings 
                 </label>
@@ -177,13 +173,14 @@
             <div class="radio-container">
               <div class="form-check form-group">
                 <input class="form-check-input" type="radio" name="accountcategoryRadio" id="accountcategoryRadio1" value="Individual"
-                  >
+                [(ngModel)]="oBankAccountModel.sAccountCategory">
                 <label class="form-check-label" for="accountcategoryRadio1">
                   Individual 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="accountcategoryRadio" id="accountcategoryRadio2" value="Joint">
+                <input class="form-check-input" type="radio" name="accountcategoryRadio" id="accountcategoryRadio2" value="Joint"
+                [(ngModel)]="oBankAccountModel.sAccountCategory">
                 <label class="form-check-label" for="accountcategoryRadio2">
                   Joint 
                 </label>
@@ -195,13 +192,14 @@
             <div class="radio-container">
               <div class="form-check form-group">
                 <input class="form-check-input" type="radio" name="shareRadio" id="shareRadio1" value="Single"
-                  >
+                [(ngModel)]="oBankAccountModel.sShareType">
                 <label class="form-check-label" for="shareRadio1">
                   Single 
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="shareRadio" id="shareRadio22" value="Double">
+                <input class="form-check-input" type="radio" name="shareRadio" id="shareRadio22" value="Double"
+                [(ngModel)]="oBankAccountModel.sShareType">
                 <label class="form-check-label" for="shareRadio2">
                   Double
                 </label>
@@ -213,13 +211,14 @@
             <div class="radio-container">
               <div class="form-check form-group">
                 <input class="form-check-input" type="radio" name="smsRadio" id="smsRadio1" value="Yes"
-                  >
+                [(ngModel)]="oBankAccountModel.sSMSAlert">
                 <label class="form-check-label" for="smsRadio1">
                   YES
                 </label>
               </div>
               <div class="form-check form-group">
-                <input class="form-check-input" type="radio" name="smsRadio" id="smsRadio2" value="No">
+                <input class="form-check-input" type="radio" name="smsRadio" id="smsRadio2" value="No"
+                [(ngModel)]="oBankAccountModel.sSMSAlert">
                 <label class="form-check-label" for="smsRadio2">
                   NO
                 </label>
@@ -280,8 +279,8 @@
             <h2 class="col-sm-12">Address</h2>  
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sAddress">House/Flat No</label>                  
-                <input id="sAddress" name="sAddress" [(ngModel)]="oBankAccountModel.sAddress" type="text"
+                <label for="sFlatNo">House/Flat No</label>                  
+                <input id="sFlatNo" name="sFlatNo" [(ngModel)]="oBankAccountModel.sFlatNo" type="text"
                   class="form-control" >
               </div>
             </div>
@@ -316,14 +315,14 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sPinCode">Pin Code</label>                  
-                <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="text"
+                <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="number"
                   class="form-control" >
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sMobileNumber">Mobile Number</label>                  
-                <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="text"
+                <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="tel"
                   class="form-control" >
               </div>
             </div>

@@ -71,6 +71,10 @@ var oBankAccountSchema = new oSchema({
     type: String,
     trim: true
   },
+  sSMSAlert: {
+    type: String,
+    trim: true
+  },
   sFatherOrHusbandName: {
     type: String,
     trim: true

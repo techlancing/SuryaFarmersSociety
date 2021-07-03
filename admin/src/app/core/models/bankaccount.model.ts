@@ -20,6 +20,7 @@ export class BankAccount {
         public sAccountType : string = '',
         public sAccountCategory : string = '',
         public sShareType : string = '',
+        public sSMSAlert : string = '',
         public sFatherOrHusbandName : string = '',
         public sMotherName : string = '',
         public sNomineeName : string = '',
