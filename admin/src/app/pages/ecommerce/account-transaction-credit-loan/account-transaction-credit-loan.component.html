@@ -5,7 +5,7 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnCreditLoanInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Credit Loan</h2>
@@ -13,18 +13,28 @@
              <div class="row">
               <div class="col-sm-12">                
               </div>
-              
+              <div class="col-sm-6">
+                <div class="form-group" >
+                  <label class="control-label">Account Number</label>
+                  <ng-select [items]="aBankAccounts" name="accountno" [(ngModel)]="oCreditLoanModel.sAccountNo"
+                    bindLabel="sAccountNo" bindValue="sAccountNo" >
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.sAccountNo}}
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sSanctionAmount">Sanction Amount</label>                  
-                  <input id="sSanctionAmount" name="sSanctionAmount" [(ngModel)]="ocreditloanmodel.sSanctionAmount" type="text"
+                  <label for="nSanctionAmount">Sanction Amount</label>                  
+                  <input id="nSanctionAmount" name="nSanctionAmount" [(ngModel)]="oCreditLoanModel.nSanctionAmount" type="number"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sDate">Loan Issue Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="ocreditloanmodel.sDate" type="sDate"
+                  <label for="loanissueDate">Loan Issue Date</label>                  
+                  <input id="loanissueDate" name="loanissueDate" [(ngModel)]="oCreditLoanModel.sDate" type="date"
                     class="form-control" >
                 </div>
               </div>
@@ -33,7 +43,7 @@
                   <div class="form-group">
                     <label for="sTypeofLoan">Type Of Loan</label>
                     <ng-select [items]="aTypeofLoan" name="sTypeofLoan"
-                      [(ngModel)]="ocreditloanmodel.sTypeofLoan" 
+                      [(ngModel)]="oCreditLoanModel.sTypeofLoan" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -47,7 +57,7 @@
                   <div class="form-group">
                     <label for="sInstallmentType">Installment Type</label>
                     <ng-select [items]="aInstallmentType" name="sInstallmentType"
-                      [(ngModel)]="ocreditloanmodel.sInstallmentType" 
+                      [(ngModel)]="oCreditLoanModel.sInstallmentType" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -59,29 +69,29 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sLoanRepaymentPeriod">Loan Repayment Period</label>                  
-                  <input id="sLoanRepaymentPeriod" name="sLoanRepaymentPeriod" [(ngModel)]="ocreditloanmodel.sLoanRepaymentPeriod" type="text"
+                  <input id="sLoanRepaymentPeriod" name="sLoanRepaymentPeriod" [(ngModel)]="oCreditLoanModel.sLoanRepaymentPeriod" type="text"
                     class="form-control" >
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sInstallmentAmount">Installment Amount</label>
-                  <input id="sInstallmentAmount" name="sInstallmentAmount" [(ngModel)]="ocreditloanmodel.sInstallmentAmount" type="text"
-                    class="form-control" disabled>
+                  <label for="nInstallmentAmount">Installment Amount</label>
+                  <input id="nInstallmentAmount" name="nInstallmentAmount" [(ngModel)]="oCreditLoanModel.nInstallmentAmount" type="number"
+                    class="form-control">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sDate">End of the Loan Date </label>
-                  <input id="sDate" name="sDate" [(ngModel)]="ocreditloanmodel.sDate" type="sDate"
-                    class="form-control" disabled>
+                  <label for="endofloandate">End of the Loan Date </label>
+                  <input id="endofloandate" name="endofloandate" [(ngModel)]="oCreditLoanModel.sEndofLoanDate" type="date"
+                    class="form-control">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sLetPenaltyPercentage">Let Penalty Percentage</label>
-                  <input id="sLetPenaltyPercentage" name="sLetPenaltyPercentage" [(ngModel)]="ocreditloanmodel.sLetPenaltyPercentage" type="text"
-                    class="form-control" disabled>
+                  <label for="nLetPenaltyPercentage">Let Penalty Percentage</label>
+                  <input id="nLetPenaltyPercentage" name="nLetPenaltyPercentage" [(ngModel)]="oCreditLoanModel.nLetPenaltyPercentage" type="number"
+                    class="form-control">
                 </div>
               </div> 
               <div class="col-sm-6">
@@ -89,7 +99,7 @@
                   <div class="form-group">
                     <label for="sEmployeeName">Loan Issue Employee</label>
                     <ng-select [items]="aLoanIssueEmployee" name="sEmployeeName"
-                      [(ngModel)]="ocreditloanmodel.sEmployeeName" 
+                      [(ngModel)]="oCreditLoanModel.sEmployeeName" 
                       bindLabel="displayText" bindValue="value">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
@@ -102,8 +112,8 @@
                 <div class="add-container">
                   <div class="form-group">
                     <label for="sTransactionId">Transaction ID</label>
-                    <input id="sTransactionId" name="sTransactionId" [(ngModel)]="ocreditloanmodel.sTransactionId" type="text"
-                    class="form-control" disabled>
+                    <input id="sTransactionId" name="sTransactionId" [(ngModel)]="oCreditLoanModel.sTransactionId" type="text"
+                    class="form-control">
                   </div>
                 </div>
               </div>                           

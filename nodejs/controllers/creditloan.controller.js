@@ -1,0 +1,81 @@
+const oExpress = require('express');
+const oMongoose = require('mongoose');
+
+const oCreditLoanModel = require("../data_base/models/creditloan.model");
+
+const oCreditLoanRouter = oExpress.Router();
+
+//To remove unhandled promise rejections
+const asyncMiddleware = fn =>
+  (oReq, oRes, oNext) => {
+    Promise.resolve(fn(oReq, oRes, oNext))
+      .catch(oNext);
+  };
+  
+// url: ..../creditloan/add_creditloan
+oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  const newCreditLoan = new oCreditLoanModel(oReq.body);
+  try{
+    // Save creditloan Info
+    await newCreditLoan.save();    
+    oRes.json("Success");
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+
+  }
+}));
+
+// url: ..../creditloan/edit_creditloan
+oCreditLoanRouter.post("/edit_creditloan", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oCreditLoan = await oCreditLoanModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
+
+    if(!oCreditLoan){
+      return oRes.status(400).send();
+    }
+
+    oRes.json("Success"); 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+
+}));
+
+// url: ..../creditloan/delete_creditloan
+oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  try{
+    console.log(oReq.body._id);
+    const oCreditLoan = await oCreditLoanModel.findByIdAndDelete(oReq.body._id);
+
+    if(!oCreditLoan){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oCreditLoan); 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+
+}));
+
+// url: ..../creditloan/creditloan_list
+oCreditLoanRouter.get("/creditloan_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+    try{
+      const oAllCreditLoans = await oCreditLoanModel.find();
+
+      if(!oAllCreditLoans){
+        return oRes.status(400).send();
+      }
+
+      oRes.json(oAllCreditLoans);
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+}));
+
+module.exports = oCreditLoanRouter;

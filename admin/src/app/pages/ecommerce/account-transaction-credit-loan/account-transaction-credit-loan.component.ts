@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankAccountService } from '../../../core/services/account.service';
+import { CreditLoanService } from '../../../core/services/creditloan.service';
 import { CreditLoan } from '../../../core/models/creditloan.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { BankAccount } from '../../../core/models/bankaccount.model';
+import { BankAccountService } from '../../../core/services/account.service';
 @Component({
   selector: 'app-account-transaction-credit-loan',
   templateUrl: './account-transaction-credit-loan.component.html',
@@ -12,13 +14,12 @@ import Swal from 'sweetalert2';
 })
 export class AccountTransactionCreditLoanComponent implements OnInit {
 
-  bankaccounts: Array<CreditLoan>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: CreditLoan;
+  @Input() oEditCreditLoan: CreditLoan;
 
-  public ocreditloanmodel: CreditLoan;
+  public oCreditLoanModel: CreditLoan;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -28,11 +29,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   @ViewChild('addcardropzoneElem')
   public oDropZone: DropzoneComponent;
-  // aState : Array<
-  // {
-  //   displayText:string,
-  //   value:string
-  // }>;
+  
   aTypeofLoan : Array<
   {
     displayText:string,
@@ -49,13 +46,6 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     value:string
   }>;
   
-  public oDropZoneConfig: DropzoneConfigInterface = {
-    // Change this to your upload POST address:
-  url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 100,
-  maxFiles: 1
-  };
-
   // bread crumb items
   breadCrumbItems: Array<{}>;
   @Input() bHideBreadCrumb: boolean = false;
@@ -63,12 +53,15 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  
-  constructor(private oBankAccountService: BankAccountService,
+  public aBankAccounts: Array<BankAccount>;
+  public sSelectedAccount: string;
+
+  constructor(private oCreditLoanService: CreditLoanService,
+    private oBankAccountService: BankAccountService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+    this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add CreditLoan', active: true }];
     this.aTypeofLoan = [
       {
         displayText: 'EMI Loan',
@@ -130,54 +123,33 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     //   },
     //   ];  
     
-    this.ocreditloanmodel = new CreditLoan();
+    this.oCreditLoanModel = new CreditLoan();
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
-      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
+      // const tempobj = JSON.parse(JSON.stringify(this.oEditCreditLoan));
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
     this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
-
+      this.aBankAccounts = [...data as any];
     });
   }
 
-  fnCreateAccountDetails(){
-    // this.oCreditModel.sBranchCode = this.oCreditModel.sState + 
-    // this.oCreditModel.sDesignation + this.oCreditModel.sMandal + 
-    // this.oCreditModel.sVillage;
-    // this.oCreditModel.sAccountNo = this.oCreditModel.sBranchCode + '0001';
-    // this.oCreditModel.sCustomerId = this.oCreditModel.sBranchCode + '0002';
+  fnOnCreditLoanInfoSubmit(): void {
+    //this.bIsAddActive = true;
+      this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
+        console.log(data);
+        this.fnSucessMessage();
+      });
   }
-
-  fnResetState() {
-    // this.oCreditModel.sState = '';
-  }
-
-
-
-  fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
-
-
-
+  
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'State is saved sucessfully.',
+      title: 'CreditLoan is created sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -193,15 +165,6 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     });
   }
 
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
 
   // fnEditSucessMessage() {
   //   Swal.fire({

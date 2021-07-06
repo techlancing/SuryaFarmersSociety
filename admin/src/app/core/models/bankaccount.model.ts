@@ -10,7 +10,7 @@ export class BankAccount {
         public nDistrictId : number = null,
         public nMandalId : number = null,
         public nVillageId : number = null,
-        public sCustomerId : string = null,
+        public sCustomerId : number = null,
         public sDate : string = '',
         public sApplicantName : string = '',
         public sApplicantSurName : string = '',
