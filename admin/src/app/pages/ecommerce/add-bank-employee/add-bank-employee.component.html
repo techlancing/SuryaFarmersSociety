@@ -5,7 +5,7 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_BankEmployeeFormElem="ngForm" (ngSubmit)="fnOnBankEmployeeInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Add Employee</h2>
@@ -31,7 +31,7 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sCallLetterIssuedDate">Call Letter Issued Date</label>                  
-                  <input id="sCallLetterIssuedDate" name="sCallLetterIssuedDate" [(ngModel)]="oBankEmployeeModel.sCallLetterIssuedDate" type="text"
+                  <input id="sCallLetterIssuedDate" name="sCallLetterIssuedDate" [(ngModel)]="oBankEmployeeModel.sCallLetterIssuedDate" type="date"
                     class="form-control" >
                 </div>
               </div>
@@ -51,7 +51,7 @@
                   <div class="form-group">
                     <label for="sEmployeeName">Employee Name</label>
                     <input id="EmployeeName" name="sEmployeeName" [(ngModel)]="oBankEmployeeModel.sEmployeeName" type="text"
-                    class="form-control" disabled>
+                    class="form-control">
                   </div>
                 </div>
               </div>
@@ -59,14 +59,14 @@
                 <div class="form-group">
                   <label for="sFatherOrHusbandName">Father/Husband Name</label>
                   <input id="sFatherOrHusbandName" name="sFatherOrHusbandName" [(ngModel)]="oBankEmployeeModel.sFatherOrHusbandName" type="text"
-                    class="form-control" disabled>
+                    class="form-control">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sMotherName">Mother Name</label>
                   <input id="sMotherName" name="sMotherName" [(ngModel)]="oBankEmployeeModel.sMotherName" type="text"
-                    class="form-control" disabled>
+                    class="form-control">
                 </div>
               </div>  
               <!-- <h2 class="col-sm-12">Personal Information</h2>                           -->
@@ -147,8 +147,8 @@
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="sIfscCode">IFSC Code</label>                  
-                <input id="sIfscCode" name="sIfscCode" [(ngModel)]="oBankEmployeeModel.sIfscCode" type="text"
+                <label for="sIFSCCode">IFSC Code</label>                  
+                <input id="sIFSCCode" name="sIFSCCode" [(ngModel)]="oBankEmployeeModel.sIFSCCode" type="text"
                   class="form-control" >
               </div>
             </div>

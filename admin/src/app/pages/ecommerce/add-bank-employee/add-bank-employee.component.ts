@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankAccountService } from '../../../core/services/account.service';
+import { BankEmployeeService } from '../../../core/services/bankemployee.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model'
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +14,7 @@ import { from } from 'rxjs';
 })
 export class AddBankEmployeeComponent implements OnInit {
 
-bankaccounts: Array<BankEmployee>;
+aBankEmployees: Array<BankEmployee>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
@@ -70,7 +70,7 @@ bankaccounts: Array<BankEmployee>;
   public sButtonText: string;
   @Input() bisEditMode: boolean;
   
-  constructor(private oBankAccountService: BankAccountService,
+  constructor(private oBankEmployeeService: BankEmployeeService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -129,18 +129,18 @@ bankaccounts: Array<BankEmployee>;
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+   // this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
 
-    });
+   // });
   }
 
-  fnCreateAccountDetails(){
-    // this.oBankEmployeeModel.sBranchCode = this.oBankEmployeeModel.sState + 
-    // this.oBankEmployeeModel.sDesignation + this.oBankEmployeeModel.sMandal + 
-    // this.oBankEmployeeModel.sVillage;
-    // this.oBankEmployeeModel.sAccountNo = this.oBankEmployeeModel.sBranchCode + '0001';
-    // this.oBankEmployeeModel.sCustomerId = this.oBankEmployeeModel.sBranchCode + '0002';
+  fnOnBankEmployeeInfoSubmit(): void {
+    //this.bIsAddActive = true;
+      this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
+        console.log(data);
+        this.fnSucessMessage();
+      });
   }
 
   fnResetState() {
@@ -186,52 +186,23 @@ bankaccounts: Array<BankEmployee>;
   // }
 
   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
+      this.aBankEmployees = [];
+      console.log(this.aBankEmployees);
+      this.aBankEmployees = [...cdata as any];
+      console.log(this.aBankEmployees);
       // this.oBankEmployeeModel.sState = '';
       this.modalService.dismissAll();
     });
   }
 
-  // fnonUploadImageSuccess(args: any){
-  //   this.oBankAccountModel.oImageInfo = args[1].oImageRefId;
-  // }
-
-  // fnDeleteCar(nIndex) {
-  //   console.log(this.bankaccounts[nIndex] as BankAccount);
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'You won\'t be able to revert this!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#34c38f',
-  //     cancelButtonColor: '#f46a6a',
-  //     confirmButtonText: 'Yes, delete it!'
-  //   }).then(result => {
-  //     if (result.value) {
-  //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
-  //         this.bankaccounts = [];
-  //         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-  //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
-  //           this.bankaccounts = [...cdata as any];
-  //           this.oBankAccountModel.sState = '';
-  //         });
-  //       });
-
-  //     }
-  //   });
-
-  // }
-
+  
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'State is saved sucessfully.',
+      title: 'Bank Employee data is saved sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -247,15 +218,6 @@ bankaccounts: Array<BankEmployee>;
     });
   }
 
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
 
   // fnEditSucessMessage() {
   //   Swal.fire({
