@@ -22,6 +22,8 @@ const oVillageController = require("./controllers/village.controller");
 const oAccountController = require("./controllers/account.controller");
 const oCreditLoanController = require("./controllers/creditloan.controller");
 const oBankEmployeeController = require("./controllers/bankemployee.controller");
+const oCreditController = require("./controllers/credit.controller");
+
 
 
 // catch 404 and forward to error handler
@@ -73,6 +75,7 @@ oServer.use("/nodejs/village", oVillageController);
 
 oServer.use("/nodejs/account", oAccountController);
 oServer.use("/nodejs/creditloan", oCreditLoanController);
+oServer.use("/nodejs/credit", oCreditController);
 oServer.use("/nodejs/bankemployee", oBankEmployeeController);
 
 

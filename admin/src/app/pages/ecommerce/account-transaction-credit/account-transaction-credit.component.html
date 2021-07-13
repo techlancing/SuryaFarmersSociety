@@ -5,7 +5,7 @@
   bgimageclass="addcategory_header"></app-page-title>
 
   <div class="row">
-    <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+    <form class="col-12" novalidate #_CreditFormElem="ngForm" (ngSubmit)="fnOnCreditInfoSubmit()">
       <div class="card card-bg">
         <div class="card-body">
           <h2>Credit</h2>
@@ -17,7 +17,7 @@
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="nAmount">Amount</label>                  
-                <input id="nAmount" name="nAmount" [(ngModel)]="oCreditModel.nAmount" type="text"
+                <input id="nAmount" name="nAmount" [(ngModel)]="oCreditModel.nAmount" type="number"
                   class="form-control" >
               </div>
             </div>
@@ -42,15 +42,22 @@
                 <div class="form-group">
                   <label for="sTransactionId">Transaction ID</label>
                   <input id="sTransactionId" name="sTransactionId" [(ngModel)]="oCreditModel.sTransactionId" type="text"
-                  class="form-control" disabled>
+                  class="form-control">
                 </div>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="sReceiverName">Received Employee</label>
-                <input id="sReceiverName" name="sReceiverName" [(ngModel)]="oCreditModel.sReceiverName" type="text"
-                  class="form-control" disabled>
+                <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
+                    [(ngModel)]="oCreditModel.sReceiverName" 
+                    bindLabel="displayText" bindValue="value">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.displayText}}
+                    </ng-template>
+                  </ng-select>
+               <!-- <input id="sReceiverName" name="sReceiverName" [(ngModel)]="oCreditModel.sReceiverName" type="text"
+                  class="form-control"> -->
               </div>
             </div>             
 
