@@ -1,7 +1,7 @@
 import { ImageInfo } from './image.model';
 export class Credit {
     constructor(       
-        public sTransactionId : number = null,//unique: true},        
+        public sTransactionId : string = '',//unique: true},        
         public sDate : string = '',
         public sReceiverName : string = '',        
         public sNarration : string = '',        

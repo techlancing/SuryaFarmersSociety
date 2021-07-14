@@ -5,7 +5,7 @@
     bgimageclass="addcategory_header"></app-page-title>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_DebitFormElem="ngForm" (ngSubmit)="fnOnDebitInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Debit</h2>
@@ -40,17 +40,22 @@
               <div class="col-sm-12">
                 <div class="add-container">
                   <div class="form-group">
-                    <label for="nTransactionId">Transaction ID</label>
-                    <input id="TransactionId" name="nTransactionId" [(ngModel)]="oDebitModel.nTransactionId" type="text"
-                    class="form-control" disabled>
+                    <label for="sTransactionId">Transaction ID</label>
+                    <input id="TransactionId" name="sTransactionId" [(ngModel)]="oDebitModel.sTransactionId" type="text"
+                    class="form-control" >
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="sReceiverName">Received Employee</label>
-                  <input id="sReceiverName" name="sReceiverName" [(ngModel)]="oDebitModel.sReceiverName" type="text"
-                    class="form-control" disabled>
+                  <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
+                    [(ngModel)]="oDebitModel.sReceiverName" 
+                    bindLabel="displayText" bindValue="value">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.displayText}}
+                    </ng-template>
+                  </ng-select>
                 </div>
               </div>             
 
