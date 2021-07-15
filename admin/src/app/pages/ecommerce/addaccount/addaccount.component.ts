@@ -11,6 +11,7 @@ import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'n
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addaccount',
@@ -24,6 +25,7 @@ export class AddaccountComponent implements OnInit {
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankAccount;
+
 
   public oBankAccountModel: BankAccount;
   nSelectedEditIndex: number;
@@ -66,6 +68,7 @@ export class AddaccountComponent implements OnInit {
     private oDistrictService: DistrictService,
     private oMandalService: MandalService,
     private oVillageService: VillageService,
+    private router : Router,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -89,8 +92,8 @@ export class AddaccountComponent implements OnInit {
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
-      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-      // this.oBankAccountModel = tempobj;
+      const tempobj = JSON.parse(JSON.stringify(this.oEditBankAccount));
+      this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
     this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
@@ -161,6 +164,38 @@ export class AddaccountComponent implements OnInit {
   }
 
   fnOnBankAccountInfoSubmit(): void {
+    if(this.oBankAccountModel.sState === '' || 
+    this.oBankAccountModel.nDistrictId === null || 
+    this.oBankAccountModel.nMandalId === null || 
+    this.oBankAccountModel.nVillageId === null || 
+    this.oBankAccountModel.sDate === '' || 
+    this.oBankAccountModel.sApplicantName === '' ||
+    this.oBankAccountModel.sApplicantSurName === '' ||
+    this.oBankAccountModel.sGender === '' ||
+    this.oBankAccountModel.sDOB === '' ||
+    this.oBankAccountModel.sAge === '' ||
+    this.oBankAccountModel.sAccountType === '' ||
+    this.oBankAccountModel.sAccountCategory === '' ||
+    this.oBankAccountModel.sShareType === '' ||
+    this.oBankAccountModel.sSMSAlert === '' ||
+    this.oBankAccountModel.sFatherOrHusbandName === '' ||
+    this.oBankAccountModel.sMotherName === '' ||
+    this.oBankAccountModel.sNomineeName === '' ||
+    this.oBankAccountModel.sVoterIdNo === '' ||
+    this.oBankAccountModel.sAadharNo === '' ||
+    this.oBankAccountModel.sRationCardNo === '' ||
+    this.oBankAccountModel.sFlatNo === '' ||
+    this.oBankAccountModel.sStreetName === '' ||
+    this.oBankAccountModel.sVillageAddress === '' ||
+    this.oBankAccountModel.sMandalAddress === '' ||
+    this.oBankAccountModel.sDistrictAddress === '' ||
+    this.oBankAccountModel.sPinCode === '' ||
+    this.oBankAccountModel.sMobileNumber === '' ||
+    this.oBankAccountModel.sEmail === '' ||
+    this.oBankAccountModel.nAmount === null ){
+      this.fnShowFieldsAreEmpty();
+      return;
+    }
     if(this.bankaccounts != undefined && this.bankaccounts !== null){
       if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
       {
@@ -185,6 +220,7 @@ export class AddaccountComponent implements OnInit {
           //this.oBankAccountModel.sState = '';
           this.bIsAddActive = false;
           this.addClicked.emit();
+          this.redirectTo('/newaccountform');
         });
       });
   }
@@ -200,6 +236,11 @@ export class AddaccountComponent implements OnInit {
   //     this.modalService.dismissAll();
   //   });
   // }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
   fnonUploadPassportImageSuccess(args: any){
     this.oBankAccountModel.oPassportImageInfo = args[1].oImageRefId;
@@ -252,6 +293,16 @@ export class AddaccountComponent implements OnInit {
       position: 'center',
       icon: 'success',
       title: 'State is saved sucessfully.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  fnShowFieldsAreEmpty(){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please fill all the fields.',
       showConfirmButton: false,
       timer: 1500
     });

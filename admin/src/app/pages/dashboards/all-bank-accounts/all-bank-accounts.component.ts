@@ -5,6 +5,7 @@ import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-all-bank-accounts',
@@ -20,9 +21,11 @@ export class AllBankAccountsComponent implements OnInit {
   tables$: Observable<BankAccount[]>;
   total$: Observable<number>;
   @Input() bHideBreadCrumb: boolean = false;
+  nSelectedProductIndex : number;
 
   constructor(private oBankAccountService : BankAccountService,
-    public service: AdvancedService) {
+    public service: AdvancedService,
+    private modalService: NgbModal) {
       this.tables$ = service.tables$;
       console.log(this.tables$);
     this.total$ = service.total$;
@@ -30,6 +33,19 @@ export class AllBankAccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'All Bank Accounts', active: true }];
+    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+      this.aAllBankAccounts = [...data as any];
+
+    });
+  }
+
+  /**
+   * Open modal
+   * @param content modal content
+   */
+   openModal(content: any, selectedindex: number) {
+     this.nSelectedProductIndex = selectedindex;
+    this.modalService.open(content, { centered: true, size: 'xl' });
   }
 
   /**

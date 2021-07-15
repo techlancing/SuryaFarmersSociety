@@ -15,10 +15,12 @@ import { DefaultComponent } from './default/default.component';
 import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
 import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
+import { EcommerceModule } from '../ecommerce/ecommerce.module';
 
 @NgModule({
   declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent],
   imports: [
+    EcommerceModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

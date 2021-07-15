@@ -66,15 +66,8 @@
                           </td>
                           
                           <td>
-                            <div ngbDropdown placement="bottom-left">
-                              <i class="mdi mdi-dots-vertical dropdown-toggle" ngbDropdownToggle data-toggle="dropdown"
-                                aria-expanded="true"></i>
-                              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                                <a class="dropdown-item" href="javascript: void(0);"><i class="mdi mdi-plus"></i>Add</a>
-                                <a class="dropdown-item" href="javascript: void(0);"><i
-                                    class="mdi mdi-account-edit"></i>Edit</a>
-                              </div>
-                            </div>
+                            <button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
+                              class="mdi mdi-account-edit" ></i>Edit</button>
                           </td>
                         </tr>
         
@@ -90,5 +83,16 @@
     </div>
   </div>
   
+  <ng-template #accountcontent role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Edit Account</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <app-addaccount bHideBreadCrumb='true' 
+      [bisEditMode]="true"
+    [oEditBankAccount]="aAllBankAccounts[nSelectedProductIndex]"></app-addaccount>
   
+    </div>
+  </ng-template>
   

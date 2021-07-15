@@ -91,6 +91,7 @@ const config: DropzoneConfigInterface = {
     NgbTooltipModule,
     ArchwizardModule
   ],
+  exports:[AddaccountComponent ],
   providers: [
     {
       provide: DROPZONE_CONFIG,
