@@ -42,7 +42,7 @@ oCreditLoanRouter.post("/edit_creditloan", asyncMiddleware(async(oReq, oRes, oNe
     oRes.status(400).send(e);
   }
 
-}));
+}));2
 
 // url: ..../creditloan/delete_creditloan
 oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, oNext) => { 
@@ -63,9 +63,9 @@ oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, 
 }));
 
 // url: ..../creditloan/creditloan_list
-oCreditLoanRouter.get("/creditloan_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oCreditLoanRouter.post("/creditloan_list", asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllCreditLoans = await oCreditLoanModel.find();
+      const oAllCreditLoans = await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo});
 
       if(!oAllCreditLoans){
         return oRes.status(400).send();

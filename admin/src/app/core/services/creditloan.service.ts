@@ -16,9 +16,9 @@ export class CreditLoanService {
         return this.http.post(sMethodUrl, oCreditLoan);
     }
 
-    fngetCreditLoanInfo(){
+    fngetCreditLoanInfo(sAccountNo: string){
       const sMethodUrl = `${this.sRootUrl}/creditloan_list`;
-      return this.http.get(sMethodUrl);
+      return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
     }
 
     fnEditCreditLoanInfo(oCreditLoan: CreditLoan) {

@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model'
+import { CreditLoan } from 'src/app/core/models/creditloan.model';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 
 @Component({
   selector: 'app-all-transaction-print',
@@ -14,17 +16,21 @@ import Swal from 'sweetalert2';
 })
 export class AllTransactionPrintComponent implements OnInit {
 
-  bankaccounts: Array<BankAccount>;
+  aBankAccounts: Array<BankAccount>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankAccount;
 
   public oAlltransactionprintmodel: BankAccount;
+  public aCreditLoan : Array<CreditLoan>;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
-
+  public sSelectedAccount: string;
+  
+  bIsBtnActive: boolean;
+  bIsAccountData: boolean;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -67,6 +73,7 @@ export class AllTransactionPrintComponent implements OnInit {
   @Input() bisEditMode: boolean;
   
   constructor(private oBankAccountService: BankAccountService,
+    private oCreditLoanServcie : CreditLoanService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -141,10 +148,7 @@ export class AllTransactionPrintComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfoByNumber("010103010001").subscribe((data) => {
-      this.oAlltransactionprintmodel = data as any;
-
-    });
+    this.fnGetAllAccounts();
   }
 
   fnCreateAccountDetails(){
@@ -159,15 +163,31 @@ export class AllTransactionPrintComponent implements OnInit {
     // this.oCreditModel.sState = '';
   }
 
+  fnGetAccountNumber(): void{
+    if(this.sSelectedAccount.length > 0 ){
+      this.bIsBtnActive = true;
+    }
+  }
+
+  fnFecthAccountDetails(): void{
+    this.oBankAccountService.fngetBankAccountInfoByNumber(this.sSelectedAccount).subscribe((data) => {
+      this.oAlltransactionprintmodel = data as any;
+      this.bIsAccountData = true;
+      this.oCreditLoanServcie.fngetCreditLoanInfo(this.sSelectedAccount).subscribe((loandata)=>{
+        this.aCreditLoan = loandata as any;
+      });
+    });
+  }
 
 
-  fnUpdateParentAfterEdit() {
+
+  fnGetAllAccounts() {
     this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
+      this.aBankAccounts = [];
+      console.log(this.aBankAccounts);
+      this.aBankAccounts = [...cdata as any];
+      console.log(this.aBankAccounts);
       //this.oCreditModel.sState = '';
       this.modalService.dismissAll();
     });

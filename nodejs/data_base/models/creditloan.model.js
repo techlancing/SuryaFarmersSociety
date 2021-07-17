@@ -7,8 +7,7 @@ var oCreditLoanSchema = new oSchema({
   nLoanId : {type: Number},
   sAccountNo: { 
     type: String,
-    trim: true,
-    unique: true
+    trim: true
    },//unique: true},
    nSanctionAmount:{
     type: Number

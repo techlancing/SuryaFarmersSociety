@@ -66,6 +66,12 @@ export const MENU: MenuItem[] = [
                 link: '/addemployee',
                 parentId: 10
             },
+            {
+                id: 45,
+                label: 'MENUITEMS.ECOMMERCE.LIST.CREDITLOAN',
+                link: '/creditloan',
+                parentId: 40
+            }
             
         ]
     },
@@ -79,12 +85,6 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
             link: '/passbookprint',
             parentId: 35
-        },
-        {
-            id: 37,
-            label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
-            link: '/alltranactionprint',
-            parentId: 35
         }
     ]
 },
@@ -93,6 +93,12 @@ export const MENU: MenuItem[] = [
     label: 'MENUITEMS.ACCOUNTTRANSACTION.TEXT',
     icon: 'bx-user',
     subItems: [
+        {
+            id: 37,
+            label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.ALLTRANSACTIONPRINT',
+            link: '/alltranactionprint',
+            parentId: 35
+        },
           {
             id: 42,
             label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DEBIT',
@@ -111,12 +117,7 @@ export const MENU: MenuItem[] = [
             link: '/credit',
             parentId: 40
         },
-        {
-            id: 45,
-            label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.CREDITLOAN',
-            link: '/creditloan',
-            parentId: 40
-        },
+        
         {
             id: 46,
             label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.INTRATRANSACTION',

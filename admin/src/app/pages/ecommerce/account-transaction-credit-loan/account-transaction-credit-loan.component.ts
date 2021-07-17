@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { BankAccount } from '../../../core/models/bankaccount.model';
 import { BankAccountService } from '../../../core/services/account.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-account-transaction-credit-loan',
   templateUrl: './account-transaction-credit-loan.component.html',
@@ -58,6 +59,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   constructor(private oCreditLoanService: CreditLoanService,
     private oBankAccountService: BankAccountService,
+            public router: Router,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -142,8 +144,14 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.redirectTo('/creditloan');
       });
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
   
   fnSucessMessage() {
     Swal.fire({

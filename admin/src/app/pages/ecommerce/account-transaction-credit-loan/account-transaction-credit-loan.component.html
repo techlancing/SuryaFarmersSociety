@@ -44,7 +44,7 @@
                     <label for="sTypeofLoan">Type Of Loan</label>
                     <ng-select [items]="aTypeofLoan" name="sTypeofLoan"
                       [(ngModel)]="oCreditLoanModel.sTypeofLoan" 
-                      bindLabel="displayText" bindValue="value">
+                      bindLabel="displayText" bindValue="displayText">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>
@@ -58,7 +58,7 @@
                     <label for="sInstallmentType">Installment Type</label>
                     <ng-select [items]="aInstallmentType" name="sInstallmentType"
                       [(ngModel)]="oCreditLoanModel.sInstallmentType" 
-                      bindLabel="displayText" bindValue="value">
+                      bindLabel="displayText" bindValue="displayText">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>
@@ -100,7 +100,7 @@
                     <label for="sEmployeeName">Loan Issue Employee</label>
                     <ng-select [items]="aLoanIssueEmployee" name="sEmployeeName"
                       [(ngModel)]="oCreditLoanModel.sEmployeeName" 
-                      bindLabel="displayText" bindValue="value">
+                      bindLabel="displayText" bindValue="displayText">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>

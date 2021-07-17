@@ -110,24 +110,25 @@
         "ADDMANDAL": "Add Mandal",
         "ADDVILLAGE": "Add Village",
         "ADDACCOUNT": "Add New Account",
-        "ADDEMPLOYEE": "Add Employee"
+        "ADDEMPLOYEE": "Add Employee",
+        "CREDITLOAN": "Add New Loan"
       }
     },
     "PASSBOOK": {
       "TEXT": "PASSBOOK",
       "LIST": {
         "PASSBOOKPRINT": "Passbook Print",
-        "NEWPASSBOOKPRINT": "New Passbook Print",
-        "ALLTRANSACTIONPRINT": "All Transaction Print"
+        "NEWPASSBOOKPRINT": "New Passbook Print"
+        
       }
     },
     "ACCOUNTTRANSACTION": {
       "TEXT": "TRANSACTIONS",
       "LIST": {
+        "ALLTRANSACTIONPRINT": "All Transactions",
         "DEBIT": "Debit",
         "DAILYSAVINGDEBIT": "Daily saving Debit",
         "CREDIT": "Credit",
-        "CREDITLOAN": "Credit Loan",
         "INTRATRANSACTION": "Intra Transaction"
       }
     },
