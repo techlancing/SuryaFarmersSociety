@@ -17,7 +17,33 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
   const newDebit = new oDebitModel(oReq.body);
   try{
     // Save Debit Info
-    await newDebit.save();    
+    await newDebit.save();
+    
+    //To get last transaction data to get the balance amount
+    let oBalanceAmount = 0;
+    try{
+      const olasttransaction = await oTransactionModel.find({nLoanId: newDebit.nLoanId}).sort({_id:-1}).limit(1);
+      if(olasttransaction.length > 0) {
+        oBalanceAmount = olasttransaction[0].nBalanceAmount;
+       // oRes.send("Success");
+      }
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = newDebit.sAccountNo;
+    oTransaction.nLoanId = newDebit.nLoanId;
+    oTransaction.nCreditAmount = 0;
+    oTransaction.nDebitAmount = newDebit.nAmount;
+    oTransaction.nBalanceAmount = oBalanceAmount - newDebit.nAmount;
+    oTransaction.sDate = newDebit.sDate;
+    oTransaction.sNarration = "By Cash";  
+    
+    const newTransaction = new oTransactionModel(oTransaction);
+    await newTransaction.save();
     oRes.json("Success");
 
   }catch(e){

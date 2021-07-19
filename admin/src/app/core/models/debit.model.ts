@@ -1,8 +1,9 @@
 import { ImageInfo } from './image.model';
 export class Debit {
     constructor(
+        public sAccountNo : string = '',
+        public nLoanId : number = null,
         public sTransactionId : string = '',//unique: true},
-        //public sAccountNo : string = null,
         public sDate : string = '',
         public sReceiverName : string = '',
         public sNarration : string = '',        

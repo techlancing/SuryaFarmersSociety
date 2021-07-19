@@ -17,7 +17,34 @@ oCreditRouter.post("/add_credit", asyncMiddleware(async (oReq, oRes, oNext) => {
   const newCredit = new oCreditModel(oReq.body);
   try{
     // Save credit Info
-    await newCredit.save();    
+    await newCredit.save(); 
+    
+    //To get last transaction data to get the balance amount
+    let oBalanceAmount = 0;
+    try{
+      const olasttransaction = await oTransactionModel.find({nLoanId: newCredit.nLoanId}).sort({_id:-1}).limit(1);
+      if(olasttransaction.length > 0) {
+        oBalanceAmount = olasttransaction[0].nBalanceAmount;
+       // oRes.send("Success");
+      }
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = newCredit.sAccountNo;
+    oTransaction.nLoanId = newCredit.nLoanId;
+    oTransaction.nCreditAmount = newCredit.nAmount;
+    oTransaction.nDebitAmount = 0;
+    oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
+    oTransaction.sDate = newCredit.sDate;
+    oTransaction.sNarration = "Topup Loan";  
+    
+    const newTransaction = new oTransactionModel(oTransaction);
+    await newTransaction.save();
+
     oRes.json("Success");
 
   }catch(e){

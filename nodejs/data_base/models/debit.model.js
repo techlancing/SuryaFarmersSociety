@@ -5,10 +5,15 @@ const oSchema = oMongoose.Schema
 
 var oDebitSchema = new oSchema({
   nDebitId : {type: Number},
+  nLoanId : {type: Number},
+  sAccountNo: { 
+    type: String,
+    trim: true
+   },//unique: true},
   sTransactionId: { 
     type: String,
     trim: true,
-   },//unique: true},
+   },//unique: true},c
    nAmount:{
     type: Number
    },

@@ -2,6 +2,7 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
+const oTransactionModel = require("../data_base/models/transaction.model");
 
 const oCreditLoanRouter = oExpress.Router();
 
@@ -17,7 +18,21 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
   const newCreditLoan = new oCreditLoanModel(oReq.body);
   try{
     // Save creditloan Info
-    await newCreditLoan.save();    
+    await newCreditLoan.save();
+    
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = newCreditLoan.sAccountNo;
+    oTransaction.nLoanId = newCreditLoan.nLoanId;
+    oTransaction.nCreditAmount = newCreditLoan.nSanctionAmount;
+    oTransaction.nDebitAmount = 0;
+    oTransaction.nBalanceAmount = newCreditLoan.nSanctionAmount;
+    oTransaction.sDate = newCreditLoan.sDate;
+    oTransaction.sNarration = newCreditLoan.sTypeofLoan;  
+    
+    const newTransaction = new oTransactionModel(oTransaction);
+    await newTransaction.save();
+
     oRes.json("Success");
 
   }catch(e){
