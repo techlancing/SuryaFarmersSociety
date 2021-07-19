@@ -40,9 +40,11 @@
               <div class="row">
               <div class="row col-sm-12">
                 <div class="col-sm-6">
-                  <div class="form-group">
+                  <div class="form-group img-container">
                     <label for="sAccountNo">Photo</label>
-                    <img/>                
+                    <img src="{{sImageRootPath + oAlltransactionprintmodel.oPassportImageInfo?.sImageURL}}"/>    
+                    <img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature1Info?.sImageURL}}"/>  
+                    <img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature2Info?.sImageURL}}"/>              
                      </div>
                 </div>
                 <div class="row col-sm-6">

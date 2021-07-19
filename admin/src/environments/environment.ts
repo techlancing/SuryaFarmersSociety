@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   applicationName: "suryafarmerssociety",
   apiUrl: "/",
-  imagePath: "http://localhost:3300/",
+  imagePath: "http://localhost:2155/",
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',

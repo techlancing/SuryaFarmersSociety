@@ -71,6 +71,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
+  sImageRootPath : string;
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
@@ -78,6 +79,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+    this.sImageRootPath = environment.imagePath;
     this.aTypeofLoan = [
       {
         displayText: 'EMI Loan',
