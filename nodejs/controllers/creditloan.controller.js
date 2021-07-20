@@ -33,6 +33,10 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
 
+    //push transaction info and again save credit loan
+    newCreditLoan.oTransactionInfo.push(newTransaction);
+    await newCreditLoan.save();
+
     oRes.json("Success");
 
   }catch(e){

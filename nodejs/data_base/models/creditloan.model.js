@@ -46,6 +46,7 @@ var oCreditLoanSchema = new oSchema({
     type: String,
     trim: true
   },
+  oTransactionInfo: [{type: oSchema.Types.ObjectId, ref: 'Transaction'}]
 });
 oCreditLoanSchema.plugin(oAutoIncrement, { inc_field: 'nLoanId', inc_amount: 1, start_seq: 100000 });
 

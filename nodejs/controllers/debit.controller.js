@@ -3,6 +3,8 @@ const oMongoose = require('mongoose');
 
 const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oCreditLoanModel = require("../data_base/models/creditloan.model");
+
 const oDebitRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -44,6 +46,16 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
+
+    const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newDebit.nLoanId});
+
+    if(!oCreditLoan){
+      return oRes.status(400).send();
+    }
+    else{
+      oCreditLoan.oTransactionInfo.push(newTransaction);
+      await oCreditLoan.save();
+    }
     oRes.json("Success");
 
   }catch(e){

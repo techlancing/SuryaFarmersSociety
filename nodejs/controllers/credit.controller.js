@@ -3,6 +3,8 @@ const oMongoose = require('mongoose');
 
 const oCreditModel = require("../data_base/models/credit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oCreditLoanModel = require("../data_base/models/creditloan.model");
+
 
 const oCreditRouter = oExpress.Router();
 
@@ -45,6 +47,16 @@ oCreditRouter.post("/add_credit", asyncMiddleware(async (oReq, oRes, oNext) => {
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
+
+    const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newCredit.nLoanId});
+
+    if(!oCreditLoan){
+      return oRes.status(400).send();
+    }
+    else{
+      oCreditLoan.oTransactionInfo.push(newTransaction);
+      await oCreditLoan.save();
+    }
 
     oRes.json("Success");
 
