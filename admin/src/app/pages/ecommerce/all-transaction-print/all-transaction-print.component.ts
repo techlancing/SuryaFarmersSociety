@@ -16,13 +16,13 @@ import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 })
 export class AllTransactionPrintComponent implements OnInit {
 
-  aBankAccounts: Array<BankAccount>;
+  
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankAccount;
 
-  public oAlltransactionprintmodel: BankAccount;
+  
   public aCreditLoan : Array<CreditLoan>;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
@@ -71,7 +71,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
-  sImageRootPath : string;
+  
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
@@ -79,7 +79,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-    this.sImageRootPath = environment.imagePath;
+    
     this.aTypeofLoan = [
       {
         displayText: 'EMI Loan',
@@ -141,7 +141,7 @@ export class AllTransactionPrintComponent implements OnInit {
     //   },
     //   ];  
     
-    this.oAlltransactionprintmodel = new BankAccount();
+    
     this.sButtonText = 'Print';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -150,7 +150,13 @@ export class AllTransactionPrintComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.fnGetAllAccounts();
+    
+  }
+
+  fnGetCreditLoans(oSelectedAccount : BankAccount){
+    this.oCreditLoanServcie.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
+      this.aCreditLoan = loandata as any;
+    });
   }
 
   fnCreateAccountDetails(){
@@ -165,35 +171,11 @@ export class AllTransactionPrintComponent implements OnInit {
     // this.oCreditModel.sState = '';
   }
 
-  fnGetAccountNumber(): void{
-    if(this.sSelectedAccount.length > 0 ){
-      this.bIsBtnActive = true;
-    }
-  }
-
-  fnFecthAccountDetails(): void{
-    this.oBankAccountService.fngetBankAccountInfoByNumber(this.sSelectedAccount).subscribe((data) => {
-      this.oAlltransactionprintmodel = data as any;
-      this.bIsAccountData = true;
-      this.oCreditLoanServcie.fngetCreditLoanInfo(this.sSelectedAccount).subscribe((loandata)=>{
-        this.aCreditLoan = loandata as any;
-      });
-    });
-  }
+  
 
 
 
-  fnGetAllAccounts() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.aBankAccounts = [];
-      console.log(this.aBankAccounts);
-      this.aBankAccounts = [...cdata as any];
-      console.log(this.aBankAccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
+  
 
 
 

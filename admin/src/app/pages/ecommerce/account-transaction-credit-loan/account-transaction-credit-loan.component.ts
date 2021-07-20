@@ -139,6 +139,10 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     });
   }
 
+  fnGetActiveAccount(oActiveAccount: BankAccount){
+    this.oCreditLoanModel.sAccountNo = oActiveAccount.sAccountNo;
+  }
+
   fnOnCreditLoanInfoSubmit(): void {
     //this.bIsAddActive = true;
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {

@@ -2,6 +2,7 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oCreditModel = require("../data_base/models/credit.model");
+const oTransactionModel = require("../data_base/models/transaction.model");
 
 const oCreditRouter = oExpress.Router();
 

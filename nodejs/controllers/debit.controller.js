@@ -2,7 +2,7 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oDebitModel = require("../data_base/models/debit.model");
-
+const oTransactionModel = require("../data_base/models/transaction.model");
 const oDebitRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -40,7 +40,7 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
     oTransaction.nDebitAmount = newDebit.nAmount;
     oTransaction.nBalanceAmount = oBalanceAmount - newDebit.nAmount;
     oTransaction.sDate = newDebit.sDate;
-    oTransaction.sNarration = "By Cash";  
+    oTransaction.sNarration = newDebit.sNarration;  
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

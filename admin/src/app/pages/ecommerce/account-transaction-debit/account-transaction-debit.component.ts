@@ -5,6 +5,9 @@ import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'n
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { BankAccount } from 'src/app/core/models/bankaccount.model';
+import { CreditLoanService } from 'src/app/core/services/creditloan.service';
+import { CreditLoan } from 'src/app/core/models/creditloan.model';
 
 @Component({
   selector: 'app-account-transaction-debit',
@@ -17,7 +20,7 @@ export class AccountTransactionDebitComponent implements OnInit {
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditDebit: Debit;
-
+  public aCreditLoan : Array<CreditLoan>;
   public oDebitModel: Debit;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
@@ -43,6 +46,7 @@ export class AccountTransactionDebitComponent implements OnInit {
   @Input() bisEditMode: boolean;
   // oDebitModel: any;
   constructor(private oDebitService: DebitService,
+    private oCreditLoanService: CreditLoanService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -80,6 +84,13 @@ export class AccountTransactionDebitComponent implements OnInit {
         console.log(data);
         this.fnSucessMessage();
       });
+  }
+
+  fnGetCreditLoans(oSelectedAccount : BankAccount){
+    this.oDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
+    this.oCreditLoanService.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
+      this.aCreditLoan = loandata as any;
+    });
   }
 
   fnSucessMessage() {

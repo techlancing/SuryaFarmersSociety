@@ -43,6 +43,7 @@ import { NewPassbookPrintComponent } from './new-passbook-print/new-passbook-pri
 import { SelectPrintLineComponent } from './select-print-line/select-print-line.component';
 import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
 import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
+import { BankAccountDataComponent } from './bank-account-data/bank-account-data.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -71,7 +72,8 @@ const config: DropzoneConfigInterface = {
      NewPassbookPrintComponent,
      SelectPrintLineComponent,
      CategoryWiseBalanceSummaryComponent,
-     AllCategoryWiseBalanceSummaryComponent],
+     AllCategoryWiseBalanceSummaryComponent,
+     BankAccountDataComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,
