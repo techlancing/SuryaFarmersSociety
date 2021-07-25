@@ -27,7 +27,6 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
       const olasttransaction = await oTransactionModel.find({nLoanId: newDebit.nLoanId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
-       // oRes.send("Success");
       }
     }catch(e){
       console.log(e);
@@ -40,7 +39,7 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
     oTransaction.nLoanId = newDebit.nLoanId;
     oTransaction.nCreditAmount = 0;
     oTransaction.nDebitAmount = newDebit.nAmount;
-    oTransaction.nBalanceAmount = oBalanceAmount - newDebit.nAmount;
+    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - newDebit.nAmount) * 100) / 100).toFixed(2);
     oTransaction.sDate = newDebit.sDate;
     oTransaction.sNarration = newDebit.sNarration;  
     
@@ -53,7 +52,10 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
       return oRes.status(400).send();
     }
     else{
-      oCreditLoan.oTransactionInfo.push(newTransaction);
+      if(oTransaction.nBalanceAmount > 0)
+        oCreditLoan.oTransactionInfo.push(newTransaction);
+      else
+        oCreditLoan.sLoanStatus = 'Completed';
       await oCreditLoan.save();
     }
     oRes.json("Success");

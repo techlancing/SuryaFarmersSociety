@@ -12,7 +12,17 @@ var oCreditLoanSchema = new oSchema({
    nSanctionAmount:{
     type: Number
    },
+    nIntrest : {
+      type : Number
+    },
+    nTotalAmount : {
+      type : Number
+    },
    sTransactionId: {
+    type: String,
+    trim: true
+  },
+  sLoanStatus: {
     type: String,
     trim: true
   },
@@ -28,9 +38,8 @@ var oCreditLoanSchema = new oSchema({
     type: String,
     trim: true
   },
-  sLoanRepaymentPeriod: {
-    type: String,
-    trim: true
+  nLoanRepaymentPeriod: {
+    type: Number
   },
   nInstallmentAmount:{
     type: Number

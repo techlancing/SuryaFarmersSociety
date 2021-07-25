@@ -25,6 +25,8 @@ export class AccountTransactionDebitComponent implements OnInit {
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
+  nActiveLoanIndex : number;
+  bShowLoanData : boolean;
 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -80,6 +82,13 @@ export class AccountTransactionDebitComponent implements OnInit {
 
   fnOnDebitInfoSubmit(): void {
     //this.bIsAddActive = true;
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+      let datetoday = `${yyyy}-${mm}-${dd}`;
+    this.oDebitModel.sDate = datetoday.toString();
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
@@ -93,6 +102,16 @@ export class AccountTransactionDebitComponent implements OnInit {
     });
   }
 
+  fnFecthLoanData() : void{
+    this.aCreditLoan.map((loan : CreditLoan,index)=>{
+      if(loan.nLoanId === this.oDebitModel.nLoanId){
+        this.nActiveLoanIndex = index;
+        this.bShowLoanData = true;
+      }
+        
+    })
+    
+  }
   fnSucessMessage() {
     Swal.fire({
       position: 'center',

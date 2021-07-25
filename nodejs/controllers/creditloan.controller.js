@@ -24,9 +24,9 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
     let oTransaction = {};
     oTransaction.sAccountNo = newCreditLoan.sAccountNo;
     oTransaction.nLoanId = newCreditLoan.nLoanId;
-    oTransaction.nCreditAmount = newCreditLoan.nSanctionAmount;
+    oTransaction.nCreditAmount = newCreditLoan.nTotalAmount;
     oTransaction.nDebitAmount = 0;
-    oTransaction.nBalanceAmount = newCreditLoan.nSanctionAmount;
+    oTransaction.nBalanceAmount = newCreditLoan.nTotalAmount;
     oTransaction.sDate = newCreditLoan.sDate;
     oTransaction.sNarration = newCreditLoan.sTypeofLoan;  
     
@@ -34,7 +34,8 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
     await newTransaction.save();
 
     //push transaction info and again save credit loan
-    newCreditLoan.oTransactionInfo.push(newTransaction);
+    newCreditLoan.oTransactionInfo = newTransaction._id;
+    newCreditLoan.sLoanStatus = "Active";
     await newCreditLoan.save();
 
     oRes.json("Success");
@@ -84,13 +85,18 @@ oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, 
 // url: ..../creditloan/creditloan_list
 oCreditLoanRouter.post("/creditloan_list", asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllCreditLoans = await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo});
-
-      if(!oAllCreditLoans){
-        return oRes.status(400).send();
-      }
-
-      oRes.json(oAllCreditLoans);
+      await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo})
+      .populate({
+        path: 'oTransactionInfo'
+      }).exec((oError, oAllCreditLoans) => {
+        if(!oError) {
+            oRes.json(oAllCreditLoans);
+        }
+        else{
+            console.log(oError);
+            return oRes.status(400).send();
+        }
+      });
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);

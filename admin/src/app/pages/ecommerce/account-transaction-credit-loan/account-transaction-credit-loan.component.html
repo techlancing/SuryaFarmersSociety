@@ -10,23 +10,37 @@
     <div class="row">
       <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnCreditLoanInfoSubmit()">
         <div class="card card-bg">
+          
           <div class="card-body">
-            
-            
+            <h2 *ngIf="oCreditLoanModel && oCreditLoanModel.sAccountNo">New Loan - {{oCreditLoanModel.sAccountNo}}</h2>
              <div class="row">
-              
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="nSanctionAmount">Sanction Amount</label>                  
-                  <input id="nSanctionAmount" name="nSanctionAmount" [(ngModel)]="oCreditLoanModel.nSanctionAmount" type="number"
-                    class="form-control" >
-                </div>
-              </div>
+               
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="loanissueDate">Loan Issue Date</label>                  
                   <input id="loanissueDate" name="loanissueDate" [(ngModel)]="oCreditLoanModel.sDate" type="date"
                     class="form-control" >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nSanctionAmount">Sanction Amount</label>                  
+                  <input id="nSanctionAmount" name="nSanctionAmount" [(ngModel)]="oCreditLoanModel.nSanctionAmount" type="number"
+                    class="form-control" (input)="fnCalculateTotalAmount()">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nIntrest">Intrest (%)</label>                  
+                  <input id="nIntrest" name="nIntrest" [(ngModel)]="oCreditLoanModel.nIntrest" type="number"
+                    class="form-control" (input)="fnCalculateTotalAmount()">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nSanctionAmount">Total Amount</label>                  
+                  <input id="nTotalAmount" name="nTotalAmount" [(ngModel)]="oCreditLoanModel.nTotalAmount" type="number"
+                    class="form-control" disabled>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -59,9 +73,9 @@
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sLoanRepaymentPeriod">Loan Repayment Period</label>                  
-                  <input id="sLoanRepaymentPeriod" name="sLoanRepaymentPeriod" [(ngModel)]="oCreditLoanModel.sLoanRepaymentPeriod" type="text"
-                    class="form-control" >
+                  <label for="nLoanRepaymentPeriod">Loan Repayment Period (Months)</label>                  
+                  <input id="nLoanRepaymentPeriod" name="nLoanRepaymentPeriod" [(ngModel)]="oCreditLoanModel.nLoanRepaymentPeriod" type="number"
+                    class="form-control" (input)="fnCalculateEMIAmount()">
                 </div>
               </div>
               <div class="col-sm-6">

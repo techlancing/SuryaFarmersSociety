@@ -3,11 +3,11 @@
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
-  
+    <app-bank-account-data headerText="All Transaction Print" 
+    (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
     <div class="row">
       
-      <app-bank-account-data headerText="All Transaction Print" 
-      (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
+      
     <div class="row col-12">
       <div class="col-12"  >
         <div class="card card-bg" *ngFor="let oCreditLoanmodel of aCreditLoan">
@@ -46,8 +46,8 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <label for="sLoanRepaymentPeriod">Loan Repayment Period:</label>
-                        <label class="account-detail">{{oCreditLoanmodel.sLoanRepaymentPeriod}}</label>
+                        <label for="nLoanRepaymentPeriod">Loan Repayment Period:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.nLoanRepaymentPeriod}}</label>
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -101,36 +101,36 @@
                     </div>
                                  
                   </div>
-                  <div class="row" >
+                  <div class="row" *ngFor="let otransactionmodel of oCreditLoanmodel.oTransactionInfo">
                     <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="sBranchCode">Date</label> 
+                        <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
                         
                       </div>
                     </div>
                     
                     <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="sAccountNo">Credit</label>                  
+                        <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
                          </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="form-group">
-                        <label for="sBranchCode">Debit</label>                  
+                        <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
                         <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                           class="form-control" > -->
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="form-group">
-                          <label for="sBranchCode">Balance Amount</label>  
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount}}</label>  
                           <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                           class="form-control" > -->
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label for="sBranchCode">Narration</label>                  
+                        <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
                         <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                           class="form-control" > -->
                       </div>

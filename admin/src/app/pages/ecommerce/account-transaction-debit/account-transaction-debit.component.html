@@ -9,9 +9,10 @@
 
     <div class="row">
       <form class="col-12" novalidate #_DebitFormElem="ngForm" (ngSubmit)="fnOnDebitInfoSubmit()">
+        <div class="col-12">
         <div class="card card-bg">
           <div class="card-body">
-            <h2>Debit</h2>
+            <h2>Select Loan</h2>
   
              <div class="row">
               
@@ -27,60 +28,198 @@
                   </ng-select>
                 </div>
               </div>  
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="nAmount">Amount</label>                  
-                  <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"
-                    class="form-control" >
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="sDate">Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="oDebitModel.sDate" type="date"
-                    class="form-control" >
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="sNarration">Narration</label>                  
-                  <input id="sNarration" name="sNarration" [(ngModel)]="oDebitModel.sNarration" type="text"
-                    class="form-control" >
-                </div>
+              <div class="col-sm-6 btn-container">
+                <button type="button" class="btn btn-primary mr-1" 
+                 
+                (click)="fnFecthLoanData()">
+                Get Loan Details</button>
+                
               </div>
                
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="col-12"  *ngIf="bShowLoanData">
+          <div class="card card-bg" >
+            <div class="card-body">
+               
+              <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
+                <ngb-panel id="static-1">
+                  <ng-template ngbPanelTitle class="text-black">
+                    <h2>{{aCreditLoan[nActiveLoanIndex].sTypeofLoan}} - {{aCreditLoan[nActiveLoanIndex].nSanctionAmount}}</h2>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sDate">Loan Issue Date:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sDate}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sTypeofLoan">Type of Loan:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sTypeofLoan}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="nSanctionAmount">Sanction Amount:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nSanctionAmount}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sInstallmentType">Installment Types:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sInstallmentType}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="nLoanRepaymentPeriod">Loan Repayment Period:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nLoanRepaymentPeriod}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="nInstallmentAmount">Installment Amount:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nInstallmentAmount}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="sEndofLoanDate">End of the Loan:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sEndofLoanDate}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <h4>Account Ledger</h4>
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode">Date</label> 
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sAccountNo">Credit</label>                  
+                           </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode">Debit</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="sBranchCode">Balance Amount</label>  
+                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for="sBranchCode">Narration</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                                   
+                    </div>
+                    <div class="row" *ngFor="let otransactionmodel of aCreditLoan[nActiveLoanIndex].oTransactionInfo">
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
+                          
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
+                           </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount}}</label>  
+                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                                   
+                    </div>
+                  </ng-template>
+                </ngb-panel>
+                
+              </ngb-accordion>
+
+              <h2>Debit</h2>
+              <div class="row">
               
-              <div class="col-sm-6">
-                <div class="add-container">
+                
+                <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="sTransactionId">Transaction ID</label>
-                    <input id="TransactionId" name="sTransactionId" [(ngModel)]="oDebitModel.sTransactionId" type="text"
-                    class="form-control" >
+                    <label for="nAmount">Amount</label>                  
+                    <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"
+                      class="form-control" >
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="sReceiverName">Received Employee</label>
-                  <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
-                    [(ngModel)]="oDebitModel.sReceiverName" 
-                    bindLabel="displayText" bindValue="value">
-                    <ng-template ng-label-tmp let-item="item">
-                      {{item.displayText}}
-                    </ng-template>
-                  </ng-select>
+                
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="sNarration">Narration</label>                  
+                    <input id="sNarration" name="sNarration" [(ngModel)]="oDebitModel.sNarration" type="text"
+                      class="form-control" >
+                  </div>
                 </div>
-              </div>             
-
-              <div class="col-sm-8 add-category-btn-container">
-                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
-                >{{sButtonText}}</button>
-                <button type="button" class="btn btn-secondary"
-                >Clear</button>
-                <!-- <button type="button" class="btn btn-secondary"
-                >Clear</button> -->
+                 
+                
+                
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="sReceiverName">Received Employee</label>
+                    <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
+                      [(ngModel)]="oDebitModel.sReceiverName" 
+                      bindLabel="displayText" bindValue="displayText">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>             
+  
+                <div class="col-sm-8 add-category-btn-container">
+                  <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
+                  >{{sButtonText}}</button>
+                  <button type="button" class="btn btn-secondary"
+                  >Clear</button>
+                  <!-- <button type="button" class="btn btn-secondary"
+                  >Clear</button> -->
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        
       </form>

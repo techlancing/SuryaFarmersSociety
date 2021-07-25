@@ -152,6 +152,22 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       });
   }
 
+  fnCalculateTotalAmount() : void {
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest){
+      this.oCreditLoanModel.nTotalAmount = this.oCreditLoanModel.nSanctionAmount + 
+      (this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest / 100);
+      this.fnCalculateEMIAmount();
+    }
+  }
+
+  fnCalculateEMIAmount() : void {
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && 
+      this.oCreditLoanModel.nLoanRepaymentPeriod){
+        let emiamount = (Math.round((this.oCreditLoanModel.nTotalAmount / this.oCreditLoanModel.nLoanRepaymentPeriod) * 100) / 100).toFixed(2);
+        this.oCreditLoanModel.nInstallmentAmount = Number(emiamount);
+      }
+  }
+
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
