@@ -58,11 +58,17 @@ const routes: Routes = [
     },
     {
         path: 'credit',
-        component: AccountTransactionCreditComponent
+        component: AccountTransactionDebitComponent,
+        data: {
+            type: 'credit'
+        }
     },
     {
         path: 'debit',
-        component: AccountTransactionDebitComponent
+        component: AccountTransactionDebitComponent,
+        data: {
+            type: 'debit'
+        }
     },
     {
         path:'dailysavingdebit',

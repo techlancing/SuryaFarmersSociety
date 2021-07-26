@@ -4,7 +4,7 @@
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
 
-    <app-bank-account-data headerText="Debit" 
+    <app-bank-account-data [headerText]='sCaption' 
     (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
 
     <div class="row">
@@ -67,6 +67,18 @@
                         <div class="form-group">
                           <label for="nSanctionAmount">Sanction Amount:</label>
                           <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nSanctionAmount}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="nIntrest">Intrest:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nIntrest}}</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="nTotalAmount">Total Amount:</label>
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nTotalAmount}}</label>
                         </div>
                       </div>
                       <div class="col-sm-3">
@@ -173,11 +185,19 @@
                 
               </ngb-accordion>
 
-              <h2>Debit</h2>
+              <h2>{{sCaption}} - Transaction</h2>
               <div class="row">
               
                 
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf="!bIsCredit">
+                  <div class="form-group">
+                    <label for="nAmount">Amount</label>                  
+                    <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"
+                      class="form-control" readonly>
+                  </div>
+                </div>
+
+                <div class="col-sm-6"  *ngIf="bIsCredit">
                   <div class="form-group">
                     <label for="nAmount">Amount</label>                  
                     <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"

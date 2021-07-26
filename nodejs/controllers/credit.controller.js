@@ -43,7 +43,7 @@ oCreditRouter.post("/add_credit", asyncMiddleware(async (oReq, oRes, oNext) => {
     oTransaction.nDebitAmount = 0;
     oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
     oTransaction.sDate = newCredit.sDate;
-    oTransaction.sNarration = "Topup Loan";  
+    oTransaction.sNarration = newCredit.sNarration;  
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

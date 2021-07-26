@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
 import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { CreditLoan } from 'src/app/core/models/creditloan.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CreditService } from 'src/app/core/services/credit.service';
 
 @Component({
   selector: 'app-account-transaction-debit',
@@ -19,7 +21,8 @@ export class AccountTransactionDebitComponent implements OnInit {
   
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditDebit: Debit;
+  @Input() bIsCredit: boolean;
+  public sCaption : string;
   public aCreditLoan : Array<CreditLoan>;
   public oDebitModel: Debit;
   nSelectedEditIndex: number;
@@ -49,10 +52,21 @@ export class AccountTransactionDebitComponent implements OnInit {
   // oDebitModel: any;
   constructor(private oDebitService: DebitService,
     private oCreditLoanService: CreditLoanService,
+    private oCreditService: CreditService,
+    public activatedroute : ActivatedRoute,
+    private router: Router,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+    console.log(this.activatedroute.snapshot.data.type);
+    if(this.activatedroute.snapshot.data.type === 'credit'){
+      this.sCaption = 'Credit';
+      this.bIsCredit = true;
+    }else{
+      this.sCaption = 'Debit';
+      this.bIsCredit = false;
+    }
     this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',
@@ -89,11 +103,26 @@ export class AccountTransactionDebitComponent implements OnInit {
 
       let datetoday = `${yyyy}-${mm}-${dd}`;
     this.oDebitModel.sDate = datetoday.toString();
+    if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.redirectTo('/debit');
       });
+    }else{
+      this.oCreditService.fnAddCreditInfo(this.oDebitModel).subscribe((data) => {
+        console.log(data);
+        this.fnSucessMessage();
+        this.redirectTo('/credit');
+      });
+    }
+      
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
     this.oDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
@@ -103,20 +132,28 @@ export class AccountTransactionDebitComponent implements OnInit {
   }
 
   fnFecthLoanData() : void{
+    
     this.aCreditLoan.map((loan : CreditLoan,index)=>{
       if(loan.nLoanId === this.oDebitModel.nLoanId){
         this.nActiveLoanIndex = index;
         this.bShowLoanData = true;
+        this.oDebitModel.nAmount = loan.nInstallmentAmount;
       }
         
     })
     
   }
   fnSucessMessage() {
+    let msg = '';
+    if(this.bIsCredit){
+      msg = 'Amount is credited successfully.';
+    }else{
+      msg = 'Amount is debited successfully.';
+    }
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'State is saved sucessfully.',
+      title: msg,
       showConfirmButton: false,
       timer: 1500
     });
