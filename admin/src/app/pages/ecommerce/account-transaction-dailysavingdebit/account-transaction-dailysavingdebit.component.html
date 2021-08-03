@@ -2,7 +2,8 @@
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
-  
+    <app-bank-account-data headerText='Daily Deposit Account' 
+    (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
     <div class="row">
       <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
         <div class="card card-bg">
@@ -10,56 +11,53 @@
             <h2>Daily Saving Deposit</h2>
   
              <div class="row">
-              <div class="col-sm-12">                
-              </div>
-              
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sDate">Start Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="odailysavingdebitmodel.sDate" type="date"
-                    class="form-control" >
+                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sStartDate" type="date"
+                    class="form-control" (change)="fnCalculateDays()">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sDate">End Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="odailysavingdebitmodel.sDate" type="date"
-                    class="form-control" >
+                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
+                    class="form-control" (change)="fnCalculateDays()">
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sTotaldays">Total Days</label>                  
-                  <input id="sTotaldays" name="sTotaldays" [(ngModel)]="odailysavingdebitmodel.sTotaldays" type="text"
-                    class="form-control" >
+                  <input id="sTotaldays" name="sTotaldays" [(ngModel)]="oDailySavingDebitModel.sTotaldays" type="text"
+                    class="form-control" readonly>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sDayAmount">For Day Amount</label>
-                  <input id="sDayAmount" name="sDayAmount" [(ngModel)]="odailysavingdebitmodel.sDayAmount" type="text"
-                    class="form-control" disabled>
+                  <input id="sDayAmount" name="sDayAmount" [(ngModel)]="oDailySavingDebitModel.nDayAmount" type="text"
+                    class="form-control" (input)="fnCalculateTotalAmount()">
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nAmount">Total Amount</label>
-                  <input id="nAmount" name="nAmount" [(ngModel)]="odailysavingdebitmodel.nAmount" type="number"
-                    class="form-control" disabled>
+                  <input id="nAmount" name="nAmount" [(ngModel)]="oDailySavingDebitModel.nAmount" type="number"
+                    class="form-control" readonly>
                 </div>
               </div> 
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sReceiverName">Received Employee</label>
-                  <input id="sReceiverName" name="sReceiverName" [(ngModel)]="odailysavingdebitmodel.sReceiverName" type="text"
+                  <input id="sReceiverName" name="sReceiverName" [(ngModel)]="oDailySavingDebitModel.sReceiverName" type="text"
                     class="form-control" disabled>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <div class="add-container">
                   <div class="form-group">
                     <label for="nTransactionId">Transaction ID</label>
-                    <input id="nTransactionId" name="nTransactionId" [(ngModel)]="odailysavingdebitmodel.nTransactionId" type="text"
+                    <input id="nTransactionId" name="nTransactionId" [(ngModel)]="oDailySavingDebitModel.nTransactionId" type="text"
                     class="form-control" disabled>
                   </div>
                 </div>

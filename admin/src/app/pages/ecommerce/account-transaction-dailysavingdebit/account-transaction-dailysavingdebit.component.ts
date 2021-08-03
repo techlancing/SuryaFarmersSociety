@@ -7,6 +7,7 @@ import { BankAccountService } from '../../../core/services/account.service';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { environment } from 'src/environments/environment';
 import { from } from 'rxjs';
+import { BankAccount } from 'src/app/core/models/bankaccount.model';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -21,7 +22,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: DailySavingDebit;
 
-  public odailysavingdebitmodel: DailySavingDebit;
+  public oDailySavingDebitModel: DailySavingDebit;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -121,7 +122,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     //   },
     //   ];
     
-    this.odailysavingdebitmodel = new DailySavingDebit();
+    this.oDailySavingDebitModel = new DailySavingDebit();
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -136,31 +137,39 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     });
   }
 
-  fnCreateAccountDetails(){
-    // this.oCreditModel.sBranchCode = this.oCreditModel.sState + 
-    // this.oCreditModel.sDesignation + this.oCreditModel.sMandal + 
-    // this.oCreditModel.sVillage;
-    // this.oCreditModel.sAccountNo = this.oCreditModel.sBranchCode + '0001';
-    // this.oCreditModel.sCustomerId = this.oCreditModel.sBranchCode + '0002';
+  fnGetCreditLoans(oSelectedAccount : BankAccount){
+    this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
+    
   }
 
-  fnResetState() {
-    // this.oCreditModel.sState = '';
+  // new Date("dateString") is browser-dependent and discouraged, so we'll write
+// a simple parse function for U.S. date format (which does no error checking)
+fnParseDate(str) {
+  var mdy = str.split('-');
+  return new Date(mdy[2], mdy[1],mdy[0]-1 );
+}
+
+fnDatediff(first, second) {
+  // Take the difference between the dates and divide by milliseconds per day.
+  // Round to nearest whole number to deal with DST.
+  return Math.round((second-first)/(1000*60*60*24));
+}
+
+fnCalculateDays(): void{
+  if(this.oDailySavingDebitModel.sStartDate !== undefined && this.oDailySavingDebitModel.sEndDate !== undefined){
+    
+    const diffInMs   = +(new Date(this.oDailySavingDebitModel.sEndDate)) - +(new Date(this.oDailySavingDebitModel.sStartDate))
+    this.oDailySavingDebitModel.sTotaldays  = diffInMs / (1000 * 60 * 60 * 24);
+  } 
+  
+}
+
+fnCalculateTotalAmount(): void{
+  if(this.oDailySavingDebitModel.nDayAmount !== undefined && this.oDailySavingDebitModel.sTotaldays !== undefined){
+    this.oDailySavingDebitModel.nAmount = this.oDailySavingDebitModel.nDayAmount * this.oDailySavingDebitModel.sTotaldays;
   }
-
-
-
-  fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
+  
+}
 
   fnSucessMessage() {
     Swal.fire({
