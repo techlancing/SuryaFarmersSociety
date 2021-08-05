@@ -9,6 +9,7 @@ import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'n
 import { environment } from 'src/environments/environment';
 import { from } from 'rxjs';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -64,12 +65,15 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   maxFilesize: 100,
   maxFiles: 1
   };
+  public bShowLoanData :boolean;
 
   aLoanIssueEmployee : Array<
   {
     displayText:string,
     value:string
   }>;
+
+  public aTransactionModel : any;
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -81,7 +85,8 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   
   constructor(private oBankAccountService: BankAccountService,
               private oDailySavingDebitService : DailySavingDebitService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -109,15 +114,20 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
-
-    });
+    
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
     this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
-    
+    this.oDailySavingDebitService.fngetDailySavingDepositInfo(this.oDailySavingDebitModel.sAccountNo).subscribe((data) => {
+      this.aTransactionModel = data as any;
+      this.bShowLoanData = true;
+    });
   }
 
   // new Date("dateString") is browser-dependent and discouraged, so we'll write
@@ -152,8 +162,9 @@ fnCalculateTotalAmount(): void{
 fnOnDailySavingDebitInfoSubmit(): void {
   //this.bIsAddActive = true;
     this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-      console.log(data);
+      
       this.fnSucessMessage();
+      this.redirectTo('/dailysavingdebit');
     });
 }
   fnSucessMessage() {
