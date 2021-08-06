@@ -9,6 +9,9 @@ var oDailyDepositSchema = new oSchema({
     type: String,
     trim: true
    },//unique: true},
+   nAccountId: {
+    type: Number
+   },
   sTransactionId: { 
     type: String,
     trim: true,

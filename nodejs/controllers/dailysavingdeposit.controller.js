@@ -23,7 +23,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try{
-      const olasttransaction = await oTransactionModel.find({sAccountNo: newDeposit.sAccountNo}).sort({_id:-1}).limit(1);
+      const olasttransaction = await oTransactionModel.find({nLoanId: newDeposit.nAccountId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
@@ -35,7 +35,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (
     //save transaction model
     let oTransaction = {};
     oTransaction.sAccountNo = newDeposit.sAccountNo;
-    oTransaction.nLoanId = newDeposit.nDailyDepositId;
+    oTransaction.nLoanId = newDeposit.nAccountId;
     oTransaction.nCreditAmount = newDeposit.nAmount;
     oTransaction.nDebitAmount = 0;
     oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + newDeposit.nAmount) * 100) / 100).toFixed(2);

@@ -1,7 +1,8 @@
 import { ImageInfo } from './image.model';
 export class DailySavingDebit {
     constructor( 
-        public sAccountNo : string = '',     
+        public sAccountNo : string = '', 
+        public nAccountId : number = null,   
         public sTransactionId : string = '',//unique: true},        
         public sStartDate : string = '',
         public sEndDate : string = '',
