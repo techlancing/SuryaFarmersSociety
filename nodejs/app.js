@@ -24,6 +24,7 @@ const oCreditLoanController = require("./controllers/creditloan.controller");
 const oBankEmployeeController = require("./controllers/bankemployee.controller");
 const oCreditController = require("./controllers/credit.controller");
 const oDebitController = require("./controllers/debit.controller");
+const oDailySavingDepositController = require("./controllers/dailysavingdeposit.controller");
 
 
 
@@ -79,7 +80,7 @@ oServer.use("/nodejs/creditloan", oCreditLoanController);
 oServer.use("/nodejs/credit", oCreditController);
 oServer.use("/nodejs/debit", oDebitController);
 oServer.use("/nodejs/bankemployee", oBankEmployeeController);
-
+oServer.use("/nodejs/dailysavingdeposit",oDailySavingDepositController);
 
 oServer.get("/", (req, res) => {
 

@@ -5,7 +5,7 @@
     <app-bank-account-data headerText='Daily Deposit Account' 
     (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Daily Saving Deposit</h2>
@@ -27,8 +27,8 @@
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sTotaldays">Total Days</label>                  
-                  <input id="sTotaldays" name="sTotaldays" [(ngModel)]="oDailySavingDebitModel.sTotaldays" type="text"
+                  <label for="nTotaldays">Total Days</label>                  
+                  <input id="nTotaldays" name="nTotaldays" [(ngModel)]="oDailySavingDebitModel.nTotaldays" type="number"
                     class="form-control" readonly>
                 </div>
               </div>
@@ -49,15 +49,20 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sReceiverName">Received Employee</label>
-                  <input id="sReceiverName" name="sReceiverName" [(ngModel)]="oDailySavingDebitModel.sReceiverName" type="text"
-                    class="form-control" disabled>
+                    <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
+                      [(ngModel)]="oDailySavingDebitModel.sReceiverName" 
+                      bindLabel="displayText" bindValue="displayText">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                    </ng-select>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="add-container">
                   <div class="form-group">
-                    <label for="nTransactionId">Transaction ID</label>
-                    <input id="nTransactionId" name="nTransactionId" [(ngModel)]="oDailySavingDebitModel.nTransactionId" type="text"
+                    <label for="sTransactionId">Transaction ID</label>
+                    <input id="sTransactionId" name="sTransactionId" [(ngModel)]="oDailySavingDebitModel.sTransactionId" type="text"
                     class="form-control" disabled>
                   </div>
                 </div>

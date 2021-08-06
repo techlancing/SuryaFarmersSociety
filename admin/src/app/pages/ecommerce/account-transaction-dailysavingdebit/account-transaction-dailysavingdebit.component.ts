@@ -4,6 +4,7 @@ import { DailySavingDebit } from '../../../core/models/dailysavingdebit.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Input } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
+import { DailySavingDebitService } from '../../../core/services/dailysavingdebit.service';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { environment } from 'src/environments/environment';
 import { from } from 'rxjs';
@@ -64,6 +65,12 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   maxFiles: 1
   };
 
+  aLoanIssueEmployee : Array<
+  {
+    displayText:string,
+    value:string
+  }>;
+
   // bread crumb items
   breadCrumbItems: Array<{}>;
   @Input() bHideBreadCrumb: boolean = false;
@@ -73,54 +80,25 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   @Input() bisEditMode: boolean;
   
   constructor(private oBankAccountService: BankAccountService,
+              private oDailySavingDebitService : DailySavingDebitService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-    // this.aDesignation = [
-    //   {
-    //     displayText: 'Manager',
-    //     value:'01'
-    //   },
-    //   {
-    //   displayText: 'Accountant',
-    //     value:'02'
-    //   }  
-    // ];
-    // this.aMandal = [
-    //   {
-    //     displayText: 'Gudur',
-    //     value:'01'
-    //   },
-    //   {
-    //     displayText: 'Kesamudram',
-    //     value:'02'
-    //   },
-    //   {
-    //     displayText: 'Kothaguda',
-    //     value:'03'
-    //   }
-    // ];
-    // this.aVillage = [
-    //   {
-    //     displayText: 'Gajulagattu',
-    //     value:'01'
-    //   },
-    //   {
-    //     displayText: 'Gundenga',
-    //     value:'02'
-    //   },
-    //   {
-    //     displayText: 'Ayodyapuram',
-    //     value:'03'
-    //   }
-    // ];
-    // this.aState = [
-    //   {
-    //     displayText: 'Telangana',
-    //     value: '01'
-    //   },
-    //   ];
+    this.aLoanIssueEmployee = [
+      {
+        displayText: 'Venkanna',
+        value:'01'
+      },
+      {
+        displayText: 'Bhaskar',
+        value:'02'
+      },
+      {
+        displayText: 'Naresh',
+        value:'03'
+      }
+    ];
     
     this.oDailySavingDebitModel = new DailySavingDebit();
     this.sButtonText = 'Send SMS & Save & Submit';
@@ -159,23 +137,30 @@ fnCalculateDays(): void{
   if(this.oDailySavingDebitModel.sStartDate !== undefined && this.oDailySavingDebitModel.sEndDate !== undefined){
     
     const diffInMs   = +(new Date(this.oDailySavingDebitModel.sEndDate)) - +(new Date(this.oDailySavingDebitModel.sStartDate))
-    this.oDailySavingDebitModel.sTotaldays  = diffInMs / (1000 * 60 * 60 * 24);
+    this.oDailySavingDebitModel.nTotaldays  = diffInMs / (1000 * 60 * 60 * 24);
   } 
   
 }
 
 fnCalculateTotalAmount(): void{
-  if(this.oDailySavingDebitModel.nDayAmount !== undefined && this.oDailySavingDebitModel.sTotaldays !== undefined){
-    this.oDailySavingDebitModel.nAmount = this.oDailySavingDebitModel.nDayAmount * this.oDailySavingDebitModel.sTotaldays;
+  if(this.oDailySavingDebitModel.nDayAmount !== undefined && this.oDailySavingDebitModel.nTotaldays !== undefined){
+    this.oDailySavingDebitModel.nAmount = this.oDailySavingDebitModel.nDayAmount * this.oDailySavingDebitModel.nTotaldays;
   }
   
 }
 
+fnOnDailySavingDebitInfoSubmit(): void {
+  //this.bIsAddActive = true;
+    this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
+      console.log(data);
+      this.fnSucessMessage();
+    });
+}
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'State is saved sucessfully.',
+      title: 'Amount deposited sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
