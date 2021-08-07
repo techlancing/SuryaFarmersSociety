@@ -50,7 +50,7 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
 // url: ..../creditloan/edit_creditloan
 oCreditLoanRouter.post("/edit_creditloan", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    const oCreditLoan = await oCreditLoanModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
+    const oCreditLoan = await oCreditLoanModel.AndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
     if(!oCreditLoan){
       return oRes.status(400).send();

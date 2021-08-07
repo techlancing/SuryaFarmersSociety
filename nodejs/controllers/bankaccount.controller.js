@@ -6,6 +6,7 @@ var fs = require('fs');
 
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oImageModel = require("../data_base/models/image.model");
+const oTransactionModel = require("../data_base/models/transaction.model");
 
 const obankaccountRouter = oExpress.Router();
 // SET STORAGE for  uploading images
@@ -77,7 +78,24 @@ obankaccountRouter.post("/add_bankaccount", asyncMiddleware(async (oReq, oRes, o
   const newbankaccount = new obankaccountModel(oReq.body);
   try{
     // Save bankaccount Info
-    await newbankaccount.save();    
+    await newbankaccount.save(); 
+    
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = newbankaccount.sAccountNo;
+    oTransaction.nLoanId = newbankaccount.nAccountId;
+    oTransaction.nCreditAmount = newbankaccount.nAmount;
+    oTransaction.nDebitAmount = 0;
+    oTransaction.nBalanceAmount = newbankaccount.nAmount;
+    oTransaction.sDate = newbankaccount.sDate;
+    oTransaction.sNarration = "new account created";  
+    
+    const newTransaction = new oTransactionModel(oTransaction);
+    await newTransaction.save();
+
+    newbankaccount.oTransactionInfo = newTransaction._id;
+    await newbankaccount.save();
+
     oRes.json("Success");
 
   }catch(e){
@@ -179,6 +197,23 @@ obankaccountRouter.post("/getlastaccountinvillage", asyncMiddleware(async(oReq, 
       
       
     });*/
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+// url: ..../bankaccount/getallsavingstransactions
+obankaccountRouter.post("getallsavingstransactions", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId})
+      if(oAllTransactions) {
+          oRes.json(oAllTransactions);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
   }catch(e){
     console.log(e);
     oRes.status(400).send(e);

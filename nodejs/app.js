@@ -25,6 +25,7 @@ const oBankEmployeeController = require("./controllers/bankemployee.controller")
 const oCreditController = require("./controllers/credit.controller");
 const oDebitController = require("./controllers/debit.controller");
 const oDailySavingDepositController = require("./controllers/dailysavingdeposit.controller");
+const oIntraTransactionController = require("./controllers/intratransaction.controller");
 
 
 
@@ -81,6 +82,8 @@ oServer.use("/nodejs/credit", oCreditController);
 oServer.use("/nodejs/debit", oDebitController);
 oServer.use("/nodejs/bankemployee", oBankEmployeeController);
 oServer.use("/nodejs/dailysavingdeposit",oDailySavingDepositController);
+oServer.use("/nodejs/intratransaction",oIntraTransactionController);
+
 
 oServer.get("/", (req, res) => {
 

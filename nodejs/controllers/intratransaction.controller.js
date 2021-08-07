@@ -1,0 +1,193 @@
+const oExpress = require('express');
+const oMongoose = require('mongoose');
+
+const oIntraTransactionModel = require("../data_base/models/intratransaction.model");
+const oTransactionModel = require("../data_base/models/transaction.model");
+const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model");
+const oCreditLoanModel = require("../data_base/models/creditloan.model");
+const oBankAccountModel = require("../data_base/models/bankaccount.model");
+
+
+
+const oIntraTransactionRouter = oExpress.Router();
+
+//To remove unhandled promise rejections
+const asyncMiddleware = fn =>
+  (oReq, oRes, oNext) => {
+    Promise.resolve(fn(oReq, oRes, oNext))
+      .catch(oNext);
+  };
+  
+// url: ..../intratransaction/add_intratransaction
+oIntraTransactionRouter.post("/add_intratransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  const newIntraTransaction = new oIntraTransactionModel(oReq.body);
+  try{
+    // Save Intra Transaction Info
+    await newIntraTransaction.save();  
+    oRes.json("Success");      
+  }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+  }
+
+}));
+
+// url: ..../intratransaction/intraaccounttransaction
+oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  try{
+        
+    //To Credit amount to reciever account
+    let oBalanceAmount = 0;
+    
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = oReq.body.sRecieverAccountNumber;
+    oTransaction.nCreditAmount = oReq.body.nAmount;
+    oTransaction.nDebitAmount = 0;
+    oTransaction.sDate = oReq.body.sDate;
+    oTransaction.sNarration = oReq.body.sNarration;  
+   
+    try{
+      if(newIntraTransaction.nRecieverAccountType == 0)    // savings account
+      {
+        oTransaction.nLoanId = oReq.body.nReceiverAccountId;
+        const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nReceiverAccountId}).sort({_id:-1}).limit(1);
+        if(olasttransaction.length > 0) 
+          oBalanceAmount = olasttransaction[0].nBalanceAmount;
+        
+        oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + oReq.body.nAmount) * 100) / 100).toFixed(2);
+        
+        // Update total amount in dailysavingdeposit model
+        let oSavingsAccount = oDailyDepositModel.findOne({nAccountId : oReq.body.nReceiverAccountId});
+        if(oSavingsAccount)
+          oDailyDepositModel.findByIdAndUpdate(oSavingsAccount._id,{nAmount: oTransaction.nBalanceAmount},{ new: true, runValidators : true});
+
+        // Update total amount in bankaccount model
+        let oBankAccount = oBankAccountModel.findOne({nAccountId : oReq.body.nReceiverAccountId});
+        if(oBankAccount)
+          oBankAccountModel.findByIdAndUpdate(oBankAccount._id,{nAmount: oTransaction.nBalanceAmount},{ new: true, runValidators : true});
+
+      }
+      else if(newIntraTransaction.nRecieverAccountType == 1)  // credit loan
+      {
+        oTransaction.nLoanId = oReq.body.nLoanId;
+        const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nLoanId}).sort({_id:-1}).limit(1);
+        if(olasttransaction.length > 0) 
+          oBalanceAmount = olasttransaction[0].nBalanceAmount;
+
+        oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + oReq.body.nAmount) * 100) / 100).toFixed(2);
+
+        const newTransaction = new oTransactionModel(oTransaction);
+        await newTransaction.save();
+        // Update total amount in creditloan model
+        let oCreditLoan = oCreditLoanModel.findOne({nLoanId : oReq.body.nLoanId});
+        if(oCreditLoan)
+        {
+          oCreditLoan.oTransactionInfo.push(newTransaction);
+          await oCreditLoan.save();
+        }
+                  
+      }
+      
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+
+
+    //To Debit amount from sender account
+    let oBalanceAmt = 0;
+    try{
+      const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nSenderAccountId}).sort({_id:-1}).limit(1);
+      if(olasttransaction.length > 0) {
+        oBalanceAmt = olasttransaction[0].nBalanceAmount;
+      }
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+
+    //save transaction model
+    let oTransactionInfo = {};
+    oTransactionInfo.sAccountNo = oReq.body.sSenderAccountNumber;
+    oTransactionInfo.nLoanId = oReq.body.nSenderAccountId;
+    oTransactionInfo.nCreditAmount = 0;
+    oTransactionInfo.nDebitAmount = oReq.body.nAmount;
+    oTransactionInfo.nBalanceAmount = (Math.round((oBalanceAmt - oReq.body.nAmount) * 100) / 100).toFixed(2);
+    oTransactionInfo.sDate = oReq.body.sDate;
+    oTransactionInfo.sNarration = oReq.body.sNarration;  
+    
+    const newTransaction = new oTransactionModel(oTransactionInfo);
+    await newTransaction.save();
+
+    // Update total amount in dailysavingdeposit model
+    let oSenderAccount = oDailyDepositModel.findOne({nAccountId : oReq.body.nSenderAccountId});
+    if(oSenderAccount)
+      oDailyDepositModel.findByIdAndUpdate(oSenderAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
+
+    // Update total amount in bankaccount model
+    let oSenderBankAccount = oBankAccountModel.findOne({nAccountId : oReq.body.nSenderAccountId});
+    if(oSenderBankAccount)
+      oBankAccountModel.findByIdAndUpdate(oSenderBankAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
+    
+    oRes.json("Success");
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+
+  }
+}));
+
+// url: ..../intratransaction/edit_intratransaction
+oIntraTransactionRouter.post("/edit_intratransaction", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oIntraTransaction = await oIntraTransactionModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
+
+    if(!oIntraTransaction){
+      return oRes.status(400).send();
+    }
+
+    oRes.json("Success"); 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+
+}));
+
+// url: ..../intratransaction/delete_intratransaction
+oIntraTransactionRouter.post("/delete_intratransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  try{
+    console.log(oReq.body._id);
+    const oIntraTransaction = await oIntraTransactionModel.findByIdAndDelete(oReq.body._id);
+
+    if(!oIntraTransaction){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oIntraTransaction); 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+
+}));
+
+// url: ..../intratransaction/intratransaction_list
+oIntraTransactionRouter.get("/intratransaction_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+    try{
+      const oAllIntraTransaction= await oIntraTransactionModel.find();
+
+      if(!oAllIntraTransaction){
+        return oRes.status(400).send();
+      }
+
+      oRes.json(oAllIntraTansaction);
+    }catch(e){
+      console.log(e);
+      oRes.status(400).send(e);
+    }
+}));
+
+module.exports = oIntraTransactionRouter;

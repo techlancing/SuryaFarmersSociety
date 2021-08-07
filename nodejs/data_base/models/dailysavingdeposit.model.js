@@ -41,7 +41,7 @@ var oDailyDepositSchema = new oSchema({
     type: String,
     trim: true
   },
-  oTransactionInfo: [{type: oSchema.Types.ObjectId, ref: 'Transaction'}]
+  oTransactionInfo: {type: oSchema.Types.ObjectId, ref: 'Transaction'}
 
 });
 oDailyDepositSchema.plugin(oAutoIncrement, { inc_field: 'nDailyDepositId', inc_amount: 1, start_seq: 700000 });

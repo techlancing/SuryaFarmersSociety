@@ -142,7 +142,8 @@ var oBankAccountSchema = new oSchema({
   oSignature1Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oSignature2Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oDocument1Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
-  oDocument2Info: {type: oSchema.Types.ObjectId, ref: 'Image'}
+  oDocument2Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
+  oTransactionInfo: {type: oSchema.Types.ObjectId, ref: 'Transaction'}
 });
 oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'nAccountId', inc_amount: 1, start_seq: 100 });
 oBankAccountSchema.plugin(oAutoIncrement, { inc_field: 'sCustomerId', inc_amount: -1, start_seq: 799999999 });
