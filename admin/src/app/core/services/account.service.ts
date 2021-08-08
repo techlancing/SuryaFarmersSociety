@@ -36,6 +36,11 @@ export class BankAccountService {
       return this.http.post(sMethodUrl, oBankAccount);
   }
 
+  fngetBankAccountSavingsTransactions(nAccountId: number) {
+    const sMethodUrl = `${this.sRootUrl}/getallsavingstransactions`;
+    return this.http.post(sMethodUrl, {nAccountId:nAccountId});
+}
+
   fnDeleteBankAccountInfo(oBankAccount: BankAccount) {
       const sMethodUrl = `${this.sRootUrl}/delete_bankaccount`;
       return this.http.post(sMethodUrl, oBankAccount);

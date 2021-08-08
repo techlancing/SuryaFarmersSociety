@@ -262,37 +262,11 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.oDocument2Info = args[1].oImageRefId;
   }
 
-  // fnDeleteCar(nIndex) {
-  //   console.log(this.bankaccounts[nIndex] as BankAccount);
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'You won\'t be able to revert this!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#34c38f',
-  //     cancelButtonColor: '#f46a6a',
-  //     confirmButtonText: 'Yes, delete it!'
-  //   }).then(result => {
-  //     if (result.value) {
-  //       this.oBankAccountService.fnDeleteCarInfo(this.bankaccounts[nIndex] as BankAccount).subscribe((data) => {
-  //         this.bankaccounts = [];
-  //         this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-  //           Swal.fire((data as BankAccount).sState, 'State is deleted successfully.', 'success');
-  //           this.bankaccounts = [...cdata as any];
-  //           this.oBankAccountModel.sState = '';
-  //         });
-  //       });
-
-  //     }
-  //   });
-
-  // }
-
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'State is saved sucessfully.',
+      title: 'Account is created sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -308,31 +282,13 @@ export class AddaccountComponent implements OnInit {
     });
   }
 
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  fnDuplicateCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Car Name is already exists',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
+  
 
   fnEditSucessMessage() {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Car is updated sucessfully.',
+      title: 'Account updated sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });

@@ -124,7 +124,8 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
     this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
-    this.oDailySavingDebitService.fngetDailySavingDepositInfo(this.oDailySavingDebitModel.sAccountNo).subscribe((data) => {
+    this.oDailySavingDebitModel.nAccountId = oSelectedAccount.nAccountId;
+    this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
       this.bShowLoanData = true;
     });

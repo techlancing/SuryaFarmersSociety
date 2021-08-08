@@ -56,13 +56,9 @@ export class AllTransactionPrintComponent implements OnInit {
     displayText:string,
     value:string
   }>;
+
+  aTransactions : any;
   
-  public oDropZoneConfig: DropzoneConfigInterface = {
-    // Change this to your upload POST address:
-  url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 100,
-  maxFiles: 1
-  };
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -75,6 +71,7 @@ export class AllTransactionPrintComponent implements OnInit {
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
+    private oAccountService: BankAccountService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -134,13 +131,6 @@ export class AllTransactionPrintComponent implements OnInit {
         value:'03'
       }
     ];
-    // this.aState = [
-    //   {
-    //     displayText: 'Telangana',
-    //     value: '01'
-    //   },
-    //   ];  
-    
     
     this.sButtonText = 'Print';
     this.bIsAddActive = false;
@@ -156,68 +146,14 @@ export class AllTransactionPrintComponent implements OnInit {
   fnGetCreditLoans(oSelectedAccount : BankAccount){
     this.oCreditLoanServcie.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
       this.aCreditLoan = loandata as any;
+      this.oAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((savingdata)=>{
+        this.aTransactions = savingdata as any;
+        console.log(this.aTransactions);
+      });
     });
   }
 
-  fnCreateAccountDetails(){
-    // this.oCreditModel.sBranchCode = this.oCreditModel.sState + 
-    // this.oCreditModel.sDesignation + this.oCreditModel.sMandal + 
-    // this.oCreditModel.sVillage;
-    // this.oCreditModel.sAccountNo = this.oCreditModel.sBranchCode + '0001';
-    // this.oCreditModel.sCustomerId = this.oCreditModel.sBranchCode + '0002';
-  }
 
-  fnResetState() {
-    // this.oCreditModel.sState = '';
-  }
-
-  
-
-
-
-  
-
-
-
-  fnSucessMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'State is saved sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
-
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
   /**
    * Open modal
    * @param content modal content

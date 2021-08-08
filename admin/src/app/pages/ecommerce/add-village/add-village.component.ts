@@ -82,7 +82,7 @@ export class AddVillageComponent implements OnInit {
           this.bisEditMode = false;
           this.bIsEditActive = false;
         } else if (showmsg && this.bisDeleteMode) {
-          Swal.fire(VillageName, 'Sub Mandal is deleted successfully.', 'success');
+          Swal.fire(VillageName, 'Village is deleted successfully.', 'success');
           this.bisDeleteMode = false;
         }
 
@@ -106,7 +106,7 @@ export class AddVillageComponent implements OnInit {
       this.fnEmptyVillageNameMessage();
       return;
     }
-    //Verification for Duplicate Sub Mandal Name
+    //Verification for Duplicate Village Name
     for(var i = 0; i < this.aVillages.length; i++) {
       if(this.aVillages[i].sVillageName.toLowerCase() === this.oVillageModel.sVillageName.toLowerCase().trim()) {
         this.fnDuplicateVillageNameMessage();
@@ -167,7 +167,7 @@ export class AddVillageComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Sub Mandal is saved successfully.',
+      title: 'Village is saved successfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -177,7 +177,7 @@ export class AddVillageComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Sub Mandal is updated successfully.',
+      title: 'Village is updated successfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -187,7 +187,7 @@ export class AddVillageComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please enter a valid Sub Mandal Name',
+      title: 'Please enter a valid Village Name',
       showConfirmButton: false,
       timer: 1500
     })
@@ -197,7 +197,7 @@ export class AddVillageComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Sub Mandal Name is already exists.',
+      title: 'Village Name is already exists.',
       showConfirmButton: false,
       timer: 1500
     })

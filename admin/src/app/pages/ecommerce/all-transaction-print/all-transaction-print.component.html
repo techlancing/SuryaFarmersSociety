@@ -7,6 +7,99 @@
     (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
     <div class="row">
       
+      <div class="row col-12" *ngIf="aTransactions && aTransactions.length > 0">
+        <div class="col-12"  >
+          <div class="card card-bg" >
+            <div class="card-body">
+              <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
+                <ngb-panel id="static-1">
+                  <ng-template ngbPanelTitle class="text-black">
+                    <h2>Savings Account</h2>
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+                    
+                    <h4>Account Ledger</h4>
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode">Date</label> 
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sAccountNo">Credit</label>                  
+                           </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode">Debit</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="sBranchCode">Balance Amount</label>  
+                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for="sBranchCode">Narration</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                                   
+                    </div>
+                    <div class="row" *ngFor="let otransactionmodel of aTransactions">
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
+                          
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
+                           </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount}}</label>  
+                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
+                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                            class="form-control" > -->
+                        </div>
+                      </div>
+                                   
+                    </div>
+                  </ng-template>
+                </ngb-panel>
+                
+              </ngb-accordion>
+            </div>
+          </div>
+        </div>
+      </div>    
       
     <div class="row col-12">
       <div class="col-12"  >

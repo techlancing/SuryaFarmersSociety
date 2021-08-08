@@ -14,6 +14,7 @@ export class BankAccountDataComponent implements OnInit {
   public sSelectedAccount: string;
   bIsBtnActive: boolean;
   bIsAccountData: boolean;
+  @Input() bShowPrintBtn: boolean;
   sImageRootPath : string;
   aBankAccounts: Array<BankAccount>;
   @Input() headerText: string;

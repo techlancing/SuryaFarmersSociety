@@ -21,7 +21,7 @@
             Show Account Details</button>
             
           </div>
-          <div class="col-sm-1 btn-container">
+          <div class="col-sm-1 btn-container" *ngIf="bShowPrintBtn">
             <button type="button" class="btn btn-primary mr-1" 
             [disabled]="!bIsBtnActive" 
             >

@@ -160,6 +160,23 @@ obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oN
     }
 }));
 
+// url: ..../bankaccount/getallsavingstransactions
+obankaccountRouter.post("/getallsavingstransactions", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId})
+      if(oAllTransactions) {
+          oRes.json(oAllTransactions);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 // url: ..../bankaccount/getaccountbynumber
 obankaccountRouter.post("/getaccountbynumber", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
@@ -181,6 +198,7 @@ obankaccountRouter.post("/getaccountbynumber", asyncMiddleware(async(oReq, oRes,
   }
 }));
 
+
 // url: ..../bankaccount/getlastaccountinvillage
 obankaccountRouter.post("/getlastaccountinvillage", asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
@@ -197,23 +215,6 @@ obankaccountRouter.post("/getlastaccountinvillage", asyncMiddleware(async(oReq, 
       
       
     });*/
-  }catch(e){
-    console.log(e);
-    oRes.status(400).send(e);
-  }
-}));
-
-// url: ..../bankaccount/getallsavingstransactions
-obankaccountRouter.post("getallsavingstransactions", asyncMiddleware(async(oReq, oRes, oNext) => {
-  try{
-    let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId})
-      if(oAllTransactions) {
-          oRes.json(oAllTransactions);
-      }
-      else{
-          console.log(oError);
-          return oRes.status(400).send();
-      }
   }catch(e){
     console.log(e);
     oRes.status(400).send(e);

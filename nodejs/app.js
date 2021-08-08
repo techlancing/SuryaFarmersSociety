@@ -48,9 +48,9 @@ const oIntraTransactionController = require("./controllers/intratransaction.cont
 oServer.use(logger('dev'));
 oServer.use(express.json());
 // oServer.use(express.urlencoded({ extended: false }));
-oServer.use(bodyparser.urlencoded({ extended: true }));
-oServer.use(bodyparser.json());
-oServer.use(bodyparser.raw());
+oServer.use(express.urlencoded({ extended: true }));
+oServer.use(express.json());
+//oServer.use(express.raw());
 oServer.use(cookieParser());
 oServer.use(express.static(path.join(__dirname, 'public')));
 //oServer.use(cors());

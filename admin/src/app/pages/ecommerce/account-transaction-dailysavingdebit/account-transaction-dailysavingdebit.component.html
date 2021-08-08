@@ -57,33 +57,33 @@
                 <div class="row" *ngFor="let otransactionmodel of aTransactionModel">
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.oTransactionInfo[0].sDate}}</label> 
+                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
                       
                     </div>
                   </div>
                   
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label for="sAccountNo" class="trans-detail">{{otransactionmodel.oTransactionInfo[0].nCreditAmount}}</label>                  
+                      <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
                        </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.oTransactionInfo[0].nDebitAmount}}</label>                  
+                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
                       <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                         class="form-control" > -->
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="sBranchCode" class="trans-detail">{{otransactionmodel.oTransactionInfo[0].nBalanceAmount}}</label>  
+                        <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount}}</label>  
                         <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                         class="form-control" > -->
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.oTransactionInfo[0].sNarration}}</label>                  
+                      <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
                       <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
                         class="form-control" > -->
                     </div>
@@ -94,17 +94,9 @@
             </ngb-panel>
             
           </ngb-accordion>
-        </div>
-      </div>
-    </div>
-  </div>
-    <div class="row" *ngIf="bShowLoanData">
-      <form class="col-12" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
-        <div class="card card-bg">
-          <div class="card-body">
-            <h2>Daily Saving Deposit</h2>
-  
-             <div class="row">
+
+          <form class="col-12" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
+            <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sDate">Start Date</label>                  
@@ -179,9 +171,11 @@
                 >Clear</button> -->
               </div>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
       </div>
+    </div>
+  </div>
+    
 </div>
   
