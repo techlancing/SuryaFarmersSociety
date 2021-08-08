@@ -13,8 +13,9 @@ var oIntraTransactionSchema = new oSchema({
     type: String,
     trim: true,
    },//unique: true},
-   nRecieverAccountType: { 
-    type: Number
+   sRecieverAccountType: { 
+    type: String,
+    trim: true,
    },
    sTransactionEmployee: {
     type: String,

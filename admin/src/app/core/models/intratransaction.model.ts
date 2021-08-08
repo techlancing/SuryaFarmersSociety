@@ -8,7 +8,10 @@ export class IntraTransaction {
         public sTransactionEmployee : string = '',        
         public sNarration : string = '',        
         public nAmount : number = null,
-        
+        public sRecieverAccountType: string = '',
+        public nLoanId: number = null,
+        public nReceiverAccountId: number = null,
+        public nSenderAccountId: number = null
 
     ) {
 

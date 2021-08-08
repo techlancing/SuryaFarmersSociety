@@ -2,13 +2,64 @@
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
+
+    <app-bank-account-data headerText='Sender Account' 
+    (accountDataClicked)="fnGetSenderAccount($event)"></app-bank-account-data>
+
+    <app-bank-account-data headerText='Receiver Account' 
+    (accountDataClicked)="fnGetReceiverAccount($event)"></app-bank-account-data>
+
+    <div class="col-sm-6">
+      <label class="font-size-14 mb-3">Select Account Type</label>
+    <div class="radio-container">
+      <div class="form-check form-group">
+        <input class="form-check-input" type="radio" name="accountRadio" id="accountRadio1" value="savings"
+        [(ngModel)]="ointratransactionModel.sRecieverAccountType">
+        <label class="form-check-label" for="accountRadio1">
+          Savings
+        </label>
+      </div>
+      <div class="form-check form-group">
+        <input class="form-check-input" type="radio" name="accountRadio" id="accountRadio2" value="loan"
+        [(ngModel)]="ointratransactionModel.sRecieverAccountType" (change)="fnGetCreditLoans()">
+        <label class="form-check-label" for="accountRadio2">
+          Loan
+        </label>
+      </div>
+    </div>
+    </div>
+
+    <div class="col-12" *ngIf="ointratransactionModel.sRecieverAccountType === 'loan'">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h2>Select Loan</h2>
+
+           <div class="row">
+            
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sReceiverName">Select Loan</label>
+                <ng-select [items]="aCreditLoan" name="nLoanId"
+                  [(ngModel)]="ointratransactionModel.nLoanId" 
+                  bindLabel="sTypeofLoan" bindValue="nLoanId">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{item.sTypeofLoan}}
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>  
+            
+             
+          </div>
+        </div>
+      </div>
+    </div>
   
     <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
+      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" (ngSubmit)="fnOnIntraTransactionInfoSubmit()">
         <div class="card card-bg">
           <div class="card-body">
             <h2>Intra Transaction</h2>
-            <p>Sender Account</p>
              <div class="row">
               <div class="col-sm-12">                
               </div>
@@ -16,21 +67,42 @@
                 <div class="form-group">
                   <label for="sAccountNumber">Sender Account Number</label>                  
                   <input id="sAccountNumber" name="sSanctionAmount" [(ngModel)]="ointratransactionModel.sSenderAccountNumber" type="text"
-                    class="form-control" >
+                    class="form-control" readonly>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="sAccountNumber">Receiver Account Number</label>                  
-                  <input id="sAccountNumber" name="sAccountNumber" [(ngModel)]="ointratransactionModel.sRecieverAccountNumber" type="sDate"
-                    class="form-control" >
+                  <label for="sRAccountNumber">Receiver Account Number</label>                  
+                  <input id="sRAccountNumber" name="sRAccountNumber" [(ngModel)]="ointratransactionModel.sRecieverAccountNumber" type="text"
+                    class="form-control" readonly>
                 </div>
               </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sRecieverAccountType">Account Type</label>                  
+                  <input id="sRecieverAccountType" name="sRecieverAccountType" [(ngModel)]="ointratransactionModel.sRecieverAccountType" 
+                    class="form-control" readonly>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="sReceiverName">Select Loan</label>
+                  <ng-select [items]="aCreditLoan" name="nLoanId"
+                    [(ngModel)]="ointratransactionModel.nLoanId" 
+                    bindLabel="sTypeofLoan" bindValue="nLoanId" aria-readonly="readonly">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.sTypeofLoan}}
+                    </ng-template>
+                  </ng-select >
+                </div>
+              </div>  
               
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nAmount">Amount</label>
-                  <input id="nAmount" name="nAmount" [(ngModel)]="ointratransactionModel.nAmount" type="text"
+                  <input id="nAmount" name="nAmount" [(ngModel)]="ointratransactionModel.nAmount" type="number"
                     class="form-control">
                 </div>
               </div> 
@@ -51,17 +123,22 @@
                     class="form-control" >
                   </div>
                 </div>
-              </div>                           
+              </div>    
               
               <div class="col-sm-6">
-                <div class="add-container">
-                  <div class="form-group">
-                    <label for="sTransactionEmployee">Transaction Employee</label>
-                    <input id="sTransactionEmployee" name="sTransactionEmployee" [(ngModel)]="ointratransactionModel.sTransactionEmployee" type="text"
-                    class="form-control" >
-                  </div>
+                <div class="form-group">
+                  <label for="sReceiverName">Transaction Employee</label>
+                  <ng-select [items]="aLoanIssueEmployee" name="sReceiverName"
+                    [(ngModel)]="ointratransactionModel.sTransactionEmployee" 
+                    bindLabel="displayText" bindValue="displayText">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.displayText}}
+                    </ng-template>
+                  </ng-select>
                 </div>
-              </div>
+              </div>  
+
+
               <div class="col-sm-8 add-category-btn-container">
                 <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
                 >{{sButtonText}}</button>

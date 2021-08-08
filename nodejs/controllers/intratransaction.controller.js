@@ -42,14 +42,14 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
     //save transaction model
     let oTransaction = {};
     oTransaction.sAccountNo = oReq.body.sRecieverAccountNumber;
-    oTransaction.nCreditAmount = oReq.body.nAmount;
-    oTransaction.nDebitAmount = 0;
     oTransaction.sDate = oReq.body.sDate;
     oTransaction.sNarration = oReq.body.sNarration;  
    
     try{
-      if(newIntraTransaction.nRecieverAccountType == 0)    // savings account
+      if(oReq.body.sRecieverAccountType == 'savings')    // savings account
       {
+        oTransaction.nCreditAmount = oReq.body.nAmount;
+        oTransaction.nDebitAmount = 0;
         oTransaction.nLoanId = oReq.body.nReceiverAccountId;
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nReceiverAccountId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 
@@ -67,20 +67,26 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
         if(oBankAccount)
           oBankAccountModel.findByIdAndUpdate(oBankAccount._id,{nAmount: oTransaction.nBalanceAmount},{ new: true, runValidators : true});
 
+        const newTransaction = new oTransactionModel(oTransaction);
+        await newTransaction.save();
       }
-      else if(newIntraTransaction.nRecieverAccountType == 1)  // credit loan
+      else if(oReq.body.sRecieverAccountType == 'loan')  // credit loan
       {
+        oTransaction.nCreditAmount = 0;
+        oTransaction.nDebitAmount = oReq.body.nAmount;
         oTransaction.nLoanId = oReq.body.nLoanId;
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nLoanId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 
           oBalanceAmount = olasttransaction[0].nBalanceAmount;
 
-        oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + oReq.body.nAmount) * 100) / 100).toFixed(2);
+        console.log('oBalanceAmount creditloan',oBalanceAmount);
+
+        oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - oReq.body.nAmount) * 100) / 100).toFixed(2);
 
         const newTransaction = new oTransactionModel(oTransaction);
         await newTransaction.save();
         // Update total amount in creditloan model
-        let oCreditLoan = oCreditLoanModel.findOne({nLoanId : oReq.body.nLoanId});
+        let oCreditLoan = await oCreditLoanModel.findOne({nLoanId : oReq.body.nLoanId});
         if(oCreditLoan)
         {
           oCreditLoan.oTransactionInfo.push(newTransaction);
@@ -100,6 +106,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
     try{
       const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nSenderAccountId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
+        console.log('olasttransaction',olasttransaction[0]);
+
         oBalanceAmt = olasttransaction[0].nBalanceAmount;
       }
     }catch(e){
@@ -113,22 +121,24 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
     oTransactionInfo.nLoanId = oReq.body.nSenderAccountId;
     oTransactionInfo.nCreditAmount = 0;
     oTransactionInfo.nDebitAmount = oReq.body.nAmount;
+    console.log(oBalanceAmt);
     oTransactionInfo.nBalanceAmount = (Math.round((oBalanceAmt - oReq.body.nAmount) * 100) / 100).toFixed(2);
     oTransactionInfo.sDate = oReq.body.sDate;
     oTransactionInfo.sNarration = oReq.body.sNarration;  
     
     const newTransaction = new oTransactionModel(oTransactionInfo);
     await newTransaction.save();
+    console.log('newtransaction',newTransaction);
 
     // Update total amount in dailysavingdeposit model
-    let oSenderAccount = oDailyDepositModel.findOne({nAccountId : oReq.body.nSenderAccountId});
+    let oSenderAccount = await oDailyDepositModel.findOne({nAccountId : oReq.body.nSenderAccountId});
     if(oSenderAccount)
-      oDailyDepositModel.findByIdAndUpdate(oSenderAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
+      await oDailyDepositModel.findByIdAndUpdate(oSenderAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
 
     // Update total amount in bankaccount model
-    let oSenderBankAccount = oBankAccountModel.findOne({nAccountId : oReq.body.nSenderAccountId});
+    let oSenderBankAccount = await oBankAccountModel.findOne({nAccountId : oReq.body.nSenderAccountId});
     if(oSenderBankAccount)
-      oBankAccountModel.findByIdAndUpdate(oSenderBankAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
+      await oBankAccountModel.findByIdAndUpdate(oSenderBankAccount._id,{nAmount: oTransactionInfo.nBalanceAmount},{ new: true, runValidators : true});
     
     oRes.json("Success");
 

@@ -5,6 +5,11 @@ import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'n
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { BankAccount } from 'src/app/core/models/bankaccount.model';
+import { CreditLoanService } from 'src/app/core/services/creditloan.service';
+import { IntraTransactionService } from 'src/app/core/services/intratransaction.service';
+import { CreditLoan } from 'src/app/core/models/creditloan.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -67,12 +72,36 @@ import Swal from 'sweetalert2';
  
    public sButtonText: string;
    @Input() bisEditMode: boolean;
+   public aCreditLoan : Array<CreditLoan>;
+   public sAccountype: string;
+   aLoanIssueEmployee : Array<
+  {
+    displayText:string,
+    value:string
+  }>;
    
    constructor(private oBankAccountService: BankAccountService,
+    private oCreditLoanService: CreditLoanService,
+    private oIntraTransactionService: IntraTransactionService,
+    private router: Router,
                private modalService: NgbModal) { }
  
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+     this.aLoanIssueEmployee = [
+      {
+        displayText: 'Venkanna',
+        value:'01'
+      },
+      {
+        displayText: 'Bhaskar',
+        value:'02'
+      },
+      {
+        displayText: 'Naresh',
+        value:'03'
+      }
+    ];
      this.aDesignation = [
        {
          displayText: 'Manager',
@@ -101,18 +130,38 @@ import Swal from 'sweetalert2';
  
      });
    }
- 
-   fnCreateAccountDetails(){
-     // this.oCreditModel.sBranchCode = this.oCreditModel.sState + 
-     // this.oCreditModel.sDesignation + this.oCreditModel.sMandal + 
-     // this.oCreditModel.sVillage;
-     // this.oCreditModel.sAccountNo = this.oCreditModel.sBranchCode + '0001';
-     // this.oCreditModel.sCustomerId = this.oCreditModel.sBranchCode + '0002';
+
+   fnGetCreditLoans(){
+     
+    this.sAccountype = 'savings'
+    this.oCreditLoanService.fngetCreditLoanInfo(this.ointratransactionModel.sRecieverAccountNumber).subscribe((loandata)=>{
+      this.aCreditLoan = loandata as any;
+    });
+  }
+
+   fnGetSenderAccount(oSelectedAccount : BankAccount){
+    this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
+    this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
+    this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
+   }
+
+   fnGetReceiverAccount(oSelectedAccount : BankAccount){
+    this.ointratransactionModel.sRecieverAccountNumber = oSelectedAccount.sAccountNo;
+    this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
    }
  
-   fnResetState() {
-     // this.oCreditModel.sState = '';
+   fnOnIntraTransactionInfoSubmit(){
+    this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
+      console.log(data);
+      this.fnSucessMessage();
+      this.redirectTo('/intratransaction');
+    });
    }
+
+   redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
  
  
  
