@@ -112,6 +112,12 @@ export const MENU: MenuItem[] = [
             parentId: 40
         },
         {
+            id: 62,
+            label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.WITHDRAWAL',
+            link: '/withdrawal',
+            parentId: 40
+        },
+        {
             id: 44,
             label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.CREDIT',
             link: '/credit',

@@ -38,19 +38,15 @@ oAccountRouter.post("/login", asyncMiddleware(async (oReq, oRes, oNext) => {
     let bIsRetailer = false;
 
     user = await oUserModel.findUserByCredentials(oReq.body.sEmail, oReq.body.sPassword);
-    if (!user) {
-      user = await oRetailerModel.findRetailerByCredentials(oReq.body.sEmail, oReq.body.sPassword);
-      if (user)
-        bIsRetailer = true;
-    }
-
+    console.log(oReq.body.sEmail);
+    console.log(oReq.body.sPassword);
+    console.log(user);
     if (user === 0) {
       oRes.status(401).send({ error: 'Email does not exists. Please create a free account' });
     } else if (user === 1) {
       oRes.status(401).send({ error: 'Invalid Email or Password' });
-    }
-    const token = await user.generateAuthToken();
-    if (!bIsRetailer) {
+    }else{
+      const token = await user.generateAuthToken();
       oRes.json({
         'sUserEmail': user.sUserEmail,
         'sUserName': user.sUserName,
@@ -58,16 +54,8 @@ oAccountRouter.post("/login", asyncMiddleware(async (oReq, oRes, oNext) => {
         '_token': token,
         '_expirytokentime': user.sTokenExpiryTime
       });
-    } else {
-      oRes.json({
-        'sUserEmail': user.sUserEmail,
-        'sUserName': user.sUserName,
-        'sBussinessName': user.sBusinessName,
-        'bIsRetailer': true,
-        '_token': token,
-        '_expirytokentime': user.sTokenExpiryTime
-      });
     }
+    
 
   } catch (oError) {
     console.log(oError);
@@ -126,24 +114,6 @@ oAccountRouter.post("/createuseraccount", asyncMiddleware(async (oReq, oRes, oNe
   }
 }));
 
-// url: ..../account/createretaileraccount
-oAccountRouter.post("/createretaileraccount", asyncMiddleware(async (oReq, oRes, oNext) => {
-  try {
-    const user = await oRetailerModel.addRetailerByCredentials(oReq.body.sName, oReq.body.sEmail, oReq.body.sPassword, oReq.body.nMobile, oReq.body.sBusinessName,
-      oReq.body.sAadharNumber, oReq.body.sPanNumber, oReq.body.sGSTNumber);
-
-    if (user) {
-      //const token = jwt.sign({_id:oReq.body.sEmail},'thisisuserAutentication');
-      oRes.json(oReq.body.sEmail);
-    }
-    else {
-      oRes.json({ error: 'Email is already registerd' })
-    }
-  } catch (e) {
-    console.log(e);
-    oRes.status(400).send(e);
-  }
-}));
 
 // Update account
 oAccountRouter.patch("/me", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
@@ -204,36 +174,6 @@ oAccountRouter.get("/getusers", asyncMiddleware(async (oReq, oRes, oNext) => {
       });
     }));
     oRes.json({ 'users': users });
-
-  } catch (e) {
-    console.log(e);
-    oRes.status(400).send(e);
-  }
-}));
-
-//url: ..../account/getretailers
-oAccountRouter.get("/getretailers", asyncMiddleware(async (oReq, oRes, oNext) => {
-
-  try {
-    const oRetailers = await oRetailerModel.find({});
-    let retailers = [];
-    let oAddress = null;
-    await Promise.all(oRetailers.map(async (retailer) => {
-
-      oAddress = await oAddressModel.findOne({ nUserId: retailer.nRetailerId });
-      //console.log(oAddress);
-
-      retailers.push({
-        'sUserEmail': retailer.sUserEmail,
-        'sUserName': retailer.sUserName,
-        'sUserMobile': retailer.sUserMobile,
-        'sUserBusiness': retailer.sBusinessName,
-        'sUserAddress': oAddress,
-        'sUserJoiningDate': retailer.createdAt
-      });
-    }));
-
-    oRes.json({ 'retailers': retailers });
 
   } catch (e) {
     console.log(e);

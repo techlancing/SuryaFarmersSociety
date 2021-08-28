@@ -72,7 +72,17 @@ const routes: Routes = [
     },
     {
         path:'dailysavingdebit',
-        component: AccountTransactionDailysavingdebitComponent
+        component: AccountTransactionDailysavingdebitComponent,
+        data: {
+            type: 'deposit'
+        }
+    },
+    {
+        path:'withdrawal',
+        component: AccountTransactionDailysavingdebitComponent,
+        data: {
+            type: 'withdraw'
+        }
     },
     {
         path:'creditloan',

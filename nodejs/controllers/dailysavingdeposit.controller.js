@@ -32,23 +32,38 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (
       oRes.status(400).send(e);
     }
 
-    //save transaction model
-    let oTransaction = {};
-    oTransaction.sAccountNo = newDeposit.sAccountNo;
-    oTransaction.nLoanId = newDeposit.nAccountId;
-    oTransaction.nCreditAmount = newDeposit.nAmount;
-    oTransaction.nDebitAmount = 0;
-    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + newDeposit.nAmount) * 100) / 100).toFixed(2);
-    oTransaction.sDate = newDeposit.sEndDate;
-    oTransaction.sNarration = newDeposit.sNarration;  
-    
-    const newTransaction = new oTransactionModel(oTransaction);
-    await newTransaction.save();
-
-    if(oTransaction.nBalanceAmount > 0)
+    let sdate = newDeposit.sStartDate;
+    let today = new Date(sdate);
+    let tomorrow = new Date(today);
+        
+    for(let i = 0; i < newDeposit.nTotaldays; i++)
     {
-      newDeposit.oTransactionInfo = newTransaction._id;
-      await newDeposit.save();
+      //save transaction model
+      let oTransaction = {};
+      oTransaction.sAccountNo = newDeposit.sAccountNo;
+      oTransaction.nLoanId = newDeposit.nAccountId;
+      oTransaction.nCreditAmount = 0;
+      oTransaction.nDebitAmount = newDeposit.nDayAmount;
+      console.log(oBalanceAmount);
+      oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + Number(newDeposit.nDayAmount)) * 100) / 100).toFixed(2);
+      oBalanceAmount = Number(oTransaction.nBalanceAmount);
+      console.log(newDeposit);
+      console.log((Math.round((oBalanceAmount + newDeposit.nDayAmount) * 100) / 100).toFixed(2));
+      console.log(oTransaction.nBalanceAmount);
+      console.log(oBalanceAmount);
+      oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + (tomorrow.getMonth()+1).toString() + "-" + tomorrow.getDate().toString();
+      tomorrow.setDate(tomorrow.getDate() + 1 );
+      sdate = oTransaction.sDate;
+      oTransaction.sNarration = newDeposit.sNarration;  
+      
+      const newTransaction = new oTransactionModel(oTransaction);
+      await newTransaction.save();
+
+      if(oTransaction.nBalanceAmount > 0)
+      {
+        newDeposit.oTransactionInfo = newTransaction._id;
+        await newDeposit.save();
+      }
     }
     oRes.json("Success");
 
@@ -115,4 +130,41 @@ oDailyDepositRouter.post("/dailydeposittransaction_list", asyncMiddleware(async(
     }
 }));
 
+// url: ..../dailysavingdeposit/withdraw_dailydeposittransaction
+oDailyDepositRouter.post("/withdraw_dailydeposittransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+  //To get last transaction data to get the balance amount
+  let oBalanceAmount = 0;
+  try{
+    const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nAccountId}).sort({_id:-1}).limit(1);
+    if(olasttransaction.length > 0) {
+      oBalanceAmount = olasttransaction[0].nBalanceAmount;
+    }
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+  try{
+    //save transaction model
+    let oTransaction = {};
+    oTransaction.sAccountNo = oReq.body.sAccountNo;
+    oTransaction.nLoanId = oReq.body.nAccountId;
+    oTransaction.nCreditAmount = 0;
+    oTransaction.nDebitAmount = oReq.body.nAmount;
+    console.log(oBalanceAmount);
+    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - Number(oReq.body.nAmount)) * 100) / 100).toFixed(2);
+    oBalanceAmount = Number(oTransaction.nBalanceAmount);
+    oTransaction.sDate = oReq.body.sEndDate;
+    oTransaction.sNarration = oReq.body.sNarration;  
+    
+    const newTransaction = new oTransactionModel(oTransaction);
+    await newTransaction.save();
+
+    oRes.json("Success");
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+
+
+}));
 module.exports = oDailyDepositRouter;

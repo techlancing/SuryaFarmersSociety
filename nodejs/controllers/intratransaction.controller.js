@@ -48,8 +48,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
     try{
       if(oReq.body.sRecieverAccountType == 'savings')    // savings account
       {
-        oTransaction.nCreditAmount = oReq.body.nAmount;
-        oTransaction.nDebitAmount = 0;
+        oTransaction.nCreditAmount = 0;
+        oTransaction.nDebitAmount = oReq.body.nAmount;
         oTransaction.nLoanId = oReq.body.nReceiverAccountId;
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nReceiverAccountId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 
@@ -72,8 +72,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
       }
       else if(oReq.body.sRecieverAccountType == 'loan')  // credit loan
       {
-        oTransaction.nCreditAmount = 0;
-        oTransaction.nDebitAmount = oReq.body.nAmount;
+        oTransaction.nCreditAmount = oReq.body.nAmount;
+        oTransaction.nDebitAmount = 0;
         oTransaction.nLoanId = oReq.body.nLoanId;
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nLoanId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 

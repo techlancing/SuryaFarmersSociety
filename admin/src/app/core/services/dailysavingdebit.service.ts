@@ -16,6 +16,11 @@ export class DailySavingDebitService {
         return this.http.post(sMethodUrl, oDailyDeposit);
     }
 
+    fnWithDrawDailySavingDepositInfo(oDailyDeposit: DailySavingDebit) {
+      const sMethodUrl = `${this.sRootUrl}/withdraw_dailydeposittransaction`;
+      return this.http.post(sMethodUrl, oDailyDeposit);
+  }
+
     fngetDailySavingDepositInfo(sAccountNo: string){
       const sMethodUrl = `${this.sRootUrl}/dailydeposittransaction_list`;
       return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});

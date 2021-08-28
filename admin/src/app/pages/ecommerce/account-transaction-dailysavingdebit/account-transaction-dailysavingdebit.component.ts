@@ -9,7 +9,7 @@ import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'n
 import { environment } from 'src/environments/environment';
 import { from } from 'rxjs';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -81,11 +81,12 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   @Input() bHideCateogryList: boolean = false;
 
   public sButtonText: string;
-  @Input() bisEditMode: boolean;
+  public bIsDeposit : boolean;
   
   constructor(private oBankAccountService: BankAccountService,
               private oDailySavingDebitService : DailySavingDebitService,
               private modalService: NgbModal,
+              public activatedroute : ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -106,13 +107,16 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     ];
     
     this.oDailySavingDebitModel = new DailySavingDebit();
-    this.sButtonText = 'Send SMS & Save & Submit';
+    
     this.bIsAddActive = false;
     this.bIsEditActive = false;
-    if (this.bisEditMode) {
-      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-      // this.oBankAccountModel = tempobj;
-      this.sButtonText = 'Update';
+
+    if(this.activatedroute.snapshot.data.type === 'deposit'){
+      this.sButtonText = 'Deposit & Send SMS';
+      this.bIsDeposit = true;
+    }else{
+      this.sButtonText = 'Withdraw & Send SMS';
+      this.bIsDeposit = false;
     }
     
   }
@@ -148,7 +152,7 @@ fnCalculateDays(): void{
   if(this.oDailySavingDebitModel.sStartDate !== undefined && this.oDailySavingDebitModel.sEndDate !== undefined){
     
     const diffInMs   = +(new Date(this.oDailySavingDebitModel.sEndDate)) - +(new Date(this.oDailySavingDebitModel.sStartDate))
-    this.oDailySavingDebitModel.nTotaldays  = diffInMs / (1000 * 60 * 60 * 24);
+    this.oDailySavingDebitModel.nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
   } 
   
 }
@@ -162,11 +166,21 @@ fnCalculateTotalAmount(): void{
 
 fnOnDailySavingDebitInfoSubmit(): void {
   //this.bIsAddActive = true;
+  if(this.bIsDeposit)
+  {
     this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
       
       this.fnSucessMessage();
       this.redirectTo('/dailysavingdebit');
     });
+  }
+  else{
+    this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
+      
+      this.fnSucessMessage();
+      this.redirectTo('/withdrawal');
+    });
+  }
 }
   fnSucessMessage() {
     Swal.fire({

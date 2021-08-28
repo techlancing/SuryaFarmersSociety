@@ -84,8 +84,8 @@ obankaccountRouter.post("/add_bankaccount", asyncMiddleware(async (oReq, oRes, o
     let oTransaction = {};
     oTransaction.sAccountNo = newbankaccount.sAccountNo;
     oTransaction.nLoanId = newbankaccount.nAccountId;
-    oTransaction.nCreditAmount = newbankaccount.nAmount;
-    oTransaction.nDebitAmount = 0;
+    oTransaction.nCreditAmount = 0;
+    oTransaction.nDebitAmount = newbankaccount.nAmount;
     oTransaction.nBalanceAmount = newbankaccount.nAmount;
     oTransaction.sDate = newbankaccount.sDate;
     oTransaction.sNarration = "new account created";  

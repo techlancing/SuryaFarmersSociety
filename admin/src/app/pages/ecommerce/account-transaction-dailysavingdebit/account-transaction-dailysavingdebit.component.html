@@ -97,39 +97,46 @@
 
           <form class="col-12" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                   <label for="sDate">Start Date</label>                  
                   <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sStartDate" type="date"
                     class="form-control" (change)="fnCalculateDays()">
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                   <label for="sDate">End Date</label>                  
                   <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
                     class="form-control" (change)="fnCalculateDays()">
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                   <label for="nTotaldays">Total Days</label>                  
                   <input id="nTotaldays" name="nTotaldays" [(ngModel)]="oDailySavingDebitModel.nTotaldays" type="number"
                     class="form-control" readonly>
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                   <label for="sDayAmount">For Day Amount</label>
                   <input id="sDayAmount" name="sDayAmount" [(ngModel)]="oDailySavingDebitModel.nDayAmount" type="text"
                     class="form-control" (input)="fnCalculateTotalAmount()">
                 </div>
               </div>
+              <div class="col-sm-6" *ngIf="!bIsDeposit">
+                <div class="form-group">
+                  <label for="sDate">Date</label>                  
+                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
+                    class="form-control">
+                </div>
+              </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nAmount">Total Amount</label>
                   <input id="nAmount" name="nAmount" [(ngModel)]="oDailySavingDebitModel.nAmount" type="number"
-                    class="form-control" readonly>
+                    class="form-control">
                 </div>
               </div> 
               <div class="col-sm-6">

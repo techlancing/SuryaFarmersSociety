@@ -126,9 +126,10 @@
       "TEXT": "TRANSACTIONS",
       "LIST": {
         "ALLTRANSACTIONPRINT": "All Transactions",
-        "DEBIT": "Debit",
-        "DAILYSAVINGDEBIT": "Daily saving Debit",
-        "CREDIT": "Credit",
+        "DAILYSAVINGDEBIT": "Saving Deposit",
+        "WITHDRAWAL": "Saving Withdrawal",
+        "DEBIT": "Loan Debit",
+        "CREDIT": "Loan Credit",
         "INTRATRANSACTION": "Intra Transaction"
       }
     },
