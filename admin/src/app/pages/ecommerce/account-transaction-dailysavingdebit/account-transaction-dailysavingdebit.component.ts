@@ -81,6 +81,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   @Input() bHideCateogryList: boolean = false;
 
   public sButtonText: string;
+  public sSuccessMsg: string;
   public bIsDeposit : boolean;
   
   constructor(private oBankAccountService: BankAccountService,
@@ -113,9 +114,11 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
 
     if(this.activatedroute.snapshot.data.type === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
+      this.sSuccessMsg = 'Amount deposited sucessfully.'
       this.bIsDeposit = true;
     }else{
       this.sButtonText = 'Withdraw & Send SMS';
+      this.sSuccessMsg = 'Amount withdrawn sucessfully.'
       this.bIsDeposit = false;
     }
     
@@ -186,41 +189,13 @@ fnOnDailySavingDebitInfoSubmit(): void {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Amount deposited sucessfully.',
+      title: this.sSuccessMsg,
       showConfirmButton: false,
       timer: 1500
     });
   }
 
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
 
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
-
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
   /**
    * Open modal
    * @param content modal content

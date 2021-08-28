@@ -44,6 +44,7 @@ import { SelectPrintLineComponent } from './select-print-line/select-print-line.
 import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
 import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
 import { BankAccountDataComponent } from './bank-account-data/bank-account-data.component';
+import { AccountLedgerTableComponent } from './account-ledger-table/account-ledger-table.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -73,7 +74,8 @@ const config: DropzoneConfigInterface = {
      SelectPrintLineComponent,
      CategoryWiseBalanceSummaryComponent,
      AllCategoryWiseBalanceSummaryComponent,
-     BankAccountDataComponent],
+     BankAccountDataComponent,
+     AccountLedgerTableComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,

@@ -72,8 +72,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
       }
       else if(oReq.body.sRecieverAccountType == 'loan')  // credit loan
       {
-        oTransaction.nCreditAmount = oReq.body.nAmount;
-        oTransaction.nDebitAmount = 0;
+        oTransaction.nCreditAmount = 0;
+        oTransaction.nDebitAmount = oReq.body.nAmount;
         oTransaction.nLoanId = oReq.body.nLoanId;
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nLoanId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 

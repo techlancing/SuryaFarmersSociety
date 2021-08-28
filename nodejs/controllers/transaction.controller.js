@@ -70,4 +70,21 @@ oTransactionRouter.get("/Transaction_list", asyncMiddleware(async(oReq, oRes, oN
     }
 }));
 
+// url: ..../transaction/gettransactionsbetweendates
+oTransactionRouter.post("/gettransactionsbetweendates", asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oAllTransactions = await oTransactionModel.find({ sDate:{ $gte: oReq.body.from_date,
+    $lt: oReq.body.to_date} });
+
+    if(!oAllTransactions){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oAllTransactions);
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 module.exports = oTransactionRouter;

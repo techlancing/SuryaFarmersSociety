@@ -148,8 +148,8 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", asyncMiddleware(as
     let oTransaction = {};
     oTransaction.sAccountNo = oReq.body.sAccountNo;
     oTransaction.nLoanId = oReq.body.nAccountId;
-    oTransaction.nCreditAmount = 0;
-    oTransaction.nDebitAmount = oReq.body.nAmount;
+    oTransaction.nCreditAmount = oReq.body.nAmount;
+    oTransaction.nDebitAmount = 0;
     console.log(oBalanceAmount);
     oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - Number(oReq.body.nAmount)) * 100) / 100).toFixed(2);
     oBalanceAmount = Number(oTransaction.nBalanceAmount);
