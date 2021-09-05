@@ -1,72 +1,117 @@
+
 <div class="container-fluid">
-    <!-- page title -->
-    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
-    bgimageclass="addcategory_header"></app-page-title>
-  
-    <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
-        <div class="card card-bg">
-          <div class="card-body">
-            <h2>Day Wise Cumulative Account Report</h2>
-                 
-             <div class="row">
-              <div class="col-sm-12">                
-              </div>                 
+  <!-- page title -->
+  <app-page-title title="" 
+  bgimageclass="addcategory_header"></app-page-title>
+
+  <div class="row">
+    <form class="col-12" novalidate #_daywiseFormElem="ngForm" (ngSubmit)="fnGetDayWiseTransactionSubmit(_daywiseFormElem)">
+      <div class="card card-bg">
+        <div class="card-body">
+          
+          <app-bank-account-data headerText='Day Wise Cumulative Account' 
+          (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
+           <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="fromDate">From Date</label>
+                <input id="fromDate" name="fromDate"  type="date" ngModel
+                  class="form-control" >                  
+                 </div>
             </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="toDate">To Date</label>
+                <input id="toDate" name="toDate"  type="date" ngModel
+                  class="form-control" >                  
+                 </div>
+            </div>
+            <div class="col-sm-4 add-category-btn-container">
+              <button type="submit" class="btn btn-primary mr-1" 
+              >Get Statement</button>
+              
+            </div> 
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="sAccountNo">Credit:</label>                  
+                 <label class="account-detail">{{ntotalCredit.toLocaleString()}}</label>
+              </div>
+            </div>
+            
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="sDate">Debit:</label>                  
+                <label class="account-detail">{{ntotalDebit.toLocaleString()}}</label>
+              </div>
+            </div>
+            
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="sDate">Balance:</label>                  
+                <label class="account-detail">{{nbalanceAmount.toLocaleString()}}</label>
+              </div>
+            </div>               
+          </div>
+          <h4>Account Ledger</h4>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sBranchCode">Date</label> 
+              </div>
+            </div>
+            
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sAccountNo">Credit</label>                  
+                 </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sBranchCode">Debit</label>                  
+                <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
+                  class="form-control" > -->
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                  <label for="sBranchCode">Balance Amount</label>  
+                  
+              </div>
+            </div>            
+          </div>
+          <div class="row" *ngFor="let otransactionmodel of uniqueArr">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
+                
+              </div>
+            </div>
+            
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
+                 </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                  <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount}}</label>  
+                  
+              </div>
+            </div>
+            
+            
+                         
           </div>
         </div>
-      </form>
-      
-      
-<div class="container-fluid">
-    <!-- page title -->
-    <!-- <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
-    bgimageclass="addcategory_header"></app-page-title> -->
-  
-    <div class="row">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
-        
-             <div class="row">
-              <div class="col-sm-12">                
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sDate">From Date</label>
-                  <input id="sDate" name="sDate" [(ngModel)]="odaywisecumulativeaccountmodel.sDate" type="date"
-                    class="form-control" >                  
-                   </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                   </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                   </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sDate">To Date</label>
-                  <input id="sDate" name="sDate" [(ngModel)]="odaywisecumulativeaccountmodel.sDate" type="date"
-                    class="form-control" >                  
-                   </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                   </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                   </div>
-              </div>
-              <div class="col-sm-4 add-category-btn-container">
-                <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsAddActive || bIsEditActive"
-                >submit</button>
-                <!-- <button type="button" class="btn btn-secondary">Clear</button> -->
-                <!-- <button type="button" class="btn btn-secondary"
-                >Clear</button> -->
-              </div>
+      </div>
+    </form>
+    
+    
+</div>
+</div>
+    

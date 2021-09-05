@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankAccountService } from '../../../core/services/account.service';
-import { DaywiseCumulativeAccount } from '../../../core/models/daywisecumulativeaccount.model'
-import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { TransactionService } from '../../../core/services/transaction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
+import { BankAccount } from 'src/app/core/models/bankaccount.model';
 
 @Component({
   selector: 'app-daywise-cumulative-account',
@@ -13,123 +13,70 @@ import Swal from 'sweetalert2';
 })
 export class DaywiseCumulativeAccountComponent implements OnInit {
 
-  bankaccounts: Array<DaywiseCumulativeAccount>;
+  public aTransactions : any;
+  public ntotalCredit : number =0;
+  public ntotalDebit : number =0;
+  public nbalanceAmount : number =0;
+  public sAccountNumber : string;
+  public uniqueArr = [];
+  
+    constructor(private oTransactionService: TransactionService,
+                private modalService: NgbModal) { }
+  
+    ngOnInit(): void {
+      
+    }
 
-  @Output() updateClicked = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: DaywiseCumulativeAccount;
-
-  public odaywisecumulativeaccountmodel: DaywiseCumulativeAccount;
-  nSelectedEditIndex: number;
-  bIsAddActive: boolean;
-  bIsEditActive: boolean;
-
-  @ViewChild('_BankAccountFormElem')
-  public oBankAccountfoFormElem: any;
-
-  @ViewChild('addcardropzoneElem')
-  public oDropZone: DropzoneComponent;
-  // aState : Array<
-  // {
-  //   displayText:string,
-  //   value:string
-  // }>;
-   // bread crumb items
-   breadCrumbItems: Array<{}>;
-   @Input() bHideBreadCrumb: boolean = false;
-   @Input() bHideCateogryList: boolean = false;
- 
-   public sButtonText: string;
-   @Input() bisEditMode: boolean;
-  aTypeofLoan: { displayText: string; value: string; }[];
-   
-   constructor(private oBankAccountService: BankAccountService,
-               private modalService: NgbModal) { }
- 
-   ngOnInit(): void {
-     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-     this.aTypeofLoan = [
-       {
-         displayText: 'EMI Loan',
-         value:'01'
-       }
-     ];
-     this.odaywisecumulativeaccountmodel = new DaywiseCumulativeAccount();
-     this.sButtonText = 'Print';
-     this.bIsAddActive = false;
-     this.bIsEditActive = false;
-     if (this.bisEditMode) {
-       // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-       // this.oBankAccountModel = tempobj;
-       this.sButtonText = 'Update';
-     }
-     this.oBankAccountService.fngetBankAccountInfo().subscribe(() => {
-       //this.aBankAccountTypes = [...data as any];
- 
-     });
-   }
-   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
-
-
-
-  fnSucessMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'State is saved sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
-
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
-  /**
-   * Open modal
-   * @param content modal content
-   */
-  openModal(content: any, index: number) {
-    this.nSelectedEditIndex = index;
-
-    this.modalService.open(content, { centered: true });
-
-  }
-
+    fnGetCreditLoans(oSelectedAccount : BankAccount){
+      this.sAccountNumber = oSelectedAccount.sAccountNo;
+    }
+  
+    fnGetDayWiseTransactionSubmit(ngform: NgForm){
+      this.ntotalCredit =0;
+      this.ntotalDebit =0;
+      this.nbalanceAmount = 0;
+      this.uniqueArr = [];
+      let fromdate = ngform.value.fromDate;
+      let todate = ngform.value.toDate;
+      const diffInMs   = +(new Date(todate)) - +(new Date(fromdate))
+      let nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+  
+      let today = new Date(fromdate);
+      let tomorrow = new Date(today);
+      
+      // oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
+      console.log(fromdate,todate);
+      this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+        console.log(data);
+        this.aTransactions = data;
+        let tempdate = '';
+        this.aTransactions.map((transaction)=>{
+          
+          if(this.sAccountNumber === transaction.sAccountNo){
+            this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;
+          this.ntotalDebit = this.ntotalDebit + transaction.nDebitAmount;
+            if(tempdate !== transaction.sDate){
+              tempdate = transaction.sDate;
+              this.uniqueArr = [...this.uniqueArr,{
+                sDate:transaction.sDate,
+                nCreditAmount:transaction.nCreditAmount,
+                nDebitAmount:transaction.nDebitAmount,
+                nBalanceAmount:transaction.nCreditAmount- transaction.nDebitAmount
+              }];
+            }else{
+              this.uniqueArr[this.uniqueArr.length - 1].nCreditAmount += transaction.nCreditAmount;
+              this.uniqueArr[this.uniqueArr.length - 1].nDebitAmount += transaction.nDebitAmount;
+              this.uniqueArr[this.uniqueArr.length - 1].nBalanceAmount = this.uniqueArr[this.uniqueArr.length - 1].nCreditAmount - 
+              this.uniqueArr[this.uniqueArr.length - 1].nDebitAmount;
+              
+            }
+          }
+          
+        });
+        console.log(this.uniqueArr);
+        this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      });
+    }
+  
+  
 }

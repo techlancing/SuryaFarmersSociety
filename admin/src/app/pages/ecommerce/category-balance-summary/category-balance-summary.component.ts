@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankAccountService } from '../../../core/services/account.service';
-import { CategoryBalanceSummary } from '../../../core/models/categorybalancesummary.model'
-import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { TransactionService } from '../../../core/services/transaction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-category-balance-summary',
   templateUrl: './category-balance-summary.component.html',
@@ -13,123 +11,61 @@ import Swal from 'sweetalert2';
 })
 export class CategoryBalanceSummaryComponent implements OnInit {
 
-  bankaccounts: Array<CategoryBalanceSummary>;
+  public aTransactions : any;
+  public ntotalCredit : number =0;
+  public ntotalDebit : number =0;
+  public nbalanceAmount : number =0;
+  public uniqueArr = [];
+  public uniqueTransactions = [];
+  
+    constructor(private oTransactionService: TransactionService,
+                private modalService: NgbModal) { }
+  
+    ngOnInit(): void {
+      
+    }
+  
+    fnGetDayWiseTransactionSubmit(ngform: NgForm){
+      this.ntotalCredit =0;
+      this.ntotalDebit =0;
+      this.nbalanceAmount = 0;
+      this.uniqueArr = [];
+      this.uniqueTransactions = [];
+      let fromdate = ngform.value.fromDate;
+      let todate = ngform.value.toDate;
+      this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+        console.log(data);
+        this.aTransactions = data;
 
-  @Output() updateClicked = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: CategoryBalanceSummary;
+        this.uniqueArr = [...new Set(this.aTransactions.map(item => item.sAccountNo))];
+        this.aTransactions.map((transaction)=>{
+          this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;
+          this.ntotalDebit = this.ntotalDebit + transaction.nDebitAmount;
+        });
 
-  public ocategorybalancesummarymodel: CategoryBalanceSummary;
-  nSelectedEditIndex: number;
-  bIsAddActive: boolean;
-  bIsEditActive: boolean;
-
-  @ViewChild('_BankAccountFormElem')
-  public oBankAccountfoFormElem: any;
-
-  @ViewChild('addcardropzoneElem')
-  public oDropZone: DropzoneComponent;
-  // aState : Array<
-  // {
-  //   displayText:string,
-  //   value:string
-  // }>;
-   // bread crumb items
-   breadCrumbItems: Array<{}>;
-   @Input() bHideBreadCrumb: boolean = false;
-   @Input() bHideCateogryList: boolean = false;
- 
-   public sButtonText: string;
-   @Input() bisEditMode: boolean;
-  aTypeofLoan: { displayText: string; value: string; }[];
-   
-   constructor(private oBankAccountService: BankAccountService,
-               private modalService: NgbModal) { }
- 
-   ngOnInit(): void {
-     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-     this.aTypeofLoan = [
-       {
-         displayText: 'EMI Loan',
-         value:'01'
-       }
-     ];
-     this.ocategorybalancesummarymodel = new CategoryBalanceSummary();
-     this.sButtonText = 'Print';
-     this.bIsAddActive = false;
-     this.bIsEditActive = false;
-     if (this.bisEditMode) {
-       // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-       // this.oBankAccountModel = tempobj;
-       this.sButtonText = 'Update';
-     }
-     this.oBankAccountService.fngetBankAccountInfo().subscribe(() => {
-       //this.aBankAccountTypes = [...data as any];
- 
-     });
-   }
-   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
-
-
-
-  fnSucessMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'State is saved sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
-
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
-  /**
-   * Open modal
-   * @param content modal content
-   */
-  openModal(content: any, index: number) {
-    this.nSelectedEditIndex = index;
-
-    this.modalService.open(content, { centered: true });
-
-  }
-
+        this.uniqueArr.map((uniqueAccno)=>{
+          let saccno = '';
+            let totalcredit = 0;
+            let totaldebit =0;
+          this.aTransactions.map((transaction)=>{
+            
+            if(uniqueAccno === transaction.sAccountNo){
+              saccno = transaction.sAccountNo;
+                totalcredit += transaction.nCreditAmount;
+                totaldebit += transaction.nDebitAmount;
+            }
+          });
+            this.uniqueTransactions = [...this.uniqueTransactions,{
+              sAccountNo:saccno,
+              nCreditAmount:totalcredit,
+              nDebitAmount:totaldebit,
+              nBalanceAmount:totalcredit- totaldebit
+            }];
+        });
+        
+        console.log(this.uniqueArr);
+        this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      });
+    }
+  
 }

@@ -24,6 +24,9 @@ public nbalanceAmount : number =0;
   }
 
   fnGetDayWiseTransactionSubmit(ngform: NgForm){
+    this.ntotalCredit =0;
+    this.ntotalDebit =0;
+    this.nbalanceAmount = 0;
     let fromdate = ngform.value.fromDate;
     let todate = ngform.value.toDate;
     console.log(fromdate,todate);

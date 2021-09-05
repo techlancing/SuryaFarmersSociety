@@ -51,7 +51,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (
       console.log((Math.round((oBalanceAmount + newDeposit.nDayAmount) * 100) / 100).toFixed(2));
       console.log(oTransaction.nBalanceAmount);
       console.log(oBalanceAmount);
-      oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + (tomorrow.getMonth()+1).toString() + "-" + tomorrow.getDate().toString();
+      oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
       tomorrow.setDate(tomorrow.getDate() + 1 );
       sdate = oTransaction.sDate;
       oTransaction.sNarration = newDeposit.sNarration;  
