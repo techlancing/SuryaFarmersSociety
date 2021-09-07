@@ -16,3 +16,10 @@
 .card-bg{
 background-color: antiquewhite;
 }
+
+.btn-container{
+    display: grid;
+    justify-items: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}

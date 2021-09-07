@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { BankAccountService } from '../../../core/services/account.service';
-import { Last12MonthsTransaction } from '../../../core/models/last12monthstransactions.model'
-import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { TransactionService } from '../../../core/services/transaction.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-last12-months-transaction',
@@ -13,123 +12,68 @@ import Swal from 'sweetalert2';
 })
 export class Last12MonthsTransactionComponent implements OnInit {
 
-  bankaccounts: Array<Last12MonthsTransaction>;
+  public aTransactions : any;
+  public ntotalCredit : number =0;
+  public ntotalDebit : number =0;
+  public nbalanceAmount : number =0;
+  public uniqueArr = [];
+  public uniqueTransactions = [];
+  
+    constructor(private oTransactionService: TransactionService,
+                private modalService: NgbModal) { }
+  
+    ngOnInit(): void {
+      
+    }
+  
+    fnGetDayWiseTransactionSubmit(ngform: NgForm){
+      this.ntotalCredit =0;
+      this.ntotalDebit =0;
+      this.nbalanceAmount = 0;
+      let fromdate = ngform.value.fromDate;
+      let todate = ngform.value.toDate;
+      console.log(fromdate, todate);
+      const diffInMs   = +(new Date(todate)) - +(new Date(fromdate))
+      let nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+  
+      let today = new Date(fromdate);
+      let tomorrow = new Date(today);
+      
+      // oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
+      console.log(fromdate,todate);
+      this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+        console.log(data);
+        this.aTransactions = data;
+        this.uniqueArr = [...new Set(this.aTransactions.map(item => 
+          new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(item.sDate))
+          ))];
+        console.log(this.uniqueArr);
+        this.aTransactions.map((transaction)=>{
+          this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;
+          this.ntotalDebit = this.ntotalDebit + transaction.nDebitAmount;
+        });
 
-  @Output() updateClicked = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: Last12MonthsTransaction;
-
-  public olast12monthstransactionsmodel: Last12MonthsTransaction;
-  nSelectedEditIndex: number;
-  bIsAddActive: boolean;
-  bIsEditActive: boolean;
-
-  @ViewChild('_BankAccountFormElem')
-  public oBankAccountfoFormElem: any;
-
-  @ViewChild('addcardropzoneElem')
-  public oDropZone: DropzoneComponent;
-  // aState : Array<
-  // {
-  //   displayText:string,
-  //   value:string
-  // }>;
-   // bread crumb items
-   breadCrumbItems: Array<{}>;
-   @Input() bHideBreadCrumb: boolean = false;
-   @Input() bHideCateogryList: boolean = false;
- 
-   public sButtonText: string;
-   @Input() bisEditMode: boolean;
-  aTypeofLoan: { displayText: string; value: string; }[];
-   
-   constructor(private oBankAccountService: BankAccountService,
-               private modalService: NgbModal) { }
- 
-   ngOnInit(): void {
-     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
-     this.aTypeofLoan = [
-       {
-         displayText: 'EMI Loan',
-         value:'01'
-       }
-     ];
-     this.olast12monthstransactionsmodel = new Last12MonthsTransaction();
-     this.sButtonText = 'Print';
-     this.bIsAddActive = false;
-     this.bIsEditActive = false;
-     if (this.bisEditMode) {
-       // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-       // this.oBankAccountModel = tempobj;
-       this.sButtonText = 'Update';
-     }
-     this.oBankAccountService.fngetBankAccountInfo().subscribe(() => {
-       //this.aBankAccountTypes = [...data as any];
- 
-     });
-   }
-   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-      // this.fnEditSucessMessage();
-      this.bankaccounts = [];
-      console.log(this.bankaccounts);
-      this.bankaccounts = [...cdata as any];
-      console.log(this.bankaccounts);
-      //this.oCreditModel.sState = '';
-      this.modalService.dismissAll();
-    });
-  }
-
-
-
-  fnSucessMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'State is saved sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  fnEmptyCarNameMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please enter a valid Car Name',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  // fnDuplicateCarNameMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'warning',
-  //     title: 'Car Name is already exists',
-  //     showConfirmButton: false,
-  //     timer: 2000
-  //   });
-  // }
-
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
-  /**
-   * Open modal
-   * @param content modal content
-   */
-  openModal(content: any, index: number) {
-    this.nSelectedEditIndex = index;
-
-    this.modalService.open(content, { centered: true });
-
-  }
-
+        this.uniqueArr.map((month)=>{
+          let saccno = '';
+            let totalcredit = 0;
+            let totaldebit =0;
+          this.aTransactions.map((transaction)=>{
+            console.log(new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(transaction.sDate)));
+            if(month === new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(transaction.sDate))){
+              saccno = month;
+                totalcredit += transaction.nCreditAmount;
+                totaldebit += transaction.nDebitAmount;
+            }
+          });
+            this.uniqueTransactions = [...this.uniqueTransactions,{
+              sAccountNo:saccno,
+              nCreditAmount:totalcredit,
+              nDebitAmount:totaldebit,
+              nBalanceAmount:totalcredit- totaldebit
+            }];
+        });
+        this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      });
+    }
+  
 }

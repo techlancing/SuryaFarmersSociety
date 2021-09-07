@@ -133,27 +133,15 @@
         "INTRATRANSACTION": "Intra Transaction"
       }
     },
-    "ACCOUNTSTATEMENT": {
-      "TEXT": "ACCOUNT STATEMENT",
-      "LIST": {
-        "ALLORDERS": "All Orders"
-      }
-    },
     "REPORTS": {
       "TEXT": "REPORTS",
       "LIST": {
-        "INVOICELIST": "Invoice List",
-        "INVOICEDETAILS": "Invoice Details",
         "DAYWISETRANSACTIONREPORT": "Day wise Transaction",
         "DAYWISECUMULATIVE": "Day Wise Cumulative",
-        "DAYWISECUMULATIVEACCOUNT": "Day Wise Cumulative Account",
-        "LASTTRANSACTION": "Last Transaction",
-        "LAST12MONTHSTRANSACTION": "Last 12-Months Transaction",
+        "DAYWISECUMULATIVEACCOUNT": "Account Cumulative ",
+        "LAST12MONTHSTRANSACTION": "Monthly Cumulative",
         "CATEGORYBALANCESUMMARY": "Category Balance Summary",
-        "CATEGORYWISEBALANCESUMMARY": "Category Wise Balance Summary",
-        "ALLCATEGORYBALANCESUMMARY": "All Category Balance Summary",
-        "ALLCATEGORYWISEBALANCESUMMARY": "All Category Wise Balance Summary",
-        "DAYMONTHYEARWISE": "Day Month Year Wise"
+        "ALLCATEGORYBALANCESUMMARY": "All Category Balance Summary"
       }
     },
     "EMAIL": {

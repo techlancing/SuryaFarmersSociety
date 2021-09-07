@@ -8,8 +8,17 @@
     }
 }
 
-label{
-    color:orange;
+.btn-container{
+    display: grid;
+    justify-items: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+
+
+.account-detail{
+    color: orange;
+    margin-left: 15px;
 }
 
 .card-bg{
@@ -19,4 +28,12 @@ background-color: antiquewhite;
 .border-cls{
     border-bottom: 1px solid gainsboro;
     margin-bottom: 10px;   
+}
+
+.trans-detail{
+    color: orange;
+}
+
+.transaction-border{
+    border-bottom: solid 1px wheat;
 }

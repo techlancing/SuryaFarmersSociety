@@ -133,25 +133,6 @@ export const MENU: MenuItem[] = [
     ]
 },
 {
-    id: 47,
-    label: 'MENUITEMS.ACCOUNTSTATEMENT.TEXT',
-    icon: 'bx-note',
-    subItems: [
-        {
-            id: 36,
-            label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
-            link: '/passbookprint',
-            parentId: 35
-        },
-        {
-            id: 37,
-            label: 'MENUITEMS.PASSBOOK.LIST.NEWPASSBOOKPRINT',
-            link: '/newpassbookprint',
-            parentId: 35
-        }
-    ]
-},
-{
     id: 48,
     label: 'MENUITEMS.REPORTS.TEXT',
     icon: 'bxs-report',
@@ -176,12 +157,6 @@ export const MENU: MenuItem[] = [
         },
         {
             id: 60,
-            label: 'MENUITEMS.REPORTS.LIST.LASTTRANSACTION',
-            link: '/LastTransaction',
-            parentId: 51
-        },
-        {
-            id: 60,
             label: 'MENUITEMS.REPORTS.LIST.LAST12MONTHSTRANSACTION',
             link: '/Last12MonthsTransaction',
             parentId: 52
@@ -197,24 +172,6 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYBALANCESUMMARY',
             link: '/AllCategoryBalanceSummary',
             parentId: 54
-        },
-        {
-            id: 60,
-            label: 'MENUITEMS.REPORTS.LIST.DAYMONTHYEARWISE',
-            link: '/DayMonthYearWise',
-            parentId: 55
-        },
-        {
-            id: 60,
-            label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYWISEBALANCESUMMARY',
-            link: '/AllCategoryWiseBalanceSummary',
-            parentId: 56
-        },
-        {
-            id: 60,
-            label: 'MENUITEMS.REPORTS.LIST.CATEGORYWISEBALANCESUMMARY',
-            link: '/CategoryWiseBalanceSummary',
-            parentId: 57
         }
     ]
 }
