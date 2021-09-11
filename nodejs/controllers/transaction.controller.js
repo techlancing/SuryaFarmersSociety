@@ -2,6 +2,8 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oAuthentication = require("../middleware/authentication");
+
 const oTransactionRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -12,7 +14,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../Transaction/add_Transaction
-oTransactionRouter.post("/add_Transaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oTransactionRouter.post("/add_Transaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newTransaction = new oTransactionModel(oReq.body);
   try{
     // Save Transaction Info
@@ -55,7 +57,7 @@ oTransactionRouter.post("/add_Transaction", asyncMiddleware(async (oReq, oRes, o
 
 
 // url: ..../Transaction/Transaction_list
-oTransactionRouter.get("/Transaction_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oTransactionRouter.get("/Transaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllTransactions = await oTransactionModel.find({nLoanId: newTransaction.nLoanId});
 
@@ -71,7 +73,7 @@ oTransactionRouter.get("/Transaction_list", asyncMiddleware(async(oReq, oRes, oN
 }));
 
 // url: ..../transaction/gettransactionsbetweendates
-oTransactionRouter.post("/gettransactionsbetweendates", asyncMiddleware(async(oReq, oRes, oNext) => {
+oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oAllTransactions = await oTransactionModel.find({ sDate:{ $gte: oReq.body.from_date,
     $lt: oReq.body.to_date} });

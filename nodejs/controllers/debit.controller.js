@@ -4,6 +4,8 @@ const oMongoose = require('mongoose');
 const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
+const oAuthentication = require("../middleware/authentication");
+
 
 const oDebitRouter = oExpress.Router();
 
@@ -15,7 +17,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../debit/add_debit
-oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newDebit = new oDebitModel(oReq.body);
   try{
     // Save Debit Info
@@ -68,7 +70,7 @@ oDebitRouter.post("/add_debit", asyncMiddleware(async (oReq, oRes, oNext) => {
 }));
 
 // url: ..../debit/edit_debit
-oDebitRouter.post("/edit_debit", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDebitRouter.post("/edit_debit", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oDebit = await oDebitModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -85,7 +87,7 @@ oDebitRouter.post("/edit_debit", asyncMiddleware(async(oReq, oRes, oNext) => {
 }));
 
 // url: ..../debit/delete_debit
-oDebitRouter.post("/delete_debit", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDebitRouter.post("/delete_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oDebit = await oDebitModel.findByIdAndDelete(oReq.body._id);
@@ -103,7 +105,7 @@ oDebitRouter.post("/delete_debit", asyncMiddleware(async (oReq, oRes, oNext) => 
 }));
 
 // url: ..../debit/debit_list
-oDebitRouter.get("/debit_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDebitRouter.get("/debit_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllDebits = await oDebitModel.find();
 

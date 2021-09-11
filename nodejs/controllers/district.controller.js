@@ -14,7 +14,7 @@ const asyncMiddleware = fn =>
   };
 
 // url: ..../District/add_District
-oDistrictRouter.post("/add_district", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDistrictRouter.post("/add_district", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newDistrict = new oDistrictModel(oReq.body);
   try{
     // Save District Info
@@ -29,7 +29,7 @@ oDistrictRouter.post("/add_district", asyncMiddleware(async (oReq, oRes, oNext) 
 }));
 
 // url: ..../District/edit_District
-oDistrictRouter.post("/edit_district", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDistrictRouter.post("/edit_district", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oDistrict = await oDistrictModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -46,7 +46,7 @@ oDistrictRouter.post("/edit_district", asyncMiddleware(async(oReq, oRes, oNext) 
 }));
 
 // url: ..../District/delete_District
-oDistrictRouter.post("/delete_district", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDistrictRouter.post("/delete_district", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oDistrict = await oDistrictModel.findByIdAndDelete(oReq.body._id);

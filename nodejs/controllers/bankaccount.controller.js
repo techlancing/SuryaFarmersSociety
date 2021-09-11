@@ -7,6 +7,8 @@ var fs = require('fs');
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oImageModel = require("../data_base/models/image.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oAuthentication = require("../middleware/authentication");
+
 
 const obankaccountRouter = oExpress.Router();
 // SET STORAGE for  uploading images
@@ -74,7 +76,7 @@ const asyncMiddleware = fn =>
   
 
 // url: ..../bankaccount/add_bankaccount
-obankaccountRouter.post("/add_bankaccount", asyncMiddleware(async (oReq, oRes, oNext) => { 
+obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newbankaccount = new obankaccountModel(oReq.body);
   try{
     // Save bankaccount Info
@@ -106,7 +108,7 @@ obankaccountRouter.post("/add_bankaccount", asyncMiddleware(async (oReq, oRes, o
 }));
 
 // url: ..../bankaccount/edit_bankaccount
-obankaccountRouter.post("/edit_bankaccount", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.post("/edit_bankaccount", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const obankaccount = await obankaccountModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -123,7 +125,7 @@ obankaccountRouter.post("/edit_bankaccount", asyncMiddleware(async(oReq, oRes, o
 }));
 
 // url: ..../bankaccount/delete_bankaccount
-obankaccountRouter.post("/delete_bankaccount", asyncMiddleware(async (oReq, oRes, oNext) => { 
+obankaccountRouter.post("/delete_bankaccount", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const obankaccount = await obankaccountModel.findByIdAndDelete(oReq.body._id);
@@ -145,7 +147,7 @@ obankaccountRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
 }));
 
 // url: ..../bankaccount/bankaccount_list
-obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllbankaccounts = await obankaccountModel.find();
 
@@ -161,7 +163,7 @@ obankaccountRouter.get("/bankaccount_list", asyncMiddleware(async(oReq, oRes, oN
 }));
 
 // url: ..../bankaccount/getallsavingstransactions
-obankaccountRouter.post("/getallsavingstransactions", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.post("/getallsavingstransactions", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId})
       if(oAllTransactions) {
@@ -178,7 +180,7 @@ obankaccountRouter.post("/getallsavingstransactions", asyncMiddleware(async(oReq
 }));
 
 // url: ..../bankaccount/getaccountbynumber
-obankaccountRouter.post("/getaccountbynumber", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.post("/getaccountbynumber", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     await obankaccountModel.findOne({sAccountNo : oReq.body.sAccountNo})
     .populate({
@@ -200,7 +202,7 @@ obankaccountRouter.post("/getaccountbynumber", asyncMiddleware(async(oReq, oRes,
 
 
 // url: ..../bankaccount/getlastaccountinvillage
-obankaccountRouter.post("/getlastaccountinvillage", asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.post("/getlastaccountinvillage", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     console.log(oReq.body.nVillageId);
     const olastacc = await obankaccountModel.find({nVillageId: oReq.body.nVillageId}).sort({_id:-1}).limit(1);

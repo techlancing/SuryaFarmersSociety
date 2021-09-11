@@ -3,6 +3,7 @@ const oMongoose = require('mongoose');
 
 const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oAuthentication = require("../middleware/authentication");
 
 const oDailyDepositRouter = oExpress.Router();
 
@@ -14,7 +15,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../dailysavingdeposit/add_dailydeposittransaction
-oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newDeposit = new oDailyDepositModel(oReq.body);
   try{
     // Save Daily deposit Info
@@ -75,7 +76,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", asyncMiddleware(async (
 }));
 
 // url: ..../dailysavingdeposit/edit_dailydeposittransaction
-oDailyDepositRouter.post("/edit_dailydeposittransaction", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDailyDepositRouter.post("/edit_dailydeposittransaction", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oDeposit = await oDailyDepositModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -92,7 +93,7 @@ oDailyDepositRouter.post("/edit_dailydeposittransaction", asyncMiddleware(async(
 }));
 
 // url: ..../dailysavingdeposit/delete_dailydeposittransaction
-oDailyDepositRouter.post("/delete_dailydeposittransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDailyDepositRouter.post("/delete_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oDeposit = await oDailyDepositModel.findByIdAndDelete(oReq.body._id);
@@ -110,7 +111,7 @@ oDailyDepositRouter.post("/delete_dailydeposittransaction", asyncMiddleware(asyn
 }));
 
 // url: ..../dailysavingdeposit/dailydeposittransaction_list
-oDailyDepositRouter.post("/dailydeposittransaction_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDailyDepositRouter.post("/dailydeposittransaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       await oDailyDepositModel.find({sAccountNo : oReq.body.sAccountNo})
       .populate({
@@ -131,7 +132,7 @@ oDailyDepositRouter.post("/dailydeposittransaction_list", asyncMiddleware(async(
 }));
 
 // url: ..../dailysavingdeposit/withdraw_dailydeposittransaction
-oDailyDepositRouter.post("/withdraw_dailydeposittransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   //To get last transaction data to get the balance amount
   let oBalanceAmount = 0;
   try{

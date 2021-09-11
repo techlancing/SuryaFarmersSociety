@@ -2,6 +2,8 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oMandalModel = require("../data_base/models/mandal.model");
+const oAuthentication = require("../middleware/authentication");
+
 
 const oMandalRouter = oExpress.Router();
 
@@ -13,7 +15,7 @@ const asyncMiddleware = fn =>
   };
 
 // url: ..../Mandal/add_Mandal
-oMandalRouter.post("/add_mandal", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oMandalRouter.post("/add_mandal", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newMandal = new oMandalModel(oReq.body);
   try{
     // Save Mandal Info
@@ -28,7 +30,7 @@ oMandalRouter.post("/add_mandal", asyncMiddleware(async (oReq, oRes, oNext) => {
 }));
 
 // url: ..../Mandal/edit_Mandal
-oMandalRouter.post("/edit_mandal", asyncMiddleware(async(oReq, oRes, oNext) => {
+oMandalRouter.post("/edit_mandal", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oMandal = await oMandalModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -45,7 +47,7 @@ oMandalRouter.post("/edit_mandal", asyncMiddleware(async(oReq, oRes, oNext) => {
 }));
 
 // url: ..../Mandal/delete_Mandal
-oMandalRouter.post("/delete_mandal", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oMandalRouter.post("/delete_mandal", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oMandal = await oMandalModel.findByIdAndDelete(oReq.body._id);
@@ -63,7 +65,7 @@ oMandalRouter.post("/delete_mandal", asyncMiddleware(async (oReq, oRes, oNext) =
 }));
 
 // url: ..../Mandal/Mandal_list
-oMandalRouter.get("/mandal_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oMandalRouter.get("/mandal_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllMandals = await oMandalModel.find();
 

@@ -92,6 +92,11 @@ oUserSchema.methods.generateAuthToken = async function () {
   dateObj = new Date(dateObj);
   user.sTokenExpiryTime = dateObj;
   user.tokens = user.tokens.concat({ token })
+
+  if(user.tokens.length > 5)
+  {
+    (user.tokens).splice(0,user.tokens.length - 5);
+  }
   await user.save()
 
   return token

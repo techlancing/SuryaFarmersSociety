@@ -3,6 +3,7 @@ const oMongoose = require('mongoose');
 
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const oAuthentication = require("../middleware/authentication");
 
 const oCreditLoanRouter = oExpress.Router();
 
@@ -14,7 +15,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../creditloan/add_creditloan
-oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newCreditLoan = new oCreditLoanModel(oReq.body);
   try{
     // Save creditloan Info
@@ -48,7 +49,7 @@ oCreditLoanRouter.post("/add_creditloan", asyncMiddleware(async (oReq, oRes, oNe
 }));
 
 // url: ..../creditloan/edit_creditloan
-oCreditLoanRouter.post("/edit_creditloan", asyncMiddleware(async(oReq, oRes, oNext) => {
+oCreditLoanRouter.post("/edit_creditloan", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oCreditLoan = await oCreditLoanModel.AndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -65,7 +66,7 @@ oCreditLoanRouter.post("/edit_creditloan", asyncMiddleware(async(oReq, oRes, oNe
 }));2
 
 // url: ..../creditloan/delete_creditloan
-oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oCreditLoanRouter.post("/delete_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oCreditLoan = await oCreditLoanModel.findByIdAndDelete(oReq.body._id);
@@ -83,7 +84,7 @@ oCreditLoanRouter.post("/delete_creditloan", asyncMiddleware(async (oReq, oRes, 
 }));
 
 // url: ..../creditloan/creditloan_list
-oCreditLoanRouter.post("/creditloan_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oCreditLoanRouter.post("/creditloan_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo})
       .populate({

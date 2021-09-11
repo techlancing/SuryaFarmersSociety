@@ -6,6 +6,7 @@ const oTransactionModel = require("../data_base/models/transaction.model");
 const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oBankAccountModel = require("../data_base/models/bankaccount.model");
+const oAuthentication = require("../middleware/authentication");
 
 
 
@@ -19,7 +20,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../intratransaction/add_intratransaction
-oIntraTransactionRouter.post("/add_intratransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oIntraTransactionRouter.post("/add_intratransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newIntraTransaction = new oIntraTransactionModel(oReq.body);
   try{
     // Save Intra Transaction Info
@@ -33,7 +34,7 @@ oIntraTransactionRouter.post("/add_intratransaction", asyncMiddleware(async (oRe
 }));
 
 // url: ..../intratransaction/intraaccounttransaction
-oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
         
     //To Credit amount to reciever account
@@ -150,7 +151,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", asyncMiddleware(async (
 }));
 
 // url: ..../intratransaction/edit_intratransaction
-oIntraTransactionRouter.post("/edit_intratransaction", asyncMiddleware(async(oReq, oRes, oNext) => {
+oIntraTransactionRouter.post("/edit_intratransaction", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oIntraTransaction = await oIntraTransactionModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -167,7 +168,7 @@ oIntraTransactionRouter.post("/edit_intratransaction", asyncMiddleware(async(oRe
 }));
 
 // url: ..../intratransaction/delete_intratransaction
-oIntraTransactionRouter.post("/delete_intratransaction", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oIntraTransactionRouter.post("/delete_intratransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oIntraTransaction = await oIntraTransactionModel.findByIdAndDelete(oReq.body._id);
@@ -185,7 +186,7 @@ oIntraTransactionRouter.post("/delete_intratransaction", asyncMiddleware(async (
 }));
 
 // url: ..../intratransaction/intratransaction_list
-oIntraTransactionRouter.get("/intratransaction_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oIntraTransactionRouter.get("/intratransaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllIntraTransaction= await oIntraTransactionModel.find();
 

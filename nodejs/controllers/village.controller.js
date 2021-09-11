@@ -2,6 +2,8 @@ const oExpress = require('express');
 const oMongoose = require('mongoose');
 
 const oVillageModel = require("../data_base/models/village.model");
+const oAuthentication = require("../middleware/authentication");
+
 
 const oVillageRouter = oExpress.Router();
 
@@ -13,7 +15,7 @@ const asyncMiddleware = fn =>
   };
 
 // url: ..../Village/add_Village
-oVillageRouter.post("/add_village", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oVillageRouter.post("/add_village", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newVillage = new oVillageModel(oReq.body);
   try{
     // Save Village Info
@@ -28,7 +30,7 @@ oVillageRouter.post("/add_village", asyncMiddleware(async (oReq, oRes, oNext) =>
 }));
 
 // url: ..../Village/edit_Village
-oVillageRouter.post("/edit_village", asyncMiddleware(async(oReq, oRes, oNext) => {
+oVillageRouter.post("/edit_village", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oVillage = await oVillageModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -45,7 +47,7 @@ oVillageRouter.post("/edit_village", asyncMiddleware(async(oReq, oRes, oNext) =>
 }));
 
 // url: ..../Village/delete_Village
-oVillageRouter.post("/delete_village", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oVillageRouter.post("/delete_village", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oVillage = await oVillageModel.findByIdAndDelete(oReq.body._id);
@@ -63,7 +65,7 @@ oVillageRouter.post("/delete_village", asyncMiddleware(async (oReq, oRes, oNext)
 }));
 
 // url: ..../Village/Village_list
-oVillageRouter.get("/village_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oVillageRouter.get("/village_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllVillages = await oVillageModel.find();
 

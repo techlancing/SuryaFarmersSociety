@@ -4,6 +4,7 @@ const oMongoose = require('mongoose');
 const oCreditModel = require("../data_base/models/credit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
+const oAuthentication = require("../middleware/authentication");
 
 
 const oCreditRouter = oExpress.Router();
@@ -16,7 +17,7 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../credit/add_credit
-oCreditRouter.post("/add_credit", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newCredit = new oCreditModel(oReq.body);
   try{
     // Save credit Info
@@ -68,7 +69,7 @@ oCreditRouter.post("/add_credit", asyncMiddleware(async (oReq, oRes, oNext) => {
 }));
 
 // url: ..../credit/edit_credit
-oCreditRouter.post("/edit_credit", asyncMiddleware(async(oReq, oRes, oNext) => {
+oCreditRouter.post("/edit_credit", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oCredit = await oCreditModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -85,7 +86,7 @@ oCreditRouter.post("/edit_credit", asyncMiddleware(async(oReq, oRes, oNext) => {
 }));
 
 // url: ..../credit/delete_credit
-oCreditRouter.post("/delete_credit", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oCreditRouter.post("/delete_credit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oCredit = await oCreditModel.findByIdAndDelete(oReq.body._id);
@@ -103,7 +104,7 @@ oCreditRouter.post("/delete_credit", asyncMiddleware(async (oReq, oRes, oNext) =
 }));
 
 // url: ..../credit/credit_list
-oCreditRouter.get("/credit_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oCreditRouter.get("/credit_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllCredits = await oCreditModel.find();
 

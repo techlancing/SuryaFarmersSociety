@@ -6,6 +6,8 @@ var fs = require('fs');
 
 const oBankEmployeeModel = require("../data_base/models/bankemployee.model");
 const oImageModel = require("../data_base/models/image.model");
+const oAuthentication = require("../middleware/authentication");
+
 
 const oBankEmployeeRouter = oExpress.Router();
 // SET STORAGE for  uploading images
@@ -73,7 +75,7 @@ const asyncMiddleware = fn =>
   
 
 // url: ..../bankemployee/add_bankemployee
-oBankEmployeeRouter.post("/add_bankemployee", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oBankEmployeeRouter.post("/add_bankemployee", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newBankEmployee = new oBankEmployeeModel(oReq.body);
   try{
     // Save bank employee Info
@@ -88,7 +90,7 @@ oBankEmployeeRouter.post("/add_bankemployee", asyncMiddleware(async (oReq, oRes,
 }));
 
 // url: ..../bankemployee/edit_bankemployee
-oBankEmployeeRouter.post("/edit_bankemployee", asyncMiddleware(async(oReq, oRes, oNext) => {
+oBankEmployeeRouter.post("/edit_bankemployee", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oBankEmployee = await oBankEmployeeModel.findByIdAndUpdate(oReq.body._id, oReq.body, { new: true, runValidators : true});
 
@@ -105,7 +107,7 @@ oBankEmployeeRouter.post("/edit_bankemployee", asyncMiddleware(async(oReq, oRes,
 }));
 
 // url: ..../bankemployee/delete_bankemployee
-oBankEmployeeRouter.post("/delete_bankemployee", asyncMiddleware(async (oReq, oRes, oNext) => { 
+oBankEmployeeRouter.post("/delete_bankemployee", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
     console.log(oReq.body._id);
     const oBankEmployee = await oBankEmployeeModel.findByIdAndDelete(oReq.body._id);
@@ -123,7 +125,7 @@ oBankEmployeeRouter.post("/delete_bankemployee", asyncMiddleware(async (oReq, oR
 }));
 
 // url: ..../bankemployee/bankemployee_list
-oBankEmployeeRouter.get("/bankemployee_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oBankEmployeeRouter.get("/bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllBankEmployees = await oBankEmployeeModel.find();
 
