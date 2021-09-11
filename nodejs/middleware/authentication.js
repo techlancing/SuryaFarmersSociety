@@ -12,10 +12,6 @@ const authentication = async (oReq, oRes, next) => {
         let bIsRetailer = false;
         user = await oUserModel.findOne({ _id: decoded._id, 'tokens.token': token })
         if (!user) {
-            user = await oRetailerModel.findOne({ _id: decoded._id, 'tokens.token': token })
-            if (user)
-                bIsRetailer = true;
-            else
                 throw new Error()
         }
 

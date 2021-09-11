@@ -13,23 +13,25 @@
         </div>
     </div>
     <!-- end page title -->
-
+    <div class="row">
+        <div class="bg-soft-primary">
+            <div class="row">
+                <div class="col-7">
+                    <div class="text-primary p-3">
+                        <h5 class="text-primary">Welcome Back !</h5>
+                        <p>Surya Farmer's Society</p>
+                    </div>
+                </div>
+                <div class="col-5 align-self-end">
+                    <img src="assets/images/newsetup/admin_add_header.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-4">
             <div class="card overflow-hidden">
-                <div class="bg-soft-primary">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="text-primary p-3">
-                                <h5 class="text-primary">Welcome Back !</h5>
-                                <p>Surya Farmer's Society</p>
-                            </div>
-                        </div>
-                        <div class="col-5 align-self-end">
-                            <img src="assets/images/profile-img.png" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
+                
                 
             </div>
             <div class="card">
@@ -69,46 +71,12 @@
             </div>
             <!-- end row -->
 
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-4 float-sm-left">Email Sent</h4>
-                    <div class="float-sm-right">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);">Week</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);">Month</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);">Year</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="clearfix"></div>
-                    <apx-chart dir="ltr" class="apex-charts" [chart]="emailSentBarChart.chart"
-                        [series]="emailSentBarChart.series" [legend]="emailSentBarChart.legend"
-                        [colors]="emailSentBarChart.colors" [fill]="emailSentBarChart.fill"
-                        [dataLabels]="emailSentBarChart.dataLabels" [xaxis]="emailSentBarChart.xaxis"
-                        [plotOptions]="emailSentBarChart.plotOptions">
-                    </apx-chart>
-                </div>
-            </div>
+            
         </div>
     </div>
     <!-- end row -->
 
     
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-4">Latest Transaction</h4>
-                    <!-- <app-transaction [transactions]="transactions"></app-transaction> -->
-                    <!-- end table -->
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div> <!-- container-fluid -->

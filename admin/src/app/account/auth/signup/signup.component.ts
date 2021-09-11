@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
+import { AuthenticationService } from '../../../core/services/authentication.service';
 import { environment } from '../../../../environments/environment';
 import { first } from 'rxjs/operators';
 import { UserProfileService } from '../../../core/services/user.service';
@@ -50,30 +50,15 @@ export class SignupComponent implements OnInit, AfterViewInit {
     if (this.signupForm.invalid) {
       return;
     } else {
-      if (environment.defaultauth === 'firebase') {
-        this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
-          this.successmsg = true;
-          if (this.successmsg) {
-            this.router.navigate(['/dashboard']);
-          }
-        })
-          .catch(error => {
-            this.error = error ? error : '';
-          });
-      } else {
-        this.userService.register(this.signupForm.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.successmsg = true;
-              if (this.successmsg) {
-                this.router.navigate(['/account/login']);
-              }
-            },
-            error => {
-              this.error = error ? error : '';
-            });
-      }
+      this.authenticationService.fnCreateUserAccount(this.f.username.value, this.f.email.value, this.f.password.value,this.f.password.value,1234567890)
+      .subscribe(
+        data => {
+          this.router.navigate(['/account/login']);
+        },
+        error => {
+          console.log(error);
+          this.error = error ? error : '';
+        });
     }
   }
 }

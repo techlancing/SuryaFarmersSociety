@@ -4,6 +4,7 @@ const oMongoose = require('mongoose');
 const oDistrictModel = require("../data_base/models/district.model");
 
 const oDistrictRouter = oExpress.Router();
+const oAuthentication = require("../middleware/authentication");
 
 //To remove unhandled promise rejections
 const asyncMiddleware = fn =>
@@ -63,7 +64,7 @@ oDistrictRouter.post("/delete_district", asyncMiddleware(async (oReq, oRes, oNex
 }));
 
 // url: ..../District/District_list
-oDistrictRouter.get("/district_list", asyncMiddleware(async(oReq, oRes, oNext) => {
+oDistrictRouter.get("/district_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       const oAllDistricts = await oDistrictModel.find();
 

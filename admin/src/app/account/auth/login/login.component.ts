@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      email: ['suryafarmers@gmail.com', [Validators.required, Validators.email]],
+      password: ['suryafarmers', [Validators.required]],
     });
 
     // reset login status

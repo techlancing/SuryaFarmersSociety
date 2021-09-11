@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { AuthenticationService } from '../services/auth.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { AuthfakeauthenticationService } from '../services/authfake.service';
 
 import { environment } from '../../../environments/environment';
@@ -15,19 +15,29 @@ export class AuthGuard implements CanActivate {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (environment.defaultauth === 'firebase') {
-            const currentUser = this.authenticationService.currentUser();
-            if (currentUser) {
-                // logged in so return true
-                return true;
-            }
-        } else {
-            const currentUser = this.authFackservice.currentUserValue;
+        // if (environment.defaultauth === 'firebase') {
+        //     const currentUser = this.authenticationService.currentUser();
+        //     if (currentUser) {
+        //         // logged in so return true
+        //         return true;
+        //     }
+        // } else {
+        //     const currentUser = this.authFackservice.currentUserValue;
+        //     if (currentUser) {
+        //         // logged in so return true
+        //         return true;
+        //     }
+        // }
+        if(localStorage.getItem('userData') !== undefined &&
+        localStorage.getItem('userData') !== null){
+            const currentUser = JSON.parse(localStorage.getItem('userData'));
             if (currentUser) {
                 // logged in so return true
                 return true;
             }
         }
+        // return true;
+        
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
         return false;
