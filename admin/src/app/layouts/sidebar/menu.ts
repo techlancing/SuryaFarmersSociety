@@ -85,6 +85,12 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
             link: '/passbookprint',
             parentId: 35
+        },
+        {
+            id: 37,
+            label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
+            link: '/alltranactionprint',
+            parentId: 35
         }
     ]
 },
@@ -93,12 +99,7 @@ export const MENU: MenuItem[] = [
     label: 'MENUITEMS.ACCOUNTTRANSACTION.TEXT',
     icon: 'bx-user',
     subItems: [
-        {
-            id: 37,
-            label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.ALLTRANSACTIONPRINT',
-            link: '/alltranactionprint',
-            parentId: 35
-        },
+        
           {
             id: 42,
             label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DEBIT',

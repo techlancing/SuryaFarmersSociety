@@ -97,8 +97,14 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="Date">Date</label>                  
-                  <input id="Date" name="sDate" [(ngModel)]="oBankAccountModel.sDate" type="date"
-                    class="form-control" >
+                  <!-- <input id="Date" name="sDate" [(ngModel)]="oBankAccountModel.sDate" type="date"
+                    class="form-control" > -->
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                          showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                          dateInputFormat: 'DD-MM-YYYY' }"
+                          placeholder="Select Date" bsDatepicker name="sDate"
+                      class="form-control"
+                       [(ngModel)]="oBankAccountModel.sDate">
                 </div>
               </div>
               <div class="col-sm-4">
@@ -343,35 +349,35 @@
               </div>     
               <h2 class="col-sm-12">Documents</h2> 
               
-              <div class="col-sm-12">
+              <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Photo Upload'" (success)="fnonUploadPassportImageSuccess($event)"
                     ></dropzone>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Signature-1 Upload'"
                     (success)="fnonUploadSignature1ImageSuccess($event)"></dropzone>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Signature-2 Upload'"
                     (success)="fnonUploadSignature2ImageSuccess($event)"></dropzone>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-4">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Document-1 Upload'"
                     (success)="fnonUploadDocument1ImageSuccess($event)"></dropzone>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div class="col-sm-4">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcardropzoneElem
                     [message]="'Document-2 Upload'"

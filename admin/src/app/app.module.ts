@@ -22,6 +22,7 @@ import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
 import { AuthInterceptorService } from './core/guards/auth.interceptor';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
 } else {
@@ -55,7 +56,8 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbAccordionModule,
     NgbNavModule,
     NgbTooltipModule,
-    ScrollToModule.forRoot()
+    ScrollToModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [

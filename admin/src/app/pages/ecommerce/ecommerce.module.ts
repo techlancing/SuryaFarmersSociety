@@ -11,6 +11,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgbNavModule, NgbDropdownModule, NgbPaginationModule, NgbAccordionModule,
   NgbCollapseModule,NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+  import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
@@ -50,6 +51,7 @@ const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/car/upload_file", //'https://httpbin.org/post',
   maxFilesize: 100,
+  addRemoveLinks : true
 };
 
 @NgModule({
@@ -93,7 +95,8 @@ const config: DropzoneConfigInterface = {
     NgbAccordionModule,
     NgbCollapseModule,
     NgbTooltipModule,
-    ArchwizardModule
+    ArchwizardModule,
+    BsDatepickerModule
   ],
   exports:[AddaccountComponent ],
   providers: [

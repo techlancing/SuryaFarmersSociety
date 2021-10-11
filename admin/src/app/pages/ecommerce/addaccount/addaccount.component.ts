@@ -87,7 +87,7 @@ export class AddaccountComponent implements OnInit {
       ];
     
     this.oBankAccountModel = new BankAccount();
-    this.oBankAccountModel.sDate = new Date().toJSON().slice(0,10).replace(/-/g,'-').split('').reverse().join('');
+    this.oBankAccountModel.sDate = new Date().toString();
     this.sButtonText = 'Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -149,10 +149,10 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountService.fngetLastBankAccountInfo(this.oBankAccountModel.nVillageId).subscribe((data:any) => {
       
       if(data.accno.toString().length === 1){
-        this.oBankAccountModel.sAccountNo = this.oBankAccountModel.sBranchCode +'000' + data.accno;
+        this.oBankAccountModel.sAccountNo = '0'+this.oBankAccountModel.sBranchCode +'000' + data.accno;
       }else{
         
-        this.oBankAccountModel.sAccountNo = (parseInt(data.accno) + 1).toString();
+        this.oBankAccountModel.sAccountNo = '0'+(parseInt(data.accno) + 1).toString();
       }
       
       //this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
