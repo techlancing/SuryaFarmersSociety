@@ -145,6 +145,12 @@
               <label for="sDOB">Date Of Birth</label>                
               <input id="sDOB" name="sDOB" [(ngModel)]="oBankAccountModel.sDOB" type="date"
                   class="form-control" >
+                  <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                          showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                          dateInputFormat: 'DD-MM-YYYY' }"
+                          placeholder="Select Date" bsDatepicker name="DobDate"
+                      class="form-control"
+                       [(ngModel)]="oBankAccountModel.sDOB">
               </div>
             </div>
             <div class="col-sm-4">

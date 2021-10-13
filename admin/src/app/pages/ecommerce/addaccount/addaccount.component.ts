@@ -212,6 +212,8 @@ export class AddaccountComponent implements OnInit {
     }
  
       this.bIsAddActive = true;
+      this.oBankAccountModel.sDate = new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      this.oBankAccountModel.sDOB = new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
        this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
         this.bankaccounts = [];
          this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
