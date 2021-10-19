@@ -35,8 +35,21 @@ export class AddaccountComponent implements OnInit {
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
-  @ViewChild('addcardropzoneElem')
-  public oDropZone: DropzoneComponent;
+  @ViewChild('photodropzoneElem')
+  public oPhotoDropZone: DropzoneComponent;
+
+@ViewChild('signature1dropzoneElem')
+  public oSignature1DropZone: DropzoneComponent;
+
+@ViewChild('signature2dropzoneElem')
+  public oSignature2DropZone: DropzoneComponent;
+
+@ViewChild('document1dropzoneElem')
+  public oDocument1DropZone: DropzoneComponent;
+
+@ViewChild('document2dropzoneElem')
+  public oDocument2DropZone: DropzoneComponent;
+
   aState : Array<
   {
     displayText:string,
@@ -95,11 +108,81 @@ export class AddaccountComponent implements OnInit {
       const tempobj = JSON.parse(JSON.stringify(this.oEditBankAccount));
       this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
+      this.fnDisplayExistingImageThumbnail();
     }
     this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       this.bankaccounts = [...data as any];
 
     });
+  }
+
+  private fnDisplayExistingImageThumbnail(): void{
+
+    setTimeout(() => {
+
+
+      const oDZ = this.oPhotoDropZone.directiveRef.dropzone();
+      let oImageInfo = this.oBankAccountModel.oPassportImageInfo;
+      if (!oImageInfo) return;
+
+      var imgURL = environment.imagePath + oImageInfo.sImageURL;
+      var mockFile = { name: oImageInfo.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURL };
+
+      var crossorigin = "anonymous";
+      oDZ.displayExistingFile(mockFile, imgURL, function (img) {
+        console.log(img);
+      }, crossorigin);
+
+      const oDZM = this.oSignature1DropZone.directiveRef.dropzone();
+      let oImageInfoMob = this.oBankAccountModel.oSignature1Info;
+      if (!oImageInfoMob) return;
+
+      var imgURLmob = environment.imagePath + oImageInfoMob.sImageURL;
+      var mockFileMob = { name: oImageInfoMob.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLmob };
+
+      crossorigin = "anonymous";
+      oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
+        console.log(img);
+      }, crossorigin);
+
+      const os2DZM = this.oSignature2DropZone.directiveRef.dropzone();
+      let oImageInfos2 = this.oBankAccountModel.oSignature2Info;
+      if (!oImageInfos2) return;
+
+      var imgURLs2 = environment.imagePath + oImageInfos2.sImageURL;
+      var mockFiles2 = { name: oImageInfos2.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLs2 };
+
+      crossorigin = "anonymous";
+      os2DZM.displayExistingFile(mockFiles2, imgURLs2, function (img) {
+        console.log(img);
+      }, crossorigin);
+
+      const od1DZM = this.oDocument1DropZone.directiveRef.dropzone();
+      let oImageInfod1 = this.oBankAccountModel.oDocument1Info;
+      if (!oImageInfod1) return;
+
+      var imgURLd1 = environment.imagePath + oImageInfod1.sImageURL;
+      var mockFiled1 = { name: oImageInfod1.sImageName, size: 12345, accepted: true,  dataURL: imgURLd1 };
+
+      crossorigin = "anonymous";
+      od1DZM.displayExistingFile(mockFiled1, imgURLd1, function (img) {
+        console.log(img);
+      }, crossorigin);
+
+      const od2DZM = this.oDocument2DropZone.directiveRef.dropzone();
+      let oImageInfd2 = this.oBankAccountModel.oDocument2Info;
+      if (!oImageInfd2) return;
+
+      var imgURLd2 = environment.imagePath + oImageInfd2.sImageURL;
+      var mockFiled2 = { name: oImageInfd2.sImageName, size: 12345, accepted: true, dataURL: imgURLd2 };
+
+      crossorigin = "anonymous";
+      od2DZM.displayExistingFile(mockFiled2, imgURLd2, function (img) {
+        console.log(img);
+      }, crossorigin);
+
+    }, 500);
+
   }
 
   fnFetchMandalInfo(event, nDistrictId: number) {
@@ -212,8 +295,12 @@ export class AddaccountComponent implements OnInit {
     }
  
       this.bIsAddActive = true;
-      this.oBankAccountModel.sDate = new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
-      this.oBankAccountModel.sDOB = new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
+      //In Edit case,the date coming from db is 'dd-mm-yyyy' for which new Date is giving an error
+      // So just checking the lenght of the string, temp fix
+      if(this.oBankAccountModel.sDate.length > 10)
+        this.oBankAccountModel.sDate = new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      if(this.oBankAccountModel.sDOB.length > 10)  
+        this.oBankAccountModel.sDOB = new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
       if (!this.bisEditMode) {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];

@@ -149,13 +149,20 @@ obankaccountRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
 // url: ..../bankaccount/bankaccount_list
 obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllbankaccounts = await obankaccountModel.find();
+      await obankaccountModel.find()
+      .populate({
+        path: 'oPassportImageInfo oSignature1Info oSignature2Info oDocument1Info oDocument2Info'
+      }).exec((oError, oAllbankaccounts) => {
+        if(!oError) {
+            oRes.json(oAllbankaccounts);
+        }
+        else{
+            console.log(oError);
+        }
 
-      if(!oAllbankaccounts){
-        return oRes.status(400).send();
-      }
+      });
 
-      oRes.json(oAllbankaccounts);
+      
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
