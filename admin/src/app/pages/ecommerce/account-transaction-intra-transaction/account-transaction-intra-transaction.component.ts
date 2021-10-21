@@ -151,6 +151,9 @@ import { Router } from '@angular/router';
    }
  
    fnOnIntraTransactionInfoSubmit(){
+
+    this.ointratransactionModel.sDate = new Date(this.ointratransactionModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);
       this.fnSucessMessage();

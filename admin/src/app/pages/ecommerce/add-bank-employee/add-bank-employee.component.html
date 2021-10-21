@@ -31,8 +31,16 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sCallLetterIssuedDate">Call Letter Issued Date</label>                  
-                  <input id="sCallLetterIssuedDate" name="sCallLetterIssuedDate" [(ngModel)]="oBankEmployeeModel.sCallLetterIssuedDate" type="date"
-                    class="form-control" >
+                  <!--<input id="sCallLetterIssuedDate" name="sCallLetterIssuedDate" [(ngModel)]="oBankEmployeeModel.sCallLetterIssuedDate" type="date"
+                    class="form-control" >-->
+
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                    showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                    dateInputFormat: 'DD-MM-YYYY' }"
+                    placeholder="Select Date" bsDatepicker name="sCallLetterIssuedDate"
+                class="form-control"
+                 [(ngModel)]="oBankEmployeeModel.sCallLetterIssuedDate">
+
                 </div>
               </div>
 
@@ -40,8 +48,16 @@
                 <div class="add-container">
                   <div class="form-group">
                     <label for="sJoiningDate">Joining Date</label>
-                    <input id="Date" name="sJoiningDate" [(ngModel)]="oBankEmployeeModel.sJoiningDate" type="date"
-                    class="form-control" >
+                  <!-- <input id="Date" name="sJoiningDate" [(ngModel)]="oBankEmployeeModel.sJoiningDate" type="date"
+                    class="form-control" >-->
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                    showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                    dateInputFormat: 'DD-MM-YYYY' }"
+                    placeholder="Select Date" bsDatepicker name="sJoiningDate"
+                class="form-control"
+                 [(ngModel)]="oBankEmployeeModel.sJoiningDate">
+                   
+
                   </div>
                 </div>
               </div>

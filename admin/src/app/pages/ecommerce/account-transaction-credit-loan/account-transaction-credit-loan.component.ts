@@ -145,6 +145,10 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   fnOnCreditLoanInfoSubmit(): void {
     //this.bIsAddActive = true;
+
+    this.oCreditLoanModel.sDate = new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
+
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();

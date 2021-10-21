@@ -137,6 +137,10 @@ aBankEmployees: Array<BankEmployee>;
 
   fnOnBankEmployeeInfoSubmit(): void {
     //this.bIsAddActive = true;
+
+    this.oBankEmployeeModel.sCallLetterIssuedDate = new Date(this.oBankEmployeeModel.sCallLetterIssuedDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oBankEmployeeModel.sJoiningDate = new Date(this.oBankEmployeeModel.sJoiningDate).toISOString().split('T')[0].split("-").reverse().join("-");
+
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();

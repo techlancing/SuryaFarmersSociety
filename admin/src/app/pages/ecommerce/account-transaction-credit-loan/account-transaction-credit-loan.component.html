@@ -18,8 +18,16 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="loanissueDate">Loan Issue Date</label>                  
-                  <input id="loanissueDate" name="loanissueDate" [(ngModel)]="oCreditLoanModel.sDate" type="date"
-                    class="form-control" >
+                <!--  <input id="loanissueDate" name="loanissueDate" [(ngModel)]="oCreditLoanModel.sDate" type="date"
+                    class="form-control" >-->
+
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                    showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                    dateInputFormat: 'DD-MM-YYYY' }"
+                    placeholder="Select Date" bsDatepicker name="loanissueDate"
+                class="form-control"
+                 [(ngModel)]="oCreditLoanModel.sDate">
+
                 </div>
               </div>
               <div class="col-sm-6">
@@ -88,8 +96,16 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="endofloandate">End of the Loan Date </label>
-                  <input id="endofloandate" name="endofloandate" [(ngModel)]="oCreditLoanModel.sEndofLoanDate" type="date"
-                    class="form-control">
+                <!--  <input id="endofloandate" name="endofloandate" [(ngModel)]="oCreditLoanModel.sEndofLoanDate" type="date"
+                    class="form-control">-->
+
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                    showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                    dateInputFormat: 'DD-MM-YYYY' }"
+                    placeholder="Select Date" bsDatepicker name="endofloandate"
+                class="form-control"
+                 [(ngModel)]="oCreditLoanModel.sEndofLoanDate">                 
+
                 </div>
               </div>
               <div class="col-sm-6">

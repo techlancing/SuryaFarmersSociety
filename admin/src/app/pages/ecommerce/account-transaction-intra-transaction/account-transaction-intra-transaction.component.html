@@ -110,8 +110,16 @@
                 <div class="add-container">
                   <div class="form-group">
                     <label for="sDate">Date</label>
-                    <input id="sDate" name="sDate" [(ngModel)]="ointratransactionModel.sDate" type="date"
-                    class="form-control" >
+                  <!--  <input id="sDate" name="sDate" [(ngModel)]="ointratransactionModel.sDate" type="date"
+                    class="form-control" >-->
+
+                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                    showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                    dateInputFormat: 'DD-MM-YYYY' }"
+                    placeholder="Select Date" bsDatepicker name="sDat"
+                class="form-control"
+                 [(ngModel)]="ointratransactionModel.sDate">
+
                   </div>
                 </div>
               </div>
