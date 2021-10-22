@@ -16,9 +16,10 @@ import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
 import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
 import { EcommerceModule } from '../ecommerce/ecommerce.module';
+import { AllEmployeesComponent } from './all-employees/all-employees.component';
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent, AllEmployeesComponent],
   imports: [
     EcommerceModule,
     CommonModule,

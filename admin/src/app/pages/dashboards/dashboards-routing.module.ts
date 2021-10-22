@@ -5,6 +5,7 @@ import { DefaultComponent } from './default/default.component';
 import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
 import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
+import { AllEmployeesComponent } from './all-employees/all-employees.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
     {
         path: 'allaccounts',
         component: AllBankAccountsComponent
+    },
+    {
+        path: 'allemployees',
+        component: AllEmployeesComponent
     },
     {
         path: 'saas',

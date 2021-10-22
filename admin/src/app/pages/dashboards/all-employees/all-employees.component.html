@@ -1,0 +1,43 @@
+<div class="container-fluid">
+
+    <app-page-title title="All Employees" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row">
+        <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
+         <div class="card card-bg">
+          <div class="card-body">
+              <h2>All Employees</h2>
+
+
+             <div class="row mb-md-2">
+                  
+            <div class="table-responsive">
+              <table class="table table-centered " id="basic-datatable">
+                <thead>
+                  <tr>
+                    <th>EmployeeId</th>
+                    <th>EmployeeName</th>
+                    <th>Phone</th>
+                    <th>Joining Date</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of aUsers ;let i = index;">
+                    <td>{{user.nEmployeeID}}</td>
+                    <td>{{user.sEmployeeName}}</td>
+                    <td>{{user.sMobileNumber}}</td>
+                    <td>{{user.sJoiningDate}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+    </div>
+    <!-- end row -->
+  </div>
+  

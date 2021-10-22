@@ -75,6 +75,7 @@
       "LIST": {
         "DEFAULT": "Dashboard",
         "ALLACCOUNTS": "All Accounts",
+        "ALLEMPLOYEES":"All Employees",
         "SAAS": "Saas",
         "CRYPTO": "Crypto"
       }

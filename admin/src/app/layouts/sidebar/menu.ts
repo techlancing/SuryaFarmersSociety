@@ -22,6 +22,12 @@ export const MENU: MenuItem[] = [
                 label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
                 link: '/allaccounts',
                 parentId: 2
+            },
+            {
+                id: 5,
+                label: 'MENUITEMS.DASHBOARDS.LIST.ALLEMPLOYEES',
+                link: '/allemployees',
+                parentId: 2
             }
         ]
     },
