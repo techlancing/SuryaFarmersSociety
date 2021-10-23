@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { BankAccount } from '../../../core/models/bankaccount.model';
 import { BankAccountService } from '../../../core/services/account.service';
 import { Router } from '@angular/router';
+import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
+import { BankEmployee } from '../../../core/models/bankemployee.model';
 @Component({
   selector: 'app-account-transaction-credit-loan',
   templateUrl: './account-transaction-credit-loan.component.html',
@@ -56,11 +58,14 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   @Input() bisEditMode: boolean;
   public aBankAccounts: Array<BankAccount>;
   public sSelectedAccount: string;
+  aUsers: Array<BankEmployee>;
+
 
   constructor(private oCreditLoanService: CreditLoanService,
     private oBankAccountService: BankAccountService,
             public router: Router,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private oBankEmployeeService: BankEmployeeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add CreditLoan', active: true }];
@@ -104,6 +109,11 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         value:'03'
       }
     ];
+
+    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+     console.log('users',users);
+      this.aUsers = users;
+    });
     this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',
@@ -134,7 +144,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+   this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       this.aBankAccounts = [...data as any];
     });
   }

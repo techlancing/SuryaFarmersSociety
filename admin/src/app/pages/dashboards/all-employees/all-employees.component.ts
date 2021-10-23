@@ -2,6 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
+//import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { AdvancedService } from './advanced.service';
+//import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+import { DecimalPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-all-employees',
@@ -28,8 +34,18 @@ export class AllEmployeesComponent implements OnInit {
       console.log('users',users);
       this.aUsers = users;
   });
-
+  /*
+  @param Content
+  openModal(content: any, selectedindex: number) {
+    this.nSelectedProductIndex = selectedindex;
+   this.modalService.open(content, { centered: true, size: 'xl' });
+ }*/
 
 
 }
 }
+/*
+function openModal(content: any, any: any, selectedindex: any, number: any) {
+  throw new Error('Function not implemented.');
+}*/
+

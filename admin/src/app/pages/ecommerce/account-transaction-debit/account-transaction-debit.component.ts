@@ -10,6 +10,8 @@ import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { CreditLoan } from 'src/app/core/models/creditloan.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreditService } from 'src/app/core/services/credit.service';
+import { BankEmployee } from '../../../core/models/bankemployee.model';
+import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 
 @Component({
   selector: 'app-account-transaction-debit',
@@ -30,6 +32,8 @@ export class AccountTransactionDebitComponent implements OnInit {
   bIsEditActive: boolean;
   nActiveLoanIndex : number;
   bShowLoanData : boolean;
+  aUsers: Array<BankEmployee>;
+
 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -55,7 +59,8 @@ export class AccountTransactionDebitComponent implements OnInit {
     private oCreditService: CreditService,
     public activatedroute : ActivatedRoute,
     private router: Router,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private oBankEmployeeService: BankEmployeeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -67,6 +72,11 @@ export class AccountTransactionDebitComponent implements OnInit {
       this.sCaption = 'Debit';
       this.bIsCredit = false;
     }
+    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+      console.log('users',users);
+       this.aUsers = users;
+     });
+
     this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',

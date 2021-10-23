@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { from } from 'rxjs';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BankEmployee } from '../../../core/models/bankemployee.model';
+import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -28,6 +30,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
+  aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -88,10 +91,17 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
               private oDailySavingDebitService : DailySavingDebitService,
               private modalService: NgbModal,
               public activatedroute : ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private oBankEmployeeService: BankEmployeeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+    
+    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+      console.log('users',users);
+       this.aUsers = users;
+     });
+
     this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',

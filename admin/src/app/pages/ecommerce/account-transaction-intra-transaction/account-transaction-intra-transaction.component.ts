@@ -10,6 +10,8 @@ import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { IntraTransactionService } from 'src/app/core/services/intratransaction.service';
 import { CreditLoan } from 'src/app/core/models/creditloan.model';
 import { Router } from '@angular/router';
+import { BankEmployee } from '../../../core/models/bankemployee.model';
+import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -27,6 +29,7 @@ import { Router } from '@angular/router';
    nSelectedEditIndex: number;
    bIsAddActive: boolean;
    bIsEditActive: boolean;
+   aUsers: Array<BankEmployee>;
  
    @ViewChild('_BankAccountFormElem')
    public oBankAccountfoFormElem: any;
@@ -84,10 +87,18 @@ import { Router } from '@angular/router';
     private oCreditLoanService: CreditLoanService,
     private oIntraTransactionService: IntraTransactionService,
     private router: Router,
-               private modalService: NgbModal) { }
+               private modalService: NgbModal,
+               private oBankEmployeeService: BankEmployeeService) { }
  
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+
+     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+      console.log('users',users);
+       this.aUsers = users;
+     });
+
+
      this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',

@@ -119,11 +119,11 @@
                 <div class="add-container">
                   <div class="form-group">
                     <label for="sEmployeeName">Loan Issue Employee</label>
-                    <ng-select [items]="aLoanIssueEmployee" name="sEmployeeName"
+                    <ng-select [items]="aUsers" name="sEmployeeName"
                       [(ngModel)]="oCreditLoanModel.sEmployeeName" 
-                      bindLabel="displayText" bindValue="displayText">
+                      bindLabel="sEmployeeName" bindValue="sEmployeeName">
                       <ng-template ng-label-tmp let-item="item">
-                        {{item.displayText}}
+                        {{item.sEmployeeName}}
                       </ng-template>
                     </ng-select>
                   </div>
