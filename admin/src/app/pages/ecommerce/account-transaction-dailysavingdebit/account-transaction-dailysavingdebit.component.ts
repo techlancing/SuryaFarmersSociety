@@ -30,6 +30,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
+  public headerText : string;
   aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')
@@ -102,6 +103,12 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
        this.aUsers = users;
      });
 
+     if(this.bIsDeposit){
+       this.headerText = "Daily Deposit Account";
+     }else{
+       this.headerText = "Daily WithDrawal Account";
+     }
+
     this.aLoanIssueEmployee = [
       {
         displayText: 'Venkanna',
@@ -162,12 +169,29 @@ fnDatediff(first, second) {
 }
 
 fnCalculateDays(): void{
-  if(this.oDailySavingDebitModel.sStartDate !== undefined && this.oDailySavingDebitModel.sEndDate !== undefined){
-    
-    const diffInMs   = +(new Date(this.oDailySavingDebitModel.sEndDate)) - +(new Date(this.oDailySavingDebitModel.sStartDate))
-    this.oDailySavingDebitModel.nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
-  } 
-  
+
+  if (typeof this.oDailySavingDebitModel.sStartDate === 'object' &&
+    typeof this.oDailySavingDebitModel.sEndDate === 'object') {
+    this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
+    this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+  }
+
+  if (typeof this.oDailySavingDebitModel.sStartDate === 'object' &&
+    this.oDailySavingDebitModel.sEndDate.length > 8) {
+    this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
+    this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+  }
+
+  if (this.oDailySavingDebitModel.sStartDate.length > 8 &&
+    typeof this.oDailySavingDebitModel.sEndDate === 'object') {
+    this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
+    this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+  }
+
 }
 
 fnCalculateTotalAmount(): void{
@@ -179,8 +203,14 @@ fnCalculateTotalAmount(): void{
 
 fnOnDailySavingDebitInfoSubmit(): void {
   //this.bIsAddActive = true;
-  this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
- this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+  if(typeof this.oDailySavingDebitModel.sStartDate === 'object' ){
+      this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    }
+
+    if(typeof this.oDailySavingDebitModel.sEndDate === 'object' ){
+      this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      }
+    
  if(this.bIsDeposit)
   {
     this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
