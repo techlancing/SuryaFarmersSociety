@@ -10,6 +10,7 @@
         <div class="card-body">
 
           <div class="savings-header">
+            <div></div>
             <button type="button" class="btn btn-primary mr-1" (click)="fnPrintPassBook()">
               print</button>
           </div>
@@ -27,7 +28,7 @@
             
           </ngb-accordion>
 
-          <form class="col-12" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
+          <form class="col-12 hide-savingDeposit" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingDebitInfoSubmit()">
             <div class="row">
               <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">

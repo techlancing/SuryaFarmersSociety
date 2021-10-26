@@ -21,6 +21,8 @@ export class AllTransactionPrintComponent implements OnInit {
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankAccount;
+  bFristButton : boolean = false;
+  bSecondButton : boolean = false;
 
   
   public aCreditLoan : Array<CreditLoan>;
@@ -165,7 +167,15 @@ export class AllTransactionPrintComponent implements OnInit {
 
   }
   
-  fnPrintPassBook(): void{
+  fnPrintSavingAccount(): void{
+    this.bFristButton = true;
+    this.bSecondButton = false;
+    window.print();
+  }
+
+  fnPrintLoanAccount(): void{
+    this.bFristButton = false;
+    this.bSecondButton = true;
     window.print();
   }
 

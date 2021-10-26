@@ -11,12 +11,19 @@
 .trans-detail{
     color: orange;
 }
+.savings-header{
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-auto-flow: column;
+}
+
 
 .card-bg{
 background-color: antiquewhite;
 }
 @media print {
-    app-bank-account-data,.savings-header,.hide-savings,.hide-ledger{
+    app-bank-account-data,.savings-header,.hide-savings,.hide-savingDeposit{
         display: none!important;
     }
     
