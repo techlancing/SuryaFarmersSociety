@@ -83,7 +83,19 @@ aBankEmployees: Array<BankEmployee>;
       {
       displayText: 'Accountant',
         value:'02'
-      }  
+      },
+      {
+        displayText: 'Field Officer',
+        value:'03'
+      },
+      {
+        displayText: 'Cashier',
+        value:'04'
+      },
+      {
+        displayText: 'Office Boy',
+        value:'05'
+      }
     ];
     this.aMandal = [
       {

@@ -15,3 +15,9 @@
 .card-bg{
 background-color: antiquewhite;
 }
+@media print {
+    app-bank-account-data,.savings-header,.hide-savings,.hide-ledger{
+        display: none!important;
+    }
+    
+}

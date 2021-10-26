@@ -164,5 +164,9 @@ export class AllTransactionPrintComponent implements OnInit {
     this.modalService.open(content, { centered: true });
 
   }
+  
+  fnPrintPassBook(): void{
+    window.print();
+  }
 
 }  

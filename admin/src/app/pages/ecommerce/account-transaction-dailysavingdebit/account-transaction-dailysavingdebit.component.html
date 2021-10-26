@@ -8,11 +8,16 @@
     <div class="col-12"  >
       <div class="card card-bg" >
         <div class="card-body">
-           
+
+          <div class="savings-header">
+            <button type="button" class="btn btn-primary mr-1" (click)="fnPrintPassBook()">
+              print</button>
+          </div>
+
           <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
             <ngb-panel id="static-1">
               <ng-template ngbPanelTitle class="text-black">
-                <h2>Savings Account </h2>
+                <h2 class="hide-savings">Savings Account </h2>
               </ng-template>
               <ng-template ngbPanelContent>
                 <app-account-ledger-table [aTransactions]='aTransactionModel'></app-account-ledger-table>
@@ -26,16 +31,30 @@
             <div class="row">
               <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
-                  <label for="sDate">Start Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sStartDate" type="date"
-                    class="form-control" (change)="fnCalculateDays()">
+                  <label for="sDate">Start Date</label>       
+                  <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"
+                  placeholder="Select Date" bsDatepicker name="sStartDate"
+              class="form-control"
+               [(ngModel)]="oDailySavingDebitModel.sStartDate" (change)="fnCalculateDays()">           
+                 <!--<input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sStartDate" type="date" 
+                    class="form-control" (change)="fnCalculateDays()">-->
                 </div>
               </div>
               <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
-                  <label for="sDate">End Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
-                    class="form-control" (change)="fnCalculateDays()">
+                  <label for="sDate">End Date</label>     
+
+                  <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"
+                  placeholder="Select Date" bsDatepicker name="sEndDate"
+              class="form-control"
+               [(ngModel)]="oDailySavingDebitModel.sEndDate" (change)="fnCalculateDays()"> 
+
+                <!--  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
+                    class="form-control" (change)="fnCalculateDays()">-->
                 </div>
               </div>
               <div class="col-sm-6" *ngIf="bIsDeposit">
@@ -54,9 +73,17 @@
               </div>
               <div class="col-sm-6" *ngIf="!bIsDeposit">
                 <div class="form-group">
-                  <label for="sDate">Date</label>                  
-                  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
-                    class="form-control">
+                  <label for="sDate">Date</label> 
+
+                  <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"
+                  placeholder="Select Date" bsDatepicker name="sDate"
+              class="form-control"
+               [(ngModel)]="oDailySavingDebitModel.sEndDate" >
+
+                <!--  <input id="sDate" name="sDate" [(ngModel)]="oDailySavingDebitModel.sEndDate" type="date"
+                    class="form-control">-->
                 </div>
               </div>
               <div class="col-sm-6">

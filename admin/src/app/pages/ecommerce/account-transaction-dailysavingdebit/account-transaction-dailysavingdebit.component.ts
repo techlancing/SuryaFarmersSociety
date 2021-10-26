@@ -179,7 +179,9 @@ fnCalculateTotalAmount(): void{
 
 fnOnDailySavingDebitInfoSubmit(): void {
   //this.bIsAddActive = true;
-  if(this.bIsDeposit)
+  this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+ this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+ if(this.bIsDeposit)
   {
     this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
       
@@ -215,6 +217,9 @@ fnOnDailySavingDebitInfoSubmit(): void {
 
     this.modalService.open(content, { centered: true });
 
+  }
+  fnPrintPassBook(): void{
+    window.print();
   }
 
 }
