@@ -18,7 +18,7 @@ aBankEmployees: Array<BankEmployee>;
 
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
-  @Input() oEditBankAccount: BankEmployee;
+  @Input() oEditBankEmployeeModel: BankEmployee;
 
   public oBankEmployeeModel: BankEmployee;
   nSelectedEditIndex: number;
@@ -137,8 +137,8 @@ aBankEmployees: Array<BankEmployee>;
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
-      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-      // this.oBankAccountModel = tempobj;
+       const tempobj = JSON.parse(JSON.stringify(this.oEditBankEmployeeModel));
+      this.oBankEmployeeModel = tempobj;
       this.sButtonText = 'Update';
     }
    // this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((data) => {

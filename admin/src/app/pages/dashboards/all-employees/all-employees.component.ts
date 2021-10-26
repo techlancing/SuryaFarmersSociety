@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
-//import { Content } from '@angular/compiler/src/render3/r3_ast';
-//import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+import { AdvancedSortableDirective } from '../all-bank-accounts/advanced-sortable.directive';
+import { AdvancedService } from '../all-bank-accounts/advanced.service';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,9 +21,12 @@ export class AllEmployeesComponent implements OnInit {
   breadCrumbItems: Array<{}>;
   term: any;
   @Input() bHideBreadCrumb: boolean = false;
+
+  nSelectedProductIndex : number;
+  
   // page
   currentpage: number;
-  constructor(private oBankEmployeeService: BankEmployeeService) { }
+  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Ecommece' }, { label: 'EndUsers', active: true }];
@@ -33,15 +36,19 @@ export class AllEmployeesComponent implements OnInit {
       console.log('users',users);
       this.aUsers = users;
   });
-  /*
-  @param Content
-  openModal(content: any, selectedindex: number) {
-    this.nSelectedProductIndex = selectedindex;
-   this.modalService.open(content, { centered: true, size: 'xl' });
- }*/
-
-
+  
 }
+/**
+   * Open modal
+   * @param content modal content
+   */
+
+ openModal(content: any, selectedindex: number) {
+  this.nSelectedProductIndex = selectedindex;
+ this.modalService.open(content, { centered: true, size: 'xl' });
+}
+
+
 }
 /*
 function openModal(content: any, any: any, selectedindex: any, number: any) {

@@ -98,7 +98,7 @@ const config: DropzoneConfigInterface = {
     ArchwizardModule,
     BsDatepickerModule
   ],
-  exports:[AddaccountComponent ],
+  exports:[AddaccountComponent, AddBankEmployeeComponent ],
   providers: [
     {
       provide: DROPZONE_CONFIG,
