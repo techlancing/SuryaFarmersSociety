@@ -10,7 +10,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from './saas/shared/shared.module'
 import { NgbDropdownModule, NgbTooltipModule, NgbNavModule ,NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap'
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 import { DefaultComponent } from './default/default.component';
 import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
@@ -34,7 +34,8 @@ import { AllEmployeesComponent } from './all-employees/all-employees.component';
     WidgetModule,
     NgApexchartsModule,
     SharedModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    NgSelectModule
   ]
 })
 export class DashboardsModule { }

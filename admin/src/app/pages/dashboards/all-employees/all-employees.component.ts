@@ -7,6 +7,7 @@ import { AdvancedService } from '../all-bank-accounts/advanced.service';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 
 @Component({
   selector: 'app-all-employees',
@@ -15,7 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AllEmployeesComponent implements OnInit {
 
-  
+
   aUsers: Array<BankEmployee>;
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -24,11 +25,36 @@ export class AllEmployeesComponent implements OnInit {
 
   nSelectedProductIndex : number;
   
+
+  public oDropZone: DropzoneComponent;
+  aChairman : Array<
+  {
+    displayText:string,
+    value:string
+  }>;
+
   // page
   currentpage: number;
   constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
+
+    this.aChairman=[
+      {
+        displayText: 'Aprrove',
+        value:'01'
+      },
+      {
+      displayText: 'Reject',
+        value:'02'
+      },
+      {
+        displayText: 'Pending',
+          value:'02'
+        }
+
+    ]
+
     this.breadCrumbItems = [{ label: 'Ecommece' }, { label: 'EndUsers', active: true }];
 
     this.currentpage = 1;

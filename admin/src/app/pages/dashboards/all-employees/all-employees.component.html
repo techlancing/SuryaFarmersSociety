@@ -1,59 +1,66 @@
 <div class="container-fluid">
 
-    <app-page-title title="All Employees" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
-    bgimageclass="addcategory_header"></app-page-title>
-  
-    <div class="row">
-        <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
-         <div class="card card-bg">
-          <div class="card-body">
-              <h2>All Employees</h2>
+  <app-page-title title="All Employees" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+  bgimageclass="addcategory_header"></app-page-title>
+
+  <div class="row">
+      <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
+       <div class="card card-bg">
+        <div class="card-body">
+            <h2>All Employees</h2>
 
 
-             <div class="row mb-md-2">
-                  
-            <div class="table-responsive">
-              <table class="table table-centered " id="basic-datatable">
-                <thead>
-                  <tr>
-                    <th>EmployeeId</th>
-                    <th>EmployeeName</th>
-                    <th>Phone</th>
-                    <th>Joining Date</th>
-                    <th>Edit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of aUsers ;let i = index;">
-                    <td>{{user.nEmployeeID}}</td>
-                    <td>{{user.sEmployeeName}}</td>
-                    <td>{{user.sMobileNumber}}</td>
-                    <td>{{user.sJoiningDate}}</td>
-                    <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                      class="mdi mdi-employee-edit"></i>Edit</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+           <div class="row mb-md-2">
+                
+         <div class="table-responsive">
+          <table class="table table-centered " id="basic-datatable">
+            <thead>
+              <tr>
+                <th>EmployeeId</th>
+                <th>EmployeeName</th>
+                <th>Phone</th>
+                <th>Joining Date</th>
+               <th>Approved Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of aUsers ;let i = index;">
+                <td>{{user.nEmployeeID}}</td>
+                <td>{{user.sEmployeeName}}</td>
+                <td>{{user.sMobileNumber}}</td>
+                <td>{{user.sJoiningDate}}</td>
+                <td>
+                  <ng-select [items]="aChairman" name="sChairman"
+                      bindLabel="displayText" bindValue="value">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.displayText}}
+                      </ng-template>
+                  </ng-select>
+                </td>
+                  <!--  <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
+                      class="mdi mdi-employee-edit"></i>Edit</button></td>-->
+              </tr>
+            </tbody>
+          </table>
+        </div>
         </div>
       </div>
-      </form>
     </div>
-    <!-- end row -->
+    </form>
   </div>
-  
-  
-  <ng-template #accountcontent role="document" let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title mt-0">Edit Account</h5>
-      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
-    </div>
-    <div class="modal-body">
-      <app-add-bank-employee bHideBreadCrumb='true' 
-      [bisEditMode]="true"
-    [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]"></app-add-bank-employee>
-  
-    </div>
-  </ng-template>
-  
+  <!-- end row -->
+</div>
+
+
+<ng-template #accountcontent role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Edit Account</h5>
+    <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+  </div>
+  <div class="modal-body">
+    <app-add-bank-employee bHideBreadCrumb='true' 
+    [bisEditMode]="true"
+  [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]"></app-add-bank-employee>
+
+  </div>
+</ng-template>

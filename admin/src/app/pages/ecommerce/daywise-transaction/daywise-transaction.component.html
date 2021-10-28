@@ -15,9 +15,13 @@
                 <div class="form-group">
                   <label for="fromDate">From Date</label>
                   
-
-                 <input id="fromDate" name="fromDate"  type="date" ngModel
-                    class="form-control" >                
+                  <input [bsConfig]="{ showWeekNumbers: false,
+                          showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                          dateInputFormat: 'DD-MM-YYYY' }"
+                          placeholder="Select Date" bsDatepicker name="fromDate" [(ngModel)]="fromDate"
+                      class="form-control">
+                 <!--<input id="fromDate" name="fromDate"  type="date" ngModel
+                    class="form-control" >  -->              
                    </div>
               </div>
               <div class="col-sm-4">

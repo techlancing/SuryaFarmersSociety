@@ -6,17 +6,17 @@
     <app-bank-account-data headerText="All Transaction Print" 
     (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
 
-   <!-- [ngclass]="bFristButton : 'first'?'second'"-->
+    
 
-    <div class="row hide-trans" >      
-      <div class="row col-12" *ngIf="aTransactions && aTransactions.length > 0">
-        <div class="col-12"  >
+    <div class="row " [ngClass]="{'first': bFristButton===true,'second': bSecondButton===true}">      
+      <div class="row col-12 " *ngIf="aTransactions && aTransactions.length > 0">
+        <div class="col-12 " >
           <div class="savings-header">
             <div></div>
             <button type="button" class="btn btn-primary mr-1" (click)="fnPrintSavingAccount()">
               print</button>
           </div>
-          <div class="card card-bg" >
+          <div class="card card-bg hide-trans" >
             <div class="card-body">
               <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
                 <ngb-panel id="static-1">
@@ -36,10 +36,10 @@
         </div>
       </div>    
       
-    <div class="row col-12">
-      <div class="col-12 hide-loan"  >
+    <div class="row col-12 hide-loan">
+      <div class="col-12 "  ><!--hide-loan-->
         <div class="card card-bg" *ngFor="let oCreditLoanmodel of aCreditLoan">
-          <div class="card-body">
+          <div class="card-body ">
 
             <div class="savings-header">
               <div></div>

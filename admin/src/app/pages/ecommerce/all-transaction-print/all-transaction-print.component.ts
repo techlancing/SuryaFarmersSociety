@@ -169,14 +169,16 @@ export class AllTransactionPrintComponent implements OnInit {
   
   fnPrintSavingAccount(): void{
     this.bFristButton = true;
-    this.bSecondButton = false;
+   this.bSecondButton = false;
     window.print();
+    //this.bFristButton=false;
   }
 
   fnPrintLoanAccount(): void{
     this.bFristButton = false;
     this.bSecondButton = true;
     window.print();
+   //this.bSecondButton=false;
   }
 
 }  
