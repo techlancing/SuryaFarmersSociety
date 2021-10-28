@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { analytics } from 'firebase';
 
 @Component({
   selector: 'app-addaccount',
@@ -31,7 +32,8 @@ export class AddaccountComponent implements OnInit {
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
-
+  bShowPersonal : boolean;
+ 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -92,6 +94,8 @@ export class AddaccountComponent implements OnInit {
       
     });
     
+    this.bShowPersonal=false;
+
     this.aState = [
       {
         displayText: 'Telangana',
@@ -216,6 +220,13 @@ export class AddaccountComponent implements OnInit {
     });
     
   }
+/*
+  fnCalculateAge(){
+    if(this.oBankAccountModel.sDOB===''){
+      var today=(new Date).getFullYear;  
+      this.oBankAccountModel.sAge=today-(new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-")).getFullYear
+   }
+  }*/
 
   fnCreateAccountDetails(){
     let statecode = this.oBankAccountModel.sState;
@@ -240,6 +251,9 @@ export class AddaccountComponent implements OnInit {
       
       //this.oBankAccountModel.sCustomerId = this.oBankAccountModel.sBranchCode + '0002';
     });
+
+    this.bShowPersonal=true;
+
   }
 
   fnResetState() {

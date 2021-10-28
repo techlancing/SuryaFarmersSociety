@@ -16,6 +16,7 @@ public ntotalCredit : number =0;
 public ntotalDebit : number =0;
 public nbalanceAmount : number =0;
 fromDate : any;
+toDate : any;
 
   constructor(private oTransactionService: TransactionService,
               private modalService: NgbModal) { }
@@ -30,7 +31,7 @@ fromDate : any;
     this.nbalanceAmount = 0;
     let fromdate = ngform.value.fromDate;
     let todate = ngform.value.toDate;
-    console.log(this.fromDate,todate);
+    console.log(this.fromDate,this.toDate);
     this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
       console.log(data);
       this.aTransactions = data;

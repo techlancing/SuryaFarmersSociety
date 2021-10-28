@@ -111,7 +111,7 @@ export class AccountTransactionDebitComponent implements OnInit {
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
 
-      let datetoday = `${yyyy}-${mm}-${dd}`;
+      let datetoday = `${dd}-${mm}-${yyyy}`;
     this.oDebitModel.sDate = datetoday.toString();
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {

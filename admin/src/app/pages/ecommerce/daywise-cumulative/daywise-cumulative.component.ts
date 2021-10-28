@@ -17,7 +17,8 @@ public ntotalCredit : number =0;
 public ntotalDebit : number =0;
 public nbalanceAmount : number =0;
 public uniqueArr = [];
-
+fromdate : any;
+todate :any;
   constructor(private oTransactionService: TransactionService,
               private modalService: NgbModal) { }
 
@@ -29,17 +30,17 @@ public uniqueArr = [];
     this.ntotalCredit =0;
     this.ntotalDebit =0;
     this.nbalanceAmount = 0;
-    let fromdate = ngform.value.fromDate;
-    let todate = ngform.value.toDate;
-    const diffInMs   = +(new Date(todate)) - +(new Date(fromdate))
+    //let fromdate = ngform.value.fromDate;
+   //let todate = ngform.value.toDate;
+    const diffInMs   = +(new Date(this.todate)) - +(new Date(this.fromdate))
     let nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
 
-    let today = new Date(fromdate);
+    let today = new Date(this.fromdate);
     let tomorrow = new Date(today);
     
     // oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
-    console.log(fromdate,todate);
-    this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+    console.log(this.fromdate,this.todate);
+    this.oTransactionService.fngetTransactionInfo(this.fromdate,this.todate).subscribe((data) => {
       console.log(data);
       this.aTransactions = data;
       let tempdate = '';
