@@ -151,7 +151,7 @@
                           dateInputFormat: 'DD-MM-YYYY' }"
                           placeholder="Select Date" bsDatepicker name="DobDate"
                       class="form-control"
-                       [(ngModel)]="oBankAccountModel.sDOB">
+                       [(ngModel)]="oBankAccountModel.sDOB"  (bsValueChange)=" fnCalculateAge()" >
               </div>
             </div>
             <div class="col-sm-4">

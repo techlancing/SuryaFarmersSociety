@@ -220,15 +220,20 @@ export class AddaccountComponent implements OnInit {
     });
     
   }
-/*
+
   fnCalculateAge(){
-    if(this.oBankAccountModel.sDOB===''){
-      var today=(new Date).getFullYear;  
-      this.oBankAccountModel.sAge=today-(new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-")).getFullYear
+    if(typeof this.oBankAccountModel.sDOB==='object'){
+      let today=new Date().getFullYear();  
+      let sDateOfBirth=new Date(this.oBankAccountModel.sDOB);
+      let sdob=sDateOfBirth.getFullYear();
+      console.log(today);
+      console.log(sdob);
+     this.oBankAccountModel.sAge= ""+(today-sdob);
    }
-  }*/
+  }
 
   fnCreateAccountDetails(){
+    console.log(this.oBankAccountModel.sState);
     let statecode = this.oBankAccountModel.sState;
     let selecteddistrict = this.aDistrict.find(item=> item.nDistrictId === this.oBankAccountModel.nDistrictId);
     let selectedmandal = this.aMandal.find(item=> item.nMandalId === this.oBankAccountModel.nMandalId);
@@ -243,7 +248,7 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountService.fngetLastBankAccountInfo(this.oBankAccountModel.nVillageId).subscribe((data:any) => {
       
       if(data.accno.toString().length === 1){
-        this.oBankAccountModel.sAccountNo = '0'+this.oBankAccountModel.sBranchCode +'000' + data.accno;
+        this.oBankAccountModel.sAccountNo = ''+this.oBankAccountModel.sBranchCode +'000' + data.accno;
       }else{
         
         this.oBankAccountModel.sAccountNo = '0'+(parseInt(data.accno) + 1).toString();
