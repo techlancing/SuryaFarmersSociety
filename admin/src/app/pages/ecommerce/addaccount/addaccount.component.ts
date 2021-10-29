@@ -233,7 +233,6 @@ export class AddaccountComponent implements OnInit {
   }
 
   fnCreateAccountDetails(){
-    console.log(this.oBankAccountModel.sState);
     let statecode = this.oBankAccountModel.sState;
     let selecteddistrict = this.aDistrict.find(item=> item.nDistrictId === this.oBankAccountModel.nDistrictId);
     let selectedmandal = this.aMandal.find(item=> item.nMandalId === this.oBankAccountModel.nMandalId);
@@ -416,6 +415,15 @@ export class AddaccountComponent implements OnInit {
     this.nSelectedEditIndex = index;
 
     this.modalService.open(content, { centered: true });
+
+  }
+
+  fnValidateNominee(event : Event){
+    let nominee=(<HTMLInputElement>event.target).value;
+    console.log(event);
+    if(nominee!==this.oBankAccountModel.sFatherOrHusbandName||nominee!==this.oBankAccountModel.sMotherName){
+      (<HTMLInputElement>event.target).innerText='please enter husband/father or mother name';
+    }
 
   }
 
