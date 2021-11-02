@@ -119,6 +119,12 @@ export const MENU: MenuItem[] = [
             parentId: 40
         },
         {
+            id: 49,
+            label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DAILYSAVINGSDEPOSIT',
+            link: '/dailysavingsdeposit',
+            parentId: 40
+        },
+        {
             id: 62,
             label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.WITHDRAWAL',
             link: '/withdrawal',

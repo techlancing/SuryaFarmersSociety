@@ -127,6 +127,7 @@
       "TEXT": "TRANSACTIONS",
       "LIST": {
         "DAILYSAVINGDEBIT": "Saving Deposit",
+        "DAILYSAVINGSDEPOSIT": "Daily Saving Deposit",
         "WITHDRAWAL": "Saving Withdrawal",
         "DEBIT": "Loan Debit",
         "CREDIT": "Loan Credit",

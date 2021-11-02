@@ -13,7 +13,7 @@ import { AddDistrictComponent } from './add-district/add-district.component';
 import { AddMandalComponent } from './add-mandal/add-mandal.component';
 import { AddVillageComponent } from './add-village/add-village.component';
 import { DaywiseTransactionComponent } from './daywise-transaction/daywise-transaction.component';
-// import { IntraTransactionComponent } from './intra-transaction/intratransaction.component';
+import { DailySavingsDepositComponent } from './daily-savings-deposit/daily-savings-deposit.component';
 import { DaywiseCumulativeComponent } from './daywise-cumulative/daywise-cumulative.component';
 import { DaywiseCumulativeAccountComponent } from './daywise-cumulative-account/daywise-cumulative-account.component';
 import { LastTransactionComponent } from './last-transaction/last-transaction.component';
@@ -73,6 +73,13 @@ const routes: Routes = [
     {
         path:'dailysavingdebit',
         component: AccountTransactionDailysavingdebitComponent,
+        data: {
+            type: 'deposit'
+        }
+    },
+    {
+        path:'dailysavingsdeposit',
+        component: DailySavingsDepositComponent,
         data: {
             type: 'deposit'
         }
