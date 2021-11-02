@@ -157,7 +157,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     //this.bIsAddActive = true;
 
     this.oCreditLoanModel.sDate = new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    //this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
@@ -167,9 +167,9 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   }
 
   fnCalculateTotalAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest){
-      this.oCreditLoanModel.nTotalAmount = this.oCreditLoanModel.nSanctionAmount + 
-      (this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest / 100);
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays && this.oCreditLoanModel.nLoanMonths){
+      let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100); 
+      this.oCreditLoanModel.nTotalAmount=this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest)).toFixed(0));
       this.fnCalculateEMIAmount();
     }
   }

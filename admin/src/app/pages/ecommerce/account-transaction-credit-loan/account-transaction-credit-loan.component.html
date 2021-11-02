@@ -37,13 +37,35 @@
                     class="form-control" (input)="fnCalculateTotalAmount()">
                 </div>
               </div>
+
+              
+
+
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nIntrest">Intrest (%)</label>                  
                   <input id="nIntrest" name="nIntrest" [(ngModel)]="oCreditLoanModel.nIntrest" type="number"
                     class="form-control" (input)="fnCalculateTotalAmount()">
+                </div> 
+              </div>
+
+               <!--Loan months-->
+               <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nLoanMonths">Months</label>                  
+                  <input id="nLoanMonths" name="nLoanMonths" [(ngModel)]="oCreditLoanModel.nLoanMonths" type="number"
+                    class="form-control" (input)="fnCalculateTotalAmount()">
                 </div>
               </div>
+              <!--Loan Days-->
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nLoanDays">Days</label>                  
+                  <input id="nLoanDays" name="nLoanDays" [(ngModel)]="oCreditLoanModel.nLoanDays" type="number"
+                    class="form-control" (input)="fnCalculateTotalAmount()">
+                </div>
+              </div>
+
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nSanctionAmount">Total Amount</label>                  
@@ -93,21 +115,22 @@
                     class="form-control">
                 </div>
               </div>
+              <!--
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="endofloandate">End of the Loan Date </label>
-                <!--  <input id="endofloandate" name="endofloandate" [(ngModel)]="oCreditLoanModel.sEndofLoanDate" type="date"
-                    class="form-control">-->
+                 <input id="endofloandate" name="endofloandate" [(ngModel)]="oCreditLoanModel.sEndofLoanDate" type="date"
+                    class="form-control">
 
                     <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                     showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                     dateInputFormat: 'DD-MM-YYYY' }"
                     placeholder="Select Date" bsDatepicker name="endofloandate"
                 class="form-control"
-                 [(ngModel)]="oCreditLoanModel.sEndofLoanDate">                 
-
+                 [(ngModel)]="oCreditLoanModel.sEndofLoanDate">             
                 </div>
               </div>
+              -->
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nLetPenaltyPercentage">Let Penalty Percentage</label>

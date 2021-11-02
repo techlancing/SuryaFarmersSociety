@@ -29,10 +29,13 @@ toDate : any;
     this.ntotalCredit =0;
     this.ntotalDebit =0;
     this.nbalanceAmount = 0;
-    let fromdate = ngform.value.fromDate;
-    let todate = ngform.value.toDate;
-    console.log(this.fromDate,this.toDate);
-    this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+    //let fromdate = ngform.value.fromDate;
+    //let todate = ngform.value.toDate;
+    this.fromDate = new Date(this.fromDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.toDate = new Date(this.toDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    console.log(this.fromDate);
+    console.log(this.toDate);
+    this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
       console.log(data);
       this.aTransactions = data;
       this.aTransactions.map((transaction)=>{

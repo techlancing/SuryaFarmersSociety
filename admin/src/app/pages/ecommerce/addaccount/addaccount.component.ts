@@ -418,13 +418,14 @@ export class AddaccountComponent implements OnInit {
 
   }
 
-  fnValidateNominee(event : Event){
-    let nominee=(<HTMLInputElement>event.target).value;
-    console.log(event);
-    if(nominee!==this.oBankAccountModel.sFatherOrHusbandName||nominee!==this.oBankAccountModel.sMotherName){
-      (<HTMLInputElement>event.target).innerText='please enter husband/father or mother name';
-    }
-
+  fnValidateNominee(){
+      if(this.oBankAccountModel.sNomineeName!==null){
+       if(this.oBankAccountModel.sNomineeName!==this.oBankAccountModel.sFatherOrHusbandName&&this.oBankAccountModel.sNomineeName!==this.oBankAccountModel.sMotherName)
+         this.oBankAccountModel.sNomineeName='please enter husband/father or mother name';
+      }
+      else if(this.oBankAccountModel.sNomineeName===null)
+        this.oBankAccountModel.sNomineeName='please enter husband/father or mother name';
+      else return;
   }
 
 }

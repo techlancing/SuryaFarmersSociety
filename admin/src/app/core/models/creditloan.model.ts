@@ -5,6 +5,8 @@ export class CreditLoan {
         public nLoanId : number = null,
         public nSanctionAmount : number = null,
         public nIntrest : number = null,
+        public nLoanMonths : number = null,
+        public nLoanDays : number = null,
         public nTotalAmount : number = null,
         public sTransactionId : string = '',//unique: true},  
         public sDate : string = '',        
