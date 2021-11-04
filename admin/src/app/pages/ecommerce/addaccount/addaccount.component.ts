@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { analytics } from 'firebase';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-addaccount',
@@ -84,7 +85,8 @@ export class AddaccountComponent implements OnInit {
     private oMandalService: MandalService,
     private oVillageService: VillageService,
     private router : Router,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -316,9 +318,9 @@ export class AddaccountComponent implements OnInit {
       //In Edit case,the date coming from db is 'dd-mm-yyyy' for which new Date is giving an error
       // So just checking the lenght of the string, temp fix
       if(this.oBankAccountModel.sDate !== undefined && this.oBankAccountModel.sDate !== '')
-        this.oBankAccountModel.sDate = new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+        this.oBankAccountModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDate);//new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
       if(this.oBankAccountModel.sDOB !== undefined && this.oBankAccountModel.sDate !== '')
-        this.oBankAccountModel.sDOB = new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
+        this.oBankAccountModel.sDOB = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDOB);//new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
       if (!this.bisEditMode) {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];

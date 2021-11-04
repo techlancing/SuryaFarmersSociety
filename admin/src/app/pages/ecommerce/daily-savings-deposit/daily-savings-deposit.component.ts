@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import { DailySavingDebit } from 'src/app/core/models/dailysavingdebit.model';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-daily-savings-deposit',
@@ -94,7 +95,8 @@ export class DailySavingsDepositComponent implements OnInit {
               private modalService: NgbModal,
               public activatedroute : ActivatedRoute,
               private router: Router,
-              private oBankEmployeeService: BankEmployeeService) { }
+              private oBankEmployeeService: BankEmployeeService,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -209,7 +211,7 @@ fnOnDailySavingsDepositInfoSubmit(): void {
     }*/
 
     if(typeof this.oDailySavingsDepositModel.sEndDate === 'object' ){
-      this.oDailySavingsDepositModel.sEndDate = new Date(this.oDailySavingsDepositModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      this.oDailySavingsDepositModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sEndDate);
       }
     
  if(this.bIsDeposit)

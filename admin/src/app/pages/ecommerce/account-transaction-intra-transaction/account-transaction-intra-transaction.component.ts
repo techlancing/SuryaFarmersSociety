@@ -12,6 +12,7 @@ import { CreditLoan } from 'src/app/core/models/creditloan.model';
 import { Router } from '@angular/router';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -88,7 +89,8 @@ import { BankEmployeeService } from 'src/app/core/services/bankemployee.service'
     private oIntraTransactionService: IntraTransactionService,
     private router: Router,
                private modalService: NgbModal,
-               private oBankEmployeeService: BankEmployeeService) { }
+               private oBankEmployeeService: BankEmployeeService,
+               private oUtilitydateService : UtilitydateService) { }
  
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -163,7 +165,7 @@ import { BankEmployeeService } from 'src/app/core/services/bankemployee.service'
  
    fnOnIntraTransactionInfoSubmit(){
 
-    this.ointratransactionModel.sDate = new Date(this.ointratransactionModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.ointratransactionModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.ointratransactionModel.sDate);
 
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);

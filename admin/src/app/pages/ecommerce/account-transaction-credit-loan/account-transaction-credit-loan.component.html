@@ -93,19 +93,12 @@
                     <label for="sInstallmentType">Installment Type</label>
                     <ng-select [items]="aInstallmentType" name="sInstallmentType"
                       [(ngModel)]="oCreditLoanModel.sInstallmentType" 
-                      bindLabel="displayText" bindValue="displayText">
+                      bindLabel="displayText" bindValue="displayText" (change)="fnCalculateEMIAmount()">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>
                     </ng-select>
                   </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="nLoanRepaymentPeriod">Loan Repayment Period (Months)</label>                  
-                  <input id="nLoanRepaymentPeriod" name="nLoanRepaymentPeriod" [(ngModel)]="oCreditLoanModel.nLoanRepaymentPeriod" type="number"
-                    class="form-control" (input)="fnCalculateEMIAmount()">
                 </div>
               </div>
               <div class="col-sm-6">

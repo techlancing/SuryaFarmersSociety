@@ -48,6 +48,12 @@ var oCreditLoanSchema = new oSchema({
     type: String,
     trim: true
   },
+  nLoanDays:{
+    type : Number
+  },
+  nLoanMonths:{
+    type : Number
+  },
   nLetPenaltyPercentage:{
     type: Number
   },

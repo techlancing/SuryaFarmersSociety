@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-daywise-transaction',
@@ -19,7 +20,8 @@ fromDate : any;
 toDate : any;
 
   constructor(private oTransactionService: TransactionService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     
@@ -31,12 +33,16 @@ toDate : any;
     this.nbalanceAmount = 0;
     //let fromdate = ngform.value.fromDate;
     //let todate = ngform.value.toDate;
-    this.fromDate = new Date(this.fromDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    this.toDate = new Date(this.toDate).toISOString().split('T')[0].split("-").reverse().join("-");
     console.log(this.fromDate);
     console.log(this.toDate);
+    this.fromDate = this.oUtilitydateService.fnChangeDateFormate(this.fromDate);
+    this.toDate = this.oUtilitydateService.fnChangeDateFormate(this.toDate);
+    console.log(this.fromDate);
+    console.log(this.toDate);
+    
     this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
       console.log(data);
+      console.log("hi ameen");
       this.aTransactions = data;
       this.aTransactions.map((transaction)=>{
         this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;

@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { from } from 'rxjs';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-add-bank-employee',
@@ -71,8 +72,9 @@ aBankEmployees: Array<BankEmployee>;
   @Input() bisEditMode: boolean;
   
   constructor(private oBankEmployeeService: BankEmployeeService,
-              private modalService: NgbModal) { }
-
+              private modalService: NgbModal,private oUtilitydateService : UtilitydateService) { }
+              
+             
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
     this.aDesignation = [
@@ -150,8 +152,8 @@ aBankEmployees: Array<BankEmployee>;
   fnOnBankEmployeeInfoSubmit(): void {
     //this.bIsAddActive = true;
 
-    this.oBankEmployeeModel.sCallLetterIssuedDate = new Date(this.oBankEmployeeModel.sCallLetterIssuedDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    this.oBankEmployeeModel.sJoiningDate = new Date(this.oBankEmployeeModel.sJoiningDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oBankEmployeeModel.sCallLetterIssuedDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sCallLetterIssuedDate);//new Date(this.oBankEmployeeModel.sCallLetterIssuedDate).toLocaleDateString().split("/").join("-");
+    this.oBankEmployeeModel.sJoiningDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sJoiningDate);//new Date(this.oBankEmployeeModel.sJoiningDate).toLocaleDateString('en-GB').split("/").join("-");
 
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);

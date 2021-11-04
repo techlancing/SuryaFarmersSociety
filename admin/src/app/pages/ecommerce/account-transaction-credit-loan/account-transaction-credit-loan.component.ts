@@ -10,6 +10,8 @@ import { BankAccountService } from '../../../core/services/account.service';
 import { Router } from '@angular/router';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
+import { textChangeRangeIsUnchanged } from 'typescript';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 @Component({
   selector: 'app-account-transaction-credit-loan',
   templateUrl: './account-transaction-credit-loan.component.html',
@@ -65,7 +67,8 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     private oBankAccountService: BankAccountService,
             public router: Router,
               private modalService: NgbModal,
-              private oBankEmployeeService: BankEmployeeService) { }
+              private oBankEmployeeService: BankEmployeeService,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add CreditLoan', active: true }];
@@ -156,7 +159,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   fnOnCreditLoanInfoSubmit(): void {
     //this.bIsAddActive = true;
 
-    this.oCreditLoanModel.sDate = new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
     //this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
@@ -167,21 +170,30 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   }
 
   fnCalculateTotalAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays && this.oCreditLoanModel.nLoanMonths){
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
+      console.log("entered");
       let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100); 
       this.oCreditLoanModel.nTotalAmount=this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest)).toFixed(0));
+      console.log(this.oCreditLoanModel.nTotalAmount);
       this.fnCalculateEMIAmount();
     }
   }
 
   fnCalculateEMIAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && 
-      this.oCreditLoanModel.nLoanRepaymentPeriod){
-        let emiamount = (Math.round((this.oCreditLoanModel.nTotalAmount / this.oCreditLoanModel.nLoanRepaymentPeriod) * 100) / 100).toFixed(2);
-        this.oCreditLoanModel.nInstallmentAmount = Number(emiamount);
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
+        let totalDays=this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays;
+        let emiamount = Number((Math.round((this.oCreditLoanModel.nTotalAmount / totalDays)*100)/100).toFixed(2));
+    
+        if(this.oCreditLoanModel.sInstallmentType==='Daily')
+          this.oCreditLoanModel.nInstallmentAmount = emiamount;
+        else if(this.oCreditLoanModel.sInstallmentType==='Weekly')
+        this.oCreditLoanModel.nInstallmentAmount = emiamount*7;
+        else this.oCreditLoanModel.nInstallmentAmount = emiamount*30;
+         
       }
   }
 
+  
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

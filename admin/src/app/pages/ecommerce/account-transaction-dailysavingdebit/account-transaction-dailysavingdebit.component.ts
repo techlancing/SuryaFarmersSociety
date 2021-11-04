@@ -12,6 +12,7 @@ import { BankAccount } from 'src/app/core/models/bankaccount.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -93,7 +94,8 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
               private modalService: NgbModal,
               public activatedroute : ActivatedRoute,
               private router: Router,
-              private oBankEmployeeService: BankEmployeeService) { }
+              private oBankEmployeeService: BankEmployeeService,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -204,11 +206,11 @@ fnCalculateTotalAmount(): void{
 fnOnDailySavingDebitInfoSubmit(): void {
   //this.bIsAddActive = true;
   if(typeof this.oDailySavingDebitModel.sStartDate === 'object' ){
-      this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      this.oDailySavingDebitModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sStartDate);
     }
 
     if(typeof this.oDailySavingDebitModel.sEndDate === 'object' ){
-      this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      this.oDailySavingDebitModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sEndDate);
       }
     
  if(this.bIsDeposit)
