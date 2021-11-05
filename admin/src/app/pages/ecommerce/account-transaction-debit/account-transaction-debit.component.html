@@ -89,12 +89,6 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label for="nLoanRepaymentPeriod">Loan Repayment Period:</label>
-                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nLoanRepaymentPeriod}}</label>
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
                           <label for="nInstallmentAmount">Installment Amount:</label>
                           <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nInstallmentAmount}}</label>
                         </div>
@@ -102,7 +96,20 @@
                       <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sEndofLoanDate">End of the Loan:</label>
-                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sEndofLoanDate}}</label>
+                          <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanMonths>0; else days">
+                            <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanDays>0; else months">
+                              <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nLoanMonths}} Months and {{aCreditLoan[nActiveLoanIndex].nLoanDays}} Days</label>
+                            </ng-container>
+                            <ng-template #months>
+                              <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nLoanMonths}} Months</label>
+                            </ng-template>
+                          </ng-container>
+                          <ng-template #days>
+                            <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanDays>0">
+                              <label class="account-detail"> {{aCreditLoan[nActiveLoanIndex].nLoanDays}} Days </label>
+                            </ng-container>
+                          </ng-template>
+
                         </div>
                       </div>
                     </div>

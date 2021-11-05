@@ -174,22 +174,22 @@ fnCalculateDays(): void{
 
   if (typeof this.oDailySavingDebitModel.sStartDate === 'object' &&
     typeof this.oDailySavingDebitModel.sEndDate === 'object') {
-    this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oDailySavingDebitModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sStartDate);//new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oDailySavingDebitModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sEndDate);//new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
     const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
     this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
   }
 
   if (typeof this.oDailySavingDebitModel.sStartDate === 'object' &&
     this.oDailySavingDebitModel.sEndDate.length > 8) {
-    this.oDailySavingDebitModel.sStartDate = new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oDailySavingDebitModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sStartDate);//new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
     const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
     this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
   }
 
   if (this.oDailySavingDebitModel.sStartDate.length > 8 &&
     typeof this.oDailySavingDebitModel.sEndDate === 'object') {
-    this.oDailySavingDebitModel.sEndDate = new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oDailySavingDebitModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sEndDate);//new Date(this.oDailySavingDebitModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
     const diffInMs = +(new Date(this.oDailySavingDebitModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingDebitModel.sStartDate.split("-").reverse().join("-")))
     this.oDailySavingDebitModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
   }

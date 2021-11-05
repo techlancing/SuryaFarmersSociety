@@ -19,6 +19,7 @@ public nbalanceAmount : number =0;
 fromDate : any;
 toDate : any;
 
+
   constructor(private oTransactionService: TransactionService,
               private modalService: NgbModal,
               private oUtilitydateService : UtilitydateService) { }
@@ -50,6 +51,7 @@ toDate : any;
       });
       this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
     });
+  
   }
 
 }
