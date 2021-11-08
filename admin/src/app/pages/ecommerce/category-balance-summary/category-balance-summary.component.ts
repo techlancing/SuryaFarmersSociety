@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
+
 @Component({
   selector: 'app-category-balance-summary',
   templateUrl: './category-balance-summary.component.html',
@@ -17,9 +19,12 @@ export class CategoryBalanceSummaryComponent implements OnInit {
   public nbalanceAmount : number =0;
   public uniqueArr = [];
   public uniqueTransactions = [];
+  fromDate : any;
+  toDate :any;
   
     constructor(private oTransactionService: TransactionService,
-                private modalService: NgbModal) { }
+                private modalService: NgbModal,
+                private oUtilitydateService : UtilitydateService) { }
   
     ngOnInit(): void {
       
@@ -31,9 +36,11 @@ export class CategoryBalanceSummaryComponent implements OnInit {
       this.nbalanceAmount = 0;
       this.uniqueArr = [];
       this.uniqueTransactions = [];
-      let fromdate = ngform.value.fromDate;
-      let todate = ngform.value.toDate;
-      this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+     
+      this.fromDate = this.oUtilitydateService.fnChangeDateFormate(this.fromDate);
+      this.toDate = this.oUtilitydateService.fnChangeDateFormate(this.toDate);
+
+      this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
         console.log(data);
         this.aTransactions = data;
 

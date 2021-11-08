@@ -32,14 +32,10 @@ toDate : any;
     this.ntotalCredit =0;
     this.ntotalDebit =0;
     this.nbalanceAmount = 0;
-    //let fromdate = ngform.value.fromDate;
-    //let todate = ngform.value.toDate;
-    console.log(this.fromDate);
-    console.log(this.toDate);
+   
     this.fromDate = this.oUtilitydateService.fnChangeDateFormate(this.fromDate);
     this.toDate = this.oUtilitydateService.fnChangeDateFormate(this.toDate);
-    console.log(this.fromDate);
-    console.log(this.toDate);
+   
     
     this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
       console.log(data);

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
+import {UtilitydateService} from '../../../core/services/utilitydate.service';
 
 @Component({
   selector: 'app-daywise-cumulative-account',
@@ -19,9 +20,12 @@ export class DaywiseCumulativeAccountComponent implements OnInit {
   public nbalanceAmount : number =0;
   public sAccountNumber : string;
   public uniqueArr = [];
-  
+  fromDate : any;
+  toDate :any;
+
     constructor(private oTransactionService: TransactionService,
-                private modalService: NgbModal) { }
+                private modalService: NgbModal,
+                private oUtilitydateService : UtilitydateService) { }
   
     ngOnInit(): void {
       
@@ -36,17 +40,19 @@ export class DaywiseCumulativeAccountComponent implements OnInit {
       this.ntotalDebit =0;
       this.nbalanceAmount = 0;
       this.uniqueArr = [];
-      let fromdate = ngform.value.fromDate;
-      let todate = ngform.value.toDate;
-      const diffInMs   = +(new Date(todate)) - +(new Date(fromdate))
+    
+      this.fromDate = this.oUtilitydateService.fnChangeDateFormate(this.fromDate);
+      this.toDate = this.oUtilitydateService.fnChangeDateFormate(this.toDate);
+
+      const diffInMs   = +(new Date(this.toDate)) - +(new Date(this.fromDate))
       let nTotaldays  = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
   
-      let today = new Date(fromdate);
+      let today = new Date(this.fromDate);
       let tomorrow = new Date(today);
       
       // oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
-      console.log(fromdate,todate);
-      this.oTransactionService.fngetTransactionInfo(fromdate,todate).subscribe((data) => {
+      console.log(this.fromDate,this.toDate);
+      this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
         console.log(data);
         this.aTransactions = data;
         let tempdate = '';

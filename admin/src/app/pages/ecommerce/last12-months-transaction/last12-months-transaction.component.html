@@ -14,15 +14,27 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="fromDate">From Date</label>
+                <input [bsConfig]="{ showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"
+                  placeholder="Select Date" bsDatepicker name="fromDate" [(ngModel)]="fromDate"
+              class="form-control">
+                <!--
                 <input id="fromDate" name="fromDate"  type="month" ngModel
-                  class="form-control" >                  
+                  class="form-control" >      -->            
                  </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="toDate">To Date</label>
+                <input [bsConfig]="{ showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"
+                  placeholder="Select Date" bsDatepicker name="toDate" [(ngModel)]="toDate"
+              class="form-control">
+              <!--
                 <input id="toDate" name="toDate"  type="month" ngModel
-                  class="form-control" >                  
+                  class="form-control" >    -->              
                  </div>
             </div>
             <div class="col-sm-4 btn-container">
