@@ -24,13 +24,25 @@
     }
 
     img:nth-child(2){
-        width:100px;
+        width:50px;
     }
     img:nth-child(3){
-        height:50px;
-        width:150px;
+       
+        width:50px;
     }
     img:nth-child(4){
-        height:50px;
-        width:150px;
+      
+        width:50px;
     }
+tr.imagewidth{
+    td{
+        column-width: 200px;
+    }
+
+}
+.photoWidth{
+    width : 175px;
+}
+.signWidth{
+    width : 150px;
+}

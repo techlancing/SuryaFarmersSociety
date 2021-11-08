@@ -34,10 +34,22 @@
           <div class="row col-sm-12">
             <div class="col-sm-6">
               <div class="form-group"><!--img-container-->
-                <label for="sAccountNo">Photo</label>
-                <img src="{{sImageRootPath + oAlltransactionprintmodel.oPassportImageInfo?.sImageURL}}"/>    
-                <img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature1Info?.sImageURL}}"/>  
-                <img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature2Info?.sImageURL}}"/>              
+                <table class="col-sm-6 text-center">
+                  <thead>
+                    <tr class="imagewidth">
+                    <th ><label for="sPassportPhoto">Photo</label></th>
+                    <th><label for="sSignature-1">Sign-1</label></th>
+                    <th><label for="sSignature-2">Sign-2</label></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="imagewidth">
+                    <td> <img src="{{sImageRootPath + oAlltransactionprintmodel.oPassportImageInfo?.sImageURL}}" class="photoWidth"/></td>
+                    <td><img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature1Info?.sImageURL}}" class="signWidth"/></td>
+                    <td><img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature2Info?.sImageURL}}" class="signWidth"/></td>
+                  </tr>  
+              </tbody> 
+              </table>           
                  </div>
             </div>
             <div class="row col-sm-6">

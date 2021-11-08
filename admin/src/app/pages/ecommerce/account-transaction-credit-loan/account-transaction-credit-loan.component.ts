@@ -180,7 +180,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   }
 
   fnCalculateEMIAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null && this.oCreditLoanModel.sInstallmentType){
         let totalDays=this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays;
         let emiamount = Number((Math.round((this.oCreditLoanModel.nTotalAmount / totalDays)*100)/100).toFixed(2));
     
