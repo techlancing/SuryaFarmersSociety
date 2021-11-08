@@ -103,12 +103,7 @@
                         <label class="account-detail">{{oCreditLoanmodel.sInstallmentType}}</label>
                       </div>
                     </div>
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="nLoanRepaymentPeriod">Loan Repayment Period:</label>
-                        <label class="account-detail">{{oCreditLoanmodel.nLoanRepaymentPeriod}}</label>
-                      </div>
-                    </div>
+                    
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="nInstallmentAmount">Installment Amount:</label>
@@ -118,7 +113,21 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="sEndofLoanDate">End of the Loan:</label>
-                        <label class="account-detail">{{oCreditLoanmodel.sEndofLoanDate}}</label>
+
+                        <ng-container *ngIf="oCreditLoanmodel.nLoanMonths>0; else days">
+                          <ng-container *ngIf="oCreditLoanmodel.nLoanDays>0; else months">
+                            <label class="account-detail">{{oCreditLoanmodel.nLoanMonths}} Months and {{oCreditLoanmodel.nLoanDays}} Days</label>
+                          </ng-container>
+                          <ng-template #months>
+                            <label class="account-detail">{{oCreditLoanmodel.nLoanMonths}} Months</label>
+                          </ng-template>
+                        </ng-container>
+                        <ng-template #days>
+                          <ng-container *ngIf="oCreditLoanmodel.nLoanDays>0">
+                            <label class="account-detail"> {{oCreditLoanmodel.nLoanDays}} Days </label>
+                          </ng-container>
+                        </ng-template>
+
                       </div>
                     </div>
                   </div>
