@@ -65,13 +65,13 @@
                     class="form-control" readonly>
                 </div>
               </div> -->
-              <div class="col-sm-6" *ngIf="bIsDeposit">
+              <!-- <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                   <label for="sDayAmount">For Day Amount</label>
                   <input id="sDayAmount" name="sDayAmount" [(ngModel)]="oDailySavingsDepositModel.nDayAmount" type="text"
                     class="form-control" (input)="fnCalculateTotalAmount()">
                 </div>
-              </div>
+              </div> -->
               <div class="col-sm-6" *ngIf="!bIsDeposit">
                 <div class="form-group">
                   <label for="sDate">Date</label> 

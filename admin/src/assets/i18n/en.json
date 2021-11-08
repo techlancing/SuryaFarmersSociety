@@ -126,9 +126,9 @@
     "ACCOUNTTRANSACTION": {
       "TEXT": "TRANSACTIONS",
       "LIST": {
-        "DAILYSAVINGDEBIT": "Saving Deposit",
-        "DAILYSAVINGSDEPOSIT": "Daily Saving Deposit",
-        "WITHDRAWAL": "Saving Withdrawal",
+        "DAILYSAVINGDEBIT": "Daily Saving Deposit",
+        "DAILYSAVINGSDEPOSIT": "Debit",
+        "WITHDRAWAL": "Credit",
         "DEBIT": "Loan Debit",
         "CREDIT": "Loan Credit",
         "INTRATRANSACTION": "Intra Transaction"
