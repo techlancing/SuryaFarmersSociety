@@ -49,7 +49,7 @@ export class Last12MonthsTransactionComponent implements OnInit {
         console.log(data);
         this.aTransactions = data;
         this.uniqueArr = [...new Set(this.aTransactions.map(item => 
-          new Intl.DateTimeFormat('en-GB', {month: 'long'}).format(new Date(item.sDate))
+          new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(item.sDate.split("-").reverse().join("-")))
           ))];
         console.log(this.uniqueArr);
         this.aTransactions.map((transaction)=>{
@@ -62,8 +62,8 @@ export class Last12MonthsTransactionComponent implements OnInit {
             let totalcredit = 0;
             let totaldebit =0;
           this.aTransactions.map((transaction)=>{
-            console.log(new Intl.DateTimeFormat('en-GB', {month: 'long'}).format(new Date(transaction.sDate)));
-            if(month === new Intl.DateTimeFormat('en-GB', {month: 'long'}).format(new Date(transaction.sDate))){
+            console.log(new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(transaction.sDate.split("-").reverse().join("-"))));
+            if(month === new Intl.DateTimeFormat('en-US', {month: 'long'}).format(new Date(transaction.sDate.split("-").reverse().join("-")))){
               saccno = month;
                 totalcredit += transaction.nCreditAmount;
                 totaldebit += transaction.nDebitAmount;
