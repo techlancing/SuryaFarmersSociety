@@ -43,6 +43,7 @@
                           <th sortable="sApplicantName" (sort)="onSort($event)">Name</th>
                           <th sortable="date" (sort)="onSort($event)">Created date</th>
                           <th>Actions</th>
+                          <th>Deactivate</th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let table of tables$ | async;let i=index">
@@ -68,6 +69,10 @@
                           <td>
                             <button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
                               class="mdi mdi-account-edit" ></i>Edit</button>
+                          </td>
+                          <td>
+                            <button class="btn btn-primary" ><i
+                              class="mdi mdi-account-edit" ></i>Deactivate</button>
                           </td>
                         </tr>
         
