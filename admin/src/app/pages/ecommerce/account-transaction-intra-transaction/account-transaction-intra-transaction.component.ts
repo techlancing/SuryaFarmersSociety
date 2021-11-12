@@ -62,6 +62,8 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
      displayText:string,
      value:string
    }>;
+   sSendNarration ='';
+   sRecieveNarration='';
    public oDropZoneConfig: DropzoneConfigInterface = {
      // Change this to your upload POST address:
    url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
@@ -155,18 +157,19 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
    fnGetSenderAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
-    this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
+    //this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
    }
 
    fnGetReceiverAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sRecieverAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
+   // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`
    }
  
    fnOnIntraTransactionInfoSubmit(){
 
     this.ointratransactionModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.ointratransactionModel.sDate);
-
+    //this.ointratransactionModel.sNarration=`From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`;
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);
       this.fnSucessMessage();
@@ -214,7 +217,9 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
        timer: 2000
      });
    }
- 
+   fnOnUpdateNarration(){
+    this.ointratransactionModel.sNarration=`From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`;
+   }
    // fnDuplicateCarNameMessage() {
    //   Swal.fire({
    //     position: 'center',
