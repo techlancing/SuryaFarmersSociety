@@ -157,12 +157,14 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
    fnGetSenderAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
+    this.fnOnUpdateNarration();
     //this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
    }
 
    fnGetReceiverAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sRecieverAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
+    this.fnOnUpdateNarration();
    // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`
    }
  
