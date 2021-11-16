@@ -35,8 +35,9 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       console.log(e);
       oRes.status(400).send(e);
     }
-    let b = newDeposit.sStartDate.split(/\D+/);
-    let sdate = new Date(b[2],b[1],b[0],new Date().getHours(),new Date().getMinutes(),new Date().getSeconds());
+   // let b = newDeposit.sStartDate.split(/\D+/);
+   // let sdate = new Date(b[2],b[1]-1,b[0],new Date().getHours(),new Date().getMinutes(),new Date().getSeconds());
+   sdate=new Date(newDeposit.sStartDate.split("-").reverse().join("-"));
     let today = new Date(sdate);
     let tomorrow = new Date(today);
     for(let i = 0; i < newDeposit.nTotaldays; i++)
@@ -56,7 +57,9 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       console.log(oTransaction.nBalanceAmount);
       console.log(oBalanceAmount);
       oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
+      console.log(oTransaction.sDate);
       tomorrow.setDate(tomorrow.getDate() + 1 );
+     
       sdate = oTransaction.sDate;
       oTransaction.sNarration = newDeposit.sNarration;  
       
