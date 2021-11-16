@@ -17,6 +17,7 @@ const asyncMiddleware = fn =>
 // url: ..../dailysavingdeposit/add_dailydeposittransaction
 oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newDeposit = new oDailyDepositModel(oReq.body);
+  console.log(oReq.body);
   try{
     // Save Daily deposit Info
     await newDeposit.save();
@@ -25,21 +26,23 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
     let oBalanceAmount = 0;
     try{
       const olasttransaction = await oTransactionModel.find({nLoanId: newDeposit.nAccountId}).sort({_id:-1}).limit(1);
+      console.log(olasttransaction);
       if(olasttransaction.length > 0) {
+
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
     }
-
-    let sdate = newDeposit.sStartDate;
+    let b = newDeposit.sStartDate.split(/\D+/);
+    let sdate = new Date(b[2],b[1],b[0],new Date().getHours(),new Date().getMinutes(),new Date().getSeconds());
     let today = new Date(sdate);
     let tomorrow = new Date(today);
-        
     for(let i = 0; i < newDeposit.nTotaldays; i++)
     {
       //save transaction model
+      
       let oTransaction = {};
       oTransaction.sAccountNo = newDeposit.sAccountNo;
       oTransaction.nLoanId = newDeposit.nAccountId;
@@ -63,6 +66,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       if(oTransaction.nBalanceAmount > 0)
       {
         newDeposit.oTransactionInfo = newTransaction._id;
+       
         await newDeposit.save();
       }
     }
@@ -137,8 +141,10 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
   let oBalanceAmount = 0;
   try{
     const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nAccountId}).sort({_id:-1}).limit(1);
+  
     if(olasttransaction.length > 0) {
       oBalanceAmount = olasttransaction[0].nBalanceAmount;
+      console.log("last trans");
     }
   }catch(e){
     console.log(e);

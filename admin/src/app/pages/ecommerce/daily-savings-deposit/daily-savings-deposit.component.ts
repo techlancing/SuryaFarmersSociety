@@ -128,6 +128,8 @@ export class DailySavingsDepositComponent implements OnInit {
     ];
     
     this.oDailySavingsDepositModel = new DailySavingDebit();
+    this.oDailySavingsDepositModel.nTotaldays=1;
+    
     
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -209,9 +211,10 @@ fnOnDailySavingsDepositInfoSubmit(): void {
  /* if(typeof this.oDailySavingsDepositModel.sStartDate === 'object' ){
       this.oDailySavingsDepositModel.sStartDate = new Date(this.oDailySavingsDepositModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
     }*/
-
+    this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
     if(typeof this.oDailySavingsDepositModel.sEndDate === 'object' ){
       this.oDailySavingsDepositModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sEndDate);
+      this.oDailySavingsDepositModel.sStartDate=this.oDailySavingsDepositModel.sEndDate;
       }
     
  if(this.bIsDeposit)
