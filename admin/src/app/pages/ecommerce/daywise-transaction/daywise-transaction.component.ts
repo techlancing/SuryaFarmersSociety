@@ -39,7 +39,6 @@ toDate : any;
     
     this.oTransactionService.fngetTransactionInfo(this.fromDate,this.toDate).subscribe((data) => {
       console.log(data);
-      console.log("hi ameen");
       this.aTransactions = data;
       this.aTransactions.map((transaction)=>{
         this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;

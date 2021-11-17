@@ -76,7 +76,7 @@ oTransactionRouter.get("/Transaction_list", oAuthentication, asyncMiddleware(asy
 oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oAllTransactions = await oTransactionModel.find({ sDate:{ $gte: oReq.body.from_date,
-    $lt: oReq.body.to_date} });
+    $lte: oReq.body.to_date} });
 
     if(!oAllTransactions){
       return oRes.status(400).send();

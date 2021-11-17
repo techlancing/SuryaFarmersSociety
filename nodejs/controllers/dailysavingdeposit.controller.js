@@ -26,18 +26,14 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
     let oBalanceAmount = 0;
     try{
       const olasttransaction = await oTransactionModel.find({nLoanId: newDeposit.nAccountId}).sort({_id:-1}).limit(1);
-      console.log(olasttransaction);
       if(olasttransaction.length > 0) {
-
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
     }
-   // let b = newDeposit.sStartDate.split(/\D+/);
-   // let sdate = new Date(b[2],b[1]-1,b[0],new Date().getHours(),new Date().getMinutes(),new Date().getSeconds());
-   sdate=new Date(newDeposit.sStartDate.split("-").reverse().join("-"));
+    sdate=new Date(newDeposit.sStartDate.split("-").reverse().join("-"));
     let today = new Date(sdate);
     let tomorrow = new Date(today);
     for(let i = 0; i < newDeposit.nTotaldays; i++)
@@ -49,18 +45,11 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       oTransaction.nLoanId = newDeposit.nAccountId;
       oTransaction.nCreditAmount = 0;
       oTransaction.nDebitAmount = newDeposit.nDayAmount;
-      console.log(oBalanceAmount);
       oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + Number(newDeposit.nDayAmount)) * 100) / 100).toFixed(2);
       oBalanceAmount = Number(oTransaction.nBalanceAmount);
-      console.log(newDeposit);
-      console.log((Math.round((oBalanceAmount + newDeposit.nDayAmount) * 100) / 100).toFixed(2));
-      console.log(oTransaction.nBalanceAmount);
-      console.log(oBalanceAmount);
       oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
       oTransaction.sDate = oTransaction.sDate.split("-").reverse().join("-");
-      console.log(oTransaction.sDate);
       tomorrow.setDate(tomorrow.getDate() + 1 );
-     
       sdate = oTransaction.sDate;
       oTransaction.sNarration = newDeposit.sNarration;  
       
@@ -70,7 +59,6 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       if(oTransaction.nBalanceAmount > 0)
       {
         newDeposit.oTransactionInfo = newTransaction._id;
-       
         await newDeposit.save();
       }
     }

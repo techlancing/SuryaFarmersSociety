@@ -31,6 +31,7 @@ export class Last12MonthsTransactionComponent implements OnInit {
     }
   
     fnGetDayWiseTransactionSubmit(ngform: NgForm){
+      this.uniqueTransactions = [];
       this.ntotalCredit =0;
       this.ntotalDebit =0;
       this.nbalanceAmount = 0;
