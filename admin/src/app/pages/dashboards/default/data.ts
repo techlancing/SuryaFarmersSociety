@@ -149,16 +149,20 @@ const transactions = [
 
 const statData = [{
     icon: 'bx bx-copy-alt',
-    title: 'Orders',
-    value: '1,235'
+    title: 'debit balance',
+    value: 'Rs.5,93,909'
 }, {
     icon: 'bx bx-archive-in',
-    title: 'Revenue',
-    value: '$35, 723'
+    title: 'credit balance',
+    value: 'Rs.1,00,547'
 }, {
     icon: 'bx bx-purchase-tag-alt',
-    title: 'Average Price',
-    value: '$16.2'
+    title: 'savings accounts',
+    value: '6050'
+},{
+    icon: 'bx bx-purchase-tag-alt',
+    title: 'loan accounts',
+    value: '1050'
 }];
 
 export { emailSentBarChart, monthlyEarningChart, transactions, statData };
