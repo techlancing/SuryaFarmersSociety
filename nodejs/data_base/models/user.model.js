@@ -45,6 +45,13 @@ var oUserSchema = new oSchema( {
      }
     }*/
   },
+  sRole : {
+    type: String,
+    //unique: true,
+    required: true,
+    lowercase: true,
+    trim:true
+  },
   sTokenExpiryTime: {
     type: Number
   },

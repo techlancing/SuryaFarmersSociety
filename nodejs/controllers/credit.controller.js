@@ -51,10 +51,7 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
 
     const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newCredit.nLoanId});
 
-    if(!oCreditLoan){
-      return oRes.status(400).send();
-    }
-    else{
+    if(oCreditLoan){
       oCreditLoan.oTransactionInfo.push(newTransaction);
       await oCreditLoan.save();
     }

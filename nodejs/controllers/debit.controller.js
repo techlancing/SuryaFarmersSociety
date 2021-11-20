@@ -5,6 +5,7 @@ const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oAuthentication = require("../middleware/authentication");
+const obankaccountModel = require("../data_base/models/bankaccount.model");
 
 
 const oDebitRouter = oExpress.Router();
@@ -50,16 +51,14 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
 
     const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newDebit.nLoanId});
 
-    if(!oCreditLoan){
-      return oRes.status(400).send();
-    }
-    else{
+    if(oCreditLoan){
       if(oTransaction.nBalanceAmount > 0)
         oCreditLoan.oTransactionInfo.push(newTransaction);
       else
         oCreditLoan.sLoanStatus = 'Completed';
       await oCreditLoan.save();
     }
+
     oRes.json("Success");
 
   }catch(e){

@@ -63,7 +63,45 @@ oCreditLoanRouter.post("/edit_creditloan", oAuthentication, asyncMiddleware(asyn
     oRes.status(400).send(e);
   }
 
-}));2
+}));
+
+// url: ..../creditloan/getallcreditloancount
+oCreditLoanRouter.get("/getallcreditloancount", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oCreditloan = await oCreditLoanModel.find();
+
+    if(oCreditloan.length >= 0){
+      oRes.json(oCreditloan.length);
+    } 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+
+}));
+
+// url: ..../creditloan/getallcreditloanbalance
+oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oBalance = 0;
+    let oCreditLoan = await oCreditLoanModel.find();
+
+    if(oCreditLoan.length > 0){
+      await Promise.all(oCreditLoan.map(async (oLoan) => {
+        //Get credit loan last transacton for balance amount
+        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
+      if(olasttransaction.length > 0) {
+          oBalance = oBalance + olasttransaction[0].nBalanceAmount;
+        }
+      }));
+    } 
+    oRes.json(oBalance);
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
 
 // url: ..../creditloan/delete_creditloan
 oCreditLoanRouter.post("/delete_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 

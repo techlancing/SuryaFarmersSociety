@@ -138,6 +138,9 @@ var oBankAccountSchema = new oSchema({
   nAmount: {
     type: Number
   },
+  bIsDeactivated: {
+    type: Boolean
+  },
   oPassportImageInfo: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oSignature1Info: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oSignature2Info: {type: oSchema.Types.ObjectId, ref: 'Image'},

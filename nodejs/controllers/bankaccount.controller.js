@@ -81,7 +81,7 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
   try{
     // Save bankaccount Info
     await newbankaccount.save(); 
-    
+    newbankaccount.bIsDeactivated = false;
     //save transaction model
     let oTransaction = {};
     oTransaction.sAccountNo = newbankaccount.sAccountNo;
@@ -149,7 +149,7 @@ obankaccountRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
 // url: ..../bankaccount/bankaccount_list
 obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      await obankaccountModel.find()
+      await obankaccountModel.find({bIsDeactivated : false})
       .populate({
         path: 'oPassportImageInfo oSignature1Info oSignature2Info oDocument1Info oDocument2Info'
       }).exec((oError, oAllbankaccounts) => {
@@ -169,6 +169,23 @@ obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(asy
     }
 }));
 
+// url: ..../bankaccount/activate_or_deactivate_account
+obankaccountRouter.post("/activate_or_deactivate_account", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oAccount = await obankaccountModel.find({sAccountNo : oReq.body.sAccountNo});
+    if(oAccount) {
+      oAccount.bIsDeactivated = oReq.body.bIsDeactivated;
+      await oAccount.save();
+    }
+    else{
+        return oRes.status(400).send();
+    }    
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 // url: ..../bankaccount/getallsavingstransactions
 obankaccountRouter.post("/getallsavingstransactions", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
@@ -184,6 +201,40 @@ obankaccountRouter.post("/getallsavingstransactions", oAuthentication, asyncMidd
     console.log(e);
     oRes.status(400).send(e);
   }
+}));
+
+// url: ..../bankaccount/getallsavingsaccountcount
+obankaccountRouter.get("/getallsavingsaccountcount", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let obankaccount = await obankaccountModel.find({bIsDeactivated : false});
+
+    if(obankaccount.length >= 0){
+      oRes.json(obankaccount.length);
+    } 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+
+}));
+
+// url: ..../bankaccount/getallsavingsaccountbalance
+obankaccountRouter.get("/getallsavingsaccountbalance", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let accountBalance = 0;
+    let obankaccount = await obankaccountModel.find({bIsDeactivated : false});
+
+    if(obankaccount.length > 0){
+      await Promise.all(obankaccount.map(async (oAccount) => {
+        accountBalance = accountBalance + oAccount.nAmount;
+      }));
+    } 
+    oRes.json(accountBalance);
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
 }));
 
 // url: ..../bankaccount/getaccountbynumber

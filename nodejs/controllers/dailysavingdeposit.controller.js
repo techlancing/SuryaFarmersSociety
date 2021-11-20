@@ -3,6 +3,7 @@ const oMongoose = require('mongoose');
 
 const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
+const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oAuthentication = require("../middleware/authentication");
 
 const oDailyDepositRouter = oExpress.Router();
@@ -61,6 +62,13 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
         newDeposit.oTransactionInfo = newTransaction._id;
         await newDeposit.save();
       }
+    }
+
+    //update bank account 
+    let oAccount = await obankaccountModel.findOne({sAccountNo: newDeposit.sAccountNo });
+    if(oAccount){
+      oAccount.nAmount = oBalanceAmount;
+      await oAccount.save();
     }
     oRes.json("Success");
 
@@ -157,6 +165,13 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
+
+    //update bank account 
+    let oAccount = await obankaccountModel.findOne({sAccountNo: oReq.body.sAccountNo });
+    if(oAccount){
+      oAccount.nAmount = newTransaction.nBalanceAmount;
+      await oAccount.save();
+    }
 
     oRes.json("Success");
   }catch(e){
