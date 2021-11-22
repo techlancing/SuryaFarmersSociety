@@ -187,8 +187,8 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         if(this.oCreditLoanModel.sInstallmentType==='Daily')
           this.oCreditLoanModel.nInstallmentAmount = emiamount;
         else if(this.oCreditLoanModel.sInstallmentType==='Weekly')
-        this.oCreditLoanModel.nInstallmentAmount = emiamount*7;
-        else this.oCreditLoanModel.nInstallmentAmount = emiamount*30;
+        this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamount*7*100))/100).toFixed(2));
+        else this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamount*30*100))/100).toFixed(2));
          
       }
   }

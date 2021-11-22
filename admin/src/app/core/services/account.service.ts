@@ -45,4 +45,14 @@ export class BankAccountService {
       const sMethodUrl = `${this.sRootUrl}/delete_bankaccount`;
       return this.http.post(sMethodUrl, oBankAccount);
   }
+  //Savings Accounts
+  fngetSavingsBankAccountCountInfo(){
+    const sMethodUrl = `${this.sRootUrl}/getallsavingsaccountcount`;
+      return this.http.get(sMethodUrl);
+  }
+  //saving accounts balance
+  fnGetAllSavingsAccountBalanceInfo(){
+    const sMethodUrl = `${this.sRootUrl}/getallsavingsaccountbalance`;
+      return this.http.get(sMethodUrl);
+  }
 }

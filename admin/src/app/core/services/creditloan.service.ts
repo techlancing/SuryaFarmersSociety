@@ -30,4 +30,14 @@ export class CreditLoanService {
       const sMethodUrl = `${this.sRootUrl}/delete_creditloan`;
       return this.http.post(sMethodUrl, oCreditLoan);
   }
+  //creditloan accounts count
+  fnGetCreditLoanAccountsCountInfo(){
+    const sMethodUrl = `${this.sRootUrl}/getallcreditloancount`;
+      return this.http.get(sMethodUrl);
+  }
+  //creditloan accounts balance
+  fnGetAllCreditLoanAccountBalanceInfo(){
+    const sMethodUrl = `${this.sRootUrl}/getallcreditloanbalance`;
+      return this.http.get(sMethodUrl);
+  }
 }
