@@ -4,11 +4,14 @@
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label for="sBranchCode">Date</label> 
-                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                            class="form-control" > -->
                         </div>
                       </div>
-                      
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="sBranchCode">Account Number</label>                  
+                        </div>
+                      </div>  
+
                       <div class="col-sm-1">
                         <div class="form-group">
                           <label for="sAccountNo">Credit</label>                  
@@ -17,15 +20,11 @@
                       <div class="col-sm-1">
                         <div class="form-group">
                           <label for="sBranchCode">Debit</label>                  
-                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                            class="form-control" > -->
                         </div>
                       </div>
                       <div class="col-sm-1">
                         <div class="form-group">
                             <label for="sBranchCode">Balance Amount</label>  
-                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                            class="form-control" > -->
                         </div>
                       </div>
                       <div class="col-sm-2">
@@ -36,24 +35,22 @@
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label for="sBranchCode">Narration</label>                  
-                          <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                            class="form-control" > -->
                         </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="form-group">
-                          <label for="sBranchCode">Account Number</label>                  
-                        </div>
-                      </div>       
+                      </div>     
                     </div>
                   </div>
                     <div class="row" *ngFor="let otransactionmodel of aTransactions">
                         <div class="col-sm-2">
                           <div class="form-group">
-                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label> 
-                            
+                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label>  
                           </div>
                         </div>
+                        
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sAccountNo}}</label>                  
+                          </div>
+                        </div>   
                         
                         <div class="col-sm-1">
                           <div class="form-group">
@@ -63,15 +60,11 @@
                         <div class="col-sm-1">
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount.toLocaleString()}}</label>                  
-                            <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                              class="form-control" > -->
                           </div>
                         </div>
                         <div class="col-sm-1">
                           <div class="form-group">
                               <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount.toLocaleString()}}</label>  
-                              <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                              class="form-control" > -->
                           </div>
                         </div>
                         <div class="col-sm-2">
@@ -84,12 +77,6 @@
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
                           </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                          <div class="form-group">
-                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sAccountNo}}</label>                  
-                          </div>
-                        </div>        
+                        </div>     
                       
                       </div>
