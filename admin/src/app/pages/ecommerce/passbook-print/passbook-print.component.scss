@@ -15,7 +15,9 @@
     color: orange;
     margin-left: 15px;
 }
-
+.passBookDetailsmargin{
+    margin-top: 10px;
+}
 @media print {
     .passbook-heading, .passbook-acc-input{
         display: none!important;

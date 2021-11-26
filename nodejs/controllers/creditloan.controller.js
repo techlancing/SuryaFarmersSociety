@@ -85,14 +85,13 @@ oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddlewa
   try{
     let oBalance = 0;
     let oCreditLoan = await oCreditLoanModel.find();
-    console.log("loancount",oCreditLoan);
     if(oCreditLoan.length > 0){
       await Promise.all(oCreditLoan.map(async (oLoan) => {
         //Get credit loan last transacton for balance amount
         const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
           oBalance = oBalance + olasttransaction[0].nBalanceAmount;
-          console.log("ameen","lastlength",olasttransaction.length,"    ",olasttransaction[0].nBalanceAmount);
+          console.log("ameen",olasttransaction,olasttransaction[0].nBalanceAmount);
         }
       }));
     } 

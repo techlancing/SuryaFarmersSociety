@@ -171,7 +171,6 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   fnCalculateTotalAmount() : void {
     if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
-      console.log("entered");
       let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100); 
       this.oCreditLoanModel.nTotalAmount=this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest)).toFixed(0));
       console.log(this.oCreditLoanModel.nTotalAmount);
