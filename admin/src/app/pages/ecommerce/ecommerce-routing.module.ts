@@ -25,6 +25,7 @@ import { NewPassbookPrintComponent } from './new-passbook-print/new-passbook-pri
 import { SelectPrintLineComponent } from './select-print-line/select-print-line.component';
 import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
 import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
+import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 
 const routes: Routes = [
     
@@ -142,6 +143,10 @@ const routes: Routes = [
     {
         path:'DayMonthYearWise',
         component: DayMonthYearWiseComponent
+    },
+    {
+        path: 'accountBalanceEnquiry',
+        component: AccountBalanceEnquiryComponent
     }
     
 ];

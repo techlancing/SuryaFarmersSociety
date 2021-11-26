@@ -97,6 +97,12 @@ export const MENU: MenuItem[] = [
             label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
             link: '/alltranactionprint',
             parentId: 35
+        },
+        {
+            id: 38,
+            label: 'MENUITEMS.PASSBOOK.LIST.BALANCEENQUIRY',
+            link: '/accountBalanceEnquiry',
+            parentId: 35
         }
     ]
 },

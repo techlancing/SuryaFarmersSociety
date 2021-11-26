@@ -120,7 +120,8 @@
       "LIST": {
         "PASSBOOKPRINT": "Passbook Print",
         "NEWPASSBOOKPRINT": "New Passbook Print",
-        "ALLTRANSACTIONPRINT": "All Transactions"
+        "ALLTRANSACTIONPRINT": "All Transactions",
+        "BALANCEENQUIRY": "Balance Enquiry"
       }
     },
     "ACCOUNTTRANSACTION": {

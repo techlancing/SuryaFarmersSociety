@@ -126,15 +126,16 @@
                 <label class="font-size-14 mb-3">Appointment Type</label>
               <div class="radio-container">
                 <div class="form-check form-group">
-                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Trainee"
-                    checked>
-                  <label class="form-check-label" for="genderRadio1">
+                  <input class="form-check-input" type="radio" name="appointmentRadio" id="appointmentRadio1" value="Trainee"
+                    checked (change)="fnOnSelectedAppointment($event)">
+                  <label class="form-check-label" for="appointmentRadio1">
                     Trainee
                   </label>
                 </div>
                 <div class="form-check form-group">
-                  <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio2" value="Regular">
-                  <label class="form-check-label" for="genderRadio2">
+                  <input class="form-check-input" type="radio" name="appointmentRadio" id="appointmentRadio2" value="Regular"
+                  (change)="fnOnSelectedAppointment($event)">
+                  <label class="form-check-label" for="appointmentRadio2">
                     Regular
                   </label>
                 </div>
@@ -222,7 +223,7 @@
               <div class="radio-container">
                 <div class="form-check form-group">
                   <input class="form-check-input" type="radio" name="genderRadio" id="genderRadio1" value="Trainee"
-                    checked>
+                    unchecked>
                   <label class="form-check-label" for="genderRadio1">
                     All of the above verification is true but the pairing of the left candidate will be discontinued. The Certificate of
 Educational Qualification of the applicant is to be given by all U Society Branch. Candidate will not be allowed to go to Jain

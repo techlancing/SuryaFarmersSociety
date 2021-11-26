@@ -161,6 +161,12 @@ aBankEmployees: Array<BankEmployee>;
       });
   }
 
+  fnOnSelectedAppointment($event){
+    console.log($event.target.value);
+    this.oBankEmployeeModel.sAppointmentType=$event.target.value;
+  }
+
+
   fnResetState() {
     // this.oBankEmployeeModel.sState = '';
   }

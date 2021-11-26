@@ -47,6 +47,7 @@ import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-bala
 import { BankAccountDataComponent } from './bank-account-data/bank-account-data.component';
 import { AccountLedgerTableComponent } from './account-ledger-table/account-ledger-table.component';
 import { DailySavingsDepositComponent } from './daily-savings-deposit/daily-savings-deposit.component';
+import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -79,7 +80,8 @@ const config: DropzoneConfigInterface = {
      AllCategoryWiseBalanceSummaryComponent,
      BankAccountDataComponent,
      AccountLedgerTableComponent,
-     DailySavingsDepositComponent],
+     DailySavingsDepositComponent,
+     AccountBalanceEnquiryComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,
