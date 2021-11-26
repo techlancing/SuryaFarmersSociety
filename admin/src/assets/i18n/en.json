@@ -121,7 +121,8 @@
         "PASSBOOKPRINT": "Passbook Print",
         "NEWPASSBOOKPRINT": "New Passbook Print",
         "ALLTRANSACTIONPRINT": "All Transactions",
-        "BALANCEENQUIRY": "Balance Enquiry"
+        "BALANCEENQUIRY": "Balance Enquiry",
+        "BANKACCOUNTSTATEMENT" : "Bank Account Statement"
       }
     },
     "ACCOUNTTRANSACTION": {

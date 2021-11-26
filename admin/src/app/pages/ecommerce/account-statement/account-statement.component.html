@@ -1,0 +1,33 @@
+<div class="container-fluid passbook-root-layout">
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" bgimageclass="addcategory_header"></app-page-title>
+    <div class="card card-bg">
+        <div class="card-body">
+            <h2 class="passbook-heading">Bank Account Statement</h2>
+            <div class="row passbook-acc-input">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label">Account Number</label>
+                        <ng-select name="accountno" bindLabel="sAccountNo" bindValue="sAccountNo">
+                            <ng-template ng-label-tmp let-item="item">
+                                {{item.sAccountNo}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-sm-5 btn-container">
+                    <button type="button" class="btn btn-primary mr-1">
+                        <!--[disabled]="!bIsBtnActive"-->
+                        Get Statement
+                    </button>
+
+                </div>
+                <div class="col-sm-1 btn-container">
+                    <button type="button" class="btn btn-primary mr-1">
+                        <!--[disabled]="!bIsBtnActive"-->
+                        print
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
