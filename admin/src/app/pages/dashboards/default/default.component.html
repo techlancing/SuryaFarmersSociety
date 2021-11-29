@@ -29,34 +29,47 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-sm-6">
             <div class="card overflow-hidden">
-                
-                
             </div>
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Monthly Earning</h4>
+                    <h4 class="card-title mb-4 cardTitle">Payment Details</h4>
                     <div>
-                        <div class="col-sm-6">
-                            <p class="text-muted">This month</p>
+                        <div class="col-sm-6 cardContent">
+                           <label for="Total Credit">Total Credit  :  {{nAllCreditLoanBalance}}</label>
                         </div>
-                        <div class="col-sm-6">
-                            <label for="debit balance">debit balance</label>
-                            <label for="debit balance amount">Rs.5,93,909</label>
+                        <div class="col-sm-6 cardContent">
+                            <label for="Total Debit">Total Debit  :  {{nAllSavingsBalance}}</label>
                         </div>
-                        <div  class="col-sm-6">
-                            <label for="credit balance">credit balance</label>
-                            <label for="credit balance amount">Rs.1,00,547</label>
+                        <div  class="col-sm-6 cardContent">
+                            <label for="Total Balances">Total Balances  :  </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-8">
-            <div class="row">
-                <div *ngFor="let stat of statData" class="col-md-4">
-                    <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon"></app-stat>
+        <div class="col-sm-6">
+            <div class="card overflow-hidden">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4 cardTitle">Account Summary</h4>
+                    <div>
+                        <div class="col-sm-6 cardContent">
+                            <label for="Total Accounts">Total Accounts  :  </label>
+                        </div>
+                        <div class="col-sm-6 cardContent">
+                            <label for="Credit Accounts">Credit Accounts  :  {{nCreditLoanAccountCount}}</label>
+                        </div>
+                        <div class="col-sm-6 cardContent">
+                            <label for="Debit Accounts">Debit Accounts  :  {{nSavingsAccountCount}}</label>
+                        </div>
+                        <div class="col-sm-6 cardContent">
+                            <label for="Equal Accounts">Equal Accounts  :  </label>
+                        </div>
+                    </div>
+
                 </div>
             </div>
            <!-- end row -->
