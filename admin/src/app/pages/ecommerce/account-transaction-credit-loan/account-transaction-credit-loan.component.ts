@@ -171,9 +171,10 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   fnCalculateTotalAmount() : void {
     if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
-      let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100); 
-      this.oCreditLoanModel.nTotalAmount=this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest)).toFixed(0));
+      let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100);
+      this.oCreditLoanModel.nTotalAmount=this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest*100)/100).toFixed(2));
       console.log(this.oCreditLoanModel.nTotalAmount);
+      console.log(interest);
       this.fnCalculateEMIAmount();
     }
   }
@@ -181,13 +182,19 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   fnCalculateEMIAmount() : void {
     if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null && this.oCreditLoanModel.sInstallmentType){
         let totalDays=this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays;
-        let emiamount = Number((Math.round((this.oCreditLoanModel.nTotalAmount / totalDays)*100)/100).toFixed(2));
-    
+        let emiamountp=this.oCreditLoanModel.nTotalAmount / totalDays;
+        let emiamount = Number((Math.round((emiamountp)*100)/100).toFixed(2));
+        console.log(emiamount*totalDays*100);
         if(this.oCreditLoanModel.sInstallmentType==='Daily')
           this.oCreditLoanModel.nInstallmentAmount = emiamount;
-        else if(this.oCreditLoanModel.sInstallmentType==='Weekly')
-        this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamount*7*100))/100).toFixed(2));
-        else this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamount*30*100))/100).toFixed(2));
+        else if(this.oCreditLoanModel.sInstallmentType==='Weekly') {
+          if(totalDays>=7)  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*7*100))/100).toFixed(2));
+          else  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*totalDays*100))/100).toFixed(2));
+        }
+        else{
+          if(totalDays>=30) this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*30*100))/100).toFixed(2));
+          else this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*totalDays*100))/100).toFixed(2));
+        }
          
       }
   }

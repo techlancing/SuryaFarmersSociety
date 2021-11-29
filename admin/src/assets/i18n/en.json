@@ -115,12 +115,12 @@
         "CREDITLOAN": "Add New Loan"
       }
     },
-    "PASSBOOK": {
-      "TEXT": "PASSBOOK",
+    "ALLTRANSACTIONS": {
+      "TEXT": "ALL TRANSACTIONS",
       "LIST": {
         "PASSBOOKPRINT": "Passbook Print",
         "NEWPASSBOOKPRINT": "New Passbook Print",
-        "ALLTRANSACTIONPRINT": "All Transactions",
+        "ALLTRANSACTIONPRINT": "All Transactions Print",
         "BALANCEENQUIRY": "Balance Enquiry",
         "BANKACCOUNTSTATEMENT" : "Bank Account Statement"
       }
