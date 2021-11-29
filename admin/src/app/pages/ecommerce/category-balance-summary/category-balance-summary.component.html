@@ -18,10 +18,7 @@
                   showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                   dateInputFormat: 'DD-MM-YYYY' }"
                   placeholder="Select Date" bsDatepicker name="fromDate" [(ngModel)]="fromDate"
-              class="form-control">
-                <!--
-                <input id="fromDate" name="fromDate"  type="date" ngModel
-                  class="form-control" >   -->               
+              class="form-control">             
                  </div>
             </div>
             <div class="col-sm-4">
@@ -43,6 +40,19 @@
               >Get Statement</button>
               
             </div> 
+            <!--printing-->
+            <div class="savings-header">
+              <div>
+                <label for="sLineNumberSavingsFrom">Print lIne number From</label>
+                <input id="sLineNumberSavingsFrom" name="sLineNumberSavingsFrom" type="text" class="form-control">
+                <label for="sLineNumberSavingsTo">Print lIne number To</label>
+                <input id="sLineNumberSavingsTo" name="sLineNumberSavingsTo" type="text" class="form-control">
+              </div>
+ 
+                <button type="button" class="btn btn-primary mr-1" (click)="fnPrintCategorySummary()">
+                  print</button>
+              
+            </div>
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="sAccountNo">Credit:</label>                  

@@ -80,5 +80,8 @@ export class Last12MonthsTransactionComponent implements OnInit {
         this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
       });
     }
+    fnPrintMonthlyCumulative(){
+      window.print();
+    }
   
 }

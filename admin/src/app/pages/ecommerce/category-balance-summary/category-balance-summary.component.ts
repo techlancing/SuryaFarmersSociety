@@ -74,5 +74,7 @@ export class CategoryBalanceSummaryComponent implements OnInit {
         this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
       });
     }
-  
+    fnPrintCategorySummary(){
+      window.print();
+    }
 }

@@ -83,6 +83,8 @@ export class DaywiseCumulativeAccountComponent implements OnInit {
         this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
       });
     }
-  
+    fnPrintDayWiseAccountCumulative(){
+      window.print();
+    }
   
 }

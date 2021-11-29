@@ -48,5 +48,9 @@ toDate : any;
     });
   
   }
+  fnPrintDayWiseTransactions(): void{
+    window.print();
+  }
+
 
 }

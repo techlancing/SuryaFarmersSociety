@@ -71,6 +71,9 @@ toDate :any;
       this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
     });
   }
+  fnPrintDayWiseCumulative(){
+    window.print();
+  }
 
 
 }

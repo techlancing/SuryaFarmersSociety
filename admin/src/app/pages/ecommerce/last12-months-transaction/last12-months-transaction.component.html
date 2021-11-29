@@ -41,7 +41,22 @@
               <button type="submit" class="btn btn-primary mr-1" 
               >Get Statement</button>
               
-            </div> 
+            </div>
+            
+            <!--printing-->
+            <div class="savings-header">
+              <div>
+                <label for="sLineNumberSavingsFrom">Print lIne number From</label>
+                <input id="sLineNumberSavingsFrom" name="sLineNumberSavingsFrom" type="text" class="form-control">
+                <label for="sLineNumberSavingsTo">Print lIne number To</label>
+                <input id="sLineNumberSavingsTo" name="sLineNumberSavingsTo" type="text" class="form-control">
+              </div>
+ 
+                <button type="button" class="btn btn-primary mr-1" (click)="fnPrintMonthlyCumulative()">
+                  print</button>
+              
+            </div>
+
             <div class="col-sm-12">
               <div class="form-group">
                 <label for="sAccountNo">Credit:</label>                  
