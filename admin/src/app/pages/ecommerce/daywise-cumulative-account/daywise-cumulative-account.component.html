@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <!-- page title -->
   <app-page-title title="" 
-  bgimageclass="addcategory_header"></app-page-title>
+  bgimageclass="addcategory_header" class="no-print"></app-page-title>
 
   <div class="row">
     <form class="col-12" novalidate #_daywiseFormElem="ngForm" (ngSubmit)="fnGetDayWiseTransactionSubmit(_daywiseFormElem)">
@@ -10,8 +10,8 @@
         <div class="card-body">
           
           <app-bank-account-data headerText='Day Wise Cumulative Account' 
-          (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
-           <div class="row">
+          (accountDataClicked)="fnGetCreditLoans($event)" class="no-print"></app-bank-account-data>
+           <div class="row no-print">
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="fromDate">From Date</label>
@@ -79,20 +79,18 @@
           <div class="row">
             <div class="col-sm-2">
               <div class="form-group">
-                <label for="sBranchCode">Date</label> 
+                <label for="sBranchCode" >Date</label> 
               </div>
             </div>
             
             <div class="col-sm-2">
               <div class="form-group">
-                <label for="sAccountNo">Credit</label>                  
+                <label for="sAccountNo" >Credit</label>                  
                  </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
-                <label for="sBranchCode">Debit</label>                  
-                <!-- <input id="sBranchCode" name="sBranchCode" [(ngModel)]="opassbookprintmodel.sBranchCode" type="sDate"
-                  class="form-control" > -->
+                <label for="sBranchCode" >Debit</label>                  
               </div>
             </div>
             <div class="col-sm-2">
@@ -112,12 +110,12 @@
             
             <div class="col-sm-2">
               <div class="form-group">
-                <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount}}</label>                  
+                <label for="sAccountNo" class="trans-detail ">{{otransactionmodel.nCreditAmount}}</label>                  
                  </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
-                <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount}}</label>                  
+                <label for="sBranchCode" class="trans-detail ">{{otransactionmodel.nDebitAmount}}</label>                  
               </div>
             </div>
             <div class="col-sm-2">

@@ -1,28 +1,28 @@
 <div class="container-fluid">
   <!-- page title -->
-  <app-page-title title="" bgimageclass="addcategory_header"></app-page-title>
+  <app-page-title title="" bgimageclass="addcategory_header" class="no-print"></app-page-title>
 
   <div class="row">
     <form class="col-12" novalidate #_daywiseFormElem="ngForm"
       (ngSubmit)="fnGetDayWiseTransactionSubmit(_daywiseFormElem)">
       <div class="card card-bg">
         <div class="card-body">
-          <h2>Day Wise Transaction</h2>
+          <h2 class="no-print">Day Wise Transaction</h2>
 
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="fromDate">From Date</label>
+                <label for="fromDate" class="no-print">From Date</label>
 
                 <input [bsConfig]="{ showWeekNumbers: false,
                           showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker name="fromDate"
-                  [(ngModel)]="fromDate" class="form-control">
+                  [(ngModel)]="fromDate" class="form-control no-print">
                 <!--<input id="fromDate" name="fromDate"  type="date" ngModel
                     class="form-control" >  -->
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 no-print">
               <div class="form-group">
                 <label for="toDate">To Date</label>
 
@@ -34,12 +34,12 @@
                     class="form-control" > -->
               </div>
             </div>
-            <div class="col-sm-4 btn-container">
+            <div class="col-sm-4 btn-container no-print">
               <button type="submit" class="btn btn-primary mr-1">Get Statement</button>
 
             </div>
             <!--Printing-->
-            <div class="savings-header">
+            <div class="savings-header no-print">
               <div>
               </div>
  
@@ -50,21 +50,21 @@
 
 
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 no-print">
               <div class="form-group">
                 <label for="sAccountNo">Credit:</label>
                 <label class="account-detail">{{ntotalCredit.toLocaleString()}}</label>
               </div>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 no-print">
               <div class="form-group">
                 <label for="sDate">Debit:</label>
                 <label class="account-detail">{{ntotalDebit.toLocaleString()}}</label>
               </div>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 no-print">
               <div class="form-group">
                 <label for="sDate">Balance:</label>
                 <label class="account-detail">{{nbalanceAmount.toLocaleString()}}</label>

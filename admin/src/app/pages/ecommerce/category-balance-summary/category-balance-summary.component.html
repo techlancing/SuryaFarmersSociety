@@ -2,15 +2,15 @@
 <div class="container-fluid">
   <!-- page title -->
   <app-page-title title="" 
-  bgimageclass="addcategory_header"></app-page-title>
+  bgimageclass="addcategory_header" class="no-print"></app-page-title>
 
   <div class="row">
     <form class="col-12" novalidate #_daywiseFormElem="ngForm" (ngSubmit)="fnGetDayWiseTransactionSubmit(_daywiseFormElem)">
       <div class="card card-bg">
         <div class="card-body">
-          <h2>Category Summary Balance</h2>
+          <h2 class="no-print">Category Summary Balance</h2>
                
-           <div class="row">
+           <div class="row no-print">
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="fromDate">From Date</label>
