@@ -1,3 +1,16 @@
 .trans-detail{
     color: orange;
 }
+.btn-container{
+    display: grid;
+    justify-items: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+.card-bg{
+    background-color: antiquewhite;
+}
+.balance{
+    text-align: center;
+    margin-top: 100px;
+}

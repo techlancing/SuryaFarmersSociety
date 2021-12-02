@@ -1,43 +1,28 @@
 <div class="container-fluid">
-    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" 
-        bgimageclass="addcategory_header"></app-page-title>
-    <app-bank-account-data headerText="Account Balance Enquiry"></app-bank-account-data>
-    <div class="row">
-        <div class="col-sm-2">
+  <app-page-title title="" [breadcrumbItems]="breadCrumbItems" bgimageclass="addcategory_header"></app-page-title>
+  <div class="card card-bg">
+    <div class="card-body">
+      <h2 class="passbook-heading">Baalance Enquiry</h2>
+      <div class="row">
+        <div class="col-sm-6">
           <div class="form-group">
-            <label for="sBranchCode">Date</label> 
+            <label class="control-label">Account Number</label>
+            <ng-select [items]="aBankAccounts" name="accountno" [(ngModel)]="sSelectedAccount" bindLabel="sAccountNo"
+              bindValue="sAccountNo" (change)="fnGetAccountNumber()">
+              <ng-template ng-label-tmp let-item="item">
+                {{item.sAccountNo}}
+              </ng-template>
+            </ng-select>
           </div>
         </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-              <label for="sBranchCode">Account Number</label>                  
-            </div>
-          </div> 
-          
-        <div class="col-sm-1">
-          <div class="form-group">
-            <label for="sAccountNo">Credit</label>                  
-             </div>
+        <div class="col-sm-5 btn-container">
+          <button type="button" class="btn btn-primary mr-1" [disabled]="!bIsBtnActive"
+            (click)="fnFecthAccountBalance()">
+            Show Account Balance</button>
         </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-            <label for="sBranchCode">Debit</label>                  
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-              <label for="sBranchCode">Balance Amount</label>  
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label for="sBranchCode">Transaction ID</label>                  
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label for="sBranchCode">Narration</label>                  
-          </div>
-        </div>      
       </div>
     </div>
+  </div>
+  <div *ngIf="bShowBalance" class="col-sm-12 balance">
+    <h2>Balance</h2>
+  </div>

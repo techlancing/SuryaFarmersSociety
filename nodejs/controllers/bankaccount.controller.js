@@ -172,7 +172,7 @@ obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(asy
 // url: ..../bankaccount/activate_or_deactivate_account
 obankaccountRouter.post("/activate_or_deactivate_account", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    let oAccount = await obankaccountModel.find({sAccountNo : oReq.body.sAccountNo});
+    let oAccount = await obankaccountModel.findOne({sAccountNo : oReq.body.sAccountNo});
     if(oAccount) {
       oAccount.bIsDeactivated = oReq.body.bIsDeactivated;
       await oAccount.save();

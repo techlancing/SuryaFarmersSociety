@@ -6,6 +6,7 @@ import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.direct
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2' ;
 
 @Component({
   selector: 'app-all-bank-accounts',
@@ -17,12 +18,13 @@ export class AllBankAccountsComponent implements OnInit {
 
   @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
   aAllBankAccounts : Array<BankAccount> = null;
+  oBankAccount : BankAccount =null;
   breadCrumbItems: Array<{}>;
   tables$: Observable<BankAccount[]>;
   total$: Observable<number>;
   @Input() bHideBreadCrumb: boolean = false;
   nSelectedProductIndex : number;
-
+  
   constructor(private oBankAccountService : BankAccountService,
     public service: AdvancedService,
     private modalService: NgbModal) {
@@ -63,5 +65,27 @@ export class AllBankAccountsComponent implements OnInit {
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
+  fnActivateOrDeactivateBankaccount(oBankAccount: BankAccount) {
+    if (oBankAccount) {
+      this.oBankAccount = oBankAccount;
+      if (this.oBankAccount.bIsDeactivated === false) {
+        this.oBankAccount.bIsDeactivated = true ;
+        this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo,this.oBankAccount.bIsDeactivated).subscribe((data) => {
+          console.log(data);
+          this.fnSucessMessage();
+        });
+      }
+    }
 
+  }
+
+  fnSucessMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Bank Account Deactivated sucessfully.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 }

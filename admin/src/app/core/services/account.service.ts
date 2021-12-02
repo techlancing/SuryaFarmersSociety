@@ -55,4 +55,9 @@ export class BankAccountService {
     const sMethodUrl = `${this.sRootUrl}/getallsavingsaccountbalance`;
       return this.http.get(sMethodUrl);
   }
+  //deactivate bank account
+  fnActivateOrDeactivateBankAccount(sAccountNo: string,bIsDeactivated : boolean){
+    const sMethodUrl = `${this.sRootUrl}/activate_or_deactivate_account`;
+      return this.http.post(sMethodUrl,{sAccountNo:sAccountNo,bIsDeactivated:bIsDeactivated});
+  }
 }
