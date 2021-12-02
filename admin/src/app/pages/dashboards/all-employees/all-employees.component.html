@@ -21,6 +21,7 @@
                 <th>Phone</th>
                 <th>Joining Date</th>
                <th>Approved Status</th>
+               <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -37,8 +38,8 @@
                       </ng-template>
                   </ng-select>
                 </td>
-                  <!--  <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                      class="mdi mdi-employee-edit"></i>Edit</button></td>-->
+                 <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
+                      class="mdi mdi-employee-edit"></i>Edit</button></td>
               </tr>
             </tbody>
           </table>
@@ -54,7 +55,7 @@
 
 <ng-template #accountcontent role="document" let-modal>
   <div class="modal-header">
-    <h5 class="modal-title mt-0">Edit Account</h5>
+    <h5 class="modal-title mt-0">Edit Employee Details</h5>
     <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
   </div>
   <div class="modal-body">
