@@ -16,6 +16,7 @@ public aTransactions : any;
 public ntotalCredit : number =0;
 public ntotalDebit : number =0;
 public nbalanceAmount : number =0;
+bShowAccNum : boolean = true;
 fromDate : any;
 toDate : any;
 

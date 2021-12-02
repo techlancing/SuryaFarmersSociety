@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AccountLedgerTableComponent implements OnInit {
 @Input() aTransactions : any;
+@Input() bShowAccNum : boolean ;
   constructor() { }
 
   ngOnInit(): void {
