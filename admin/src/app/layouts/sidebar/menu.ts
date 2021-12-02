@@ -83,30 +83,30 @@ export const MENU: MenuItem[] = [
     },
   {
     id: 35,
-    label: 'MENUITEMS.ALLTRANSACTIONS.TEXT',
+    label: 'MENUITEMS.PASSBOOK.TEXT',
     icon: 'bx-book-open',
     subItems: [
         {
             id: 36,
-            label: 'MENUITEMS.ALLTRANSACTIONS.LIST.PASSBOOKPRINT',
+            label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
             link: '/passbookprint',
             parentId: 35
         },
         {
             id: 37,
-            label: 'MENUITEMS.ALLTRANSACTIONS.LIST.ALLTRANSACTIONPRINT',
+            label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
             link: '/alltranactionprint',
             parentId: 35
         },
         {
             id: 38,
-            label: 'MENUITEMS.ALLTRANSACTIONS.LIST.BALANCEENQUIRY',
+            label: 'MENUITEMS.PASSBOOK.LIST.BALANCEENQUIRY',
             link: '/accountBalanceEnquiry',
             parentId: 35
         },
         {
             id: 39,
-            label: 'MENUITEMS.ALLTRANSACTIONS.LIST.BANKACCOUNTSTATEMENT',
+            label: 'MENUITEMS.PASSBOOK.LIST.BANKACCOUNTSTATEMENT',
             link: '/accountStatement',
             parentId: 35
         }
