@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { CreditLoanService } from 'src/app/core/services/creditloan.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-transaction-print',
@@ -23,7 +24,8 @@ export class AllTransactionPrintComponent implements OnInit {
   @Input() oEditBankAccount: BankAccount;
   bFristButton : boolean = false;
   bSecondButton : boolean = false;
-
+  sHeaderText : String = 'All Transaction Print';
+  bPdf : boolean = false;
   
   public aCreditLoan : Array<CreditLoan>;
   nSelectedEditIndex: number;
@@ -74,6 +76,8 @@ export class AllTransactionPrintComponent implements OnInit {
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
     private oAccountService: BankAccountService,
+    public activatedroute : ActivatedRoute,
+              private router: Router,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -141,6 +145,10 @@ export class AllTransactionPrintComponent implements OnInit {
       // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
+    }
+    if(this.activatedroute.snapshot.data.type === 'statement'){
+      this.sHeaderText='Bank Statement';
+      this.bPdf =true ;
     }
     
   }

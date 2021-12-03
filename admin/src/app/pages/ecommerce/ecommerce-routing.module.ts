@@ -26,7 +26,7 @@ import { SelectPrintLineComponent } from './select-print-line/select-print-line.
 import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-summary/category-wise-balance-summary.component';
 import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
 import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
-import { AccountStatementComponent } from './account-statement/account-statement.component';
+
 
 const routes: Routes = [
     
@@ -151,7 +151,10 @@ const routes: Routes = [
     },
     {
         path: 'accountStatement',
-        component: AccountStatementComponent
+        component: AllTransactionPrintComponent,
+        data: {
+            type: 'statement'
+        }
     }
     
 ];

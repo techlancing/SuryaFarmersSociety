@@ -3,7 +3,7 @@
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
-    <app-bank-account-data headerText="All Transaction Print" 
+    <app-bank-account-data [headerText]="sHeaderText" 
     (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
 
     
@@ -20,8 +20,10 @@
             </div>
             
     
-            <button type="button" class="btn btn-primary mr-1" (click)="fnPrintSavingAccount()">
+            <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" (click)="fnPrintSavingAccount()">
               print</button>
+              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"(click)="fnPrintSavingAccount()">
+                print pdf</button>
           </div>
           <div class="card card-bg hide-trans" >
             <div class="card-body">
@@ -58,6 +60,8 @@
               
               <button type="button" class="btn btn-primary mr-1" (click)="fnPrintLoanAccount()">
                 print</button>
+                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"(click)="fnPrintSavingAccount()">
+                 print pdf</button>
             </div>
 
             <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
