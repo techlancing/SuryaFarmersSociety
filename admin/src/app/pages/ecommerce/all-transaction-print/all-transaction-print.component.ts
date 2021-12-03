@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { ActivatedRoute, Router } from '@angular/router';
+//import jsPDF from jsPDF;
 
 @Component({
   selector: 'app-all-transaction-print',
@@ -175,18 +176,45 @@ export class AllTransactionPrintComponent implements OnInit {
 
   }
   
-  fnPrintSavingAccount(): void{
+  fnPrintSavingAccount(): void {
     this.bFristButton = true;
-   this.bSecondButton = false;
-    window.print();
-    //this.bFristButton=false;
+    this.bSecondButton = false;
+    setTimeout(() => {
+      window.print();
+    }, 500);
   }
 
-  fnPrintLoanAccount(): void{
+  fnPrintLoanAccount(): void {
     this.bFristButton = false;
     this.bSecondButton = true;
-    window.print();
-   //this.bSecondButton=false;
+    setTimeout(() => {
+      window.print();
+    }, 500);
   }
+  
+  fnConfirmationMessage() { 
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Are you sure?',
+      showConfirmButton: true,
+      timer: 1500
+    });
+  }
+
+/*  fnPrinPdftLoanAccount(): void{
+    setTimeout(() => {
+    this.bFristButton = false;
+    this.bSecondButton = true;
+  },5000);
+  var pdf = new jsPDF('p', 'pt', 'letter');
+  pdf.canvas.height = 72 * 11;
+  pdf.canvas.width = 72 * 8.5;
+
+  pdf.fromHTML(document.body);
+
+  pdf.save('test.pdf');  
+   this.fnPrint();
+  }*/
 
 }  
