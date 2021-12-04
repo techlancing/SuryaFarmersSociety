@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model'
@@ -23,11 +23,18 @@ export class AllTransactionPrintComponent implements OnInit {
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: BankAccount;
+  @ViewChild('lineNumbers')
+  public oLedgerTable : ElementRef ;
+
   bFristButton : boolean = false;
   bSecondButton : boolean = false;
   sHeaderText : String = 'All Transaction Print';
   bPdf : boolean = false;
-  
+  bPrintLine : boolean = true ;
+  public nInputLineFrom1 : number  ;
+  public nInputLineTo1 : number ;
+  public nInputLineFrom2 : number  ;
+  public nInputLineTo2 : number ;
   public aCreditLoan : Array<CreditLoan>;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
@@ -179,27 +186,42 @@ export class AllTransactionPrintComponent implements OnInit {
   fnPrintSavingAccount(): void {
     this.bFristButton = true;
     this.bSecondButton = false;
-    setTimeout(() => {
-      window.print();
-    }, 500);
+    this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
 
   fnPrintLoanAccount(): void {
     this.bFristButton = false;
     this.bSecondButton = true;
-    setTimeout(() => {
-      window.print();
-    }, 500);
+    this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
   }
-  
-  fnConfirmationMessage() { 
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Are you sure?',
-      showConfirmButton: true,
-      timer: 1500
-    });
+
+  fnConfirmationMessage(fromLine: number, toLine: number) {
+    if (fromLine > toLine)
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Please enter proper line numbers.'
+      }
+      );
+    else
+      Swal.fire(
+        {
+          position: 'center',
+          icon: 'question',
+          title: 'Do you want to print?',
+          text: 'From line ' + fromLine + ' to line ' + toLine,
+          showConfirmButton: true,
+          showCancelButton: true,
+
+        }
+      ).then((result) => {
+        if (result.isConfirmed) {
+          Swal.close();
+          setTimeout(() => {
+            window.print();
+          }, 300);
+        }
+      });
   }
 
 /*  fnPrinPdftLoanAccount(): void{

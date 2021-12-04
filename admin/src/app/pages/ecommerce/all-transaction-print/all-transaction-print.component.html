@@ -14,15 +14,15 @@
           <div class="savings-header">
             <div>
               <label for="sLineNumberSavingsFrom">Print lIne number From</label>
-              <input id="sLineNumberSavingsFrom" name="sLineNumberSavingsFrom"  type="text" class="form-control" >
+              <input id="sLineNumberSavingsFrom" name="sLineNumberSavingsFrom"  type="text" class="form-control" [(ngModel)]="nInputLineFrom1">
               <label for="sLineNumberSavingsTo">Print lIne number To</label>
-              <input id="sLineNumberSavingsTo" name="sLineNumberSavingsTo"  type="text" class="form-control" >
+              <input id="sLineNumberSavingsTo" name="sLineNumberSavingsTo"  type="text" class="form-control" [(ngModel)]="nInputLineTo1">
             </div>
             
     
-            <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" (click)="fnPrintSavingAccount()">
+            <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
               print</button>
-              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"(click)="fnPrintSavingAccount()">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
                 print pdf</button>
           </div>
           <div class="card card-bg hide-trans" >
@@ -35,7 +35,7 @@
                   </ng-template>
             
                   <ng-template ngbPanelContent>
-                    <app-account-ledger-table [aTransactions]='aTransactions'></app-account-ledger-table>
+                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' #lineNumbers></app-account-ledger-table>
                     
                   </ng-template>
                 </ngb-panel>                
@@ -53,14 +53,14 @@
             <div class="savings-header">
              <div>
                <label for="sLineNumberLoanFrom">Print lIne number From</label>
-              <input id="sLineNumberLoanFrom" name="sLineNumberLoanFrom"  type="text" class="form-control" >
+              <input id="sLineNumberLoanFrom" name="sLineNumberLoanFrom"  type="text" class="form-control" [(ngModel)]="nInputLineFrom2">
               <label for="sLineNumberLoanTo">Print lIne number To</label>
-              <input id="sLineNumberLoanTo" name="sLineNumberLoanTo"  type="text" class="form-control" >
+              <input id="sLineNumberLoanTo" name="sLineNumberLoanTo"  type="text" class="form-control" [(ngModel)]="nInputLineTo2">
              </div>
               
-              <button type="button" class="btn btn-primary mr-1" (click)="fnPrintLoanAccount()">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount()">
                 print</button>
-                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"(click)="fnPrintSavingAccount()">
+                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount()">
                  print pdf</button>
             </div>
 
@@ -135,7 +135,7 @@
                       </div>
                     </div>
                   </div>
-                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo'></app-account-ledger-table>
+                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine'></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>

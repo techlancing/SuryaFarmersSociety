@@ -1,6 +1,11 @@
 <div class="hide-ledegr">
 <h4>Account Ledger</h4>
                     <div class="row">
+                      <div class="col-sm-1" *ngIf="bPrintLine">
+                        <div class="form-group">
+                          <label for="printLine">L.No</label> 
+                        </div>
+                      </div>
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label for="sBranchCode">Date</label> 
@@ -39,7 +44,12 @@
                       </div>     
                     </div>
                   </div>
-                    <div class="row" *ngFor="let otransactionmodel of aTransactions">
+                    <div class="row" *ngFor="let otransactionmodel of aTransactions;let i=index">
+                      <div class="col-sm-1" *ngIf="bPrintLine">
+                        <div class="form-group">
+                          <label for="printLine" class="trans-detail">{{+i +1 }}</label>  
+                        </div>
+                      </div>
                         <div class="col-sm-2">
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label>  
