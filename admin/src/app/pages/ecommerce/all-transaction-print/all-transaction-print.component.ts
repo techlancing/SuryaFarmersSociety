@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { ActivatedRoute, Router } from '@angular/router';
-//import jsPDF from jsPDF;
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-all-transaction-print',
   templateUrl: './all-transaction-print.component.html',
@@ -158,7 +158,6 @@ export class AllTransactionPrintComponent implements OnInit {
       this.sHeaderText='Bank Statement';
       this.bPdf =true ;
     }
-    
   }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
@@ -224,19 +223,33 @@ export class AllTransactionPrintComponent implements OnInit {
       });
   }
 
-/*  fnPrinPdftLoanAccount(): void{
-    setTimeout(() => {
-    this.bFristButton = false;
-    this.bSecondButton = true;
-  },5000);
-  var pdf = new jsPDF('p', 'pt', 'letter');
-  pdf.canvas.height = 72 * 11;
-  pdf.canvas.width = 72 * 8.5;
+  fnPrinPdfSavingsAccount(): void {
+    let data = document.getElementById('ledger');
+    html2canvas(data,{
+      allowTaint : true,
+      useCORS : true ,
+      scale : 2
+    }).then(canvas => {
+      let pdf = new jsPDF('p', 'pt', 'letter');
+      //pdf.canvas.height = 72 * 60;
+      //pdf.canvas.width = 72 * 70;
 
-  pdf.fromHTML(document.body);
+      pdf.addImage(canvas.toDataURL('image/png,1.0'),'PNG',7,13, 195,105)  
+      pdf.text(data.innerHTML,20,20);   
+      pdf.save('SavingsAccount.pdf');
+    });
+  }
 
-  pdf.save('test.pdf');  
-   this.fnPrint();
-  }*/
+  fnPrinPdfLoanAccount(): void{
+  
+    let pdf = new jsPDF('p', 'pt', 'letter');
+    pdf.canvas.height = 72 * 11;
+    pdf.canvas.width = 72 * 8.5;
+    
+    //pdf.fromHTML(document.body);
+    //pdf.html()
+    pdf.text("hai this is ameen",20,20);
+    pdf.save('LoanAccount.pdf');  
+  }
 
 }  

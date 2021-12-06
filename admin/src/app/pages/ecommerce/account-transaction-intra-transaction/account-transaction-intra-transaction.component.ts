@@ -168,16 +168,26 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
    // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`
    }
  
-   fnOnIntraTransactionInfoSubmit(){
-
+  fnOnIntraTransactionInfoSubmit() {
     this.ointratransactionModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.ointratransactionModel.sDate);
-    //this.ointratransactionModel.sNarration=`From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`;
-    this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
-      console.log(data);
-      this.fnSucessMessage();
-      this.redirectTo('/intratransaction');
+    this.oBankAccountService.fnGetSingleAccountBalance(this.ointratransactionModel.sSenderAccountNumber).subscribe((cdata) => {
+      if (cdata && (cdata >= this.ointratransactionModel.nAmount)) {
+        this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
+          console.log(data);
+          this.fnSucessMessage();
+          this.redirectTo('/intratransaction');
+        });
+      }
+      else
+        Swal.fire({
+          position: 'center',
+          icon: 'info',
+          title: 'Sender account doesnot have sufficient balance',
+          showConfirmButton: false,
+          timer: 3000
+        });
     });
-   }
+  }
 
    redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>

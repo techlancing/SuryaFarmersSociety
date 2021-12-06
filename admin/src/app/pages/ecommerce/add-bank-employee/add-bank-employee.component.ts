@@ -154,11 +154,19 @@ aBankEmployees: Array<BankEmployee>;
 
     this.oBankEmployeeModel.sCallLetterIssuedDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sCallLetterIssuedDate);//new Date(this.oBankEmployeeModel.sCallLetterIssuedDate).toLocaleDateString().split("/").join("-");
     this.oBankEmployeeModel.sJoiningDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sJoiningDate);//new Date(this.oBankEmployeeModel.sJoiningDate).toLocaleDateString('en-GB').split("/").join("-");
-
+    if(!this.bisEditMode){
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
       });
+    }
+    else{
+      this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) =>{
+        console.log(data);
+        this.fnSucessMessage();
+      });
+    }
+
   }
 
   fnOnSelectedAppointment($event){
