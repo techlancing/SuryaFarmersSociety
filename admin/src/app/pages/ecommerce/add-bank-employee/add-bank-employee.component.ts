@@ -135,6 +135,7 @@ aBankEmployees: Array<BankEmployee>;
       ];
     
     this.oBankEmployeeModel = new BankEmployee();
+    this.oBankEmployeeModel.sAppointmentType = 'Trainee';
     this.sButtonText = 'Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
@@ -150,18 +151,42 @@ aBankEmployees: Array<BankEmployee>;
   }
 
   fnOnBankEmployeeInfoSubmit(): void {
+    if(
+    this.oBankEmployeeModel.nEmployeeID  === ''||
+    this.oBankEmployeeModel.sAccountNo === null||
+    this.oBankEmployeeModel.sEmployeeName === ''||
+    this.oBankEmployeeModel.sReligion === ''||
+    this.oBankEmployeeModel.sNationality  === ''||
+    this.oBankEmployeeModel.sSpeakLanguage === ''||
+    this.oBankEmployeeModel.sFatherOrHusbandName === ''||
+    this.oBankEmployeeModel.sMotherName === ''||        
+    this.oBankEmployeeModel.sMobileNumber  === ''||
+    this.oBankEmployeeModel.sEmployeeCallLetterID === ''||
+    this.oBankEmployeeModel.sCallLetterIssuedDate === ''||
+    this.oBankEmployeeModel.sAppointmentType === ''||
+    this.oBankEmployeeModel.sDesignation === ''||
+    this.oBankEmployeeModel.sIFSCCode === ''||
+    this.oBankEmployeeModel.sBranchName === ''||
+    this.oBankEmployeeModel.sPlace === ''||
+    this.oBankEmployeeModel.sAadharNo === ''||
+    this.oBankEmployeeModel.sJoiningDate=== ''
+    ){
+      this.fnShowFieldsAreEmpty();
+      return;
+    }
     //this.bIsAddActive = true;
-
-    this.oBankEmployeeModel.sCallLetterIssuedDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sCallLetterIssuedDate);//new Date(this.oBankEmployeeModel.sCallLetterIssuedDate).toLocaleDateString().split("/").join("-");
-    this.oBankEmployeeModel.sJoiningDate = this.oUtilitydateService.fnChangeDateFormate( this.oBankEmployeeModel.sJoiningDate);//new Date(this.oBankEmployeeModel.sJoiningDate).toLocaleDateString('en-GB').split("/").join("-");
-    if(!this.bisEditMode){
+    if (this.oBankEmployeeModel.sCallLetterIssuedDate !== undefined && this.oBankEmployeeModel.sCallLetterIssuedDate !== '')
+      this.oBankEmployeeModel.sCallLetterIssuedDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankEmployeeModel.sCallLetterIssuedDate);
+    if (this.oBankEmployeeModel.sJoiningDate !== undefined && this.oBankEmployeeModel.sJoiningDate !== '')
+      this.oBankEmployeeModel.sJoiningDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankEmployeeModel.sJoiningDate);
+    if (!this.bisEditMode) {
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
       });
     }
-    else{
-      this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) =>{
+    else {
+      this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
       });
@@ -174,6 +199,15 @@ aBankEmployees: Array<BankEmployee>;
     this.oBankEmployeeModel.sAppointmentType=$event.target.value;
   }
 
+  fnShowFieldsAreEmpty(){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please fill all the fields.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
   fnResetState() {
     // this.oBankEmployeeModel.sState = '';
