@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { OperationCanceledException } from 'typescript';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -33,7 +34,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   bIsEditActive: boolean;
   public headerText : string;
   aUsers: Array<BankEmployee>;
-
+  nBalance : number ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -221,13 +222,18 @@ fnOnDailySavingDebitInfoSubmit(): void {
       this.redirectTo('/dailysavingdebit');
     });
   }
-  else{
-    this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-      
-      this.fnSucessMessage();
-      this.redirectTo('/withdrawal');
-    });
-  }
+ else {
+   this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
+     console.log("cdata", cdata);
+     this.nBalance = cdata as number;
+     if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
+       this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
+         this.fnSucessMessage();
+         this.redirectTo('/withdrawal');
+       });
+     }
+   });
+ }
 }
   fnSucessMessage() {
     Swal.fire({
