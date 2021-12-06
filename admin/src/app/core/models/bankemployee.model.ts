@@ -2,7 +2,7 @@ import { ImageInfo } from './image.model';
 export class BankEmployee {
     constructor(
          
-        public nEmployeeID : number = null,
+        public nEmployeeID : String = '',
         public sAccountNo : number = null,
         public sEmployeeName : string = '',
         public sReligion : string = '',

@@ -4,7 +4,11 @@ const oAutoIncrement = require('mongoose-sequence')(oMongoose);
 const oSchema = oMongoose.Schema
 
 var oBankEmployeeSchema = new oSchema({
-  nEmployeeID : {type: Number},
+  nEmployeeID : {
+    type: String,
+    trim : true,
+    unique : true
+  },
   sAccountNo: { 
     type: String,
     trim: true,
@@ -81,7 +85,7 @@ var oBankEmployeeSchema = new oSchema({
   oCallLetterUpload: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oAadharUpload: {type: oSchema.Types.ObjectId, ref: 'Image'}
 });
-oBankEmployeeSchema.plugin(oAutoIncrement, { inc_field: 'nEmployeeID', inc_amount: 1, start_seq: 500 });
+//oBankEmployeeSchema.plugin(oAutoIncrement, { inc_field: 'nEmployeeID', inc_amount: 1, start_seq: 500 });
 
 
 module.exports = oMongoose.model("BankEmployee", oBankEmployeeSchema);
