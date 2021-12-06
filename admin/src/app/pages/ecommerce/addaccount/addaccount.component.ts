@@ -114,7 +114,7 @@ export class AddaccountComponent implements OnInit {
       const tempobj = JSON.parse(JSON.stringify(this.oEditBankAccount));
       this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
-      this.fnDisplayExistingImageThumbnail();
+      this.bShowPersonal = true;
     }
     this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
       this.bankaccounts = [...data as any];
@@ -122,8 +122,16 @@ export class AddaccountComponent implements OnInit {
     });
   }
 
-  private fnDisplayExistingImageThumbnail(): void{
+  ngAfterViewInit() {
+    if (this.bisEditMode) {
+      
+      this.fnDisplayExistingImageThumbnail();
+    }
+  }
 
+  private fnDisplayExistingImageThumbnail(): void{
+    if(!this.oPhotoDropZone && !this.oSignature1DropZone && !this.oSignature2DropZone
+      && !this.oDocument1DropZone && !this.oDocument2DropZone) return;
     setTimeout(() => {
 
 

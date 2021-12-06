@@ -15,6 +15,7 @@ export class AccountBalanceEnquiryComponent implements OnInit {
   public sSelectedAccount: string;
   bIsBtnActive: boolean;
   bShowBalance : boolean = false;
+  nAccountBalance : number =0;
   constructor(private oBankAccountService: BankAccountService) { }
 
   ngOnInit(): void {
@@ -38,6 +39,11 @@ export class AccountBalanceEnquiryComponent implements OnInit {
     }
   }
   fnFecthAccountBalance(){
+    
+    
+    this.oBankAccountService.fnGetSingleAccountBalance(this.sSelectedAccount).subscribe((cdata) => {
+    this.nAccountBalance = cdata as any;
     this.bShowBalance = true ;
-  }
+  });
+}
 }

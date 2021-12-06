@@ -2,7 +2,7 @@
   <app-page-title title="" [breadcrumbItems]="breadCrumbItems" bgimageclass="addcategory_header"></app-page-title>
   <div class="card card-bg">
     <div class="card-body">
-      <h2 class="passbook-heading">Baalance Enquiry</h2>
+      <h2 class="passbook-heading">Balance Enquiry</h2>
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
@@ -25,4 +25,5 @@
   </div>
   <div *ngIf="bShowBalance" class="col-sm-12 balance">
     <h2>Balance</h2>
+    <p class="account-balance" *ngIf="nAccountBalance >= 0">Rs/- {{this.nAccountBalance}}</p>
   </div>

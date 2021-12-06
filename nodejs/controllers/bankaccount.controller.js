@@ -237,6 +237,25 @@ obankaccountRouter.get("/getallsavingsaccountbalance", oAuthentication, asyncMid
   }  
 }));
 
+// url: ..../bankaccount/getsingleaccountbalance
+obankaccountRouter.post("/getsingleaccountbalance", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let accountBalance = 0;
+    let obankaccount = await obankaccountModel.findOne({bIsDeactivated : false, sAccountNo : oReq.body.sAccountNo});
+
+    if(!obankaccount){
+      return oRes.status(400).send();
+    }else{
+      accountBalance = obankaccount.nAmount; 
+    }
+    oRes.json(accountBalance);
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
 // url: ..../bankaccount/getaccountbynumber
 obankaccountRouter.post("/getaccountbynumber", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
