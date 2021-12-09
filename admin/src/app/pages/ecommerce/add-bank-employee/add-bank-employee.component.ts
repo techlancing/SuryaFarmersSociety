@@ -25,6 +25,7 @@ aBankEmployees: Array<BankEmployee>;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
+  bTRAppointedType : boolean =true ;
 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -143,6 +144,8 @@ aBankEmployees: Array<BankEmployee>;
        const tempobj = JSON.parse(JSON.stringify(this.oEditBankEmployeeModel));
       this.oBankEmployeeModel = tempobj;
       this.sButtonText = 'Update';
+      if(this.oBankEmployeeModel.sAppointmentType==='Regular')
+        this.bTRAppointedType=false;
     }
    // this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
@@ -196,6 +199,9 @@ aBankEmployees: Array<BankEmployee>;
 
   fnOnSelectedAppointment($event){
     console.log($event.target.value);
+    if($event.target.value==='Trainee')
+      this.bTRAppointedType = true ;
+    else this.bTRAppointedType = false ;
     this.oBankEmployeeModel.sAppointmentType=$event.target.value;
   }
 
