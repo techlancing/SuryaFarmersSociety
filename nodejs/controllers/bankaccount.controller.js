@@ -176,6 +176,7 @@ obankaccountRouter.post("/activate_or_deactivate_account", oAuthentication, asyn
     if(oAccount) {
       oAccount.bIsDeactivated = oReq.body.bIsDeactivated;
       await oAccount.save();
+      oRes.json('success');
     }
     else{
         return oRes.status(400).send();

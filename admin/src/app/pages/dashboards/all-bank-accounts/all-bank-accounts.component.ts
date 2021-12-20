@@ -7,6 +7,7 @@ import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2' ;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-bank-accounts',
@@ -27,7 +28,8 @@ export class AllBankAccountsComponent implements OnInit {
   
   constructor(private oBankAccountService : BankAccountService,
     public service: AdvancedService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private router : Router) {
       this.tables$ = service.tables$;
       console.log(this.tables$);
     this.total$ = service.total$;
@@ -65,6 +67,12 @@ export class AllBankAccountsComponent implements OnInit {
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
+
   fnActivateOrDeactivateBankaccount(oBankAccount: BankAccount) {
     if (oBankAccount) {
       this.oBankAccount = oBankAccount;
@@ -72,7 +80,10 @@ export class AllBankAccountsComponent implements OnInit {
         this.oBankAccount.bIsDeactivated = true ;
         this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo,this.oBankAccount.bIsDeactivated).subscribe((data) => {
           console.log(data);
-          this.fnSucessMessage();
+          if(data==='success'){
+            this.fnSucessMessage();
+            this.redirectTo('/allaccounts');
+          }
         });
       }
     }
