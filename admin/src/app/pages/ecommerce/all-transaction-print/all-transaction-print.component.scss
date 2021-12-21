@@ -38,7 +38,7 @@
     }
 
     @media print {
-        app-bank-account-data,app-page-title,.savings-header,.hide-savings{
+       app-page-title,.savings-header,.hide-savings{
             display: none!important;
         }
         .first .hide-loan{
