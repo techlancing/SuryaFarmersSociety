@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  applicationName: "suryafarmerssociety",
+  applicationName: "suryacooperativesocietylimited",
   apiUrl: "/",
   imagePath: "http://localhost:2155/",
   defaultauth: 'fackbackend',
