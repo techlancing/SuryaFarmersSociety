@@ -6,6 +6,7 @@ import { SaasComponent } from './saas/saas.component';
 import { CryptoComponent } from './crypto/crypto.component';
 import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.component';
 import { AllEmployeesComponent } from './all-employees/all-employees.component';
+import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 
 const routes: Routes = [
     {
@@ -28,6 +29,10 @@ const routes: Routes = [
         path: 'crypto',
         component: CryptoComponent
     },
+    {
+        path: 'viewemployee',
+        component: ViewEmployeeComponent
+    }
 ];
 
 @NgModule({

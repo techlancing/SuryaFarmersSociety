@@ -76,8 +76,5 @@ export class AllEmployeesComponent implements OnInit {
 
 
 }
-/*
-function openModal(content: any, any: any, selectedindex: any, number: any) {
-  throw new Error('Function not implemented.');
-}*/
+
 

@@ -22,6 +22,7 @@
                 <th>Joining Date</th>
                <th>Approved Status</th>
                <th>Actions</th>
+               <th>View Employee</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +40,11 @@
                   </ng-select>
                 </td>
                  <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                      class="mdi mdi-employee-edit"></i>Edit</button></td>
+                      class="mdi mdi-employee-edit">Edit</i></button></td>
+                <td>
+                  <button class="btn btn-primary" (click)="openModal(accountcontentviewemployee,i)">
+                    <i class="mdi mdi-employee-edit">Show Details</i></button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -63,5 +68,17 @@
     [bisEditMode]="true"
   [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]"></app-add-bank-employee>
 
+  </div>
+</ng-template>
+
+
+<ng-template #accountcontentviewemployee role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Employee Details</h5>
+    <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+  </div>
+  <div class="modal-body">
+    <app-view-employee [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]">
+    </app-view-employee>
   </div>
 </ng-template>
