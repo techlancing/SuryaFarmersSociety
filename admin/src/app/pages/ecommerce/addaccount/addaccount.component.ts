@@ -345,6 +345,7 @@ export class AddaccountComponent implements OnInit {
         this.oBankAccountService.fnEditBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           console.log(data);
           this.fnEditSucessMessage();
+          this.redirectTo('/allaccounts');
         });
       }
   }

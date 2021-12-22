@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { from } from 'rxjs';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-bank-employee',
@@ -72,7 +73,7 @@ aBankEmployees: Array<BankEmployee>;
   public sButtonText: string;
   @Input() bisEditMode: boolean;
   
-  constructor(private oBankEmployeeService: BankEmployeeService,
+  constructor(private oBankEmployeeService: BankEmployeeService,private router : Router,
               private modalService: NgbModal,private oUtilitydateService : UtilitydateService) { }
               
              
@@ -192,10 +193,15 @@ aBankEmployees: Array<BankEmployee>;
       this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.redirectTo('/allemployees');
       });
     }
 
   }
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 
   fnOnSelectedAppointment($event){
     console.log($event.target.value);
