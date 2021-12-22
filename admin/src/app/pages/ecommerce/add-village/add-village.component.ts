@@ -49,6 +49,7 @@ export class AddVillageComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Ecommerce' }, { label: 'Add Village', active: true }];
 
     this.oVillageModel = new Village();
+    console.log("new",this.oVillageModel);
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
@@ -58,6 +59,10 @@ export class AddVillageComponent implements OnInit {
       this.oVillageModel = tempobj;
 
       this.sButtonText = 'Update';
+      this.oVillageService.fngetVillageInfo().subscribe((data) => {
+        this.aVillages = [...data as any];
+      });
+
     } else {
       this.sButtonText = 'Add';
       this.fnFetchDataFromServer(false);
@@ -99,21 +104,20 @@ export class AddVillageComponent implements OnInit {
   }
 
   fnOnVillageInfoSubmit(): void {
-    console.log(this.oVillageModel.sVillageName.length)
-    console.log(this.oVillageModel.sVillageName.trim().length)
     if(this.oVillageModel.sVillageName.length === 0 || this.oVillageModel.sVillageName.trim().length === 0)
     {
       this.fnEmptyVillageNameMessage();
       return;
     }
     //Verification for Duplicate Village Name
-    for(var i = 0; i < this.aVillages.length; i++) {
-      if(this.aVillages[i].sVillageName.toLowerCase() === this.oVillageModel.sVillageName.toLowerCase().trim()) {
-        this.fnDuplicateVillageNameMessage();
-        return;
+    
+      for (var i = 0; i < this.aVillages.length; i++) {
+        if (this.aVillages[i].sVillageName.toLowerCase() === this.oVillageModel.sVillageName.toLowerCase().trim()) {
+          this.fnDuplicateVillageNameMessage();
+          return;
+        }
       }
-    }
-      
+     
     if (!this.bisEditMode) {
       this.bIsAddActive = true;
       this.oVillageService.fnAddVillageInfo(this.oVillageModel).subscribe((data) => {
@@ -208,11 +212,13 @@ export class AddVillageComponent implements OnInit {
   * Open modal
   * @param content modal content
   */
+
   openModal(content: any, catindex, subcatindex) {
     this.nSelectedMandalEditIndex = catindex;
     this.nSelectedVillageEditIndex = subcatindex;
     this.modalService.open(content, { centered: true });
   }
+  
 }
 
 

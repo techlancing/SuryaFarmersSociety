@@ -80,13 +80,13 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let village of (aVillages | mandalfilter : mandal.nMandalId); let i = index">
-                          <td>{{i}}</td>
+                          <td>{{+i + 1}}</td>
                           <td>{{village.nVillageId}}</td>
                           <td>{{village.sVillageName}}</td>
                           <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="edit"
-                            (click)="openModal(editVillage,indexOfelement,i)">
+                            (click)="openModal(editVillage,indexOfelement,aVillages.indexOf(village))">
                               <i class="bx bx-pencil"></i>
                             </button>
                           </td>
@@ -120,7 +120,7 @@
       [bisEditMode]="true"
       bHideSubCateogryList='true'
       [aEditMandals]='aMandals'
-      [oEditVillage]='aMandals[nSelectedMandalEditIndex]'
+      [oEditVillage]='aVillages[nSelectedVillageEditIndex]'
       (updateClicked)="fnUpdateParentAfterEdit()"></app-add-village>
   
     </div>
