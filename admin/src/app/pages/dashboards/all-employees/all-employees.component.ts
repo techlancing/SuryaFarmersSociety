@@ -41,7 +41,7 @@ export class AllEmployeesComponent implements OnInit {
 
     this.aChairman=[
       {
-        displayText: 'Aprrove',
+        displayText: 'Approve',
         value:'01'
       },
       {
