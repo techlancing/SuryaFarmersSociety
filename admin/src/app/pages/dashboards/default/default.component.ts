@@ -26,27 +26,20 @@ export class DefaultComponent implements OnInit {
   ngOnInit() {
     this.oBankAccountService.fngetSavingsBankAccountCountInfo().subscribe((data) => {
       this.nSavingsAccountCount = data as Number;
-      console.log("scount",data,typeof data);
-      console.log(this.nSavingsAccountCount);
-      statData[2].value=''+this.nSavingsAccountCount;
     });
 
     this.oBankAccountService.fnGetAllSavingsAccountBalanceInfo().subscribe((data) => {
       this.nAllSavingsBalance= data as Number;
-      console.log("sbalance",data,typeof data);
-      statData[0].value='Rs.'+this.nAllSavingsBalance;
+      this.nAllSavingsBalance = Number((Math.round(this.nAllSavingsBalance*100)/100).toFixed(2));
     });
 
     this.oCreditLoanService.fnGetCreditLoanAccountsCountInfo().subscribe((data) => {
       this.nCreditLoanAccountCount = data as Number;
-      console.log("ccount",data,typeof data);
-      statData[3].value=''+this.nCreditLoanAccountCount;
     });
 
     this.oCreditLoanService.fnGetAllCreditLoanAccountBalanceInfo().subscribe((data) => {
       this.nAllCreditLoanBalance = data as Number;
-      console.log("cbalance",data,typeof data);
-      statData[1].value='Rs.'+this.nAllCreditLoanBalance;
+      this.nAllCreditLoanBalance = Number((Math.round(this.nAllCreditLoanBalance*100)/100).toFixed(2));
     });
    
     this.fetchData();

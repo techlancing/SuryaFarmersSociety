@@ -148,7 +148,7 @@ export class AccountTransactionDebitComponent implements OnInit {
         this.nActiveLoanIndex = index;
         this.bShowLoanData = true;
         if(this.bIsCredit){
-          this.oDebitModel.nAmount = loan.nInstallmentAmount + (loan.nInstallmentAmount * loan.nLetPenaltyPercentage / 100);
+          this.oDebitModel.nAmount = Number((Math.round((loan.nInstallmentAmount + (loan.nInstallmentAmount * loan.nLetPenaltyPercentage / 100))*100)/100).toFixed(2));
         }else{
           this.oDebitModel.nAmount = loan.nInstallmentAmount;
         }
