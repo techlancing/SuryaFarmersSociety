@@ -86,7 +86,7 @@
                           <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary btn-sm btn-rounded add-round-btn" ngbtooltip="edit"
-                            (click)="openModal(editMandal,indexOfelement,i)">
+                            (click)="openModal(editMandal,indexOfelement,aMandals.indexOf(mandal))">
                               <i class="bx bx-pencil"></i>
                             </button>
                           </td>
@@ -120,7 +120,7 @@
       [bisEditMode]="true"
       bHideSubCateogryList='true'
       [aEditDistricts]='aDistricts'
-      [oEditMandal]='aDistricts[nSelectedDistrictEditIndex]'
+      [oEditMandal]='aMandals[nSelectedMandalEditIndex]'
       (updateClicked)="fnUpdateParentAfterEdit()"></app-add-mandal>
   
     </div>

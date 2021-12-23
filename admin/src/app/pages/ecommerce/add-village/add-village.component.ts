@@ -152,7 +152,7 @@ export class AddVillageComponent implements OnInit {
       cancelButtonColor: '#f46a6a',
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
-      if (result.value) {
+      if (result.isConfirmed) {
         // this.oVillageService.fnDeleteVillageInfo(this.aMandals[cindex].aVillagesInfo[scindex] as Village).subscribe((data) => {
         //   this.bisDeleteMode = true;
         //   this.fnFetchDataFromServer(true, (data as Village).sVillageName);

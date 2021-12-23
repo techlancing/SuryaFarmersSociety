@@ -58,6 +58,9 @@ export class AddMandalComponent implements OnInit {
       this.oMandalModel = tempobj;
 
       this.sButtonText = 'Update';
+      this.oMandalService.fngetMandalInfo().subscribe((data) => {
+        this.aMandals = [...data as any];
+      });
     } else {
       this.sButtonText = 'Add';
       this.fnFetchDataFromServer(false);
@@ -99,8 +102,6 @@ export class AddMandalComponent implements OnInit {
   }
 
   fnOnMandalInfoSubmit(): void {
-    console.log(this.oMandalModel.sMandalName.length)
-    console.log(this.oMandalModel.sMandalName.trim().length)
     if(this.oMandalModel.sMandalName.length === 0 || this.oMandalModel.sMandalName.trim().length === 0)
     {
       this.fnEmptyMandalNameMessage();
