@@ -111,7 +111,7 @@ export class AddDistrictComponent implements OnInit {
   fnDeleteDistrict(nIndex) {
     console.log(this.districts[nIndex] as District);
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Do you want to delete  "'+(this.districts[nIndex] as District).sDistrictName+'" and all Mandals in this District?',
       text: 'You won\'t be able to revert this!',
       icon: 'warning',
       showCancelButton: true,
@@ -119,7 +119,7 @@ export class AddDistrictComponent implements OnInit {
       cancelButtonColor: '#f46a6a',
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
-      if (result.value) {
+      if (result.isConfirmed) {
         this.oDistrictService.fnDeleteDistrictInfo(this.districts[nIndex] as District).subscribe((data) => {
           this.districts = [];
           this.oDistrictService.fngetDistrictInfo().subscribe((cdata) => {

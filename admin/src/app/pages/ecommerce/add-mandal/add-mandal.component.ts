@@ -139,9 +139,14 @@ export class AddMandalComponent implements OnInit {
 
   }
 
-  fnDeleteMandal(cindex, scindex) {
+  fnDeleteMandal(mandalId) {
+    let oMandal : any ;
+    this.aMandals.map((mandal) => {
+      if(mandal.nMandalId === mandalId)
+        oMandal = mandal ;
+    });
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Do you want to delete  "'+oMandal.sMandalName+'" and all villages in this mandal?',
       text: 'You won\'t be able to revert this!',
       icon: 'warning',
       showCancelButton: true,
@@ -149,11 +154,11 @@ export class AddMandalComponent implements OnInit {
       cancelButtonColor: '#f46a6a',
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
-      if (result.value) {
-        // this.oMandalService.fnDeleteMandalInfo(this.aDistricts[cindex].aMandalsInfo[scindex] as Mandal).subscribe((data) => {
-        //   this.bisDeleteMode = true;
-        //   this.fnFetchDataFromServer(true, (data as Mandal).sMandalName);
-        // });
+      if (result.isConfirmed) {
+         this.oMandalService.fnDeleteMandalInfo(oMandal).subscribe((data) => {
+           this.bisDeleteMode = true;
+           this.fnFetchDataFromServer(true, (data as Mandal).sMandalName);
+         });
 
       }
     });

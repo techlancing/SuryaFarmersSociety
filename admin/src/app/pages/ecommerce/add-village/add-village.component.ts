@@ -142,9 +142,14 @@ export class AddVillageComponent implements OnInit {
 
   }
 
-  fnDeleteVillage(cindex, scindex) {
+  fnDeleteVillage(villageId) {
+    let oVillage : any;
+    this.aVillages.map((village) => {
+      if(village.nVillageId === villageId)
+        oVillage = village ;
+    });
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Do you want to delete  "'+oVillage.sVillageName+'" village?',
       text: 'You won\'t be able to revert this!',
       icon: 'warning',
       showCancelButton: true,
@@ -153,7 +158,7 @@ export class AddVillageComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.isConfirmed) {
-         this.oVillageService.fnDeleteVillageInfo(this.aVillages[scindex]).subscribe((data) => {
+         this.oVillageService.fnDeleteVillageInfo(oVillage).subscribe((data) => {
            this.bisDeleteMode = true;
            this.fnFetchDataFromServer(true,(data as Village).sVillageName);
          });
