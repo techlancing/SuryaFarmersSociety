@@ -46,8 +46,10 @@ toDate : any;
         this.ntotalDebit = this.ntotalDebit + transaction.nDebitAmount;
       });
       this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      this.ntotalCredit = Number((Math.round(this.ntotalCredit*100)/100).toFixed(2)) ;
+      this.ntotalDebit = Number((Math.round(this.ntotalDebit*100)/100).toFixed(2));
+      this.nbalanceAmount = Number((Math.round(this.nbalanceAmount*100)/100).toFixed(2));  
     });
-  
   }
   fnPrintDayWiseTransactions(): void{
     window.print();
