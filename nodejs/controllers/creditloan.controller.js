@@ -121,9 +121,10 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
         loans.sLoanName = oLoan.sTypeofLoan;
         //Get credit loan last transacton for balance amount
         const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
+        console.log("ameen",olasttransaction);
       if(olasttransaction.length > 0) {
-          oBalance = oBalance + olasttransaction[0].nBalanceAmount;
-          loans.nLoanBalance = oBalance;
+          accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
+          loans.nLoanBalance = accountBalance;
         }
       aLoans.push(loans);
 

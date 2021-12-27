@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model';
+import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 
 @Component({
   selector: 'app-account-balance-enquiry',
@@ -16,7 +17,10 @@ export class AccountBalanceEnquiryComponent implements OnInit {
   bIsBtnActive: boolean;
   bShowBalance : boolean = false;
   nAccountBalance : number =0;
-  constructor(private oBankAccountService: BankAccountService) { }
+  public aCreditLoans : any ;
+  public bShowLoanBalance : boolean ;
+  constructor(private oBankAccountService: BankAccountService,
+    private oCreditLoanService : CreditLoanService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Bank Account' }, { label: 'Balance Enquiry', active: true }];
@@ -38,12 +42,17 @@ export class AccountBalanceEnquiryComponent implements OnInit {
       this.bIsBtnActive = true;
     }
   }
-  fnFecthAccountBalance(){
-    
-    
+  fnFecthAccountBalance(){    
     this.oBankAccountService.fnGetSingleAccountBalance(this.sSelectedAccount).subscribe((cdata) => {
     this.nAccountBalance = cdata as any;
     this.bShowBalance = true ;
-  });
-}
+    });
+    this.fnFetchLoanAccountBalance()
+  }
+  fnFetchLoanAccountBalance(){
+    this.oCreditLoanService.fnAccontCreditLoanInfo(this.sSelectedAccount).subscribe((data) => {
+      this.aCreditLoans = data as any;
+      this.bShowLoanBalance = true ;
+    });
+  }
 }
