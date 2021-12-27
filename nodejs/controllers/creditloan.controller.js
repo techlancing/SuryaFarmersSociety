@@ -127,6 +127,7 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
           loans.nLoanBalance = accountBalance;
         }
       aLoans.push(loans);
+      accountBalance = 0 ;
 
       }));
 
