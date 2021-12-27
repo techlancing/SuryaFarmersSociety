@@ -19,6 +19,7 @@ public nbalanceAmount : number =0;
 bShowAccNum : boolean = true;
 fromDate : any;
 toDate : any;
+public bShowEmployee : boolean = true ;
 
 
   constructor(private oTransactionService: TransactionService,

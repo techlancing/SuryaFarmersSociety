@@ -41,7 +41,14 @@
                         <div class="form-group">
                           <label for="sBranchCode">Narration</label>                  
                         </div>
-                      </div>     
+                      </div> 
+
+                      <div class="col-sm-1" *ngIf="bShowEmployee"> 
+                        <div class="form-group">
+                          <label for="sEmployeeName">Employee Name</label>                  
+                        </div>
+                      </div> 
+
                     </div>
                   </div>
                     <div class="row" *ngFor="let otransactionmodel of aTransactions;let i=index">
@@ -79,14 +86,19 @@
                         </div>
                         <div class="col-sm-2"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
-                              <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nTransactionId}}</label>  
-                              
+                              <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nTransactionId}}</label>       
                           </div>
                         </div>
                         <div class="col-sm-2"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
                           </div>
-                        </div>     
-                      
+                        </div>
+
+                        <div class="col-sm-1"  *ngIf="bShowEmployee">
+                          <div class="form-group">
+                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sEmployeeName}}</label>                  
+                          </div>
+                        </div>
+                        
                       </div>

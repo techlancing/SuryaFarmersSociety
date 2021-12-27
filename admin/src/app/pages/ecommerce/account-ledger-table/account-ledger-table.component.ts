@@ -11,6 +11,7 @@ export class AccountLedgerTableComponent implements OnInit {
 @Input() bPrintLine : boolean ;
 @Input() lineFrom : number ;
 @Input() lineTo : number ;
+@Input() bShowEmployee : boolean ;
   constructor() { }
 
   ngOnInit(): void {
