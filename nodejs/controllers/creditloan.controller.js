@@ -94,11 +94,43 @@ oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddlewa
         const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
           oBalance = oBalance + olasttransaction[0].nBalanceAmount;
-          console.log("ameen",olasttransaction,olasttransaction[0].nBalanceAmount);
         }
       }));
     } 
     oRes.json(oBalance);
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
+// url: ..../creditloan/getaccountcreditloans
+oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let accountBalance = 0;
+    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo});
+    let aLoans = [];
+    
+    if(oCreditLoan.length > 0){
+      await Promise.all(oCreditLoan.map(async (oLoan) => {
+        let loans = {
+          sLoanName :'',
+          nLoanBalance : 0
+        };
+        loans.sLoanName = oLoan.sTypeofLoan;
+        //Get credit loan last transacton for balance amount
+        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
+      if(olasttransaction.length > 0) {
+          oBalance = oBalance + olasttransaction[0].nBalanceAmount;
+          loans.nLoanBalance = oBalance;
+        }
+      aLoans.push(loans);
+
+      }));
+
+     }
+    oRes.json(aLoans);
 
   }catch(e){
     console.log(e);
