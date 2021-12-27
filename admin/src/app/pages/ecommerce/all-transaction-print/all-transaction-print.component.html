@@ -35,7 +35,7 @@
                   </ng-template>
             
                   <ng-template ngbPanelContent>
-                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' #lineNumbers></app-account-ledger-table>
+                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
                     
                   </ng-template>
                 </ngb-panel>                
@@ -135,7 +135,7 @@
                       </div>
                     </div>
                   </div>
-                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' id="ledger"></app-account-ledger-table>
+                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine'  [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>

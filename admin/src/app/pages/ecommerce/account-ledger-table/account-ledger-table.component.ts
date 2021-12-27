@@ -9,9 +9,10 @@ export class AccountLedgerTableComponent implements OnInit {
 @Input() aTransactions : any;
 @Input() bShowAccNum : boolean ;
 @Input() bPrintLine : boolean ;
+@Input() lineFrom : number ;
+@Input() lineTo : number ;
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

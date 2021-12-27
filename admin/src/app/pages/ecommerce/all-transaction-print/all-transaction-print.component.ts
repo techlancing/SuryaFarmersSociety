@@ -35,6 +35,8 @@ export class AllTransactionPrintComponent implements OnInit {
   public nInputLineTo1 : number ;
   public nInputLineFrom2 : number  ;
   public nInputLineTo2 : number ;
+  public lineFrom : number ;
+  public lineTo : number
   public aCreditLoan : Array<CreditLoan>;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
@@ -216,6 +218,8 @@ export class AllTransactionPrintComponent implements OnInit {
       ).then((result) => {
         if (result.isConfirmed) {
           Swal.close();
+          this.lineFrom = fromLine ;
+          this.lineTo = toLine ;
           setTimeout(() => {
             window.print();
           }, 300);

@@ -1,7 +1,7 @@
 <div class="hide-ledegr">
 <h4>Account Ledger</h4>
                     <div class="row">
-                      <div class="col-sm-1" *ngIf="bPrintLine">
+                      <div class="col-sm-1 notvisible" *ngIf="bPrintLine" [ngClass]="{'notvisible':bPrintLine}">
                         <div class="form-group">
                           <label for="printLine">L.No</label> 
                         </div>
@@ -37,7 +37,7 @@
                           <label for="sBranchCode">Transaction ID</label>                  
                         </div>
                       </div>
-                      <div class="col-sm-2">
+                      <div class="col-sm-2"> 
                         <div class="form-group">
                           <label for="sBranchCode">Narration</label>                  
                         </div>
@@ -45,45 +45,45 @@
                     </div>
                   </div>
                     <div class="row" *ngFor="let otransactionmodel of aTransactions;let i=index">
-                      <div class="col-sm-1" *ngIf="bPrintLine">
-                        <div class="form-group">
-                          <label for="printLine" class="trans-detail">{{+i +1 }}</label>  
+                      <div class="col-sm-1" *ngIf="bPrintLine"  [ngClass]="{'notvisible':bPrintLine}">
+                        <div class="form-group" > 
+                          <label for="printLine" class="trans-detail" >{{+i +1 }}</label>  
                         </div>
                       </div>
-                        <div class="col-sm-2">
-                          <div class="form-group">
+                        <div class="col-sm-2"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
+                          <div class="form-group" >
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label>  
                           </div>
                         </div>
                         
-                        <div class="col-sm-2" *ngIf="bShowAccNum">
-                          <div class="form-group">
-                            <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sAccountNo}}</label>                  
+                        <div class="col-sm-2" *ngIf="bShowAccNum"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
+                          <div class="form-group" >
+                            <label for="sBranchCode" class="trans-detail" >{{otransactionmodel.sAccountNo}}</label>                  
                           </div>
                         </div>   
                         
-                        <div class="col-sm-1">
+                        <div class="col-sm-1"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                             <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount.toLocaleString()}}</label>                  
                              </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-1"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount.toLocaleString()}}</label>                  
                           </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-1"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                               <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount.toLocaleString()}}</label>  
                           </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                               <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nTransactionId}}</label>  
                               
                           </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2"  [ngClass]="{'notvisible' : (lineFrom > (+i+1))   || ((+i+1) > lineTo) }">
                           <div class="form-group">
                             <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>                  
                           </div>
