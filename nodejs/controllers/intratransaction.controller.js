@@ -44,14 +44,17 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     let oTransaction = {};
     oTransaction.sAccountNo = oReq.body.sRecieverAccountNumber;
     oTransaction.sDate = oReq.body.sDate;
-    oTransaction.sNarration = oReq.body.sNarration;  
+    oTransaction.sNarration = oReq.body.sNarration;
+    oTransaction.sEmployeeName = oReq.body.sTransactionEmployee;
    
     try{
       if(oReq.body.sRecieverAccountType == 'savings')    // savings account
       {
+        oTransaction.sAccountType = 'Savings Account';
         oTransaction.nCreditAmount = 0;
         oTransaction.nDebitAmount = oReq.body.nAmount;
         oTransaction.nLoanId = oReq.body.nReceiverAccountId;
+        
         const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nReceiverAccountId}).sort({_id:-1}).limit(1);
         if(olasttransaction.length > 0) 
           oBalanceAmount = olasttransaction[0].nBalanceAmount;
@@ -86,10 +89,13 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
         const newTransaction = new oTransactionModel(oTransaction);
         await newTransaction.save();
+
         // Update total amount in creditloan model
         let oCreditLoan = await oCreditLoanModel.findOne({nLoanId : oReq.body.nLoanId});
         if(oCreditLoan)
         {
+          newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+          await newTransaction.save();
           oCreditLoan.oTransactionInfo.push(newTransaction);
           await oCreditLoan.save();
         }
@@ -126,7 +132,9 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     oTransactionInfo.nBalanceAmount = (Math.round((oBalanceAmt - oReq.body.nAmount) * 100) / 100).toFixed(2);
     oTransactionInfo.sDate = oReq.body.sDate;
     oTransactionInfo.sNarration = oReq.body.sNarration;  
-    
+    oTransactionInfo.sEmployeeName = 'Savings Account';
+    oTransactionInfo.sEmployeeName = oReq.body.sTransactionEmployee;
+
     const newTransaction = new oTransactionModel(oTransactionInfo);
     await newTransaction.save();
     console.log('newtransaction',newTransaction);

@@ -52,7 +52,9 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       oTransaction.sDate = oTransaction.sDate.split("-").reverse().join("-");
       tomorrow.setDate(tomorrow.getDate() + 1 );
       sdate = oTransaction.sDate;
-      oTransaction.sNarration = newDeposit.sNarration;  
+      oTransaction.sNarration = newDeposit.sNarration;
+      oTransaction.sAccountType = 'Savings Account';
+      oTransaction.sEmployeeName = newDeposit.sReceiverName;
       
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
@@ -161,7 +163,10 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
     oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - Number(oReq.body.nAmount)) * 100) / 100).toFixed(2);
     oBalanceAmount = Number(oTransaction.nBalanceAmount);
     oTransaction.sDate = oReq.body.sEndDate;
-    oTransaction.sNarration = oReq.body.sNarration;  
+    oTransaction.sNarration = oReq.body.sNarration;
+    oTransaction.sAccountType = 'Savings Account'; 
+    oTransaction.sEmployeeName = oReq.body.sReceiverName;
+
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

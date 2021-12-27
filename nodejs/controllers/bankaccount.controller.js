@@ -90,7 +90,9 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
     oTransaction.nDebitAmount = newbankaccount.nAmount;
     oTransaction.nBalanceAmount = newbankaccount.nAmount;
     oTransaction.sDate = newbankaccount.sDate;
-    oTransaction.sNarration = "new account created";  
+    oTransaction.sNarration = "new account created";
+    oTransaction.sAccountType = 'Savings Account';
+    oTransaction.sEmployeeName = '';  
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

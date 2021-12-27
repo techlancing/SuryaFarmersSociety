@@ -44,7 +44,9 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
     oTransaction.nDebitAmount = 0;
     oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
     oTransaction.sDate = newCredit.sDate;
-    oTransaction.sNarration = newCredit.sNarration;  
+    oTransaction.sNarration = newCredit.sNarration;
+    oTransaction.sAccountType = '';
+    oTransaction.sEmployeeName = newCredit.sReceiverName;  
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
@@ -52,6 +54,9 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
     const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newCredit.nLoanId});
 
     if(oCreditLoan){
+      newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+      await newTransaction.save();
+      
       oCreditLoan.oTransactionInfo.push(newTransaction);
       await oCreditLoan.save();
     }

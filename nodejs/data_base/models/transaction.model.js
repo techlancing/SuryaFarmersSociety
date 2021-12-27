@@ -26,7 +26,16 @@ var oTransactionSchema = new oSchema({
   sNarration: {
     type: String,
     trim: true
-  }
+  },
+  sEmployeeName: { 
+    type: String,
+    trim: true
+   },
+   sAccountType: { 
+    type: String,
+    trim: true
+   }
+   
 });
 oTransactionSchema.plugin(oAutoIncrement, { inc_field: 'nTransactionId', inc_amount: 1, start_seq: 200000 });
 

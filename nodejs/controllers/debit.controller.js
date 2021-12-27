@@ -1,5 +1,6 @@
 const oExpress = require('express');
 const oMongoose = require('mongoose');
+const request = require('request');
 
 const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
@@ -16,6 +17,8 @@ const asyncMiddleware = fn =>
     Promise.resolve(fn(oReq, oRes, oNext))
       .catch(oNext);
   };
+
+  
   
 // url: ..../debit/add_debit
 oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
@@ -44,7 +47,9 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     oTransaction.nDebitAmount = newDebit.nAmount;
     oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - newDebit.nAmount) * 100) / 100).toFixed(2);
     oTransaction.sDate = newDebit.sDate;
-    oTransaction.sNarration = newDebit.sNarration;  
+    oTransaction.sNarration = newDebit.sNarration;
+    oTransaction.sAccountType = '';
+    oTransaction.sEmployeeName = newDebit.sReceiverName;
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
@@ -52,14 +57,45 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newDebit.nLoanId});
 
     if(oCreditLoan){
-      if(oTransaction.nBalanceAmount > 0)
+      newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+      await newTransaction.save();
+
+      if(oTransaction.nBalanceAmount > 0){
         oCreditLoan.oTransactionInfo.push(newTransaction);
+        const msg=encodeURIComponent(`Dear customer your acc no: 1234 is Debited with INR 20 on 27-12-2021. 
+        txn id: 123. Available balance is INR 50 . 
+        Surya cooperative society limited, ADPNXT Technologies.`); 
+        const number='919043237478';
+        const apikey='NjQ2YTRiMzU0YjYxNzk0MzU5NjMzMzM2NzE0YjZhMzc=';
+        
+        const sender='TXTLCL';
+        let data=`apikey=${apikey}&sender=${sender}&numbers=${number}&message=${msg}`
+        // var options = {
+        // host: 'api.textlocal.in',
+        //   path: '/send?'+data
+        // };
+        let posturl = 'https://api.textlocal.in/send?'+ data;
+        console.log(posturl);
+        request({
+          method:'POST',
+          url: posturl,
+          headers:{
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+          
+        },(error, response)=>{
+          console.log('error:', error); // Print the error if one occurred
+          console.log('statusCode:', response && response.statusCode);
+          oRes.json(response);
+        });
+      } 
       else
         oCreditLoan.sLoanStatus = 'Completed';
       await oCreditLoan.save();
+      oRes.json("Success");
     }
 
-    oRes.json("Success");
+    
 
   }catch(e){
     console.log(e);

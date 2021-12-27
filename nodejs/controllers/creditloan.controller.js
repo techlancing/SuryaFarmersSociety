@@ -29,7 +29,10 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
     oTransaction.nDebitAmount = 0;
     oTransaction.nBalanceAmount = newCreditLoan.nTotalAmount;
     oTransaction.sDate = newCreditLoan.sDate;
-    oTransaction.sNarration = newCreditLoan.sTypeofLoan;  
+    oTransaction.sNarration = newCreditLoan.sTypeofLoan;
+    oTransaction.sAccountType = newCreditLoan.sTypeofLoan;
+    oTransaction.sEmployeeName = newCreditLoan.sEmployeeName;
+    
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
