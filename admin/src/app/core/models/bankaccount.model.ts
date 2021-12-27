@@ -38,6 +38,7 @@ export class BankAccount {
         public sEmail : string = '',
         public nAmount : number = null,
         public bIsDeactivated : boolean = false ,
+        public sEmployeeName : string = '',
         public oPassportImageInfo: ImageInfo = null,
         public oSignature1Info: ImageInfo = null,
         public oSignature2Info: ImageInfo = null,

@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { analytics } from 'firebase';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { BankEmployee } from 'src/app/core/models/bankemployee.model';
+import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 
 @Component({
   selector: 'app-addaccount',
@@ -34,7 +36,8 @@ export class AddaccountComponent implements OnInit {
   bIsAddActive: boolean;
   bIsEditActive: boolean;
   bShowPersonal : boolean;
- 
+  aUsers: Array<BankEmployee>;
+
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -86,7 +89,8 @@ export class AddaccountComponent implements OnInit {
     private oVillageService: VillageService,
     private router : Router,
               private modalService: NgbModal,
-              private oUtilitydateService : UtilitydateService) { }
+              private oUtilitydateService : UtilitydateService,
+              private oBankEmployeeService : BankEmployeeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -120,6 +124,12 @@ export class AddaccountComponent implements OnInit {
       this.bankaccounts = [...data as any];
 
     });
+
+    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+      console.log('users',users);
+       this.aUsers = users;
+     });
+
   }
 
   ngAfterViewInit() {
@@ -303,7 +313,8 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.sPinCode === '' ||
     this.oBankAccountModel.sMobileNumber === '' ||
     this.oBankAccountModel.sEmail === '' ||
-    this.oBankAccountModel.nAmount === null ){
+    this.oBankAccountModel.nAmount === null ||
+    this.oBankAccountModel.sEmployeeName === ''){
       this.fnShowFieldsAreEmpty();
       return;
     }

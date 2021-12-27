@@ -1,6 +1,6 @@
 const oExpress = require('express');
 const oMongoose = require('mongoose');
-const request = require('request');
+//const request = require('request');
 
 const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
@@ -62,7 +62,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
 
       if(oTransaction.nBalanceAmount > 0){
         oCreditLoan.oTransactionInfo.push(newTransaction);
-        const msg=encodeURIComponent(`Dear customer your acc no: 1234 is Debited with INR 20 on 27-12-2021. 
+      /* const msg=encodeURIComponent(`Dear customer your acc no: 1234 is Debited with INR 20 on 27-12-2021. 
         txn id: 123. Available balance is INR 50 . 
         Surya cooperative society limited, ADPNXT Technologies.`); 
         const number='919043237478';
@@ -87,7 +87,8 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
           console.log('error:', error); // Print the error if one occurred
           console.log('statusCode:', response && response.statusCode);
           oRes.json(response);
-        });
+        });*/
+        oRes.json(response);
       } 
       else
         oCreditLoan.sLoanStatus = 'Completed';

@@ -346,6 +346,20 @@
                   class="form-control" >
               </div>
             </div>
+            <div class="col-sm-6">
+              <div class="add-container">
+                <div class="form-group">
+                  <label for="sEmployeeName">Loan Issue Employee</label>
+                  <ng-select [items]="aUsers" name="sEmployeeName"
+                    [(ngModel)]="oBankAccountModel.sEmployeeName" 
+                    bindLabel="sEmployeeName" bindValue="sEmployeeName">
+                    <ng-template ng-label-tmp let-item="item">
+                      {{item.sEmployeeName}}
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
             <h2 class="col-sm-12">Amount to be Deposited</h2> 
               <div class="col-sm-6">
                    <div class="form-group">
