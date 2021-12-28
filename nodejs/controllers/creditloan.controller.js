@@ -108,12 +108,12 @@ oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddlewa
 // url: ..../creditloan/getaccountcreditloans
 oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    let accountBalance = 0;
     let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo});
     let aLoans = [];
     
     if(oCreditLoan.length > 0){
       await Promise.all(oCreditLoan.map(async (oLoan) => {
+        let accountBalance = 0;
         let loans = {
           sLoanName :'',
           nLoanBalance : 0
@@ -121,13 +121,12 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
         loans.sLoanName = oLoan.sTypeofLoan;
         //Get credit loan last transacton for balance amount
         const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
-        console.log("ameen",olasttransaction);
-      if(olasttransaction.length > 0) {
-          accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
-          loans.nLoanBalance = accountBalance;
-        }
-      aLoans.push(loans);
-      accountBalance = 0 ;
+      
+        if(olasttransaction.length > 0) {
+            accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
+            loans.nLoanBalance = accountBalance;
+          }
+        aLoans.push(loans);
 
       }));
 

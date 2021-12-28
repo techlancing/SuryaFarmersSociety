@@ -88,15 +88,12 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
           console.log('statusCode:', response && response.statusCode);
           oRes.json(response);
         });*/
-        oRes.json(response);
       } 
       else
         oCreditLoan.sLoanStatus = 'Completed';
       await oCreditLoan.save();
-      oRes.json("Success");
     }
-
-    
+    oRes.json("Success");
 
   }catch(e){
     console.log(e);
