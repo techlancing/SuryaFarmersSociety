@@ -27,7 +27,7 @@
     <h2>Balance</h2>
     <p class="account-balance" *ngIf="nAccountBalance >= 0">Rs/- {{this.nAccountBalance}}</p>
   </div>
-  <div *ngIf="bShowBalance" class="col-sm-12 balance">
+  <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-12 balance">
     <h2>Loan Balance</h2>
     <p>________________________________________________________</p>
     <div *ngFor="let loan of aCreditLoans" class="row">
