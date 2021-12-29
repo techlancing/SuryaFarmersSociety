@@ -8,7 +8,8 @@
 
     
 
-    <div class="row " [ngClass]="{'first': bFristButton===true,'second': bSecondButton===true}">      
+    <div class="row " [ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
+        'agri' : bAgriculturalLoan,'gold' : bGoldLoan,'silver' : bSilverLoan,'temp' : bTemporaryLoan}">      
       <div class="row col-12 " *ngIf="aTransactions && aTransactions.length > 0">
         <div class="col-12 " >
           <div class="savings-header">
@@ -58,13 +59,13 @@
               <input id="sLineNumberLoanTo" *ngIf="!bPdf" name="sLineNumberLoanTo"  type="text" class="form-control" [(ngModel)]="nInputLineTo2">
              </div>
               
-              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount()">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan)">
                 print</button>
                 <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrinPdfLoanAccount()">
                  print pdf</button>
             </div>
 
-            <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
+            <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true" [ngClass]="oCreditLoanmodel.sTypeofLoan.split(' ')[0]">
               <ngb-panel id="static-1">
                 <ng-template ngbPanelTitle class="text-black">
                   <h2>{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>

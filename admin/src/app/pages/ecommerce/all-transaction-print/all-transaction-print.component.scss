@@ -41,13 +41,27 @@
        app-page-title,.savings-header,.hide-savings{
             display: none!important;
         }
-        .first .hide-loan{
+        .savings .hide-loan{
             display: none!important;
         }
-
-        .second .hide-trans{
-            display: none!important;
+        .emi .hide-trans, .emi .Personal,.emi .Agriculture,.emi .Gold,.emi .Silver,.emi .Temporary{
+            display: none !important;
+        }
+        .personal .hide-trans, .personal .EMI, .personal .Agriculture, .personal .Gold, .personal .Silver, .personal .Temporary   {
+          display: none !important;
+        }
+        .agri .hide-trans, .agri .EMI, .agri .Personal, .agri .Gold, .agri .Silver, .agri .Temporary{
+            display: none !important;
+        }
+        .gold .hide-trans, .gold .EMI, .gold .Personal, .gold .Agriculture, .gold .Silver, .gold .Temporary{
+            display: none !important;
+        }
+        .silver .hide-trans, .silver .EMI, .silver .Personal, .silver .Agriculture, .silver .Gold, .silver .Temporary{
+            display: none !important;
+        }
+        .temp .hide-trans, .temp .EMI, .temp .Personal, .temp .Agriculture, .temp .Gold, .temp .Silver{
+            display: none !important;
         }
         
-        
+         
     }

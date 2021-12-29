@@ -26,7 +26,13 @@ export class AllTransactionPrintComponent implements OnInit {
   @ViewChild('lineNumbers')
   public oLedgerTable : ElementRef ;
 
-  bFristButton : boolean = false;
+  bEmiLoan : boolean = false ;
+  bPersonalLoan : boolean = false ;
+  bAgriculturalLoan : boolean = false ;
+  bGoldLoan : boolean = false ;
+  bSilverLoan : boolean = false ;
+  bTemporaryLoan : boolean = false ;
+  bFirstButton : boolean = false;
   bSecondButton : boolean = false;
   sHeaderText : String = 'All Transaction Print';
   bPdf : boolean = false;
@@ -185,15 +191,28 @@ export class AllTransactionPrintComponent implements OnInit {
   }
   
   fnPrintSavingAccount(): void {
-    this.bFristButton = true;
-    this.bSecondButton = false;
+    this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
 
-  fnPrintLoanAccount(): void {
-    this.bFristButton = false;
-    this.bSecondButton = true;
+  fnPrintLoanAccount(type): void {
+    console.log(type);
+    if(type === 'EMI Loan') this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
+    else if(type === 'Personal Loan') this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
+    else if(type === 'Agriculture Loan') this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
+    else if(type === 'Gold Loan')  this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
+    else if(type === 'Silver Loan')  this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
+    else  this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
     this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
+  }
+  fnDeactivateNgClasses(b1,b2,b3,b4,b5,b6,b7){
+    this.bFirstButton = b1 ;
+    this.bEmiLoan = b2 ;
+    this.bPersonalLoan = b3 ;
+    this.bAgriculturalLoan = b4 ;
+    this.bGoldLoan = b5 ;
+    this.bSilverLoan = b6 ;
+    this.bTemporaryLoan = b7 ;
   }
 
   fnConfirmationMessage(fromLine: number, toLine: number) {
