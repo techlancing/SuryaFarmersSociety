@@ -29,44 +29,51 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-7">
             <div class="card overflow-hidden">
             </div>
             <div class="card ">
                 <div class="card-body">
-                    <h4 class="card-title mb-4 cardTitle">Payment Details</h4>
+                    <h1 class="card-title mb-4 cardTitle">Payment Details</h1>
                     <div>
-                        <div class="col-sm-6 cardContent">
-                           <label for="Total Credit">Total Credit  :  {{nAllCreditLoanBalance}}</label>
+                        <div class="cardContent row">
+                           <label for="Total Credit">Total Credit  : </label>
+                           <label class="cardValue">{{nAllCreditLoanBalance}}</label>
                         </div>
-                        <div class="col-sm-6 cardContent">
-                            <label for="Total Debit">Total Debit  :  {{nAllSavingsBalance}}</label>
+                        <div class="cardContent row">
+                            <label for="Total Debit">Total Debit  : </label> 
+                            <label class="cardValue">{{nAllSavingsBalance}}</label>
                         </div>
-                        <div  class="col-sm-6 cardContent">
+                        <div  class=" cardContent row">
                             <label for="Total Balances">Total Balances  :  </label>
+                            <label class="cardValue">{{nTotalBalance}}</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <div class="card overflow-hidden">
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4 cardTitle">Account Summary</h4>
+                    <h1 class="card-title mb-4 cardTitle">Account Summary</h1>
                     <div>
-                        <div class="col-sm-6 cardContent">
+                        <div class=" cardContent row">
                             <label for="Total Accounts">Total Accounts  :  </label>
+                            <label class="cardValue">{{nCreditLoanAccountCount + nSavingsAccountCount}} </label>
                         </div>
-                        <div class="col-sm-6 cardContent">
-                            <label for="Credit Accounts">Credit Accounts  :  {{nCreditLoanAccountCount}}</label>
+                        <div class=" cardContent row">
+                            <label for="Credit Accounts">Credit Accounts  :  </label>
+                            <label class="cardValue">{{nCreditLoanAccountCount}}</label>
                         </div>
-                        <div class="col-sm-6 cardContent">
-                            <label for="Debit Accounts">Debit Accounts  :  {{nSavingsAccountCount}}</label>
+                        <div class="cardContent row">
+                            <label for="Debit Accounts">Debit Accounts  :  </label>
+                            <label class="cardValue">{{nSavingsAccountCount}}</label>
                         </div>
-                        <div class="col-sm-6 cardContent">
-                            <label for="Equal Accounts">Equal Accounts  :  </label>
+                        <div class=" cardContent row">
+                            <label for="Equal Accounts">Equal Accounts  : </label>
+                            <label for="" class="cardValue"></label>
                         </div>
                     </div>
 

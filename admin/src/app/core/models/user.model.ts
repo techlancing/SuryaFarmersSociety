@@ -4,6 +4,7 @@ export class User {
       public sUserName : string,
       public _token : string,
       private _expirytokentime: number,
+      public sRole : string
     ) {}
 
     get token() {

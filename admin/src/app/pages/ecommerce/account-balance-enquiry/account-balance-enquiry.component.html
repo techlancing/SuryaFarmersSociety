@@ -23,17 +23,23 @@
       </div>
     </div>
   </div>
-  <div *ngIf="bShowBalance" class="col-sm-12 balance">
-    <h2>Balance</h2>
-    <p class="account-balance" *ngIf="nAccountBalance >= 0">Rs/- {{this.nAccountBalance}}</p>
-  </div>
-  <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-12 balance">
-    <h2>Loan Balance</h2>
-    <p>________________________________________________________</p>
-    <div *ngFor="let loan of aCreditLoans" class="row">
-      <div class="col-sm-12 row">
-        <h3 *ngIf="loan.nLoanBalance >= 0">{{loan.sLoanName}} :</h3>
-        <p class="account-balance" *ngIf="loan.nLoanBalance >= 0"> Rs/- {{loan.nLoanBalance}}</p>
+  <div class="row">
+    <div *ngIf="bShowBalance && nAccountBalance >= 0" class="col-sm-6 balance">
+      <h2>Savings Account </h2>
+      <p>_________________________________________________</p>
+      <div class="row sbalance">
+        <h3>Balance :</h3>
+        <p class="account-balance"> Rs/- {{this.nAccountBalance}}</p>
+      </div>
     </div>
+    <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-6 balance">
+      <h2>Loan Account </h2>
+      <p>_________________________________________________</p>
+      <div *ngFor="let loan of aCreditLoans" class="row">
+        <div class="col-sm-12 row" *ngIf="loan.nLoanBalance >= 0">
+          <h3>{{loan.sLoanName}} :</h3>
+          <p class="account-balance"> Rs/- {{loan.nLoanBalance}}</p>
+        </div>
+      </div>
     </div>
   </div>

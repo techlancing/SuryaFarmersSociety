@@ -15,10 +15,11 @@ export class DefaultComponent implements OnInit {
   monthlyEarningChart: ChartType;
   transactions;
   statData;
-  nSavingsAccountCount : Number;
+  nSavingsAccountCount : any;
   nCreditLoanAccountCount : any;
   nAllCreditLoanBalance : any ;
   nAllSavingsBalance : any ;
+  nTotalBalance : number ;
 
   constructor(private oBankAccountService : BankAccountService,
     private oCreditLoanService: CreditLoanService) { }
@@ -28,23 +29,25 @@ export class DefaultComponent implements OnInit {
       this.nSavingsAccountCount = data as Number;
     });
 
-    this.oBankAccountService.fnGetAllSavingsAccountBalanceInfo().subscribe((data) => {
-      this.nAllSavingsBalance= data as Number;
-      this.nAllSavingsBalance = Number((Math.round(this.nAllSavingsBalance*100)/100).toFixed(2));
-    });
-
     this.oCreditLoanService.fnGetCreditLoanAccountsCountInfo().subscribe((data) => {
       this.nCreditLoanAccountCount = data as Number;
     });
 
-    this.oCreditLoanService.fnGetAllCreditLoanAccountBalanceInfo().subscribe((data) => {
-      this.nAllCreditLoanBalance = data as Number;
+    this.oCreditLoanService.fnGetAllCreditLoanAccountBalanceInfo().subscribe((cdata) => {
+      this.nAllCreditLoanBalance = cdata as Number;
       this.nAllCreditLoanBalance = Number((Math.round(this.nAllCreditLoanBalance*100)/100).toFixed(2));
+      
+      this.oBankAccountService.fnGetAllSavingsAccountBalanceInfo().subscribe((data) => {
+        this.nAllSavingsBalance= data as Number;
+        this.nAllSavingsBalance = Number((Math.round(this.nAllSavingsBalance*100)/100).toFixed(2));
+        this.nTotalBalance = Number((Math.round((this.nAllCreditLoanBalance-this.nAllSavingsBalance)*100)/100).toFixed(2));
+      });
+  
     });
    
     this.fetchData();
   }
-
+  
   /**
    * Fetches the data
    */

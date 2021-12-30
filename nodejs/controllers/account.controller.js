@@ -51,6 +51,7 @@ oAccountRouter.post("/login", asyncMiddleware(async (oReq, oRes, oNext) => {
         'sUserEmail': user.sUserEmail,
         'sUserName': user.sUserName,
         'bIsRetailer': false,
+        'sRole' : user.sRole,
         '_token': token,
         '_expirytokentime': user.sTokenExpiryTime
       });

@@ -137,7 +137,8 @@ export class AuthenticationService {
         resuser.sUserEmail,
         resuser.sUserName,
         resuser._token,
-        resuser._expirytokentime);
+        resuser._expirytokentime,
+        resuser.sRole);
     this.subUser$.next(user);
     //this.autoLogout(user.expirytoken);
     localStorage.setItem('userData', JSON.stringify(user));
