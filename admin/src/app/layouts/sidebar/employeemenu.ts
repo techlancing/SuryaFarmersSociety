@@ -127,6 +127,49 @@ menu = [
             }
         ]
     },
+    {
+        id: 48,
+        label: 'MENUITEMS.REPORTS.TEXT',
+        icon: 'bxs-report',
+        subItems: [
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISETRANSACTIONREPORT',
+                link: '/DayWiseTransaction',
+                parentId: 48
+            },
+            {
+                id: 61,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVE',
+                link: '/DayWiseCumulative',
+                parentId: 49
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVEACCOUNT',
+                link: '/DayWiseCumulativeAccount',
+                parentId: 50
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.LAST12MONTHSTRANSACTION',
+                link: '/Last12MonthsTransaction',
+                parentId: 52
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.CATEGORYBALANCESUMMARY',
+                link: '/CategoryBalanceSummary',
+                parentId: 53
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYBALANCESUMMARY',
+                link: '/AllCategoryBalanceSummary',
+                parentId: 54
+            }
+        ]
+    }
 
 ];
 export const PMENU: MenuItem[] = menu;
