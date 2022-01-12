@@ -64,7 +64,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.authenticationService.fnLogIn(this.f.email.value, this.f.password.value)
       .subscribe(
         data => {
-          this.router.navigate(['/dashboard']);
+          if(data.sRole !== 'chairman') this.router.navigate(['/adddistrict']);
+          else  this.router.navigate(['/dashboard']);
         },
         error => {
           console.log(error);
