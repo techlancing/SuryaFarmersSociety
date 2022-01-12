@@ -3,7 +3,8 @@ import MetisMenu from 'metismenujs/dist/metismenujs';
 import { EventService } from '../../core/services/event.service';
 import { Router, NavigationEnd } from '@angular/router';
 
-import { MENU } from './menu';
+import { CMENU } from './menu';
+import { PMENU} from './employeemenu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -194,7 +195,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * Initialize
    */
   initialize(): void {
-    this.menuItems = MENU;
+    const user = JSON.parse(localStorage.getItem('userData'));
+    if(user){
+      if(user.sRole === 'chairman') this.menuItems = CMENU;
+      else this.menuItems = PMENU ;
+    }
   }
 
   /**

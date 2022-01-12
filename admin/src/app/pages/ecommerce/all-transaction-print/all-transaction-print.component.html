@@ -23,7 +23,7 @@
     
             <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
               print</button>
-              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrinPdfSavingsAccount()">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdfSavingsAccount()">
                 print pdf</button>
           </div>
           <div class="card card-bg hide-trans" >
@@ -36,7 +36,7 @@
                   </ng-template>
             
                   <ng-template ngbPanelContent>
-                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
+                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [lineFrom]="lineFrom" [lineTo]="lineTo" id="savingsPrint"></app-account-ledger-table>
                     
                   </ng-template>
                 </ngb-panel>                

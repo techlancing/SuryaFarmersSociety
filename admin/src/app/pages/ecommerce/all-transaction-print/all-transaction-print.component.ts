@@ -246,33 +246,36 @@ export class AllTransactionPrintComponent implements OnInit {
       });
   }
 
-  fnPrinPdfSavingsAccount(): void {
-    let data = document.getElementById('ledger');
-    html2canvas(data,{
-      allowTaint : true,
-      useCORS : true ,
-      scale : 2
-    }).then(canvas => {
-      let pdf = new jsPDF('p', 'pt', 'letter');
-      //pdf.canvas.height = 72 * 60;
-      //pdf.canvas.width = 72 * 70;
-
-      pdf.addImage(canvas.toDataURL('image/png,1.0'),'PNG',7,13, 195,105)  
-      pdf.text(data.innerHTML,20,20);   
-      pdf.save('SavingsAccount.pdf');
-    });
+  fnPrintPdfSavingsAccount(): void {
+    let data = document.getElementById('savingsPrint');
+      let pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'ledger',
+        putOnlyUsedFonts:true
+       });
+      pdf.setFontSize(10);
+      pdf.html(data,{
+        callback: function (doc) {
+          doc.save('SavingsAccount.pdf');
+        }
+      });
   }
 
-  fnPrinPdfLoanAccount(): void{
-  
-    let pdf = new jsPDF('p', 'pt', 'letter');
-    pdf.canvas.height = 72 * 11;
-    pdf.canvas.width = 72 * 8.5;
-    
-    //pdf.fromHTML(document.body);
-    //pdf.html()
-    pdf.text("hai this is ameen",20,20);
-    pdf.save('LoanAccount.pdf');  
+  fnPrinPdfLoanAccount(): void{ 
+    let data = document.getElementById('savingsPrint');
+    let pdf = new jsPDF({
+      orientation: 'p',
+      unit: 'mm',
+      format: 'a4',
+      putOnlyUsedFonts:true
+     });
+    pdf.setFontSize(10);
+    pdf.html(data,{
+      callback: function (doc) {
+        doc.save('LoanAccount.pdf');
+      }
+    });
   }
 
 }  
