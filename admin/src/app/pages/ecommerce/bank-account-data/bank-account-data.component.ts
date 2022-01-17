@@ -18,6 +18,7 @@ export class BankAccountDataComponent implements OnInit {
   sImageRootPath : string;
   aBankAccounts: Array<BankAccount>;
   @Input() headerText: string;
+  @Input() bNotFirst : boolean ;
   @Output() accountDataClicked = new EventEmitter<BankAccount>();
   constructor(private oBankAccountService: BankAccountService) { }
 

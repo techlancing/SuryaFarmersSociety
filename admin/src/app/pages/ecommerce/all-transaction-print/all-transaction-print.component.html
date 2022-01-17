@@ -4,7 +4,7 @@
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
     <app-bank-account-data [headerText]="sHeaderText" 
-    (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
+    (accountDataClicked)="fnGetCreditLoans($event)" [bNotFirst]="bNotFirst"></app-bank-account-data>
 
     
 
@@ -36,7 +36,7 @@
                   </ng-template>
             
                   <ng-template ngbPanelContent>
-                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [lineFrom]="lineFrom" [lineTo]="lineTo" id="savingsPrint"></app-account-ledger-table>
+                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [bNotFirst]="bNotFirst" [lineFrom]="lineFrom" [lineTo]="lineTo" id="savingsPrint"></app-account-ledger-table>
                     
                   </ng-template>
                 </ngb-panel>                
@@ -68,10 +68,10 @@
             <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true" [ngClass]="oCreditLoanmodel.sTypeofLoan.split(' ')[0]">
               <ngb-panel id="static-1">
                 <ng-template ngbPanelTitle class="text-black">
-                  <h2>{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+                  <h2 [ngClass]="{'notvisible' : bNotFirst}">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
                 </ng-template>
                 <ng-template ngbPanelContent>
-                  <div class="row">
+                  <div class="row" [ngClass]="{'notvisible' : bNotFirst}">
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="sDate">Loan Issue Date:</label>
@@ -136,7 +136,7 @@
                       </div>
                     </div>
                   </div>
-                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine'  [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
+                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotFirst]="bNotFirst" [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>

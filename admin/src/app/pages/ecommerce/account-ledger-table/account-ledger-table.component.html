@@ -1,7 +1,7 @@
 <div class="hide-ledegr">
-<h4>Account Ledger</h4>
-                    <div class="row">
-                      <div class="col-sm-1 notvisible" *ngIf="bPrintLine" [ngClass]="{'notvisible':bPrintLine}">
+<h4 [ngClass]="{'notvisible' : bNotFirst }">Account Ledger</h4>
+                    <div class="row" [ngClass]="{'notvisible' : bNotFirst }">
+                      <div class="col-sm-1 notvisible" *ngIf="bPrintLine" >
                         <div class="form-group">
                           <label for="printLine">L.No</label> 
                         </div>

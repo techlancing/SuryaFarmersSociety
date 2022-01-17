@@ -44,14 +44,12 @@ export class AddaccountComponent implements OnInit {
   bErrorPin : boolean;
   bErrorMobile : boolean;
   bErrorEmail : boolean ;
-  bErrorAmount : boolean ;
   sVotterPattern : string = '^([a-zA-Z]){3}([0-9]){7}$';
   sAadharPattern : string = '^[2-9]{1}[0-9]{3}\\s{0, 1}[0-9]{4}\\s{0, 1}[0-9]{4}$';
   sRationCardPattern :string = '^([a-zA-Z0-9]){8,12}\s*$';
   sMobilePattern : string = '^\\(+91-){0,1}[5-9]{1}[0-9]{9}$';
   sPincodePattern : string = '^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$';
   sMailPattern : string = '^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-]+ )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}$';
-  sAmountPattern : string = '^[0-9]*$';
   aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')
@@ -476,7 +474,7 @@ export class AddaccountComponent implements OnInit {
   }
   fnValidateMobileNumber(){
     if(this.oBankAccountModel.sMobileNumber !== null){
-      let mobilePattern = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$';//'^(+91-){0,1}[5-9]{1}[0-9]{9}$';
+      let mobilePattern = '^[6-9]{1}[0-9]{9}$';
       if(!this.oBankAccountModel.sMobileNumber.trim().match(mobilePattern))
         this.bErrorMobile = true ;
       else this.bErrorMobile = false ;
@@ -498,14 +496,6 @@ export class AddaccountComponent implements OnInit {
       else this.bErrorEmail = false ;
     }
   }
-  fnValidateAmount(){
-    if(this.oBankAccountModel.nAmount !== null){
-      let amountPattern = '^[0-9]*$';
-      if(!(this.oBankAccountModel.nAmount+'').trim().match(amountPattern))
-        this.bErrorAmount = true ;
-      else this.bErrorAmount =false ;
-    }
-  }
   fnvalidate(property : string, pattern : string, sErrorName : string){
     if(property !== null){
       if(property.trim().match(pattern)) this.fnEnableOrDisableError(sErrorName,true);
@@ -519,6 +509,5 @@ export class AddaccountComponent implements OnInit {
     else if(sErrorName === 'mobile') this.bErrorMobile = flag ;
     else if(sErrorName === 'pin') this.bErrorPin = flag ;
     else if(sErrorName === 'email') this.bErrorEmail = flag ;
-    else if(sErrorName === 'amount') this.bErrorAmount = flag ;
   }
 }

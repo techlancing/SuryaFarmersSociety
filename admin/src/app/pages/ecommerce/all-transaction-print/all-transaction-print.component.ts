@@ -37,6 +37,7 @@ export class AllTransactionPrintComponent implements OnInit {
   sHeaderText : String = 'All Transaction Print';
   bPdf : boolean = false;
   bPrintLine : boolean = true ;
+  public bNotFirst : boolean = false;
   public nInputLineFrom1 : number  ;
   public nInputLineTo1 : number ;
   public nInputLineFrom2 : number  ;
@@ -56,11 +57,6 @@ export class AllTransactionPrintComponent implements OnInit {
 
   @ViewChild('addcardropzoneElem')
   public oDropZone: DropzoneComponent;
-  // aState : Array<
-  // {
-  //   displayText:string,
-  //   value:string
-  // }>;
   aTypeofLoan : Array<
   {
     displayText:string,
@@ -158,8 +154,6 @@ export class AllTransactionPrintComponent implements OnInit {
     this.bIsAddActive = false;
     this.bIsEditActive = false;
     if (this.bisEditMode) {
-      // const tempobj = JSON.parse(JSON.stringify(this.oEditBankaccount));
-      // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
     if(this.activatedroute.snapshot.data.type === 'statement'){
@@ -185,12 +179,11 @@ export class AllTransactionPrintComponent implements OnInit {
    */
   openModal(content: any, index) {
     this.nSelectedEditIndex = index;
-
     this.modalService.open(content, { centered: true });
-
   }
   
   fnPrintSavingAccount(): void {
+    this.fnUpdatePrint(this.nInputLineFrom1);
     this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
@@ -223,7 +216,9 @@ export class AllTransactionPrintComponent implements OnInit {
         title: 'Please enter proper line numbers.'
       }
       );
-    else
+    else{
+      if(Number(fromLine) === 1) this.bNotFirst = false ;
+      else this.bNotFirst = true;
       Swal.fire(
         {
           position: 'center',
@@ -244,6 +239,10 @@ export class AllTransactionPrintComponent implements OnInit {
           }, 300);
         }
       });
+    }
+  }
+  fnUpdatePrint(fromLine){
+    
   }
 
   fnPrintPdfSavingsAccount(): void {

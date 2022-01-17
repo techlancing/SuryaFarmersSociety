@@ -38,7 +38,7 @@
     }
 
     @media print {
-       app-page-title,.savings-header,.hide-savings{
+       app-page-title,.savings-header,.hide-savings,.notvisible{
             display: none!important;
         }
         .savings .hide-loan{

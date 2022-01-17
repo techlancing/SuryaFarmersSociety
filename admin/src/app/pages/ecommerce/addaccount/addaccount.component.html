@@ -373,8 +373,7 @@
                    <div class="form-group">
                    <label for="nAmount">Amount</label>                  
                    <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="number"
-                    class="form-control" (change)="fnValidateAmount()">
-                    <p *ngIf="bErrorAmount" class="error">* please enter valid amount.</p>
+                    class="form-control">
                    </div>
               </div>     
               <h2 class="col-sm-12">Documents</h2> 

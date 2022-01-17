@@ -50,7 +50,7 @@ tr.imagewidth{
     height: 80px;
 }
 @media print {
-    .imagewidth,.passbook-acc-input,h2{
+    .imagewidth,.passbook-acc-input,h2,.notvisible{
         display: none;
     }
 }
