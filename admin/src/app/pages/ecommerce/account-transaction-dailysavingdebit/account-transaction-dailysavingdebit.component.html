@@ -91,7 +91,7 @@
                 <div class="form-group">
                   <label for="nAmount">Total Amount</label>
                   <input id="nAmount" name="nAmount" [(ngModel)]="oDailySavingDebitModel.nAmount" type="number"
-                    class="form-control">
+                    class="form-control" [disabled]="bIsDeposit">
                 </div>
               </div> 
               <div class="col-sm-6">
