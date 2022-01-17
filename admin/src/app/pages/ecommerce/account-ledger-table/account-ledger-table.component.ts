@@ -12,7 +12,7 @@ export class AccountLedgerTableComponent implements OnInit {
 @Input() lineFrom : number ;
 @Input() lineTo : number ;
 @Input() bShowEmployee : boolean ;
-@Input() bNotFirst : boolean ;
+@Input() bNotPrintHead : boolean ;
   constructor() { }
 
   ngOnInit(): void {

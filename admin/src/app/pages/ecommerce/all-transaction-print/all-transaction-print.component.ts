@@ -183,7 +183,6 @@ export class AllTransactionPrintComponent implements OnInit {
   }
   
   fnPrintSavingAccount(): void {
-    this.fnUpdatePrint(this.nInputLineFrom1);
     this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
@@ -216,9 +215,7 @@ export class AllTransactionPrintComponent implements OnInit {
         title: 'Please enter proper line numbers.'
       }
       );
-    else{
-      if(Number(fromLine) === 1) this.bNotFirst = false ;
-      else this.bNotFirst = true;
+    else
       Swal.fire(
         {
           position: 'center',
@@ -239,12 +236,8 @@ export class AllTransactionPrintComponent implements OnInit {
           }, 300);
         }
       });
-    }
   }
-  fnUpdatePrint(fromLine){
-    
-  }
-
+  
   fnPrintPdfSavingsAccount(): void {
     let data = document.getElementById('savingsPrint');
       let pdf = new jsPDF({
