@@ -31,15 +31,15 @@ menu = [
                 parentId: 10
             },
             {
-                id: 22,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDACCOUNT',
-                link: '/newaccountform',
-                parentId: 10
-            },
-            {
                 id: 25,
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDEMPLOYEE',
                 link: '/addemployee',
+                parentId: 10
+            },
+            {
+                id: 22,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDACCOUNT',
+                link: '/newaccountform',
                 parentId: 10
             },
             {

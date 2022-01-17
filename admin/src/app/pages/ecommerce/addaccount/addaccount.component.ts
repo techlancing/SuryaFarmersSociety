@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BankAccount } from '../../../core/models/bankaccount.model';
 import { District } from '../../../core/models/district.model';
 import { Mandal } from '../../../core/models/mandal.model';
@@ -36,6 +36,22 @@ export class AddaccountComponent implements OnInit {
   bIsAddActive: boolean;
   bIsEditActive: boolean;
   bShowPersonal : boolean;
+  bErrorNominee : boolean;
+  bErrorNomineeRelation : boolean;
+  bErrorVoterId : boolean;
+  bErrorAadhar : boolean;
+  bErrorRation : boolean;
+  bErrorPin : boolean;
+  bErrorMobile : boolean;
+  bErrorEmail : boolean ;
+  bErrorAmount : boolean ;
+  sVotterPattern : string = '^([a-zA-Z]){3}([0-9]){7}$';
+  sAadharPattern : string = '^[2-9]{1}[0-9]{3}\\s{0, 1}[0-9]{4}\\s{0, 1}[0-9]{4}$';
+  sRationCardPattern :string = '^([a-zA-Z0-9]){8,12}\s*$';
+  sMobilePattern : string = '^\\(+91-){0,1}[5-9]{1}[0-9]{9}$';
+  sPincodePattern : string = '^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$';
+  sMailPattern : string = '^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-]+ )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}$';
+  sAmountPattern : string = '^[0-9]*$';
   aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')
@@ -90,7 +106,8 @@ export class AddaccountComponent implements OnInit {
     private router : Router,
               private modalService: NgbModal,
               private oUtilitydateService : UtilitydateService,
-              private oBankEmployeeService : BankEmployeeService) { }
+              private oBankEmployeeService : BankEmployeeService,
+              private element : ElementRef) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -315,7 +332,7 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.sEmail === '' ||
     this.oBankAccountModel.nAmount === null ||
     this.oBankAccountModel.sEmployeeName === ''){
-      this.fnShowFieldsAreEmpty();
+      this.fnMessage('Please fill all the fields.','warning');
       return;
     }
     if(this.bankaccounts != undefined && this.bankaccounts !== null){
@@ -344,7 +361,7 @@ export class AddaccountComponent implements OnInit {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];
           this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
-            this.fnSucessMessage();
+            this.fnMessage('Account is created sucessfully.','success');
             this.bankaccounts = [...cdata as any];
             //this.oBankAccountModel.sState = '';
             this.bIsAddActive = false;
@@ -355,7 +372,7 @@ export class AddaccountComponent implements OnInit {
       }else{
         this.oBankAccountService.fnEditBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           console.log(data);
-          this.fnEditSucessMessage();
+          this.fnMessage('Account updated sucessfully.','success');
           this.redirectTo('/allaccounts');
         });
       }
@@ -398,33 +415,11 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.oDocument2Info = args[1].oImageRefId;
   }
 
-  fnSucessMessage() {
+  fnMessage(message,icon) {
     Swal.fire({
       position: 'center',
-      icon: 'success',
-      title: 'Account is created sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  fnShowFieldsAreEmpty(){
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Please fill all the fields.',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
-
-  
-
-  fnEditSucessMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Account updated sucessfully.',
+      icon: icon,
+      title: message,
       showConfirmButton: false,
       timer: 1500
     });
@@ -441,13 +436,89 @@ export class AddaccountComponent implements OnInit {
   }
 
   fnValidateNominee(){
-      if(this.oBankAccountModel.sNomineeName!==null){
+     if(this.oBankAccountModel.sNomineeName!==null){
        if(this.oBankAccountModel.sNomineeName!==this.oBankAccountModel.sFatherOrHusbandName&&this.oBankAccountModel.sNomineeName!==this.oBankAccountModel.sMotherName)
-         this.oBankAccountModel.sNomineeName='please enter husband/father or mother name';
-      }
-      else if(this.oBankAccountModel.sNomineeName===null)
-        this.oBankAccountModel.sNomineeName='please enter husband/father or mother name';
-      else return;
+          this.bErrorNominee = true ;
+       else this.bErrorNominee = false ;
+     }  
   }
-
+  fnValidateNomineeRelationship(){
+    if(this.oBankAccountModel.sNomineeRelationship !==null){
+      let relation = this.oBankAccountModel.sNomineeRelationship.toLocaleLowerCase() ;
+      if(relation !== 'father' && relation !== 'mother' && relation !== 'husband')
+        this.bErrorNomineeRelation = true ;
+      else this.bErrorNomineeRelation = false ;
+    }
+  }
+  fnValidateVoterId(){
+    if(this.oBankAccountModel.sVoterIdNo !==null){
+      let votterPattern = '^([a-zA-Z]){3}([0-9]){7}$';
+      if(!this.oBankAccountModel.sVoterIdNo.trim().match(votterPattern))
+        this.bErrorVoterId = true ;
+      else this.bErrorVoterId = false ;
+    }
+  }
+  fnValidateAadhar(){
+    if(this.oBankAccountModel.sAadharNo !== null){
+      let aadharPattern = '^[2-9]{1}[0-9]{3}\\s{0,1}[0-9]{4}\\s{0,1}[0-9]{4}$';
+      if(!this.oBankAccountModel.sAadharNo.trim().match(aadharPattern) )
+        this.bErrorAadhar = true ;
+      else this.bErrorAadhar = false ;
+    }
+  }
+  fnValidateRationCard(){
+    if(this.oBankAccountModel.sRationCardNo !== null){
+      let rationCardPattern = '^([a-zA-Z0-9]){8,12}\\s*$';
+      if(!this.oBankAccountModel.sRationCardNo.trim().match(rationCardPattern))
+        this.bErrorRation = true ;
+      else this.bErrorRation = false ;
+    }
+  }
+  fnValidateMobileNumber(){
+    if(this.oBankAccountModel.sMobileNumber !== null){
+      let mobilePattern = '^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$';//'^(+91-){0,1}[5-9]{1}[0-9]{9}$';
+      if(!this.oBankAccountModel.sMobileNumber.trim().match(mobilePattern))
+        this.bErrorMobile = true ;
+      else this.bErrorMobile = false ;
+    }
+  }
+  fnValidatePinCode(){
+    if(this.oBankAccountModel.sPinCode !==null){
+      let pincodePattern = '^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$';
+      if(!(this.oBankAccountModel.sPinCode+'').trim().match(pincodePattern))
+        this.bErrorPin = true ;
+      else this.bErrorPin =false ;
+    }
+  }
+  fnIsEmail(){
+    if(this.oBankAccountModel.sEmail !== null){
+      let mailPattern = '^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-]+ )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}$';
+      if(!this.oBankAccountModel.sEmail.trim().match(mailPattern))
+        this.bErrorEmail = true ;
+      else this.bErrorEmail = false ;
+    }
+  }
+  fnValidateAmount(){
+    if(this.oBankAccountModel.nAmount !== null){
+      let amountPattern = '^[0-9]*$';
+      if(!(this.oBankAccountModel.nAmount+'').trim().match(amountPattern))
+        this.bErrorAmount = true ;
+      else this.bErrorAmount =false ;
+    }
+  }
+  fnvalidate(property : string, pattern : string, sErrorName : string){
+    if(property !== null){
+      if(property.trim().match(pattern)) this.fnEnableOrDisableError(sErrorName,true);
+      else this.fnEnableOrDisableError(sErrorName,false);
+    }
+  }
+  fnEnableOrDisableError(sErrorName : string, flag : boolean){
+    if(sErrorName === 'voter') this.bErrorVoterId = flag ;
+    else if(sErrorName === 'aadhar') this.bErrorAadhar = flag ;
+    else if(sErrorName === 'ration') this.bErrorRation = flag ;
+    else if(sErrorName === 'mobile') this.bErrorMobile = flag ;
+    else if(sErrorName === 'pin') this.bErrorPin = flag ;
+    else if(sErrorName === 'email') this.bErrorEmail = flag ;
+    else if(sErrorName === 'amount') this.bErrorAmount = flag ;
+  }
 }

@@ -257,14 +257,16 @@
               <div class="form-group">
                 <label for="sNomineeName">Nominee Name</label>                  
                 <input id="sNomineeName" name="sNomineeName" [(ngModel)]="oBankAccountModel.sNomineeName" type="text"
-                  class="form-control" ><!--(input)="fnValidateNominee()"-->
+                  class="form-control" (change)="fnValidateNominee()">
+                  <p *ngIf="bErrorNominee" class="error">* please enter father/husband or mother name as nominee.</p>
               </div>
             </div>   
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sNomineeRelationship">Nominee Relantionship</label>                  
                 <input id="sNomineeRelationship" name="sNomineeRelationship" [(ngModel)]="oBankAccountModel.sNomineeRelationship" type="text"
-                  class="form-control" >
+                  class="form-control" (change)="fnValidateNomineeRelationship()">
+                  <p *ngIf="bErrorNomineeRelation" class="error">* please enter father or husband or mother as relationship.</p>
               </div>
             </div>   
             <h2 class="col-sm-12">Identity Information</h2>   
@@ -272,21 +274,24 @@
               <div class="form-group">
                 <label for="sVoterIdNo">Voter ID Number</label>                  
                 <input id="sVoterIdNo" name="sVoterIdNo" [(ngModel)]="oBankAccountModel.sVoterIdNo" type="text"
-                  class="form-control" >
+                  class="form-control" (change)="fnValidateVoterId()">
+                  <p *ngIf="bErrorVoterId" class="error">* please enter valid Voter Id.</p>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sAadharNo">Aadhar Number</label>                  
                 <input id="sAadharNo" name="sAadharNo" [(ngModel)]="oBankAccountModel.sAadharNo" type="text"
-                  class="form-control" >
+                  class="form-control" (change)="fnValidateAadhar()">
+                  <p *ngIf="bErrorAadhar" class="error">* please enter valid Aadhar Number.</p>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="sRationCardNo">Ration Card Number</label>                  
                 <input id="sRationCardNo" name="sRationCardNo" [(ngModel)]="oBankAccountModel.sRationCardNo" type="text"
-                  class="form-control" >
+                  class="form-control" (change)="fnValidateRationCard()">
+                  <p *ngIf="bErrorRation" class="error">* please enter valid Ration Card Number.</p>
               </div>
             </div>
             <h2 class="col-sm-12">Address</h2>  
@@ -329,14 +334,16 @@
               <div class="form-group">
                 <label for="sPinCode">Pin Code</label>                  
                 <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="number"
-                  class="form-control" >
+                  class="form-control" (change) = "fnValidatePinCode()">
+                  <p *ngIf="bErrorPin" class="error">* please enter valid Pincode.</p>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="sMobileNumber">Mobile Number</label>                  
                 <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="tel"
-                  class="form-control" >
+                  class="form-control" (change) = "fnValidateMobileNumber()">
+                  <p *ngIf="bErrorMobile" class="error">* please enter valid Mobile Number.</p>
               </div>
             </div>
             <div class="col-sm-6">
@@ -344,12 +351,13 @@
                 <label for="sUserEmail">Email Id</label>                  
                 <input id="sUserEmail" name="sUserEmail" [(ngModel)]="oBankAccountModel.sEmail" type="email"
                   class="form-control" >
+                  <p *ngIf="bErrorEmail" class="error">* please enter valid email address.</p>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="add-container">
                 <div class="form-group">
-                  <label for="sEmployeeName">Loan Issue Employee</label>
+                  <label for="sEmployeeName">Account Opening Employee</label>
                   <ng-select [items]="aUsers" name="sEmployeeName"
                     [(ngModel)]="oBankAccountModel.sEmployeeName" 
                     bindLabel="sEmployeeName" bindValue="sEmployeeName">
@@ -365,7 +373,8 @@
                    <div class="form-group">
                    <label for="nAmount">Amount</label>                  
                    <input id="nAmount" name="nAmount" [(ngModel)]="oBankAccountModel.nAmount" type="number"
-                    class="form-control" >
+                    class="form-control" (change)="fnValidateAmount()">
+                    <p *ngIf="bErrorAmount" class="error">* please enter valid amount.</p>
                    </div>
               </div>     
               <h2 class="col-sm-12">Documents</h2> 
