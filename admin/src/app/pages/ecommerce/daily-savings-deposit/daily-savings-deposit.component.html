@@ -3,7 +3,7 @@
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
     <app-bank-account-data headerText='' 
-    (accountDataClicked)="fnGetCreditLoans($event)"></app-bank-account-data>
+    (accountDataClicked)="fnGetCreditLoans($event)"  [bPdfPrint]="bPdfPrint"></app-bank-account-data>
     <div class="row" *ngIf="bShowLoanData">
     <div class="col-12"  >
       <div class="card card-bg" >
@@ -28,8 +28,8 @@
             
           </ngb-accordion>
 
-          <form class="col-12 hide-savingsDeposit" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingsDepositInfoSubmit()">
-            <div class="row">
+          <form class="col-12 hideSavingsDeposit" novalidate #_DailySavingDebitFormElem="ngForm" (ngSubmit)="fnOnDailySavingsDepositInfoSubmit()">
+            <div class="row ">
              <!-- <div class="col-sm-6" *ngIf="bIsDeposit">
                 <div class="form-group">
                    <label for="sDate">Start Date</label>       

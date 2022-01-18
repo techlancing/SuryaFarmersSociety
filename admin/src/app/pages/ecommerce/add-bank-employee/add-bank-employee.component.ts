@@ -173,7 +173,12 @@ aBankEmployees: Array<BankEmployee>;
     this.oBankEmployeeModel.sBranchName === ''||
     this.oBankEmployeeModel.sPlace === ''||
     this.oBankEmployeeModel.sAadharNo === ''||
-    this.oBankEmployeeModel.sJoiningDate=== ''
+    this.oBankEmployeeModel.sJoiningDate=== ''||
+    this.oBankEmployeeModel.oPassportImageInfo === null ||
+    this.oBankEmployeeModel.oAadharUpload === null ||
+    this.oBankEmployeeModel.oBankPassBookUpload === null ||
+    this.oBankEmployeeModel.oCallLetterUpload === null ||
+    this.oBankEmployeeModel.oEmployeePhotoUpload === null
     ){
       this.fnShowFieldsAreEmpty();
       return;

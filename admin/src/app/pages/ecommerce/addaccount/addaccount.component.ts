@@ -329,7 +329,12 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.sMobileNumber === '' ||
     this.oBankAccountModel.sEmail === '' ||
     this.oBankAccountModel.nAmount === null ||
-    this.oBankAccountModel.sEmployeeName === ''){
+    this.oBankAccountModel.sEmployeeName === ''||
+    this.oBankAccountModel.oDocument1Info === null ||
+    this.oBankAccountModel.oDocument2Info === null ||
+    this.oBankAccountModel.oPassportImageInfo === null ||
+    this.oBankAccountModel.oSignature1Info === null ||
+    this.oBankAccountModel.oSignature2Info === null){
       this.fnMessage('Please fill all the fields.','warning');
       return;
     }

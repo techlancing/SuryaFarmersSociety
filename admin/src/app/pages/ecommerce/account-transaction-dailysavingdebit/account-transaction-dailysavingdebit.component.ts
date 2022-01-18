@@ -35,6 +35,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   public headerText : string;
   aUsers: Array<BankEmployee>;
   nBalance : number ;
+  public bPdfPrint : boolean = false ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 

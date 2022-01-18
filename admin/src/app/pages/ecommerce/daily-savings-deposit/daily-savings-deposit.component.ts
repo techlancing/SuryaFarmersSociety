@@ -33,6 +33,7 @@ export class DailySavingsDepositComponent implements OnInit {
   bIsAddActive: boolean;
   bIsEditActive: boolean;
   public headerText : string;
+  public bPdfPrint : boolean = false ;
   aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')

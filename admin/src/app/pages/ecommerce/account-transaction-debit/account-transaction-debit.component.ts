@@ -34,7 +34,6 @@ export class AccountTransactionDebitComponent implements OnInit {
   bShowLoanData : boolean;
   aUsers: Array<BankEmployee>;
 
-
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
