@@ -274,7 +274,7 @@
               <div class="form-group">
                 <label for="sVoterIdNo">Voter ID Number</label>                  
                 <input id="sVoterIdNo" name="sVoterIdNo" [(ngModel)]="oBankAccountModel.sVoterIdNo" type="text"
-                  class="form-control" (change)="fnValidateVoterId()">
+                  class="form-control" (change)="fnvalidate(oBankAccountModel.sVoterIdNo,sVotterPattern,'voter')">
                   <p *ngIf="bErrorVoterId" class="error">* please enter valid Voter Id.</p>
               </div>
             </div>
@@ -282,7 +282,7 @@
               <div class="form-group">
                 <label for="sAadharNo">Aadhar Number</label>                  
                 <input id="sAadharNo" name="sAadharNo" [(ngModel)]="oBankAccountModel.sAadharNo" type="text"
-                  class="form-control" (change)="fnValidateAadhar()">
+                  class="form-control" (change)="fnvalidate(oBankAccountModel.sAadharNo,sAadharPattern,'aadhar')">
                   <p *ngIf="bErrorAadhar" class="error">* please enter valid Aadhar Number.</p>
               </div>
             </div>
@@ -290,7 +290,7 @@
               <div class="form-group">
                 <label for="sRationCardNo">Ration Card Number</label>                  
                 <input id="sRationCardNo" name="sRationCardNo" [(ngModel)]="oBankAccountModel.sRationCardNo" type="text"
-                  class="form-control" (change)="fnValidateRationCard()">
+                  class="form-control" (change)="fnvalidate(oBankAccountModel.sRationCardNo,sRationCardPattern,'ration')">
                   <p *ngIf="bErrorRation" class="error">* please enter valid Ration Card Number.</p>
               </div>
             </div>
@@ -334,7 +334,7 @@
               <div class="form-group">
                 <label for="sPinCode">Pin Code</label>                  
                 <input id="sPinCode" name="sPinCode" [(ngModel)]="oBankAccountModel.sPinCode" type="number"
-                  class="form-control" (change) = "fnValidatePinCode()">
+                  class="form-control" (change) = "fnvalidate(oBankAccountModel.sPinCode+'',sPincodePattern,'pin')">
                   <p *ngIf="bErrorPin" class="error">* please enter valid Pincode.</p>
               </div>
             </div>
@@ -342,7 +342,7 @@
               <div class="form-group">
                 <label for="sMobileNumber">Mobile Number</label>                  
                 <input id="sMobileNumber" name="sMobileNumber" [(ngModel)]="oBankAccountModel.sMobileNumber" type="tel"
-                  class="form-control" (change) = "fnValidateMobileNumber()">
+                  class="form-control" (change) = "fnvalidate(oBankAccountModel.sMobileNumber,sMobilePattern,'mobile')">
                   <p *ngIf="bErrorMobile" class="error">* please enter valid Mobile Number.</p>
               </div>
             </div>
@@ -350,7 +350,7 @@
               <div class="form-group">
                 <label for="sUserEmail">Email Id</label>                  
                 <input id="sUserEmail" name="sUserEmail" [(ngModel)]="oBankAccountModel.sEmail" type="email"
-                  class="form-control" >
+                  class="form-control" (change)="fnvalidate(oBankAccountModel.sEmail,sMailPattern,'email')">
                   <p *ngIf="bErrorEmail" class="error">* please enter valid email address.</p>
               </div>
             </div>

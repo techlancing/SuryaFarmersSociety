@@ -45,11 +45,11 @@ export class AddaccountComponent implements OnInit {
   bErrorMobile : boolean;
   bErrorEmail : boolean ;
   sVotterPattern : string = '^([a-zA-Z]){3}([0-9]){7}$';
-  sAadharPattern : string = '^[2-9]{1}[0-9]{3}\\s{0, 1}[0-9]{4}\\s{0, 1}[0-9]{4}$';
-  sRationCardPattern :string = '^([a-zA-Z0-9]){8,12}\s*$';
-  sMobilePattern : string = '^\\(+91-){0,1}[5-9]{1}[0-9]{9}$';
+  sAadharPattern : string = '^[2-9]{1}[0-9]{3}\\s{0,1}[0-9]{4}\\s{0,1}[0-9]{4}$';
+  sRationCardPattern :string = '^([a-zA-Z0-9a-zA-Z]){8,12,15}\\s*$';
+  sMobilePattern : string = '([+]{0,1}91[\\s]*)?[6-9]{1}[0-9]{9}$';
   sPincodePattern : string = '^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$';
-  sMailPattern : string = '^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-]+ )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}$';
+  sMailPattern : string = '^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$';
   aUsers: Array<BankEmployee>;
 
   @ViewChild('_BankAccountFormElem')
@@ -433,9 +433,7 @@ export class AddaccountComponent implements OnInit {
    */
   openModal(content: any, index) {
     this.nSelectedEditIndex = index;
-
     this.modalService.open(content, { centered: true });
-
   }
 
   fnValidateNominee(){
@@ -453,57 +451,9 @@ export class AddaccountComponent implements OnInit {
       else this.bErrorNomineeRelation = false ;
     }
   }
-  fnValidateVoterId(){
-    if(this.oBankAccountModel.sVoterIdNo !==null){
-      let votterPattern = '^([a-zA-Z]){3}([0-9]){7}$';
-      if(!this.oBankAccountModel.sVoterIdNo.trim().match(votterPattern))
-        this.bErrorVoterId = true ;
-      else this.bErrorVoterId = false ;
-    }
-  }
-  fnValidateAadhar(){
-    if(this.oBankAccountModel.sAadharNo !== null){
-      let aadharPattern = '^[2-9]{1}[0-9]{3}\\s{0,1}[0-9]{4}\\s{0,1}[0-9]{4}$';
-      if(!this.oBankAccountModel.sAadharNo.trim().match(aadharPattern) )
-        this.bErrorAadhar = true ;
-      else this.bErrorAadhar = false ;
-    }
-  }
-  fnValidateRationCard(){
-    if(this.oBankAccountModel.sRationCardNo !== null){
-      let rationCardPattern = '^([a-zA-Z0-9]){8,12}\\s*$';
-      if(!this.oBankAccountModel.sRationCardNo.trim().match(rationCardPattern))
-        this.bErrorRation = true ;
-      else this.bErrorRation = false ;
-    }
-  }
-  fnValidateMobileNumber(){
-    if(this.oBankAccountModel.sMobileNumber !== null){
-      let mobilePattern = '^[6-9]{1}[0-9]{9}$';
-      if(!this.oBankAccountModel.sMobileNumber.trim().match(mobilePattern))
-        this.bErrorMobile = true ;
-      else this.bErrorMobile = false ;
-    }
-  }
-  fnValidatePinCode(){
-    if(this.oBankAccountModel.sPinCode !==null){
-      let pincodePattern = '^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$';
-      if(!(this.oBankAccountModel.sPinCode+'').trim().match(pincodePattern))
-        this.bErrorPin = true ;
-      else this.bErrorPin =false ;
-    }
-  }
-  fnIsEmail(){
-    if(this.oBankAccountModel.sEmail !== null){
-      let mailPattern = '^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-]+ )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}$';
-      if(!this.oBankAccountModel.sEmail.trim().match(mailPattern))
-        this.bErrorEmail = true ;
-      else this.bErrorEmail = false ;
-    }
-  }
   fnvalidate(property : string, pattern : string, sErrorName : string){
     if(property !== null){
-      if(property.trim().match(pattern)) this.fnEnableOrDisableError(sErrorName,true);
+      if(!property.trim().match(pattern)) this.fnEnableOrDisableError(sErrorName,true);
       else this.fnEnableOrDisableError(sErrorName,false);
     }
   }
