@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit, AfterViewInit {
   /**
    * On submit form
    */
-  onSubmit() {/*
+  onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -59,6 +59,6 @@ export class SignupComponent implements OnInit, AfterViewInit {
           console.log(error);
           this.error = error ? error : '';
         });
-    }*/
+    }
   }
 }
