@@ -20,6 +20,7 @@ export class BankEmployee {
         public sPlace : string = '',
         public sAadharNo : string = '',
         public sJoiningDate : string = '',
+        public sStatus : string = '',
         public oPassportImageInfo: ImageInfo = null, 
         public oEmployeePhotoUpload: ImageInfo = null,
         public oBankPassBookUpload: ImageInfo = null,

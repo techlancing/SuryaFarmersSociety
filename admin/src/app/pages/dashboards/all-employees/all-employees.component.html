@@ -33,7 +33,7 @@
                 <td>{{user.sJoiningDate}}</td>
                 <td>
                   <ng-select [items]="aChairman" name="sChairman"
-                      bindLabel="displayText" bindValue="value">
+                      bindLabel="displayText" bindValue="value" [(ngModel)]="oBankEmployeeModel.sStatus">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>

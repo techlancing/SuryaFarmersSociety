@@ -35,4 +35,8 @@ export class BankEmployeeService {
       const sMethodUrl = `${this.sRootUrl}/delete_bankemployee`;
       return this.http.post(sMethodUrl, oBankEmployee);
   }
+  fnBankEmployeeApprovalStatusInfo(sStatus: string) {
+    const sMethodUrl = `${this.sRootUrl}/edit_bankemployee`;
+    return this.http.post(sMethodUrl, sStatus);
+  }
 }

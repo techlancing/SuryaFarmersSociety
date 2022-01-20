@@ -79,6 +79,10 @@ var oBankEmployeeSchema = new oSchema({
     type: String,
     trim: true
   },
+  sStatus : {
+    type: String,
+    trim: true
+  },
   oPassportImageInfo: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oEmployeePhotoUpload: {type: oSchema.Types.ObjectId, ref: 'Image'},
   oBankPassBookUpload: {type: oSchema.Types.ObjectId, ref: 'Image'},

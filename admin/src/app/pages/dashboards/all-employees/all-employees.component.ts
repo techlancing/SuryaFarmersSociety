@@ -8,6 +8,7 @@ import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-employees',
@@ -35,22 +36,23 @@ export class AllEmployeesComponent implements OnInit {
 
   // page
   currentpage: number;
-  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal) { }
+  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal,
+    public oBankEmployeeModel : BankEmployee) { }
 
   ngOnInit(): void {
 
     this.aChairman=[
       {
         displayText: 'Approve',
-        value:'01'
+        value:'approved'
       },
       {
       displayText: 'Reject',
-        value:'02'
+        value:'rejected'
       },
       {
         displayText: 'Pending',
-          value:'02'
+          value:'pending'
         }
 
     ]
@@ -74,6 +76,20 @@ export class AllEmployeesComponent implements OnInit {
  this.modalService.open(content, { centered: true, size: 'xl' });
 }
 
+fnChangeEmployeeApprovalStatus(){
+  this.oBankEmployeeService.fnBankEmployeeApprovalStatusInfo(this.oBankEmployeeModel.sStatus).subscribe((data) => {
+    this.fnSuccessMessage();
+  });
+}
+fnSuccessMessage(){
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'District is saved sucessfully.',
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
 
 }
 
