@@ -20,6 +20,7 @@ export class DefaultComponent implements OnInit {
   nAllCreditLoanBalance : any ;
   nAllSavingsBalance : any ;
   nTotalBalance : number ;
+  nEqualAccountsCount : number ;
 
   constructor(private oBankAccountService : BankAccountService,
     private oCreditLoanService: CreditLoanService) { }
@@ -42,9 +43,12 @@ export class DefaultComponent implements OnInit {
         this.nAllSavingsBalance = Number((Math.round(this.nAllSavingsBalance*100)/100).toFixed(2));
         this.nTotalBalance = Number((Math.round((this.nAllCreditLoanBalance-this.nAllSavingsBalance)*100)/100).toFixed(2));
       });
-  
+      
     });
-   
+    
+    this.oBankAccountService.fnGetEqualAccountsCount().subscribe((data) => {
+      this.nEqualAccountsCount = data as any ;
+    });
     this.fetchData();
   }
   
