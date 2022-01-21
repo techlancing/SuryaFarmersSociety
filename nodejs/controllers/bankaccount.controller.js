@@ -280,6 +280,25 @@ obankaccountRouter.post("/getaccountbynumber", oAuthentication, asyncMiddleware(
   }
 }));
 
+// url: ..../bankaccount/getequalaccountscount
+obankaccountRouter.get("/getequalaccountscount", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let obankaccount = await obankaccountModel.find({bIsDeactivated : false});
+    let nEqualAccounts = 0;
+    if(obankaccount.length >= 0){
+      await Promise.all(obankaccount.map(async (oAccount) => {
+      let oTransaction = await oTransactionModel.find({nAccountId : oAccount.nAccountId});
+        if(oTransaction.length == 1)
+          nEqualAccounts = nEqualAccounts + 1;
+      }));
+      oRes.json(nEqualAccounts.length);
+    } 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+
+}));
 
 // url: ..../bankaccount/getlastaccountinvillage
 obankaccountRouter.post("/getlastaccountinvillage", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {

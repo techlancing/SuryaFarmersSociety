@@ -140,5 +140,23 @@ oBankEmployeeRouter.get("/bankemployee_list", oAuthentication, asyncMiddleware(a
     }
 }));
 
+// url: ..../bankemployee/set_bankemployee_status
+oBankEmployeeRouter.post("/set_bankemployee_status", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
+  try{
+    const oBankEmployee = await oBankEmployeeModel.findOne({nEmployeeID : oReq.body.nEmployeeID});
+
+    if(!oBankEmployee){
+      return oRes.status(400).send();
+    }
+    oBankEmployee.sStatus = oReq.body.sStatus;
+
+    await oBankEmployee.save();
+    oRes.json("Success"); 
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+
+}));
 
 module.exports = oBankEmployeeRouter;
