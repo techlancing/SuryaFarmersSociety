@@ -1,6 +1,5 @@
 import { MenuItem } from './menu.model';
-let menu: MenuItem[];
-menu = [
+export const PMENU: MenuItem[] = [
     {
         id: 1,
         label: 'MENUITEMS.MENU.TEXT',
@@ -28,12 +27,6 @@ menu = [
                 id: 21,
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
                 link: '/addvillage',
-                parentId: 10
-            },
-            {
-                id: 25,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDEMPLOYEE',
-                link: '/addemployee',
                 parentId: 10
             },
             {
@@ -172,4 +165,3 @@ menu = [
     }
 
 ];
-export const PMENU: MenuItem[] = menu;

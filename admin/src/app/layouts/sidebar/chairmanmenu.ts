@@ -1,113 +1,111 @@
 import { MenuItem } from './menu.model';
-let menu: MenuItem[];
-        menu = [
+export const CMENU: MenuItem[] = [
+    {
+        id: 1,
+        label: 'MENUITEMS.MENU.TEXT',
+        isTitle: true
+    },
+    {
+        id: 2,
+        label: 'MENUITEMS.DASHBOARDS.TEXT',
+        icon: 'bx-home-circle',
+        subItems: [
             {
-                id: 1,
-                label: 'MENUITEMS.MENU.TEXT',
-                isTitle: true
+                id: 3,
+                label: 'MENUITEMS.DASHBOARDS.LIST.DEFAULT',
+                link: '/dashboard',
+                parentId: 2
             },
             {
-                id: 2,
-                label: 'MENUITEMS.DASHBOARDS.TEXT',
-                icon: 'bx-home-circle',
-                subItems: [
-                    {
-                        id: 3,
-                        label: 'MENUITEMS.DASHBOARDS.LIST.DEFAULT',
-                        link: '/dashboard',
-                        parentId: 2
-                    },
-                    {
-                        id: 4,
-                        label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
-                        link: '/allaccounts',
-                        parentId: 2
-                    },
-                    {
-                        id: 5,
-                        label: 'MENUITEMS.DASHBOARDS.LIST.ALLEMPLOYEES',
-                        link: '/allemployees',
-                        parentId: 2
-                    }
-                ]
+                id: 4,
+                label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
+                link: '/allaccounts',
+                parentId: 2
             },
             {
-                id: 35,
-                label: 'MENUITEMS.PASSBOOK.TEXT',
-                icon: 'bx-book-open',
-                subItems: [
-                    {
-                        id: 36,
-                        label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
-                        link: '/passbookprint',
-                        parentId: 35
-                    },
-                    {
-                        id: 37,
-                        label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
-                        link: '/alltranactionprint',
-                        parentId: 35
-                    },
-                    {
-                        id: 38,
-                        label: 'MENUITEMS.PASSBOOK.LIST.BALANCEENQUIRY',
-                        link: '/accountBalanceEnquiry',
-                        parentId: 35
-                    },
-                    {
-                        id: 39,
-                        label: 'MENUITEMS.PASSBOOK.LIST.BANKACCOUNTSTATEMENT',
-                        link: '/accountStatement',
-                        parentId: 35
-                    }
-                ]
-            },
-            {
-                id: 48,
-                label: 'MENUITEMS.REPORTS.TEXT',
-                icon: 'bxs-report',
-                subItems: [
-                    {
-                        id: 60,
-                        label: 'MENUITEMS.REPORTS.LIST.DAYWISETRANSACTIONREPORT',
-                        link: '/DayWiseTransaction',
-                        parentId: 48
-                    },
-                    {
-                        id: 61,
-                        label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVE',
-                        link: '/DayWiseCumulative',
-                        parentId: 49
-                    },
-                    {
-                        id: 60,
-                        label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVEACCOUNT',
-                        link: '/DayWiseCumulativeAccount',
-                        parentId: 50
-                    },
-                    {
-                        id: 60,
-                        label: 'MENUITEMS.REPORTS.LIST.LAST12MONTHSTRANSACTION',
-                        link: '/Last12MonthsTransaction',
-                        parentId: 52
-                    },
-                    {
-                        id: 60,
-                        label: 'MENUITEMS.REPORTS.LIST.CATEGORYBALANCESUMMARY',
-                        link: '/CategoryBalanceSummary',
-                        parentId: 53
-                    },
-                    {
-                        id: 60,
-                        label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYBALANCESUMMARY',
-                        link: '/AllCategoryBalanceSummary',
-                        parentId: 54
-                    }
-                ]
+                id: 5,
+                label: 'MENUITEMS.DASHBOARDS.LIST.ALLEMPLOYEES',
+                link: '/allemployees',
+                parentId: 2
             }
-        ];
- 
-export const CMENU: MenuItem[] = menu;
+        ]
+    },
+    {
+        id: 35,
+        label: 'MENUITEMS.PASSBOOK.TEXT',
+        icon: 'bx-book-open',
+        subItems: [
+            {
+                id: 36,
+                label: 'MENUITEMS.PASSBOOK.LIST.PASSBOOKPRINT',
+                link: '/passbookprint',
+                parentId: 35
+            },
+            {
+                id: 37,
+                label: 'MENUITEMS.PASSBOOK.LIST.ALLTRANSACTIONPRINT',
+                link: '/alltranactionprint',
+                parentId: 35
+            },
+            {
+                id: 38,
+                label: 'MENUITEMS.PASSBOOK.LIST.BALANCEENQUIRY',
+                link: '/accountBalanceEnquiry',
+                parentId: 35
+            },
+            {
+                id: 39,
+                label: 'MENUITEMS.PASSBOOK.LIST.BANKACCOUNTSTATEMENT',
+                link: '/accountStatement',
+                parentId: 35
+            }
+        ]
+    },
+    {
+        id: 48,
+        label: 'MENUITEMS.REPORTS.TEXT',
+        icon: 'bxs-report',
+        subItems: [
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISETRANSACTIONREPORT',
+                link: '/DayWiseTransaction',
+                parentId: 48
+            },
+            {
+                id: 61,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVE',
+                link: '/DayWiseCumulative',
+                parentId: 49
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.DAYWISECUMULATIVEACCOUNT',
+                link: '/DayWiseCumulativeAccount',
+                parentId: 50
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.LAST12MONTHSTRANSACTION',
+                link: '/Last12MonthsTransaction',
+                parentId: 52
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.CATEGORYBALANCESUMMARY',
+                link: '/CategoryBalanceSummary',
+                parentId: 53
+            },
+            {
+                id: 60,
+                label: 'MENUITEMS.REPORTS.LIST.ALLCATEGORYBALANCESUMMARY',
+                link: '/AllCategoryBalanceSummary',
+                parentId: 54
+            }
+        ]
+    }
+];
+
 
 /*export const MENU: MenuItem[] = [
     {
