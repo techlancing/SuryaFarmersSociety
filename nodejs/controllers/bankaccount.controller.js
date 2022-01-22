@@ -291,7 +291,7 @@ obankaccountRouter.get("/getequalaccountscount", oAuthentication, asyncMiddlewar
         if(oTransaction.length == 1)
           nEqualAccounts = nEqualAccounts + 1;
       }));
-      oRes.json(nEqualAccounts.length);
+      oRes.json(nEqualAccounts);
     } 
   }catch(e){
     console.log(e);

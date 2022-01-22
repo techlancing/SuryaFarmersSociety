@@ -66,7 +66,7 @@ export class BankAccountService {
       return this.http.post(sMethodUrl,{sAccountNo:sAccountNo,bIsDeactivated:bIsDeactivated});
   }
   fnGetEqualAccountsCount(){
-    const sMethodUrl = `${this.sRootUrl}/getallsavingsaccountbalance`;
+    const sMethodUrl = `${this.sRootUrl}/getequalaccountscount`;
     return this.http.get(sMethodUrl);
   }
 }

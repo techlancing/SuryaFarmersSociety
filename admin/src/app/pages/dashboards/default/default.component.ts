@@ -47,6 +47,7 @@ export class DefaultComponent implements OnInit {
     });
     
     this.oBankAccountService.fnGetEqualAccountsCount().subscribe((data) => {
+      console.log(data);
       this.nEqualAccountsCount = data as any ;
     });
     this.fetchData();
