@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/core/models/auth.models';
 
 @Component({
   selector: 'app-all-employees',
@@ -25,19 +26,27 @@ export class AllEmployeesComponent implements OnInit {
   @Input() bHideBreadCrumb: boolean = false;
 
   nSelectedProductIndex : number;
-  
-
+  public account : any ;
+  public statusUpdate : boolean ;
   public oDropZone: DropzoneComponent;
   aChairman : Array<
   {
     displayText:string,
     value:string
   }>;
-
+  rChairman : Array<
+  {
+    displayText:string,
+    value:string
+  }>;
+  pChairman : Array<
+  {
+    displayText:string,
+    value:string
+  }>;
   // page
   currentpage: number;
-  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal,
-    public oBankEmployeeModel : BankEmployee) { }
+  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
 
@@ -53,10 +62,38 @@ export class AllEmployeesComponent implements OnInit {
       {
         displayText: 'Pending',
           value:'pending'
-        }
+      }
+    ];
 
-    ]
+    this.rChairman =[
+      {
+        displayText: 'Reject',
+        value: 'rejected'
+      },
+      {
+        displayText: 'Pending',
+        value: 'pending'
+      },
+      {
+        displayText: 'Approve',
+        value: 'approved'
+      }
+    ];
 
+    this.pChairman = [
+      {
+        displayText: 'Pending',
+        value: 'pending'
+      },
+      {
+        displayText: 'Approve',
+        value: 'approved'
+      },
+      {
+        displayText: 'Reject',
+        value: 'rejected'
+      }
+    ] ;
     this.breadCrumbItems = [{ label: 'Ecommece' }, { label: 'EndUsers', active: true }];
 
     this.currentpage = 1;
@@ -64,6 +101,7 @@ export class AllEmployeesComponent implements OnInit {
       console.log('users',users);
       this.aUsers = users;
   });
+  this.account = JSON.parse(localStorage.getItem('userData'));
   
 }
 /**
@@ -76,16 +114,22 @@ export class AllEmployeesComponent implements OnInit {
  this.modalService.open(content, { centered: true, size: 'xl' });
 }
 
-fnChangeEmployeeApprovalStatus(){
-  this.oBankEmployeeService.fnBankEmployeeApprovalStatusInfo(this.oBankEmployeeModel.sStatus).subscribe((data) => {
+fnChangeEmployeeApprovalStatus(oBankemployee : BankEmployee, sStatus : string){
+  oBankemployee.sStatus = sStatus ;
+  this.oBankEmployeeService.fnBankEmployeeApprovalStatusInfo(oBankemployee).subscribe((data) => {
     this.fnSuccessMessage();
+    this.ngOnInit();
   });
+}
+
+fnUpdate(){
+  this.statusUpdate = true ;
 }
 fnSuccessMessage(){
   Swal.fire({
     position: 'center',
     icon: 'success',
-    title: 'District is saved sucessfully.',
+    title: 'Employee status updated Successfully.',
     showConfirmButton: false,
     timer: 1500
   });

@@ -13,7 +13,7 @@
            <div class="row mb-md-2">
                 
          <div class="table-responsive">
-          <table class="table table-centered " id="basic-datatable">
+          <table class="table table-centered tableText" id="basic-datatable">
             <thead>
               <tr>
                 <th>EmployeeId</th>
@@ -31,16 +31,27 @@
                 <td>{{user.sEmployeeName}}</td>
                 <td>{{user.sMobileNumber}}</td>
                 <td>{{user.sJoiningDate}}</td>
-                <td>
-                  <ng-select [items]="aChairman" name="sChairman"
-                      bindLabel="displayText" bindValue="value" [(ngModel)]="oBankEmployeeModel.sStatus">
+                <!--<td> 
+                  <ng-select [items]="aChairman" [(ngModel)]="user.sStatus" name="sChairman"
+                      bindLabel="displayText" bindValue="value" (change)="fnUpdate()">
                       <ng-template ng-label-tmp let-item="item">
                         {{item.displayText}}
                       </ng-template>
                   </ng-select>
+                </td>-->
+                <td><label for="employee-status" class="status">{{user.sStatus}}</label></td>
+                <td class="buttonDisplay">
+                  <button class="btn btn-primary" *ngIf="account.sRole==='chairman'"
+                  (click)="fnChangeEmployeeApprovalStatus(user,'approve')" [disabled]="user.sStatus==='approve'"><i
+                  class="mdi mdi-employee-edit" >Approve</i></button>
+
+                  <button class="btn btn-primary"  *ngIf="account.sRole==='chairman'"
+                  (click)="fnChangeEmployeeApprovalStatus(user,'reject')" [disabled]="user.sStatus==='reject'"><i
+                  class="mdi mdi-employee-edit" >Reject</i></button>
+
+                 <button class="btn btn-primary" (click)="openModal(accountcontent,i)" *ngIf="account.sRole==='manager'"><i
+                      class="mdi mdi-employee-edit" >Edit</i></button>
                 </td>
-                 <td><button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                      class="mdi mdi-employee-edit">Edit</i></button></td>
                 <td>
                   <button class="btn btn-primary" (click)="openModal(accountcontentviewemployee,i)">
                     <i class="mdi mdi-employee-edit">Show Details</i></button>

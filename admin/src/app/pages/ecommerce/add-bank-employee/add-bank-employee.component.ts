@@ -189,6 +189,7 @@ aBankEmployees: Array<BankEmployee>;
     if (this.oBankEmployeeModel.sJoiningDate !== undefined && this.oBankEmployeeModel.sJoiningDate !== '')
       this.oBankEmployeeModel.sJoiningDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankEmployeeModel.sJoiningDate);
     if (!this.bisEditMode) {
+      this.oBankEmployeeModel.sStatus = 'pending' ;
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
