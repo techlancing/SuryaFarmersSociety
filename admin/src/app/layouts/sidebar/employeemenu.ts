@@ -40,7 +40,13 @@ export const PMENU: MenuItem[] = [
                 label: 'MENUITEMS.ECOMMERCE.LIST.CREDITLOAN',
                 link: '/creditloan',
                 parentId: 40
-            }
+            },
+            {
+                id: 80,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDTYPEOFSAVINGS',
+                link: '/savingstype',
+                parentId: 40
+            },
 
         ]
     },

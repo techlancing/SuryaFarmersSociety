@@ -112,7 +112,8 @@
         "ADDVILLAGE": "Add Village",
         "ADDACCOUNT": "Add New Account",
         "ADDEMPLOYEE": "Add Employee",
-        "CREDITLOAN": "Add New Loan"
+        "CREDITLOAN": "Add New Loan",
+        "ADDTYPEOFSAVINGS" : "Add Type Of Savings"
       }
     },
     "PASSBOOK": {
