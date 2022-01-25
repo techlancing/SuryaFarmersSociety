@@ -1,7 +1,7 @@
 const oExpress = require('express');
 const oMongoose = require('mongoose');
 //const request = require('request');
-
+const http = require('https');
 const oDebitModel = require("../data_base/models/debit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
@@ -62,32 +62,43 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
 
       if(oTransaction.nBalanceAmount > 0){
         oCreditLoan.oTransactionInfo.push(newTransaction);
-      /* const msg=encodeURIComponent(`Dear customer your acc no: 1234 is Debited with INR 20 on 27-12-2021. 
-        txn id: 123. Available balance is INR 50 . 
-        Surya cooperative society limited, ADPNXT Technologies.`); 
-        const number='919043237478';
-        const apikey='NjQ2YTRiMzU0YjYxNzk0MzU5NjMzMzM2NzE0YjZhMzc=';
-        
-        const sender='TXTLCL';
-        let data=`apikey=${apikey}&sender=${sender}&numbers=${number}&message=${msg}`
-        // var options = {
-        // host: 'api.textlocal.in',
-        //   path: '/send?'+data
-        // };
-        let posturl = 'https://api.textlocal.in/send?'+ data;
-        console.log(posturl);
-        request({
-          method:'POST',
-          url: posturl,
-          headers:{
-            "Content-Type": "application/x-www-form-urlencoded"
+        /* SmS code Start */
+        const options = {
+          "method": "POST",
+          "hostname": "api.msg91.com",
+          "port": null,
+          "path": "/api/v5/flow/",
+          "headers": {
+            "authkey": "371253A5XBmjXj61cc5295P1",
+            "content-type": "application/JSON"
           }
-          
-        },(error, response)=>{
-          console.log('error:', error); // Print the error if one occurred
-          console.log('statusCode:', response && response.statusCode);
-          oRes.json(response);
-        });*/
+        };
+        
+        const req = http.request(options, function (res) {
+          const chunks = [];
+        
+          res.on("data", function (chunk) {
+            chunks.push(chunk);
+          });
+        
+          res.on("end", function () {
+            const body = Buffer.concat(chunks);
+            console.log(body.toString());
+          });
+        });
+        //get mobile number from account number 
+        const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
+       //credit message for customers
+        req.write(`{\n  \"flow_id\": \"61cee8fed95a77467e5a686a\",\n  
+        \"sender\": \"ADPNXT\",\n  
+        \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+        \"acno\": \"${newTransaction.sAccountNo}\",\n  
+        \"amount\": \"${newTransaction.nDebitAmount}\",\n  
+        \"date\":\"${newTransaction.sDate}\",\n  
+        \"tid\":\"${newTransaction.nTransactionId}\",\n  
+        \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+      req.end();
+      /* SmS code End */
       } 
       else
         oCreditLoan.sLoanStatus = 'Completed';
