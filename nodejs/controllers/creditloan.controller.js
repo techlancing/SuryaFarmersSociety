@@ -1,6 +1,6 @@
 const oExpress = require('express');
 const oMongoose = require('mongoose');
-
+const http = require('https');
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oAuthentication = require("../middleware/authentication");
@@ -41,7 +41,45 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
     newCreditLoan.oTransactionInfo = newTransaction._id;
     newCreditLoan.sLoanStatus = "Active";
     await newCreditLoan.save();
+/* SmS code Start */
+if (process.env.IS_PRODUCTION === "YES"){
+  const options = {
+    "method": "POST",
+    "hostname": "api.msg91.com",
+    "port": null,
+    "path": "/api/v5/flow/",
+    "headers": {
+      "authkey": "371253A5XBmjXj61cc5295P1",
+      "content-type": "application/JSON"
+    }
+  };
 
+  const req = http.request(options, function (res) {
+    const chunks = [];
+
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+
+    res.on("end", function () {
+      const body = Buffer.concat(chunks);
+      console.log(body.toString());
+    });
+  });
+  //get mobile number from account number 
+  const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
+  //debit message for customers
+  req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
+  \"sender\": \"ADPNXT\",\n  
+  \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+  \"acno\": \"${newTransaction.sAccountNo}\",\n  
+  \"amount\": \"${newTransaction.nCreditAmount}\",\n  
+  \"date\":\"${newTransaction.sDate}\",\n  
+  \"tid\":\"${newTransaction.nTransactionId}\",\n  
+  \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+  req.end();
+}
+/* SmS code End */
     oRes.json("Success");
 
   }catch(e){

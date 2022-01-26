@@ -63,6 +63,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
       if(oTransaction.nBalanceAmount > 0){
         oCreditLoan.oTransactionInfo.push(newTransaction);
         /* SmS code Start */
+        if (process.env.IS_PRODUCTION === "YES"){
         const options = {
           "method": "POST",
           "hostname": "api.msg91.com",
@@ -98,6 +99,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
         \"tid\":\"${newTransaction.nTransactionId}\",\n  
         \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
       req.end();
+        }
       /* SmS code End */
       } 
       else
