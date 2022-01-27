@@ -74,6 +74,6 @@ var oSavingsTypeSchema = new oSchema({
   },
   oTransactionInfo: [{type: oSchema.Types.ObjectId, ref: 'Transaction'}]
 });
-oSavingsTypeSchema.plugin(oAutoIncrement, { inc_field: 'nSavingsId', inc_amount: 1, start_seq: 100000 });
+oSavingsTypeSchema.plugin(oAutoIncrement, { inc_field: 'nSavingsId', inc_amount: 1, start_seq: 850000 });
 
 module.exports = oMongoose.model("SavingsType", oSavingsTypeSchema);
