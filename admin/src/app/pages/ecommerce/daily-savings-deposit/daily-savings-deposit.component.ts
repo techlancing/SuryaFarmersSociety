@@ -14,6 +14,7 @@ import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import { DailySavingDebit } from 'src/app/core/models/dailysavingdebit.model';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 
 @Component({
   selector: 'app-daily-savings-deposit',
@@ -27,6 +28,7 @@ export class DailySavingsDepositComponent implements OnInit {
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() oEditBankAccount: DailySavingsDeposit;
+  @Output() savingDepositClicked = new EventEmitter<any>();
 
   public oDailySavingsDepositModel: DailySavingsDeposit;
   nSelectedEditIndex: number;
@@ -35,7 +37,11 @@ export class DailySavingsDepositComponent implements OnInit {
   public headerText : string;
   public bPdfPrint : boolean = false ;
   aUsers: Array<BankEmployee>;
-
+  aSavingDeposit : any ;
+  aSelectTransaction : any ;
+  aSavingsAndDailySavingsDeposit : any ;
+  sSelectedSavingType : string ;
+  bIsBtnActive : boolean ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -74,12 +80,6 @@ export class DailySavingsDepositComponent implements OnInit {
   };
   public bShowLoanData :boolean;
 
-  aLoanIssueEmployee : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
-
   public aTransactionModel : any;
 
   // bread crumb items
@@ -97,7 +97,8 @@ export class DailySavingsDepositComponent implements OnInit {
               public activatedroute : ActivatedRoute,
               private router: Router,
               private oBankEmployeeService: BankEmployeeService,
-              private oUtilitydateService : UtilitydateService) { }
+              private oUtilitydateService : UtilitydateService,
+              private oSavingstypeService : SavingstypeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -107,31 +108,10 @@ export class DailySavingsDepositComponent implements OnInit {
        this.aUsers = users;
      });
 
-     if(this.bIsDeposit){
-       this.headerText = "Daily Deposit Account";
-     }else{
-       this.headerText = "Daily WithDrawal Account";
-     }
-
-    this.aLoanIssueEmployee = [
-      {
-        displayText: 'Venkanna',
-        value:'01'
-      },
-      {
-        displayText: 'Bhaskar',
-        value:'02'
-      },
-      {
-        displayText: 'Naresh',
-        value:'03'
-      }
-    ];
-    
+    if(this.bIsDeposit) this.headerText = "Daily Deposit Account";
+    else this.headerText = "Daily WithDrawal Account";
     this.oDailySavingsDepositModel = new DailySavingDebit();
     this.oDailySavingsDepositModel.nTotaldays=1;
-    
-    
     this.bIsAddActive = false;
     this.bIsEditActive = false;
 
@@ -144,23 +124,57 @@ export class DailySavingsDepositComponent implements OnInit {
       this.sSuccessMsg = 'Amount withdrawn sucessfully.'
       this.bIsDeposit = false;
     }
-    
   }
 
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }
+ fnEnableButton(): void{
+  if(this.sSelectedSavingType.length > 0 ){
+    this.bIsBtnActive = true;
+  }
+}
 
-  fnGetCreditLoans(oSelectedAccount : BankAccount){
+  fnGetSavingsAccountTransactions(oSelectedAccount : BankAccount){
     this.oDailySavingsDepositModel.sAccountNo = oSelectedAccount.sAccountNo;
     this.oDailySavingsDepositModel.nAccountId = oSelectedAccount.nAccountId;
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
-      this.bShowLoanData = true;
+      //this.bShowLoanData = true;
+     
+    });
+    this.fnGetSavingDepositAccounts(oSelectedAccount);
+  }
+  fnGetSavingDepositAccounts(oSelectedAccount : BankAccount){
+    this.oSavingstypeService.fnGetAllSavingDepositAccountsInfo(oSelectedAccount.sAccountNo).subscribe((data) => {
+      this.aSavingDeposit = data as any ;
+      this.aSavingDeposit.push({
+        sAccountNo : oSelectedAccount,
+        sTypeofSavings : 'Savings Account'
+      });
+      this.aSavingDeposit.push( {
+        sAccountNo : oSelectedAccount,
+        sTypeofSavings : 'Daily Deposit Saving'
+      });
+      console.log(data);
+      
     });
   }
-
+  fnGetSavingsDeposit(){
+    if (this.sSelectedSavingType === 'Savings Account')
+      this.bShowLoanData = true;
+    else if (this.sSelectedSavingType === 'Daily Deposit Saving')
+      this.redirectTo("/dailysavingdebit");
+    else {
+      this.aSavingDeposit.map((savingdeposit) => {
+        if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
+          this.oSavingstypeService.oSavingsDeposit.next(savingdeposit);
+          this.redirectTo("/savingstypedeposittransaction");
+        }
+      });
+    }
+  }
   // new Date("dateString") is browser-dependent and discouraged, so we'll write
 // a simple parse function for U.S. date format (which does no error checking)
 fnParseDate(str) {
@@ -173,32 +187,6 @@ fnDatediff(first, second) {
   // Round to nearest whole number to deal with DST.
   return Math.round((second-first)/(1000*60*60*24));
 }
-/*
-fnCalculateDays(): void{
-
-  if (typeof this.oDailySavingsDepositModel.sStartDate === 'object' &&
-    typeof this.oDailySavingsDepositModel.sEndDate === 'object') {
-    this.oDailySavingsDepositModel.sStartDate = new Date(this.oDailySavingsDepositModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    this.oDailySavingsDepositModel.sEndDate = new Date(this.oDailySavingsDepositModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    const diffInMs = +(new Date(this.oDailySavingsDepositModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingsDepositModel.sStartDate.split("-").reverse().join("-")))
-    this.oDailySavingsDepositModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
-  }
-
-  if (typeof this.oDailySavingsDepositModel.sStartDate === 'object' &&
-    this.oDailySavingsDepositModel.sEndDate.length > 8) {
-    this.oDailySavingsDepositModel.sStartDate = new Date(this.oDailySavingsDepositModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    const diffInMs = +(new Date(this.oDailySavingsDepositModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingsDepositModel.sStartDate.split("-").reverse().join("-")))
-    this.oDailySavingsDepositModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
-  }
-
-  if (this.oDailySavingsDepositModel.sStartDate.length > 8 &&
-    typeof this.oDailySavingsDepositModel.sEndDate === 'object') {
-    this.oDailySavingsDepositModel.sEndDate = new Date(this.oDailySavingsDepositModel.sEndDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    const diffInMs = +(new Date(this.oDailySavingsDepositModel.sEndDate.split("-").reverse().join("-"))) - +(new Date(this.oDailySavingsDepositModel.sStartDate.split("-").reverse().join("-")))
-    this.oDailySavingsDepositModel.nTotaldays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
-  }
-
-}*/
 
 fnCalculateTotalAmount(): void{
   if(this.oDailySavingsDepositModel.nDayAmount !== undefined && this.oDailySavingsDepositModel.nTotaldays !== undefined){
@@ -208,10 +196,6 @@ fnCalculateTotalAmount(): void{
 }
 
 fnOnDailySavingsDepositInfoSubmit(): void {
-  //this.bIsAddActive = true;
- /* if(typeof this.oDailySavingsDepositModel.sStartDate === 'object' ){
-      this.oDailySavingsDepositModel.sStartDate = new Date(this.oDailySavingsDepositModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    }*/
     this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
     if(typeof this.oDailySavingsDepositModel.sEndDate === 'object' ){
       this.oDailySavingsDepositModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sEndDate);

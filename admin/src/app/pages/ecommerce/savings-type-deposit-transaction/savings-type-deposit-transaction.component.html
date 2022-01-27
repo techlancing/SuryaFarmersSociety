@@ -1,0 +1,135 @@
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="{{oSavingsDeposit.sTypeofSavings}}" [breadcrumbItems]="breadCrumbItems" 
+        bgimageclass="addcategory_header"></app-page-title>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <div class="savings-header">
+                        <div></div>
+                        <button type="button" class="btn btn-primary mr-1"><!--(click)="fnPrintPassBook()"-->
+                            print</button>
+                    </div>
+
+
+
+                    <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
+                        <ngb-panel id="static-1">
+                          <ng-template ngbPanelTitle class="text-black">
+                            <h2>{{oSavingsDeposit.sTypeofSavings}} - {{oSavingsDeposit.nDepositAmount}}</h2>
+                          </ng-template>
+                          <ng-template ngbPanelContent>
+                            <div class="row">
+                              <div class="col-sm-3"> 
+                                <div class="form-group">
+                                  <label for="sDate">{{oSavingsDeposit.sTypeofSavings}} Created Date:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.sStartDate}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sTypeofLoan">Type Saving Deposit:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.sTypeofSavings}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="nSanctionAmount">Deposited Amount:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.nDepositAmount}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="nIntrest">Intrest:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.nIntrest}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="nTotalAmount">Maturity Amount:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.nMaturityAmount}}</label>
+                                </div>
+                              </div>
+                              <!-- <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sInstallmentType">Installment Types:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.sInstallmentType}}</label>
+                                </div>
+                              </div> 
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="nInstallmentAmount">Installment Amount:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.nInstallmentAmount}}</label>
+                                </div>
+                              </div>-->
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sEndofLoanDate">Repayment Date:</label>
+                                  <label class="account-detail">{{oSavingsDeposit.sMaturityDate}}</label>
+                                     
+        
+                                </div>
+                              </div>
+                            </div>
+                            <app-account-ledger-table [aTransactions]='oSavingsDeposit.oTransactionInfo'></app-account-ledger-table>
+                          </ng-template>
+                        </ngb-panel>
+                        
+                      </ngb-accordion>
+
+                    <form class="col-12 hideSavingsDeposit" novalidate #_DailySavingDebitFormElem="ngForm"
+                        (ngSubmit)="fnOnSavingsDepositInfoSubmit()">
+                        <div class="row ">
+                            <div class="col-sm-6" >
+                                <div class="form-group">
+                                    <label for="sDate">Date</label>
+                                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                  showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                  dateInputFormat: 'DD-MM-YYYY' }"  bsDatepicker name="sDate"
+                                        class="form-control" [(ngModel)]="oSavingsDepositModel.sDate">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="nAmount">Total Amount</label>
+                                    <input id="nAmount" name="nAmount" [(ngModel)]="oSavingsDepositModel.nAmount"
+                                        type="number" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="sReceiverName">Received Employee</label>
+                                    <ng-select [items]="aBankEmployees" name="sReceiverName"
+                                        [(ngModel)]="oSavingsDepositModel.sReceiverName" bindLabel="sEmployeeName"
+                                        bindValue="sEmployeeName">
+                                        <ng-template ng-label-tmp let-item="item">
+                                            {{item.sEmployeeName}}
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="sNarration">Narration</label>
+                                    <input id="sNarration" name="sNarration"
+                                        [(ngModel)]="oSavingsDepositModel.sNarration" type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-8 add-category-btn-container">
+                                <button type="submit" class="btn btn-primary mr-1"
+                                    >Submit</button><!--[disabled]="bIsAddActive || bIsEditActive"-->
+                                <button type="button" class="btn btn-secondary">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

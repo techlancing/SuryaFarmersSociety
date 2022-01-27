@@ -5,15 +5,31 @@
 
     <app-bank-account-data headerText="Savings Deposit type" (accountDataClicked)="fnGetActiveAccount($event)">
     </app-bank-account-data>
-    <div class="row">
+    <div *ngIf="oSavingsTypeModel.sAccountNo !==''">
         <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnCreditLoanInfoSubmit()">
             <div class="card card-bg">
 
                 <div class="card-body">
-                    <h2 *ngIf="oSavingsTypeModel && oSavingsTypeModel.sAccountNo">New Savings Deposit -
+                    <h2 *ngIf="oSavingsTypeModel && oSavingsTypeModel.sAccountNo">{{sSavingDepositName}} -
                         {{oSavingsTypeModel.sAccountNo}}</h2>
-                    <div class="row">
 
+
+                    <div class="col-sm-6">
+                        <div class="add-container">
+                            <div class="form-group">
+                                <label for="sTypeofLoan">Type Of SavingsDeposit</label>
+                                <ng-select [items]="aTypeofSavings" name="sTypeofLoan"
+                                    [(ngModel)]="oSavingsTypeModel.sTypeofSavings" bindLabel="displayText"
+                                    bindValue="displayText" (change)="fnUpdateSavingsDepositName()">
+                                    <ng-template ng-label-tmp let-item="item">
+                                        {{item.displayText}}
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="loanissueDate">Savings Deposit Start Date</label>
@@ -31,7 +47,8 @@
                                 <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                           showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker
-                         name="savingsDepositEndDate" class="form-control" (bsValueChange)="fnCalculateTotalDays()"
+                                    name="savingsDepositEndDate" class="form-control"
+                                    (bsValueChange)="fnCalculateTotalDays()"
                                     [(ngModel)]="oSavingsTypeModel.sMaturityDate">
                             </div>
                         </div>
@@ -56,20 +73,21 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="nSavingTotalYears">Years</label>
-                                <input id="nSavingTotalYears" name="nSavingTotalYears" [(ngModel)]="oSavingsTypeModel.nSavingTotalYears"
-                                    type="number" class="form-control" disabled>
+                                <input id="nSavingTotalYears" name="nSavingTotalYears"
+                                    [(ngModel)]="oSavingsTypeModel.nSavingTotalYears" type="number" class="form-control"
+                                    disabled>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="nLoanMonths">Months</label>
-                                <input id="nSavingMonths" name="nSavingMonths" [(ngModel)]="oSavingsTypeModel.nSavingMonths"
-                                    type="number" class="form-control" >
+                                <input id="nSavingMonths" name="nSavingMonths"
+                                    [(ngModel)]="oSavingsTypeModel.nSavingMonths" type="number" class="form-control">
                             </div>
                         </div>
 
-                        
+
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="nSavingDays">Days</label>
@@ -81,25 +99,12 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="nSavingDays">Total Days</label>
-                                <input id="nSavingTotalDays" name="nSavingTotalDays" [(ngModel)]="oSavingsTypeModel.nSavingTotalDays"
-                                    type="number" class="form-control" disabled>
+                                <input id="nSavingTotalDays" name="nSavingTotalDays"
+                                    [(ngModel)]="oSavingsTypeModel.nSavingTotalDays" type="number" class="form-control"
+                                    disabled>
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
-                            <div class="add-container">
-                                <div class="form-group">
-                                    <label for="sTypeofLoan">Type Of SavingsDeposit</label>
-                                    <ng-select [items]="aTypeofSavings" name="sTypeofLoan"
-                                        [(ngModel)]="oSavingsTypeModel.sTypeofSavings" bindLabel="displayText"
-                                        bindValue="displayText">
-                                        <ng-template ng-label-tmp let-item="item">
-                                            {{item.displayText}}
-                                        </ng-template>
-                                    </ng-select>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -124,59 +129,63 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="sDateOfRepayment">Date Of Repayment</label>
-                                <input id="sDateOfRepayment" name="sDateOfRepayment" type="text"
-                                    class="form-control"  [(ngModel)]="oSavingsTypeModel.sMaturityDate" disabled>
+                                <input id="sDateOfRepayment" name="sDateOfRepayment" type="text" class="form-control"
+                                    [(ngModel)]="oSavingsTypeModel.sMaturityDate" disabled>
                             </div>
                         </div>
-                        <div class="row" *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
-                        <div class="col-sm-6">
-                            <label class="font-size-14 mb-3">Do You Add Pension Deposit Interest on Account : </label>
-                            <div class="radio-container">
-                                <div class="form-check form-group">
-                                    <input class="form-check-input" type="radio" name="PensionRadio" id="pensionRadio1"
-                                        value="Yes" [(ngModel)]="oSavingsTypeModel.sPensionDepositInterestOnAccount">
-                                    <label class="form-check-label" for="pensionRadio2">
-                                        Yes
-                                    </label>
-                                </div>
-                                <div class="form-check form-group">
-                                    <input class="form-check-input" type="radio" name="PensionRadio" id="pensionRadio2"
-                                        value="No" [(ngModel)]="oSavingsTypeModel.sPensionDepositInterestOnAccount">
-                                    <label class="form-check-label" for="pensionRadio2">
-                                        No
-                                    </label>
+                        <div class="row"
+                            *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
+                            <div class="col-sm-6">
+                                <label class="font-size-14 mb-3">Do You Add Pension Deposit Interest on Account :
+                                </label>
+                                <div class="radio-container">
+                                    <div class="form-check form-group">
+                                        <input class="form-check-input" type="radio" name="PensionRadio"
+                                            id="pensionRadio1" value="Yes"
+                                            [(ngModel)]="oSavingsTypeModel.sPensionDepositInterestOnAccount">
+                                        <label class="form-check-label" for="pensionRadio2">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-group">
+                                        <input class="form-check-input" type="radio" name="PensionRadio"
+                                            id="pensionRadio2" value="No"
+                                            [(ngModel)]="oSavingsTypeModel.sPensionDepositInterestOnAccount">
+                                        <label class="form-check-label" for="pensionRadio2">
+                                            No
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="sPensionAmountAddDate">Pension Deposit Interest Add Date</label>
-                                <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="sPensionAmountAddDate">Pension Deposit Interest Add Date</label>
+                                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                           showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker
-                                    name="savingsDepositStartDate" class="form-control"
-                                    [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate">
+                                        name="savingsDepositStartDate" class="form-control"
+                                        [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="nPensionInterestAddAmount">Interest Add amount </label>
-                                <input id="nPensionInterestAddAmount" name="nPensionInterestAddAmount" type="number"
-                                [(ngModel)]="oSavingsTypeModel.nPensionInterestAddAmount" class="form-control">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="nPensionInterestAddAmount">Interest Add amount </label>
+                                    <input id="nPensionInterestAddAmount" name="nPensionInterestAddAmount" type="number"
+                                        [(ngModel)]="oSavingsTypeModel.nPensionInterestAddAmount" class="form-control">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="nPensionAmountMonths">How Many Months Amount Add</label>
-                                <input id="nPensionAmountMonths" name="nPensionAmountMonths" type="number"
-                                [(ngModel)]="oSavingsTypeModel.nPensionAmountMonths" class="form-control">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="nPensionAmountMonths">How Many Months Amount Add</label>
+                                    <input id="nPensionAmountMonths" name="nPensionAmountMonths" type="number"
+                                        [(ngModel)]="oSavingsTypeModel.nPensionAmountMonths" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div>
                         <div class="col-sm-6">
                             <div class="add-container">
                                 <div class="form-group">
@@ -202,3 +211,4 @@
                 </div>
             </div>
         </form>
+    </div>

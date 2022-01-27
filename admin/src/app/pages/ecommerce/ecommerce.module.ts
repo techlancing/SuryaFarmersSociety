@@ -49,6 +49,7 @@ import { AccountLedgerTableComponent } from './account-ledger-table/account-ledg
 import { DailySavingsDepositComponent } from './daily-savings-deposit/daily-savings-deposit.component';
 import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 import { SavingsTypesComponent } from './savings-types/savings-types.component';
+import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
 
 
 const config: DropzoneConfigInterface = {
@@ -85,6 +86,7 @@ const config: DropzoneConfigInterface = {
      DailySavingsDepositComponent,
      AccountBalanceEnquiryComponent,
      SavingsTypesComponent,
+     SavingsTypeDepositTransactionComponent,
      ],
   imports: [
     CommonModule,

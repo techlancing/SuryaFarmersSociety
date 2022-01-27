@@ -27,6 +27,7 @@ import { CategoryWiseBalanceSummaryComponent } from './category-wise-balance-sum
 import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-balance-summary/all-category-wise-balance-summary.component';
 import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 import { SavingsTypesComponent } from './savings-types/savings-types.component';
+import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
 
 
 const routes: Routes = [
@@ -160,6 +161,10 @@ const routes: Routes = [
     {
         path : 'savingstype',
         component : SavingsTypesComponent
+    },
+    {
+        path : 'savingstypedeposittransaction',
+        component : SavingsTypeDepositTransactionComponent
     }
     
 ];

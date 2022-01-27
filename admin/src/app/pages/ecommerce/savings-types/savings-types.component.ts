@@ -21,6 +21,7 @@ export class SavingsTypesComponent implements OnInit {
   public aTypeofSavings: Array<any>;
   public oSavingsTypeModel: SavingsType;
   public sButtonText: string;
+  public sSavingDepositName : string ;
   @Input() bHideBreadCrumb: boolean = false;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -74,10 +75,12 @@ export class SavingsTypesComponent implements OnInit {
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;
+    this.sSavingDepositName = 'New Savings Deposit' ;
   }
 
   fnGetActiveAccount(oActiveAccount: BankAccount) {
     this.oSavingsTypeModel.sAccountNo = oActiveAccount.sAccountNo;
+    console.log(this.oSavingsTypeModel.sAccountNo);
   }
 
   fnOnCreditLoanInfoSubmit(): void {
@@ -97,7 +100,7 @@ export class SavingsTypesComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'CreditLoan is created sucessfully.',
+      title: this.oSavingsTypeModel.sTypeofSavings+' is created sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
@@ -146,5 +149,9 @@ export class SavingsTypesComponent implements OnInit {
     this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/30-this.oSavingsTypeModel.nSavingTotalYears*12).toFixed(0));
     this.oSavingsTypeModel.nSavingDays = this.oSavingsTypeModel.nSavingTotalDays-(this.oSavingsTypeModel.nSavingTotalYears*365+this.oSavingsTypeModel.nSavingMonths*30);
     console.log("Months=",this.oSavingsTypeModel.nSavingMonths,"years= ",this.oSavingsTypeModel.nSavingTotalYears,"days=",this.oSavingsTypeModel.nSavingDays);
+  }
+
+  fnUpdateSavingsDepositName(){
+    this.sSavingDepositName = this.oSavingsTypeModel.sTypeofSavings ;
   }
 }

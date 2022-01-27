@@ -1,0 +1,34 @@
+.radio-container{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: flex-start;
+    gap: 20px;
+    label{
+        color:black;
+    }
+}
+
+.btn-container{
+    display: grid;
+    justify-items: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.account-detail{
+    color: orange;
+    margin-left: 15px;
+}
+.trans-detail{
+    color: orange;
+}
+
+.card-bg{
+background-color: antiquewhite;
+}
+.savings-header{
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-auto-flow: column;
+}
