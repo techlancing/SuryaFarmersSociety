@@ -6,7 +6,6 @@ const oCreditModel = require("../data_base/models/credit.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oAuthentication = require("../middleware/authentication");
-const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 
 const oCreditRouter = oExpress.Router();
 
@@ -61,16 +60,7 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
       oCreditLoan.oTransactionInfo.push(newTransaction);
       await oCreditLoan.save();
     }
-    const oSavingsType = await oSavingsTypeModel.findOne({nSavingsId: newCredit.nLoanId});
-
-    if(oSavingsType){
-      newTransaction.sAccountType = oSavingsType.sTypeofSavings;
-      await newTransaction.save();
-      
-      oSavingsType.oTransactionInfo.push(newTransaction);
-      await oSavingsType.save();
-    }
-
+    
       /* SmS code Start */
     if (process.env.IS_PRODUCTION === "YES"){
       const options = {

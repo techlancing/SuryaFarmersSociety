@@ -44,7 +44,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   //this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
   if(typeof this.oSavingsDepositModel.sDate === 'object' )
     this.oSavingsDepositModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsDepositModel.sDate);
-    this.oDebitService.fnAddDebitInfo(this.oSavingsDepositModel).subscribe((data) => {
+    this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
       console.log(data);
       this.fnSucessMessage();
       this.redirectTo('/dailysavingsdeposit');

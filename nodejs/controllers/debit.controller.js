@@ -7,7 +7,6 @@ const oTransactionModel = require("../data_base/models/transaction.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oAuthentication = require("../middleware/authentication");
 const obankaccountModel = require("../data_base/models/bankaccount.model");
-const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 
 const oDebitRouter = oExpress.Router();
 
@@ -67,18 +66,6 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
         oCreditLoan.sLoanStatus = 'Completed';
       await oCreditLoan.save();
     }
-
-      const oSavingsType = await oSavingsTypeModel.findOne({nSavingsId: newDebit.nLoanId});
-
-      if(oSavingsType){
-        newTransaction.sAccountType = oSavingsType.sTypeofSavings;
-        await newTransaction.save();
-       
-        if(oTransaction.nBalanceAmount > 0){
-          oSavingsType.oTransactionInfo.push(newTransaction);
-        }
-        await oSavingsType.save();
-      }
       if(oTransaction.nBalanceAmount > 0){
         /* SmS code Start */
         if (process.env.IS_PRODUCTION === "YES"){
