@@ -1,0 +1,58 @@
+<!-- <div class="container-fluid">
+
+    <app-page-title title="All Employees" [breadcrumbItems]="breadCrumbItems" 
+    bgimageclass="addcategory_header"></app-page-title>
+  
+    <div class="row" *ngIf>
+        <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
+         <div class="card card-bg">
+          <div class="card-body">
+              <h2>All {{activatedroute.snapshot.data.tableContent}} Approvals</h2>
+  
+  
+             <div class="row mb-md-2">
+                  
+           <div class="table-responsive">
+            <table class="table table-centered tableText" id="basic-datatable">
+              <thead>
+                <tr>
+                  <th>EmployeeId</th>
+                  <th>{{activatedroute.snapshot.data.tableContent}} Name</th>
+                  <th>Start Date</th>
+                  <th>Total Amount</th>
+                  <th>Maturity Date</th>
+                 <th>Approved Status</th>
+                 <th>Actions</th>
+                 <th>View Approval</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let approval of aApproval ;let i = index;">
+                  <td>{{approval.}}</td>
+                  <td>{{approval.sEmployeeName}}</td>
+                  <td>{{approval.sMobileNumber}}</td>
+                  <td>{{approval.sJoiningDate}}</td>
+                  <td><label for="employee-status" class="status">{{approval.sStatus}}</label></td>
+                  <td class="buttonDisplay">
+                    <button class="btn btn-primary" 
+                    (click)="fnChangeApprovalStatus(approval,'approve')" [disabled]="user.sStatus==='approve'"><i
+                    class="mdi mdi-employee-edit" >Approve</i></button>
+  
+                    <button class="btn btn-primary"  
+                    (click)="fnChangeApprovalStatus(approval,'reject')" [disabled]="user.sStatus==='reject'"><i
+                    class="mdi mdi-employee-edit" >Reject</i></button>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary" (click)="openModal(accountcontentviewemployee,i)">
+                      <i class="mdi mdi-employee-edit">Show Details</i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+      </form>
+    </div> 
+  </div>  -->

@@ -14,6 +14,7 @@ import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { OperationCanceledException } from 'typescript';
+import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 
 @Component({
   selector: 'app-account-transaction-dailysavingdebit',
@@ -35,6 +36,11 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   public headerText : string;
   aUsers: Array<BankEmployee>;
   nBalance : number ;
+  sSelectedSavingType : string ;
+  aSavingDeposit : any ;
+  bIsBtnActive : boolean ;
+  oSelectedBankAccount : BankAccount ;
+  sLedgerHeading : string ;
   public bPdfPrint : boolean = false ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -97,37 +103,23 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
               public activatedroute : ActivatedRoute,
               private router: Router,
               private oBankEmployeeService: BankEmployeeService,
-              private oUtilitydateService : UtilitydateService) { }
+              private oUtilitydateService : UtilitydateService,
+              private oSavingstypeService : SavingstypeService) { }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+    if(this.bIsDeposit){
+      this.headerText = "Daily Deposit Account";
+    }else{
+      this.headerText = "Daily Saving WithDrawal Account";
+    }
+   
+    this.breadCrumbItems = [{ label: 'Transactions' }, { label: this.headerText, active: true }];
     
     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
        this.aUsers = users;
      });
 
-     if(this.bIsDeposit){
-       this.headerText = "Daily Deposit Account";
-     }else{
-       this.headerText = "Daily WithDrawal Account";
-     }
-
-    this.aLoanIssueEmployee = [
-      {
-        displayText: 'Venkanna',
-        value:'01'
-      },
-      {
-        displayText: 'Bhaskar',
-        value:'02'
-      },
-      {
-        displayText: 'Naresh',
-        value:'03'
-      }
-    ];
-    
     this.oDailySavingDebitModel = new DailySavingDebit();
     
     this.bIsAddActive = false;
@@ -136,10 +128,22 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
       this.sSuccessMsg = 'Amount deposited sucessfully.'
+      this.sLedgerHeading = 'Daily Deposit Saving '
       this.bIsDeposit = true;
-    }else{
+      this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
+        this.fnGetAccountDetails(account);
+      });
+    }else if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
       this.sButtonText = 'Withdraw & Send SMS';
-      this.sSuccessMsg = 'Amount withdrawn sucessfully.'
+      this.sSuccessMsg = 'Amount withdrawn sucessfully.';
+      this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
+        this.fnGetAccountDetails(account);
+      });
+    }else{
+      this.sLedgerHeading = 'Savings Account';
+      this.sButtonText = 'Withdraw & Send SMS';
+      this.sSuccessMsg = 'Amount withdrawn sucessfully.';
       this.bIsDeposit = false;
     }
     
@@ -150,15 +154,32 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     this.router.navigate([uri]));
  }
 
-  fnGetCreditLoans(oSelectedAccount : BankAccount){
+ fnGetAccountDetails(oSelectedAccount : BankAccount){
     this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
     this.oDailySavingDebitModel.nAccountId = oSelectedAccount.nAccountId;
+    this.oSelectedBankAccount = oSelectedAccount ;
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
-      this.bShowLoanData = true;
+     // this.bShowLoanData = true;
     });
+    if(this.activatedroute.snapshot.data.type === 'depositwithdrawl')
+     this.bShowLoanData = true;
+    if(!(this.activatedroute.snapshot.data.type === 'depositwithdrawl'))
+      this.fnGetSavingDepositAccounts(oSelectedAccount);
   }
 
+  
+  fnGetSavingDepositAccounts(oSelectedAccount : BankAccount){
+    this.oSavingstypeService.fnGetAllSavingDepositAccountsInfo(oSelectedAccount.sAccountNo).subscribe((data) => {
+      this.aSavingDeposit = data as any ;
+      this.aSavingDeposit.push({
+        sAccountNo : oSelectedAccount,
+        sTypeofSavings : 'Savings Account'
+      }); 
+      console.log(data);
+      
+    });
+  }
   // new Date("dateString") is browser-dependent and discouraged, so we'll write
 // a simple parse function for U.S. date format (which does no error checking)
 fnParseDate(str) {
@@ -224,6 +245,19 @@ fnOnDailySavingDebitInfoSubmit(): void {
     });
   }
  else {
+  //  if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
+  //   this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
+  //     console.log("cdata", cdata);
+  //     this.nBalance = cdata as number;
+  //     if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
+  //       this.oDailySavingDebitService.fnAddSavingsWithdrawTransactionInfo(this.oDailySavingDebitModel).subscribe((data) => {
+  //         this.fnSucessMessage();
+  //         this.redirectTo('/withdrawal');
+  //       });
+  //     }
+  //   });
+
+  //  }
    this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
      console.log("cdata", cdata);
      this.nBalance = cdata as number;
@@ -247,6 +281,28 @@ fnOnDailySavingDebitInfoSubmit(): void {
   }
 
 
+  fnEnableButton(): void{
+    if(this.sSelectedSavingType.length > 0 ){
+      this.bIsBtnActive = true;
+    }
+  }
+  fnGetSavingsDeposit(){
+    if (this.sSelectedSavingType === 'Savings Account')
+      this.bShowLoanData = true;
+    else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
+      this.redirectTo("/dailysavingdepositwithdrawl");
+      this.oDailySavingDebitService.oDailySavingDepositAccount.next(this.oSelectedBankAccount)
+    }
+    else {
+      this.aSavingDeposit.map((savingdeposit) => {
+        if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
+          savingdeposit.transactiontype = 'withdraw';
+          this.oSavingstypeService.oSavingsDeposit.next(savingdeposit);
+          this.redirectTo("/savingstypedeposittransaction");
+        }
+      });
+    }
+  }
   /**
    * Open modal
    * @param content modal content

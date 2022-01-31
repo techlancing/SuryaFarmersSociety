@@ -3,7 +3,35 @@
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
     <app-bank-account-data headerText='' 
-    (accountDataClicked)="fnGetCreditLoans($event)" [bPdfPrint]="bPdfPrint"></app-bank-account-data>
+    (accountDataClicked)="fnGetAccountDetails($event)" [bPdfPrint]="bPdfPrint"
+     *ngIf = "activatedroute.snapshot.data.type === 'withdraw'"></app-bank-account-data>
+
+
+    <div class="col-12 card card-bg" *ngIf = "activatedroute.snapshot.data.type === 'withdraw'">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label">Select Type Of Savings</label>
+              <ng-select [items]="aSavingDeposit" name="transactionType" [(ngModel)]="sSelectedSavingType"
+                bindLabel="sTypeofSavings" bindValue="sTypeofSavings" (change)="fnEnableButton()">
+                <ng-template ng-label-tmp let-item="item">
+                  {{item.sTypeofSavings}}
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-5 btn-container">
+            <button type="button" class="btn btn-primary mr-1 buttonadjust" (click)="fnGetSavingsDeposit()" [disabled]="!bIsBtnActive">
+              Get SavingType Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
     <div class="row" *ngIf="bShowLoanData">
     <div class="col-12"  >
       <div class="card card-bg" >
@@ -18,7 +46,7 @@
           <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
             <ngb-panel id="static-1">
               <ng-template ngbPanelTitle class="text-black">
-                <h2 class="hide-savings">Savings Account </h2>
+                <h2 class="hide-savings">{{sLedgerHeading}} </h2>
               </ng-template>
               <ng-template ngbPanelContent>
                 <app-account-ledger-table [aTransactions]='aTransactionModel'></app-account-ledger-table>

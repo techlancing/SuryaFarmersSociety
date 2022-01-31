@@ -148,6 +148,14 @@
         "ALLCATEGORYBALANCESUMMARY": "All Category Balance Summary"
       }
     },
+    "MANAGERAPPROVAL": {
+      "TEXT" : "APPROVALS",
+      "LIST" : {
+        "LOANAPPROVAL" : "Loan Approval",
+        "CREDITAPPROVAL" : "Credit Approval",
+        "SAVINGSTYPEAPPROVAL" : "Savings Deposit Approval"
+      }
+    },
     "EMAIL": {
       "TEXT": "Email",
       "LIST": {

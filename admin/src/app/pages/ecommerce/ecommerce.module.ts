@@ -50,6 +50,7 @@ import { DailySavingsDepositComponent } from './daily-savings-deposit/daily-savi
 import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 import { SavingsTypesComponent } from './savings-types/savings-types.component';
 import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
+import { ManagerApprovalComponent } from './manager-approval/manager-approval.component';
 
 
 const config: DropzoneConfigInterface = {
@@ -87,6 +88,7 @@ const config: DropzoneConfigInterface = {
      AccountBalanceEnquiryComponent,
      SavingsTypesComponent,
      SavingsTypeDepositTransactionComponent,
+     ManagerApprovalComponent,
      ],
   imports: [
     CommonModule,

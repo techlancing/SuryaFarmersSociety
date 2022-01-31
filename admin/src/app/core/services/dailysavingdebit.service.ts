@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DailySavingDebit } from '../models/dailysavingdebit.model';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
 export class DailySavingDebitService {
 
     sRootUrl: string = environment.apiUrl + "nodejs/dailysavingdeposit";
+    public oDailySavingDepositAccount = new BehaviorSubject<any>(null);    
 
     constructor(private http: HttpClient) { }
 

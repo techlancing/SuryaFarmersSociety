@@ -36,4 +36,8 @@ export class SavingstypeService {
     const sMethodUrl = `${this.sRootUrl}/addsavingsdeposit_transaction`;
     return this.http.post(sMethodUrl, oSavingsDeposit);
   }
+  fnAddSavingsWithdrawTransactionInfo(oSavingsDeposit : Debit){
+    const sMethodUrl = `${this.sRootUrl}/withdrawsavingsdeposit_transaction`;
+    return this.http.post(sMethodUrl, oSavingsDeposit);
+  }
 }

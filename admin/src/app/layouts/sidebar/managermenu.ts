@@ -11,6 +11,33 @@ export const MMENU: MenuItem[] = [
         link: '/addemployee',
         parentId: 10
     },
+
+    {
+        id: 100,
+        label: 'MENUITEMS.MANAGERAPPROVAL.TEXT',
+        icon: 'bxs-report',
+        subItems: [
+            {
+                id: 101,
+                label: 'MENUITEMS.MANAGERAPPROVAL.LIST.LOANAPPROVAL',
+                link: '/loanapproval',
+                parentId: 100
+            },
+            {
+                id: 102,
+                label: 'MENUITEMS.MANAGERAPPROVAL.LIST.CREDITAPPROVAL',
+                link: '/creditapproval',
+                parentId: 100
+            },
+            {
+                id: 103,
+                label: 'MENUITEMS.MANAGERAPPROVAL.LIST.SAVINGSTYPEAPPROVAL',
+                link: '/savingsapproval',
+                parentId: 100
+            },
+        ]
+    },
+
     {
         id: 4,
         label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',

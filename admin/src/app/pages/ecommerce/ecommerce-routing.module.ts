@@ -28,6 +28,7 @@ import { AllCategoryWiseBalanceSummaryComponent } from './all-category-wise-bala
 import { AccountBalanceEnquiryComponent } from './account-balance-enquiry/account-balance-enquiry.component';
 import { SavingsTypesComponent } from './savings-types/savings-types.component';
 import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
+import { ManagerApprovalComponent } from './manager-approval/manager-approval.component';
 
 
 const routes: Routes = [
@@ -165,7 +166,39 @@ const routes: Routes = [
     {
         path : 'savingstypedeposittransaction',
         component : SavingsTypeDepositTransactionComponent
+    },
+    {
+        path : 'savingsapproval',
+        component : ManagerApprovalComponent,
+        data :{
+            type : 'savings',
+            tableContent : 'Saving Deposits'
+        }
+    },
+    {
+        path : 'loanapproval',
+        component : ManagerApprovalComponent,
+        data :{
+            type : 'loan',
+            tableContent : 'Loan'
+        }
+    },
+    {
+        path : 'creditapproval',
+        component : ManagerApprovalComponent,
+        data :{
+            type : 'credit',
+            tableContent : 'Credit'
+        }
+    },
+    {
+        path:'dailysavingdepositwithdrawl',
+        component: AccountTransactionDailysavingdebitComponent,
+        data: {
+            type: 'depositwithdrawl'
+        }
     }
+
     
 ];
 

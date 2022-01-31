@@ -18,7 +18,9 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   aBankEmployees : Array<BankEmployee> ;
   oSavingsDepositModel : Debit;
   breadCrumbItems : Array<any> ;
-  @Input() oSavingsDeposit : SavingsType;
+  sButtonText : string ;
+  sSuccessMsg :  string ;
+  @Input() oSavingsDeposit : any;
   constructor(private oBankEmployeeService : BankEmployeeService,
     private oSavingstypeService : SavingstypeService,
     private router : Router,
@@ -34,33 +36,44 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       console.log('users',employees);
        this.aBankEmployees = employees;
      });
-     
      this.oSavingsDepositModel = new Debit();
+     if(this.oSavingsDeposit.transactiontype === 'deposit'){
+      this.sButtonText = 'Deposit & Send SMS';
+     }
+     if (this.oSavingsDeposit.transactiontype === 'withdraw'){
+        this.sButtonText = 'Withdraw & Send SMS'
+     }
   }
 
-  fnOnSavingsDepositInfoSubmit(){
-    this.oSavingsDepositModel.sAccountNo = this.oSavingsDeposit.sAccountNo ;
-    this.oSavingsDepositModel.nLoanId = this.oSavingsDeposit.nSavingsId ;
-  //this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
-  if(typeof this.oSavingsDepositModel.sDate === 'object' )
-    this.oSavingsDepositModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsDepositModel.sDate);
-    this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
-      console.log(data);
-      this.fnSucessMessage();
-      this.redirectTo('/dailysavingsdeposit');
-    });
-  // this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
-    
-  //   this.fnSucessMessage();
-  //   this.redirectTo('/dailysavingsdeposit');
-  // });
-}
+  fnOnSavingsDepositInfoSubmit() {
+    this.oSavingsDepositModel.sAccountNo = this.oSavingsDeposit.sAccountNo;
+    this.oSavingsDepositModel.nLoanId = this.oSavingsDeposit.nSavingsId;
+    //this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
+    if (typeof this.oSavingsDepositModel.sDate === 'object')
+      this.oSavingsDepositModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsDepositModel.sDate);
+    if (this.oSavingsDeposit.transactiontype === 'deposit') {
+      this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
+        console.log(data);
+        this.sSuccessMsg = 'Amount Successfully Deposited' ;
+        this.fnSucessMessage();
+        this.redirectTo('/dailysavingsdeposit');
+      });
+    }
+    if (this.oSavingsDeposit.transactiontype === 'withdraw') {
+      this.oSavingstypeService.fnAddSavingsWithdrawTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
+        console.log(data);
+        this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
+        this.fnSucessMessage();
+        this.redirectTo('/withdrawal');
+      });
+    }
+  }
 
 fnSucessMessage() {
   Swal.fire({
     position: 'center',
     icon: 'success',
-    title: 'Amount Successfully Deposited',
+    title: this.sSuccessMsg,
     showConfirmButton: false,
     timer: 1500
   });

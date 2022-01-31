@@ -15,6 +15,7 @@ import { BankEmployeeService } from 'src/app/core/services/bankemployee.service'
 import { DailySavingDebit } from 'src/app/core/models/dailysavingdebit.model';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
+import { SavingsType } from 'src/app/core/models/savingstype.model';
 
 @Component({
   selector: 'app-daily-savings-deposit',
@@ -42,6 +43,7 @@ export class DailySavingsDepositComponent implements OnInit {
   aSavingsAndDailySavingsDeposit : any ;
   sSelectedSavingType : string ;
   bIsBtnActive : boolean ;
+  oSelectedBankAccount : BankAccount ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -139,6 +141,7 @@ export class DailySavingsDepositComponent implements OnInit {
   fnGetSavingsAccountTransactions(oSelectedAccount : BankAccount){
     this.oDailySavingsDepositModel.sAccountNo = oSelectedAccount.sAccountNo;
     this.oDailySavingsDepositModel.nAccountId = oSelectedAccount.nAccountId;
+    this.oSelectedBankAccount = oSelectedAccount ;
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
       //this.bShowLoanData = true;
@@ -164,11 +167,14 @@ export class DailySavingsDepositComponent implements OnInit {
   fnGetSavingsDeposit(){
     if (this.sSelectedSavingType === 'Savings Account')
       this.bShowLoanData = true;
-    else if (this.sSelectedSavingType === 'Daily Deposit Saving')
+    else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
+      this.oDailySavingsDepositService.oDailySavingDepositAccount.next(this.oSelectedBankAccount);
       this.redirectTo("/dailysavingdebit");
+    }
     else {
       this.aSavingDeposit.map((savingdeposit) => {
         if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
+          savingdeposit.transactiontype = 'deposit' ;
           this.oSavingstypeService.oSavingsDeposit.next(savingdeposit);
           this.redirectTo("/savingstypedeposittransaction");
         }
