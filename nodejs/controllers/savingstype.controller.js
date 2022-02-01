@@ -317,7 +317,7 @@ oSavingsTypeRouter.post("/getaccountsavingstypes", oAuthentication, asyncMiddlew
 }));
 
 // url: ..../savingstype/setsavingstypeapprovalstatus
-oCreditLoanRouter.post("/setsavingstypeapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+oSavingsTypeRouter.post("/setsavingstypeapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     let oSavingsType = await oSavingsTypeModel.findOne({nSavingsId: oReq.body.nSavingsId});
     if(!oSavingsType){
