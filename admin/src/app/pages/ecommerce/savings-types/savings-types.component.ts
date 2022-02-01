@@ -145,13 +145,25 @@ export class SavingsTypesComponent implements OnInit {
       const diffInMs = +(new Date(this.oSavingsTypeModel.sMaturityDate.split("-").reverse().join("-"))) - +(new Date(this.oSavingsTypeModel.sStartDate.split("-").reverse().join("-")))
       this.oSavingsTypeModel.nSavingTotalDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
     }
-    this.oSavingsTypeModel.nSavingTotalYears = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/365).toFixed(0));
-    this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/30-this.oSavingsTypeModel.nSavingTotalYears*12).toFixed(0));
-    this.oSavingsTypeModel.nSavingDays = this.oSavingsTypeModel.nSavingTotalDays-(this.oSavingsTypeModel.nSavingTotalYears*365+this.oSavingsTypeModel.nSavingMonths*30);
-    console.log("Months=",this.oSavingsTypeModel.nSavingMonths,"years= ",this.oSavingsTypeModel.nSavingTotalYears,"days=",this.oSavingsTypeModel.nSavingDays);
+    this.fnGetTotalYears();
+    this.fnGetTotalMonths();
+    this.fnGetDays();
+    //     this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/30-this.oSavingsTypeModel.nSavingTotalYears*12).toFixed(0));
+    
+    // console.log("Months=",this.oSavingsTypeModel.nSavingMonths,"years= ",this.oSavingsTypeModel.nSavingTotalYears,"days=",this.oSavingsTypeModel.nSavingDays);
   }
 
   fnUpdateSavingsDepositName(){
     this.sSavingDepositName = this.oSavingsTypeModel.sTypeofSavings ;
+  }
+  fnGetTotalYears(){
+    this.oSavingsTypeModel.nSavingTotalYears = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/365).toFixed(0)); 
+  }
+  fnGetTotalMonths(){
+    let diff = (this.oSavingsTypeModel.nSavingTotalDays/365)-this.oSavingsTypeModel.nSavingTotalYears;
+    this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(diff/30).toFixed(0));
+  }
+  fnGetDays(){
+    this.oSavingsTypeModel.nSavingDays = this.oSavingsTypeModel.nSavingTotalDays-(this.oSavingsTypeModel.nSavingTotalYears*365+this.oSavingsTypeModel.nSavingMonths*30);
   }
 }

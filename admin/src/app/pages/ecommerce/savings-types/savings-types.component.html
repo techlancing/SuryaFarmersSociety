@@ -87,7 +87,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="nSavingDays">Days</label>
@@ -98,13 +97,12 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="nSavingDays">Total Days</label>
+                                <label for="nSavingTotalDays">Total Days</label>
                                 <input id="nSavingTotalDays" name="nSavingTotalDays"
                                     [(ngModel)]="oSavingsTypeModel.nSavingTotalDays" type="number" class="form-control"
                                     disabled>
                             </div>
                         </div>
-
 
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -133,6 +131,7 @@
                                     [(ngModel)]="oSavingsTypeModel.sMaturityDate" disabled>
                             </div>
                         </div>
+
                         <div class="row"
                             *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
                             <div class="col-sm-6">
@@ -157,7 +156,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -186,6 +184,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <div class="add-container">
                                 <div class="form-group">

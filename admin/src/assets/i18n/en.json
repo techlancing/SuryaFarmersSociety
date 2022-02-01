@@ -69,6 +69,17 @@
     "MENU": {
       "TEXT": "Menu"
     },
+    "MANAGERMENU":{
+      "TEXT" : "Welcome Manager"
+    },
+    
+    "EMPLOYEEMENU":{
+      "TEXT" : "Welcome Employee"
+    },
+    
+    "CHAIRMANMENU":{
+      "TEXT" : "Welcome Chairman"
+    },
     "DASHBOARDS": {
       "TEXT": "HOME",
       "BADGE": "03",

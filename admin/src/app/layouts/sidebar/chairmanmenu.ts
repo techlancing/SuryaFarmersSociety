@@ -1,6 +1,11 @@
 import { MenuItem } from './menu.model';
 export const CMENU: MenuItem[] = [
     {
+        id: 300,
+        label: 'MENUITEMS.CHAIRMANMENU.TEXT',
+        isTitle: true
+    },
+    {
         id: 1,
         label: 'MENUITEMS.MENU.TEXT',
         isTitle: true

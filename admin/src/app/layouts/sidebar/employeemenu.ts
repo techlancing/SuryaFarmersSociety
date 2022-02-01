@@ -1,6 +1,11 @@
 import { MenuItem } from './menu.model';
 export const PMENU: MenuItem[] = [
     {
+        id: 400,
+        label: 'MENUITEMS.EMPLOYEEMENU.TEXT',
+        isTitle: true
+    },
+    {
         id: 1,
         label: 'MENUITEMS.MENU.TEXT',
         isTitle: true
