@@ -43,7 +43,7 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
     newCreditLoan.sLoanStatus = "Active";
     await newCreditLoan.save();
 /* SmS code Start */
-if (process.env.IS_PRODUCTION === "YES"){
+if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
   const options = {
     "method": "POST",
     "hostname": "api.msg91.com",

@@ -92,7 +92,7 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     await oSavings.save();
 
       /* SmS code Start */
-    if (process.env.IS_PRODUCTION === "YES"){
+    if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
       const options = {
         "method": "POST",
         "hostname": "api.msg91.com",
@@ -180,7 +180,7 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
     await oSavings.save();
 
       /* SmS code Start */
-    if (process.env.IS_PRODUCTION === "YES"){
+    if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
       const options = {
         "method": "POST",
         "hostname": "api.msg91.com",

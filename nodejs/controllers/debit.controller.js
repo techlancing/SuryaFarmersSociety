@@ -68,7 +68,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     }
       if(oTransaction.nBalanceAmount > 0){
         /* SmS code Start */
-        if (process.env.IS_PRODUCTION === "YES"){
+        if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
         const options = {
           "method": "POST",
           "hostname": "api.msg91.com",

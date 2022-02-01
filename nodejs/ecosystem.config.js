@@ -11,6 +11,7 @@ module.exports = {
     env: {
       "PORT":2155,
       "IS_PRODUCTION": "NO",
+      "IS_STAGING": "NO",
       "ROOT_PATH": "/nodejs",
       "UPLOAD_PATH" : "public/uploads",
       "CLUSTER_DB_PATH": "mongodb+srv://raghuram:adaptnext@cluster0.vpew3.mongodb.net/suryafarmers?retryWrites=true&w=majority",
