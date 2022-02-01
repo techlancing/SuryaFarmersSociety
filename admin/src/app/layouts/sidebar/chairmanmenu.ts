@@ -2,8 +2,7 @@ import { MenuItem } from './menu.model';
 export const CMENU: MenuItem[] = [
     {
         id: 300,
-        label: 'MENUITEMS.CHAIRMANMENU.TEXT',
-        isTitle: true
+        label: 'MENUITEMS.CHAIRMANMENU.MESSAGE'
     },
     {
         id: 1,

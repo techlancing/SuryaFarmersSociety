@@ -70,15 +70,15 @@
       "TEXT": "Menu"
     },
     "MANAGERMENU":{
-      "TEXT" : "Welcome Manager"
+      "MESSAGE" : "Welcome Manager"
     },
     
     "EMPLOYEEMENU":{
-      "TEXT" : "Welcome Employee"
+      "MESSAGE" : "Welcome Employee"
     },
     
     "CHAIRMANMENU":{
-      "TEXT" : "Welcome Chairman"
+      "MESSAGE" : "Welcome Chairman"
     },
     "DASHBOARDS": {
       "TEXT": "HOME",
