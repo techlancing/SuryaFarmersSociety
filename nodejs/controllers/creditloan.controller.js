@@ -144,6 +144,25 @@ oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddlewa
   }  
 }));
 
+
+// url: ..../creditloan/setcreditloanapprovalstatus
+oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oBalance = 0;
+    let oCreditLoan = await oCreditLoanModel.findOne({nLoanId: oReq.body.nLoanId});
+    if(!oCreditLoan){
+      return oRes.status(400).send();
+    }
+    oCreditloan.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    oRes.json("Success");  
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
+
 // url: ..../creditloan/getaccountcreditloans
 oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
@@ -216,5 +235,49 @@ oCreditLoanRouter.post("/creditloan_list", oAuthentication, asyncMiddleware(asyn
       oRes.status(400).send(e);
     }
 }));
+
+// url: ..../creditloan/getallcreditloans
+oCreditLoanRouter.post("/getallcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oCreditLoanModel.find()
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllCreditLoans) => {
+      if(!oError) {
+          oRes.json(oAllCreditLoans);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+// url: ..../creditloan/getallcreditloansByApproval
+oCreditLoanRouter.post("/getallcreditloansByApproval", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved"})
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllCreditLoans) => {
+      if(!oError) {
+          oRes.json(oAllCreditLoans);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 
 module.exports = oCreditLoanRouter;

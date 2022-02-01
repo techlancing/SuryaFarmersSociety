@@ -316,6 +316,22 @@ oSavingsTypeRouter.post("/getaccountsavingstypes", oAuthentication, asyncMiddlew
   }  
 }));
 
+// url: ..../savingstype/setsavingstypeapprovalstatus
+oCreditLoanRouter.post("/setsavingstypeapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oSavingsType = await oSavingsTypeModel.findOne({nSavingsId: oReq.body.nSavingsId});
+    if(!oSavingsType){
+      return oRes.status(400).send();
+    }
+    oSavingsType.findByIdAndUpdate(oSavingsType._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    oRes.json("Success");  
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
 // url: ..../savingstype/delete_savingstype
 oSavingsTypeRouter.post("/delete_savingstype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
@@ -354,5 +370,49 @@ oSavingsTypeRouter.post("/savingstype_list", oAuthentication, asyncMiddleware(as
       oRes.status(400).send(e);
     }
 }));
+
+// url: ..../savingstype/getallsavingtypes
+oSavingsTypeRouter.post("/getallsavingtypes", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oSavingsTypeModel.find()
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllSavingTypes) => {
+      if(!oError) {
+          oRes.json(oAllSavingTypes);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+// url: ..../savingstype/getallsavingstypeByApproval
+oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oSavingsTypeModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved"})
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllSavingsType) => {
+      if(!oError) {
+          oRes.json(oAllSavingsType);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 
 module.exports = oSavingsTypeRouter;
