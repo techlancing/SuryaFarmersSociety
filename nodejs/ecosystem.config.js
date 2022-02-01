@@ -14,7 +14,6 @@ module.exports = {
       "IS_STAGING": "NO",
       "ROOT_PATH": "/nodejs",
       "UPLOAD_PATH" : "public/uploads",
-      "CLUSTER_DB_PATH": "mongodb+srv://raghuram:adaptnext@cluster0.vpew3.mongodb.net/suryafarmers?retryWrites=true&w=majority",
       "LOCALHOST_DB_PATH": 'mongodb://localhost:27017/suryafarmers',
       "VPS_DB_PATH": 'mongodb://adaptnext:AdaptNext%232020@localhost:27017/suryafarmers?authSource=admin',
       "UPLOAD_PATH": "public/uploads",
