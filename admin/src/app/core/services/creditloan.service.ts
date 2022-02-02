@@ -45,4 +45,14 @@ export class CreditLoanService {
     const sMethodUrl = `${this.sRootUrl}/getaccountcreditloans`;
     return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
   }
+  fnGetAllCreditLoanInfo() {
+    const sMethodUrl = `${this.sRootUrl}/getallcreditloans`;
+    return this.http.post(sMethodUrl,null);
+  }
+
+  fnChangeCreditLoanStatus(oCreditLoan: CreditLoan) {
+    const sMethodUrl = `${this.sRootUrl}/setcreditloanapprovalstatus`;
+    return this.http.post(sMethodUrl,oCreditLoan);
+  }
+
 }

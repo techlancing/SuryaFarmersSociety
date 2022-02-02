@@ -40,4 +40,13 @@ export class SavingstypeService {
     const sMethodUrl = `${this.sRootUrl}/withdrawsavingsdeposit_transaction`;
     return this.http.post(sMethodUrl, oSavingsDeposit);
   }
+
+  fnGetAllSavingTypeAccountsInfo(){
+    const sMethodUrl = `${this.sRootUrl}/getallsavingtypes`;
+    return this.http.post(sMethodUrl, null);
+  }
+  fnChangeSavingTypeStatus(oSavinsType: SavingsType){
+    const sMethodUrl = `${this.sRootUrl}/setsavingstypeapprovalstatus`;
+    return this.http.post(sMethodUrl, oSavinsType);
+  }
 }

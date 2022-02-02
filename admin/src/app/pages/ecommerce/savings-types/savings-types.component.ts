@@ -89,7 +89,7 @@ export class SavingsTypesComponent implements OnInit {
     this.oSavingsTypeModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sStartDate);
     this.oSavingsTypeModel.sMaturityDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sMaturityDate);
     this.oSavingsTypeModel.sPensionInterestAddDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sPensionInterestAddDate);
-
+    this.oSavingsTypeModel.sMonthInterestAddDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sMonthInterestAddDate);
     this.oSavingstypeService.fnAddSavingsDepositInfo(this.oSavingsTypeModel).subscribe((data) => {
       console.log(data);
       this.fnSucessMessage();
