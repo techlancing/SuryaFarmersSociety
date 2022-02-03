@@ -83,4 +83,39 @@ export class ManagerApprovalComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }
+ fnConfirmationMessage(approval : any,status: string){
+   let name='';
+   let amount = '' ;
+   if(this.activatedroute.snapshot.data.type === 'savings'){
+      name = approval.sTypeofSavings;
+      amount = approval.nMaturityAmount;
+   }
+   else if(this.activatedroute.snapshot.data.type === 'credit'){
+    name = approval.sTypeofSavings;
+    amount = approval.nMaturityAmount;
+   }
+   else {
+    name = approval.sTypeofLoan;
+    amount = approval.nSanctionAmount;
+   }
+  Swal.fire(
+    {
+      position: 'center',
+      icon: 'question',
+      title: 'Do you want to change the present status('+approval.sIsApproved+') of "'+name+'" as "'+status+'"?',
+      text: 'A/C : '+approval.sAccountNo + '  Name: "'+name+'" Amount: "'+amount+'"',
+      showConfirmButton: true,
+      confirmButtonColor : '#00FF00',
+      cancelButtonColor : '#FF0000',
+      confirmButtonText : 'Yes',
+      cancelButtonText : 'No',
+      showCancelButton: true
+    }
+  ).then((result) => {
+    if (result.isConfirmed) {
+      Swal.close();
+      this.fnChangeApprovalStatus(approval,status);
+    }
+  });
+ }
 }

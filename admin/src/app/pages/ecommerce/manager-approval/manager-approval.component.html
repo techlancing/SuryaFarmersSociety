@@ -47,11 +47,11 @@
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
                   <td class="buttonDisplay">
                     <button class="btn btn-primary" 
-                    (click)="fnChangeApprovalStatus(approval,'Approved')" [disabled]="approval.sIsApproved==='Approved'"><i
+                    (click)="fnConfirmationMessage(approval,'Approved')" [disabled]="approval.sIsApproved==='Approved'"><i
                     class="mdi mdi-employee-edit" >Approve</i></button>
   
                     <button class="btn btn-primary"  
-                    (click)="fnChangeApprovalStatus(approval,'Rejected')" [disabled]="approval.sIsApproved==='Rejected'"><i
+                    (click)="fnConfirmationMessage(approval,'Rejected')" [disabled]="approval.sIsApproved==='Rejected'"><i
                     class="mdi mdi-employee-edit" >Reject</i></button>
                   </td>
                 </tr>
