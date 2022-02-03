@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UtilitydateService } from 'src/app/core/services/utilitydate.service';
 import { DebitService } from 'src/app/core/services/debit.service';
+import { BankAccountService } from 'src/app/core/services/account.service';
+import { BankAccount } from 'src/app/core/models/bankaccount.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-savings-type-deposit-transaction',
@@ -20,16 +23,22 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   breadCrumbItems : Array<any> ;
   sButtonText : string ;
   sSuccessMsg :  string ;
+  oAccountprintmodel : BankAccount ;
+  bIsAccountData : boolean ;
   @Input() oSavingsDeposit : any;
+  sImageRootPath: string;
   constructor(private oBankEmployeeService : BankEmployeeService,
     private oSavingstypeService : SavingstypeService,
     private router : Router,
     private oUtilitydateService : UtilitydateService,
-    private oDebitService : DebitService) { }
+    private oDebitService : DebitService,
+    private oBankAccountService : BankAccountService) { }
 
   ngOnInit(): void {
+    this.sImageRootPath = environment.imagePath;
     this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
       this.oSavingsDeposit = data as any ;
+      this.fnFecthAccountDetails();
      });
     this.breadCrumbItems = [{ label: 'Transactions' }, { label: this.oSavingsDeposit.sTypeofSavings, active: true }];
     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((employees : any)=>{
@@ -43,6 +52,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
      if (this.oSavingsDeposit.transactiontype === 'withdraw'){
         this.sButtonText = 'Withdraw & Send SMS'
      }
+     
   }
 
   fnOnSavingsDepositInfoSubmit() {
@@ -68,6 +78,13 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       });
     }
   }
+
+  fnFecthAccountDetails(): void{
+    this.oBankAccountService.fngetBankAccountInfoByNumber(this.oSavingsDeposit.sAccountNo).subscribe((data) => {
+      this.oAccountprintmodel = data as any;
+    });
+  }
+
 
 fnSucessMessage() {
   Swal.fire({

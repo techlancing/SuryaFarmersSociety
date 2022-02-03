@@ -3,6 +3,129 @@
     <app-page-title title="{{oSavingsDeposit.sTypeofSavings}}" [breadcrumbItems]="breadCrumbItems" 
         bgimageclass="addcategory_header"></app-page-title>
 
+          <div  class="row card card-bg">
+          <div class="row col-sm-12  card-body">
+            <div class="col-sm-6">
+              <div class="form-group"><!--img-container-->
+                <table class="col-sm-6 text-center">
+                  <thead>
+                    <tr class="imagewidth">
+                    <th ><label for="sPassportPhoto">Photo</label></th>
+                    <th><label for="sSignature-1">Sign-1</label></th>
+                    <th><label for="sSignature-2">Sign-2</label></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="imagewidth">
+                    <td> <img src="{{sImageRootPath + oAccountprintmodel.oPassportImageInfo?.sImageURL}}" class="photoWidth"/></td>
+                    <td><img src="{{sImageRootPath + oAccountprintmodel.oSignature1Info?.sImageURL}}" class="signWidth"/></td>
+                    <td><img src="{{sImageRootPath + oAccountprintmodel.oSignature2Info?.sImageURL}}" class="signWidth"/></td>
+                  </tr>  
+              </tbody> 
+              </table>           
+                 </div>
+            </div>
+          </div> 
+            <div class="row col-sm-6">
+              
+            </div>
+            
+               
+         <div class="row col-sm-12">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sAccountNo">Account No :</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sAccountNo}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sDate">Date of Issue:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sDate}}</label>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sApplicantName">Customer Name:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sApplicantName}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sNomineeName">Nominee Name:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sNomineeName}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sFatherOrHusbandName">Father/Husband Name:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sFatherOrHusbandName}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sMobileNumber">Mobile No:</label> 
+              <label class="account-detail">{{oAccountprintmodel.sMobileNumber}}</label>
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sAddress">Address:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sFlatNo}}<span>, </span>{{oAccountprintmodel.sStreetName}}<span>, </span>
+                {{oAccountprintmodel.sVillageAddress}}<span>, </span>{{oAccountprintmodel.sMandalAddress}}<span>, </span>
+                {{oAccountprintmodel.sDistrictAddress}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label for="sAccountCategory">Account Category:</label>  
+                <label class="account-detail">
+                  {{oAccountprintmodel.sAccountCategory}}
+                </label>
+            </div>
+          </div>
+                      
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label for="sShareType">Types of Share:</label>
+                <label class="account-detail">{{oAccountprintmodel.sShareType}}</label>                     
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sDOB">Date Of Birth:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sDOB}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group"> 
+                <label for="sCustomerId">Customer ID:</label>
+                <label class="account-detail">{{oAccountprintmodel.sCustomerId}}</label>                 
+            </div>
+          </div>
+          
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sAccountType">Type Of Account</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sAccountType}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sAadharNo">Aadhar No:</label>                  
+              <label class="account-detail">{{oAccountprintmodel.sAadharNo}}</label>
+            </div>
+          </div>
+                      
+        </div>
+      </div> 
+
+
+
+
     <div class="row">
         <div class="col-12">
             <div class="card card-bg">
