@@ -323,7 +323,7 @@ oSavingsTypeRouter.post("/setsavingstypeapprovalstatus", oAuthentication, asyncM
     if(!oSavingsType){
       return oRes.status(400).send();
     }
-    oSavingsType.findByIdAndUpdate(oSavingsType._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    await oSavingsTypeModel.findByIdAndUpdate(oSavingsType._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
     oRes.json("Success");  
 
   }catch(e){

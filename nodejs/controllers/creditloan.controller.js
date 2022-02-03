@@ -153,7 +153,7 @@ oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMid
     if(!oCreditLoan){
       return oRes.status(400).send();
     }
-    oCreditloan.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    await oCreditLoanModel.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
     oRes.json("Success");  
 
   }catch(e){
