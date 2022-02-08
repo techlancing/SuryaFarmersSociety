@@ -122,12 +122,23 @@
               <h2>{{sCaption}} - Transaction</h2>
               <div class="row">
               
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="loanissueDate">Date</label>                    
+                      <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                      showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
+                      dateInputFormat: 'DD-MM-YYYY' }"
+                      placeholder="Select Date" bsDatepicker name="loanissueDate"
+                  class="form-control"
+                   [(ngModel)]="oDebitModel.sDate">
+                  </div>
+                </div>
                 
                 <div class="col-sm-6" *ngIf="!bIsCredit">
                   <div class="form-group">
                     <label for="nAmount">Amount</label>                  
                     <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"
-                      class="form-control" disabled>
+                      class="form-control" >
                   </div>
                 </div>
 

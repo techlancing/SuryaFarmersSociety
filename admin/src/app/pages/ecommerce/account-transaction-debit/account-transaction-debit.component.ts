@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreditService } from 'src/app/core/services/credit.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
+import { UtilitydateService } from 'src/app/core/services/utilitydate.service';
 
 @Component({
   selector: 'app-account-transaction-debit',
@@ -59,7 +60,8 @@ export class AccountTransactionDebitComponent implements OnInit {
     public activatedroute : ActivatedRoute,
     private router: Router,
               private modalService: NgbModal,
-              private oBankEmployeeService: BankEmployeeService) { }
+              private oBankEmployeeService: BankEmployeeService,
+              private oUtilitydateService : UtilitydateService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -75,21 +77,6 @@ export class AccountTransactionDebitComponent implements OnInit {
       console.log('users',users);
        this.aUsers = users;
      });
-
-    this.aLoanIssueEmployee = [
-      {
-        displayText: 'Venkanna',
-        value:'01'
-      },
-      {
-        displayText: 'Bhaskar',
-        value:'02'
-      },
-      {
-        displayText: 'Naresh',
-        value:'03'
-      }
-    ];
     
     this.oDebitModel = new Debit();
     this.sButtonText = 'Send SMS & Save & Submit';
@@ -104,14 +91,15 @@ export class AccountTransactionDebitComponent implements OnInit {
   }
 
   fnOnDebitInfoSubmit(): void {
-    //this.bIsAddActive = true;
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
+     //this.bIsAddActive = true;
+     // let today = new Date();
+    // let dd = String(today.getDate()).padStart(2, '0');
+     // let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     // let yyyy = today.getFullYear();
 
-      let datetoday = `${dd}-${mm}-${yyyy}`;
-    this.oDebitModel.sDate = datetoday.toString();
+      //   let datetoday = `${dd}-${mm}-${yyyy}`;
+    // this.oDebitModel.sDate = datetoday.toString();
+    this.oDebitModel.sDate= this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
