@@ -97,18 +97,18 @@ export const PMENU: MenuItem[] = [
                 link: '/debit',
                 parentId: 40
             },
-            {
-                id: 43,
-                label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DAILYSAVINGDEBIT',
-                link: '/dailysavingdebit',
-                parentId: 40
-            },
             // {
-            //     id: 49,
-            //     label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DAILYSAVINGSDEPOSIT',
-            //     link: '/dailysavingsdeposit',
+            //     id: 43,
+            //     label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DAILYSAVINGDEBIT',
+            //     link: '/dailysavingdebit',
             //     parentId: 40
             // },
+            {
+                id: 49,
+                label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.DAILYSAVINGSDEPOSIT',
+                link: '/dailysavingsdeposit',
+                parentId: 40
+            },
             {
                 id: 62,
                 label: 'MENUITEMS.ACCOUNTTRANSACTION.LIST.WITHDRAWAL',
