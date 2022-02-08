@@ -131,6 +131,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.sLedgerHeading = 'Daily Deposit Saving '
       this.bIsDeposit = true;
       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
+        console.log("account in dailsaving deposit",account);
         this.fnGetAccountDetails(account);
       });
     }else if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
@@ -160,11 +161,13 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     this.oSelectedBankAccount = oSelectedAccount ;
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
-     // this.bShowLoanData = true;
+      // this.bShowLoanData = true;
     });
-    if(this.activatedroute.snapshot.data.type === 'depositwithdrawl')
+    if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'||
+    this.activatedroute.snapshot.data.type === 'deposit')
      this.bShowLoanData = true;
-    if(!(this.activatedroute.snapshot.data.type === 'depositwithdrawl'))
+    if(!(this.activatedroute.snapshot.data.type === 'depositwithdrawl') && 
+    !(this.activatedroute.snapshot.data.type === 'deposit'))
       this.fnGetSavingDepositAccounts(oSelectedAccount);
   }
 
