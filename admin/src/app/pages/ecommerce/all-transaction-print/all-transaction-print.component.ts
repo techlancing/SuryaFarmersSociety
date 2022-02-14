@@ -199,18 +199,37 @@ export class AllTransactionPrintComponent implements OnInit {
   }
   
   fnPrintSavingAccount(): void {
+    this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
     this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
 
   fnPrintLoanAccount(type): void {
     console.log(type);
-    if(type === 'EMI Loan') this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
-    else if(type === 'Personal Loan') this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
-    else if(type === 'Agriculture Loan') this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
-    else if(type === 'Gold Loan')  this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
-    else if(type === 'Silver Loan')  this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
-    else  this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
+    if(type === 'EMI Loan'){
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
+    } 
+    else if(type === 'Personal Loan'){
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
+    } 
+    else if(type === 'Agriculture Loan'){
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
+    } 
+    else if(type === 'Gold Loan') {
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
+    }
+    else if(type === 'Silver Loan') {
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
+    } 
+    else {
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
+    }
     this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
   }
   
