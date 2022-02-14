@@ -11,6 +11,7 @@ import { CreditLoanService } from 'src/app/core/services/creditloan.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 @Component({
   selector: 'app-all-transaction-print',
   templateUrl: './all-transaction-print.component.html',
@@ -34,6 +35,13 @@ export class AllTransactionPrintComponent implements OnInit {
   bTemporaryLoan : boolean = false ;
   bFirstButton : boolean = false;
   bSecondButton : boolean = false;
+  bDaily : boolean =false ;
+  bFixed : boolean =false ;
+  bRecuring : boolean =false ;
+  bMonthly : boolean =false ;
+  bPension : boolean =false ;
+  bChild : boolean =false ;
+  bEducation : boolean =false ;
   sHeaderText : String = 'All Transaction Print';
   bPdf : boolean = false;
   bPrintLine : boolean = true ;
@@ -83,14 +91,15 @@ export class AllTransactionPrintComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
+  aSavingDeposit: any;
   
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
     private oAccountService: BankAccountService,
     public activatedroute : ActivatedRoute,
-              private router: Router,
-              private modalService: NgbModal) { }
+    private router: Router,private modalService: NgbModal,
+    private oSavingstypeService : SavingstypeService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -170,6 +179,13 @@ export class AllTransactionPrintComponent implements OnInit {
         console.log(this.aTransactions);
       });
     });
+    this.fnGetSavingDepositAccounts(oSelectedAccount);
+  }
+  fnGetSavingDepositAccounts(oSelectedAccount : BankAccount){
+    this.oSavingstypeService.fnGetAllSavingDepositAccountsInfo(oSelectedAccount.sAccountNo).subscribe((savingdata) => {
+      this.aSavingDeposit = savingdata as any;
+      console.log(this.aSavingDeposit);
+    });
   }
 
 
@@ -197,6 +213,7 @@ export class AllTransactionPrintComponent implements OnInit {
     else  this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
     this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
   }
+  
   fnDeactivateNgClasses(b1,b2,b3,b4,b5,b6,b7){
     this.bFirstButton = b1 ;
     this.bEmiLoan = b2 ;
@@ -205,6 +222,49 @@ export class AllTransactionPrintComponent implements OnInit {
     this.bGoldLoan = b5 ;
     this.bSilverLoan = b6 ;
     this.bTemporaryLoan = b7 ;
+  }
+
+  fnPrintSavingDepositAccount(type){
+    console.log(type);
+    if(type === 'Daily Deposit Saving'){
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
+      this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
+    }
+    else if(type === 'Fixed Deposit Saving') {
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
+    }
+    else if(type === 'Recuring Deposit Saving'){
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
+    } 
+    else if(type === 'Monthly Deposit Saving') {
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
+    } 
+    else if(type === 'Pension Deposit Saving') {
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
+    } 
+    else if(type === 'Child Deposit Saving') {
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
+    } 
+    else if(type === 'Education Deposit Saving') {
+      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
+    } 
+    this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
+
+  }
+  fnDeactivateSDNgClasses(b1,b2,b3,b4,b5,b6,b7){
+  this.bDaily  = b1;
+  this.bFixed  = b2 ;
+  this.bRecuring =  b3;
+  this.bMonthly  = b4 ;
+  this.bPension  = b5 ;
+  this.bChild  = b6 ;
+  this.bEducation =  b7;
   }
 
   fnConfirmationMessage(fromLine: number, toLine: number) {

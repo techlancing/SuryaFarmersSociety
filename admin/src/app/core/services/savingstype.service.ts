@@ -49,4 +49,9 @@ export class SavingstypeService {
     const sMethodUrl = `${this.sRootUrl}/setsavingstypeapprovalstatus`;
     return this.http.post(sMethodUrl, oSavinsType);
   }
+
+  fnGetAllSavingTypesRelatedAccountInfo(sAccountNo : number){
+    const sMethodUrl = `${this.sRootUrl}/getaccountsavingstypes`;
+    return this.http.post(sMethodUrl, {sAccountNo : sAccountNo});
+  }
 }

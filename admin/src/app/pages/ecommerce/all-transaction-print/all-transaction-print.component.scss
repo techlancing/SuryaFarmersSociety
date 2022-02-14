@@ -44,24 +44,45 @@
         .savings .hide-loan{
             display: none!important;
         }
-        .emi .hide-trans, .emi .Personal,.emi .Agriculture,.emi .Gold,.emi .Silver,.emi .Temporary{
+        .emi .hide-trans, .emi .Personal,.emi .Agriculture,.emi .Gold,.emi .Silver,.emi .Temporary,.emi .hidesavingdeposit{
             display: none !important;
         }
-        .personal .hide-trans, .personal .EMI, .personal .Agriculture, .personal .Gold, .personal .Silver, .personal .Temporary   {
+        .personal .hide-trans, .personal .EMI, .personal .Agriculture, .personal .Gold, .personal .Silver, .personal .Temporary,.personal .hidesavingdeposit{
           display: none !important;
         }
-        .agri .hide-trans, .agri .EMI, .agri .Personal, .agri .Gold, .agri .Silver, .agri .Temporary{
+        .agri .hide-trans, .agri .EMI, .agri .Personal, .agri .Gold, .agri .Silver, .agri .Temporary,.agri .hidesavingdeposit{
             display: none !important;
         }
-        .gold .hide-trans, .gold .EMI, .gold .Personal, .gold .Agriculture, .gold .Silver, .gold .Temporary{
+        .gold .hide-trans, .gold .EMI, .gold .Personal, .gold .Agriculture, .gold .Silver, .gold .Temporary,.gold .hidesavingdeposit{
             display: none !important;
         }
-        .silver .hide-trans, .silver .EMI, .silver .Personal, .silver .Agriculture, .silver .Gold, .silver .Temporary{
+        .silver .hide-trans, .silver .EMI, .silver .Personal, .silver .Agriculture, .silver .Gold, .silver .Temporary,.silver .hidesavingdeposit{
             display: none !important;
         }
-        .temp .hide-trans, .temp .EMI, .temp .Personal, .temp .Agriculture, .temp .Gold, .temp .Silver{
+        .temp .hide-trans, .temp .EMI, .temp .Personal, .temp .Agriculture, .temp .Gold, .temp .Silver,.temp .hidesavingdeposit{
             display: none !important;
         }
-        
+        .Daily .hide-trans,.Daily .savings, .Daily .hide-loan,.Daily .Fixed,.Daily .Recuring,.Daily .Monthly,.Daily .Pension,.Daily .Child,.Daily .Education{
+            display: none !important;
+        }
+        .Fixed .hide-trans,.Fixed .savings, .Fixed .hide-loan,.Fixed .Daily,.Fixed .Recuring,.Fixed .Monthly,.Fixed .Pension,.Fixed .Child,.Fixed .Education{
+            display: none !important;
+        }
+        .Recuring .hide-trans,.Recuring .savings, .Recuring .hide-loan,.Recuring .Daily,.Recuring .Fixed,.Recuring .Monthly,.Recuring .Pension,.Recuring .Child,.Recuring .Education{
+            display: none !important;
+        }
+        .Monthly .hide-trans,.Monthly .savings, .Monthly .hide-loan,.Monthly .Daily,.Monthly .Fixed,.Monthly .Recuring,.Monthly .Pension,.Monthly .Child,.Monthly .Education{
+            display: none !important;
+        }
+        .Pension .hide-trans,.Pension .savings, .Pension .hide-loan,.Pension .Daily,.Pension .Fixed,.Pension .Recuring,.Pension .Monthly,.Pension .Child,.Pension .Education{
+            display: none !important;
+        }
+        .Child .hide-trans,.Child .savings, .Child .hide-loan,.Child .Daily,.Child .Fixed,.Child .Recuring,.Child .Monthly,.Child .Pension,.Child .Education{
+            display: none !important;
+        }
+        .Education .hide-trans,.Education .savings, .Education .hide-loan,.Education .Daily,.Education .Fixed,.Education .Recuring,.Education .Monthly,.Education .Pension,.Education .Child{
+            display: none !important;
+        }
+
          
     }
