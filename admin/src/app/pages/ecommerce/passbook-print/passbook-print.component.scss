@@ -12,11 +12,15 @@
 }
 
 .account-detail{
-    color: orange;
+    color: black;
     margin-left: 15px;
+    font-weight: bold;
 }
 .passBookDetailsmargin{
     margin-top: 10px;
+}
+.passbookfont{
+    font-size: 16px;
 }
 @media print {
     .passbook-heading, .passbook-acc-input{
