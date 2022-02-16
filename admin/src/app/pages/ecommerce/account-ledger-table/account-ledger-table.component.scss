@@ -1,8 +1,14 @@
 .trans-detail{
-    color: orange;
+    color: black;
+    font-weight: bold;
+    font-size : 17px;
 }
 @media print{
     .notvisible{
        display : none !important ;
     }
+    
+}
+.tableheader{
+    font-size: 17px;
 }
