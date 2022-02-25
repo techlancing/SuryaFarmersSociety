@@ -167,6 +167,12 @@
         "SAVINGSTYPEAPPROVAL" : "Savings Deposit Approval"
       }
     },
+    "APPROVALS": {
+      "TEXT" : "Approvals",
+      "LIST" : {
+        "APPROVALSTATUS" : "Approval Status"
+      }
+    },
     "EMAIL": {
       "TEXT": "Email",
       "LIST": {

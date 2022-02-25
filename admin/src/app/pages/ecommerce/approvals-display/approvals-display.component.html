@@ -1,0 +1,79 @@
+<div class="container-fluid">
+
+    <app-page-title title="Approval Status" [breadcrumbItems]="breadCrumbItems" bgimageclass="addcategory_header">
+    </app-page-title>
+
+    <div class="row col-sm-12">
+        <div class="card card-bg">
+            <div class="card-body">
+                <h2>All SavingType Approvals</h2>
+                <!-- <div class="row mb-md-2"> -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline table-centered tableText tabledata" id="basic-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Account Number</th>
+                                    <th>SavingDeposit Name</th>
+                                    <th>Start Date</th>
+                                    <th>Maurity Date</th>
+                                    <th>Deposited Amount</th>
+                                    <th>Maturity Amount</th>
+                                    <!-- <th>Maturity Date</th> -->
+                                    <th>Approved Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="trans-detail">
+                                <tr *ngFor="let approval of aSavingDepositApprovals ;let i = index;">
+                                    <td>{{approval.sAccountNo}}</td>
+                                    <td>{{approval.sTypeofSavings}}</td>
+                                    <td>{{approval.sStartDate}}</td>
+                                    <td>{{approval.sMaturityDate}}</td>
+                                    <td>{{approval.nDepositAmount}}</td>
+                                    <td>{{approval.nMaturityAmount}}</td>
+                                    <td><label for="approval-status" class="status">{{approval.sIsApproved}}</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-sm-12">
+        <div class="card card-bg">
+            <div class="card-body">
+                <h2>All CreditLoan Approvals</h2>
+                <!-- <div class="row mb-md-2"> -->
+                    <div class="table-responsive">
+                        <table class=" table table-bordered dt-responsive nowrap datatables no-footer dtr-inline table-centered tableText tabledata " id="basic-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Account Number</th>
+                                    <th>CreditLoan Name</th>
+                                    <th>Start Date</th>
+                                    <th>Sanction Amount</th>
+                                    <th>Total Amount</th>
+                                    <th>Approved Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="trans-detail">
+                                <tr *ngFor="let approval of aCrediloanApprovals ;let i = index;">
+                                    <td>{{approval.sAccountNo}}</td>
+                                    <td>{{approval.sTypeofLoan}}</td>
+                                    <td>{{approval.sDate}}</td>
+                                    <td>{{approval.nSanctionAmount}}</td>
+                                    <td>{{approval.nTotalAmount}}</td>
+                                    <td><label for="approval-status" class="status">{{approval.sIsApproved}}</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
+</div>
