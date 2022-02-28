@@ -8,6 +8,8 @@ export class CreditLoan {
         public nLoanMonths : number = null,
         public nLoanDays : number = null,
         public nTotalAmount : number = null,
+        // public nTotalInstallments : number = null,
+        // public nLastInstallmentAmount : number =null,
         public sTransactionId : string = '',//unique: true},  
         public sDate : string = '',        
         public sTypeofLoan : string = '',

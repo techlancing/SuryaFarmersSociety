@@ -121,7 +121,7 @@
                       <div class="form-group">
                         <label for="sEndofLoanDate">End of the Loan:</label>
 
-                        <ng-container *ngIf="oCreditLoanmodel.nLoanMonths>0; else days">
+                        <!-- <ng-container *ngIf="oCreditLoanmodel.nLoanMonths>0; else days">
                           <ng-container *ngIf="oCreditLoanmodel.nLoanDays>0; else months">
                             <label class="account-detail">{{oCreditLoanmodel.nLoanMonths}} Months and {{oCreditLoanmodel.nLoanDays}} Days</label>
                           </ng-container>
@@ -133,8 +133,9 @@
                           <ng-container *ngIf="oCreditLoanmodel.nLoanDays>0">
                             <label class="account-detail"> {{oCreditLoanmodel.nLoanDays}} Days </label>
                           </ng-container>
-                        </ng-template>
+                        </ng-template> -->
 
+                        <label class="account-detail"> {{oCreditLoanmodel.sEndofLoanDate}}</label>
                       </div>
                     </div>
                   </div>

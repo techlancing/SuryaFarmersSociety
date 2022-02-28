@@ -116,28 +116,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
      console.log('users',users);
       this.aUsers = users;
-    });
-    this.aLoanIssueEmployee = [
-      {
-        displayText: 'Venkanna',
-        value:'01'
-      },
-      {
-        displayText: 'Bhaskar',
-        value:'02'
-      },
-      {
-        displayText: 'Naresh',
-        value:'03'
-      }
-    ];
-    // this.aState = [
-    //   {
-    //     displayText: 'Telangana',
-    //     value: '01'
-    //   },
-    //   ];  
-    
+    });  
     this.oCreditLoanModel = new CreditLoan();
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
@@ -160,7 +139,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     //this.bIsAddActive = true;
 
     this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
-    //this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
+    this.oCreditLoanModel.sEndofLoanDate = new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
@@ -170,8 +149,8 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   }
 
   fnCalculateTotalAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null){
-      let interest = this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * (this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays)/(365*100);
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null ){  // && this.oCreditLoanModel.nLoanMonths!==null this.oCreditLoanModel.nLoanMonths*30+
+      let interest = (this.oCreditLoanModel.nSanctionAmount * this.oCreditLoanModel.nIntrest * this.oCreditLoanModel.nLoanDays)/(365*100);
       this.oCreditLoanModel.nTotalAmount= Number((Math.round((this.oCreditLoanModel.nSanctionAmount+interest)*100)/100).toFixed(2)); //this.oCreditLoanModel.nSanctionAmount+Number((Math.round(interest*100)/100).toFixed(2));
       console.log(this.oCreditLoanModel.nTotalAmount);
       console.log(interest);
@@ -179,21 +158,54 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     }
   }
 
+
+  fnCalculateDays(): void{
+
+    if (typeof this.oCreditLoanModel.sDate === 'object' &&
+      typeof this.oCreditLoanModel.sEndofLoanDate === 'object') {
+      this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      this.oCreditLoanModel.sEndofLoanDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sEndofLoanDate);//new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+    }
+  
+    if (typeof this.oCreditLoanModel.sDate === 'object' &&
+      this.oCreditLoanModel.sEndofLoanDate.length > 8) {
+      this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+    }
+  
+    if (this.oCreditLoanModel.sDate.length > 8 &&
+      typeof this.oCreditLoanModel.sEndofLoanDate === 'object') {
+      this.oCreditLoanModel.sEndofLoanDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sEndofLoanDate);//new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
+      const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+    }
+    this.fnCalculateTotalAmount();
+  }
+
   fnCalculateEMIAmount() : void {
-    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null && this.oCreditLoanModel.nLoanMonths!==null && this.oCreditLoanModel.sInstallmentType){
-        let totalDays=this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays;
-        let emiamountp=this.oCreditLoanModel.nTotalAmount / totalDays;
+    if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null  && this.oCreditLoanModel.sInstallmentType){
+        // let totalDays=this.oCreditLoanModel.nLoanMonths*30+this.oCreditLoanModel.nLoanDays;
+        let emiamountp=this.oCreditLoanModel.nTotalAmount / this.oCreditLoanModel.nLoanDays;
         let emiamount = Number((Math.round((emiamountp)*100)/100).toFixed(2));
-        console.log(emiamount*totalDays*100);
+        console.log(emiamount*this.oCreditLoanModel.nLoanDays*100);
         if(this.oCreditLoanModel.sInstallmentType==='Daily')
           this.oCreditLoanModel.nInstallmentAmount = emiamount;
         else if(this.oCreditLoanModel.sInstallmentType==='Weekly') {
-          if(totalDays>=7)  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round(emiamountp*7*100)/100).toFixed(2));
-          else  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*totalDays*100))/100).toFixed(2));
+          // let remainingDays = this.oCreditLoanModel.nLoanDays % 7;
+          // this.oCreditLoanModel.nTotalInstallments = Math.floor(this.oCreditLoanModel.nLoanDays / 7) + 1;
+          // this.oCreditLoanModel.nLastInstallmentAmount = Number((Math.round((remainingDays * emiamountp)*100)/100).toFixed(2));
+          if(this.oCreditLoanModel.nLoanDays>=7)  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round(emiamountp*7*100)/100).toFixed(2));
+          else  this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*this.oCreditLoanModel.nLoanDays*100))/100).toFixed(2));
         }
         else{
-          if(totalDays>=30) this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*30*100))/100).toFixed(2));
-          else this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*totalDays*100))/100).toFixed(2));
+          // let remainingDays = this.oCreditLoanModel.nLoanDays % 30;
+          // this.oCreditLoanModel.nTotalInstallments = Math.floor(this.oCreditLoanModel.nLoanDays / 30) + 1;
+          // this.oCreditLoanModel.nLastInstallmentAmount = Number((Math.round((remainingDays * emiamountp)*100)/100).toFixed(2));
+          if(this.oCreditLoanModel.nLoanDays>=30) this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*30*100))/100).toFixed(2));
+          else this.oCreditLoanModel.nInstallmentAmount = Number((Math.round((emiamountp*this.oCreditLoanModel.nLoanDays*100))/100).toFixed(2));
         }
          
       }
