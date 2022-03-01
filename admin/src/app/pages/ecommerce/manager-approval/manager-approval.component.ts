@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class ManagerApprovalComponent implements OnInit {
 
   breadCrumbItems : Array<any>;
-  aApprovals: any;
+  aApprovals: any = [];
   sTableContent : string ;
   
   constructor(private oSavingstypeService : SavingstypeService,
@@ -33,18 +33,25 @@ export class ManagerApprovalComponent implements OnInit {
 
   fnGetCreditLoanApprovals(){//BankAccount
     this.oCreditLoanService.fnGetAllCreditLoanInfo().subscribe((loandata)=>{
-      this.aApprovals = loandata as any;
+      let  aApproval= loandata as any;
       console.log(loandata);
+      this.fnSortApprovals(aApproval);
     });
   }
 
   fnGetSavingDepositApprovals(){
     this.oSavingstypeService.fnGetAllSavingTypeAccountsInfo().subscribe((savingdata) => {
-      this.aApprovals = savingdata as any;
+      let aApproval = savingdata as any;
       console.log(savingdata);
+      this.fnSortApprovals(aApproval);
     });
   }
-  
+  fnSortApprovals(aApproval){
+    debugger
+    aApproval.map((approval) => {
+      if(approval.sIsApproved === 'Pending') this.aApprovals.push(approval);
+    });
+  }
   fnGetCreditApprovals(){
 
   }

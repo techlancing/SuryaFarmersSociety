@@ -118,6 +118,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       this.aUsers = users;
     });  
     this.oCreditLoanModel = new CreditLoan();
+    this.oCreditLoanModel.sIsApproved = 'Pending' ;
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;

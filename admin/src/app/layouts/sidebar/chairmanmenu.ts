@@ -9,6 +9,34 @@ export const CMENU: MenuItem[] = [
         label: 'MENUITEMS.MENU.TEXT',
         isTitle: true
     },
+    ,
+    {
+        id: 10,
+        label: 'MENUITEMS.ECOMMERCE.TEXT',
+        icon: 'bx-store',
+        subItems: [
+
+            {
+                id: 19,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDDISTRICT',
+                link: '/adddistrict',
+                parentId: 10
+            },
+            {
+                id: 20,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDMANDAL',
+                link: '/addmandal',
+                parentId: 10
+            },
+            {
+                id: 21,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
+                link: '/addvillage',
+                parentId: 10
+             }
+
+        ]
+    },
     {
         id: 2,
         label: 'MENUITEMS.DASHBOARDS.TEXT',
@@ -18,12 +46,6 @@ export const CMENU: MenuItem[] = [
                 id: 3,
                 label: 'MENUITEMS.DASHBOARDS.LIST.DEFAULT',
                 link: '/dashboard',
-                parentId: 2
-            },
-            {
-                id: 4,
-                label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
-                link: '/allaccounts',
                 parentId: 2
             },
             {

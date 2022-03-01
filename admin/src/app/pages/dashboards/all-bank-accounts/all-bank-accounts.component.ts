@@ -73,22 +73,27 @@ export class AllBankAccountsComponent implements OnInit {
     this.router.navigate([uri]));
  }
 
-  fnActivateOrDeactivateBankaccount(oBankAccount: BankAccount) {
-    if (oBankAccount) {
+  fnActivateOrDeactivateBankaccount(oBankAccount: BankAccount,activate : boolean) {
+    if (!oBankAccount) {
       this.oBankAccount = oBankAccount;
-      if (this.oBankAccount.bIsDeactivated === false) {
-        this.oBankAccount.bIsDeactivated = true ;
-        this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo,this.oBankAccount.bIsDeactivated).subscribe((data) => {
-          console.log(data);
-          if(data==='success'){
-            this.fnSucessMessage();
-            this.redirectTo('/allaccounts');
-          }
-        });
-      }
+      return;
     }
 
+    if(activate){
+      if (this.oBankAccount.bIsDeactivated == false) this.oBankAccount.bIsDeactivated = true;
+    }else {
+      if (this.oBankAccount.bIsDeactivated == true) this.oBankAccount.bIsDeactivated = false;
+    }
+
+    this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo, this.oBankAccount.bIsDeactivated).subscribe((data) => {
+      console.log(data);
+      if (data === 'success') {
+        this.fnSucessMessage();
+        this.redirectTo('/allaccounts');
+      }
+    });
   }
+ 
 
   fnSucessMessage() {
     Swal.fire({

@@ -18,9 +18,10 @@ import { AllBankAccountsComponent } from './all-bank-accounts/all-bank-accounts.
 import { EcommerceModule } from '../ecommerce/ecommerce.module';
 import { AllEmployeesComponent } from './all-employees/all-employees.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
+import { AccountDetailsComponent } from './account-details/account-details.component';
 
 @NgModule({
-  declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent, AllEmployeesComponent, ViewEmployeeComponent],
+  declarations: [DefaultComponent, SaasComponent, CryptoComponent, AllBankAccountsComponent, AllEmployeesComponent, ViewEmployeeComponent, AccountDetailsComponent],
   imports: [
     EcommerceModule,
     CommonModule,

@@ -173,12 +173,12 @@ aBankEmployees: Array<BankEmployee>;
     this.oBankEmployeeModel.sBranchName === ''||
     this.oBankEmployeeModel.sPlace === ''||
     this.oBankEmployeeModel.sAadharNo === ''||
-    this.oBankEmployeeModel.sJoiningDate=== ''||
-    this.oBankEmployeeModel.oPassportImageInfo === null ||
-    this.oBankEmployeeModel.oAadharUpload === null ||
-    this.oBankEmployeeModel.oBankPassBookUpload === null ||
-    this.oBankEmployeeModel.oCallLetterUpload === null ||
-    this.oBankEmployeeModel.oEmployeePhotoUpload === null
+    this.oBankEmployeeModel.sJoiningDate=== ''
+    // this.oBankEmployeeModel.oPassportImageInfo === null ||
+    // this.oBankEmployeeModel.oAadharUpload === null ||
+    // this.oBankEmployeeModel.oBankPassBookUpload === null ||
+    // this.oBankEmployeeModel.oCallLetterUpload === null ||
+    // this.oBankEmployeeModel.oEmployeePhotoUpload === null
     ){
       this.fnShowFieldsAreEmpty();
       return;
@@ -193,6 +193,7 @@ aBankEmployees: Array<BankEmployee>;
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.redirectTo('/addemployee');
       });
     }
     else {

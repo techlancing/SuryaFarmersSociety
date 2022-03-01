@@ -43,7 +43,8 @@
                           <th sortable="sApplicantName" (sort)="onSort($event)">Name</th>
                           <th sortable="date" (sort)="onSort($event)">Created date</th>
                           <th>Actions</th>
-                          <th>Deactivate</th>
+                          <th>Activate / Deactivate</th>
+                          <th>View Details</th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let table of tables$ | async;let i=index">
@@ -71,10 +72,15 @@
                               class="mdi mdi-account-edit" ></i>Edit</button>
                           </td>
                           <td>
-                            <button class="btn btn-primary" (click)="fnActivateOrDeactivateBankaccount(table)">
+                            <button class="btn btn-primary" *ngIf="!table.bIsDeactivated"
+                                     (click)="fnActivateOrDeactivateBankaccount(table,false)">
                               <i class="mdi mdi-account-edit"></i>Deactivate</button>
-                            <!--<button class="btn btn-primary" *ngIf="table.bIsDeactivated===true"><i class="mdi mdi-account-edit"
-                                (click)="fnActivateOrDeactivateBankaccount(table)"></i>Activate</button>-->
+                            <button class="btn btn-primary" *ngIf="table.bIsDeactivated"><i class="mdi mdi-account-edit"
+                                (click)="fnActivateOrDeactivateBankaccount(table,true)"></i>Activate</button>
+                          </td>
+                          <td>
+                            <button class="btn btn-primary" (click)="openModal(accountviewcontent,i)">
+                              <i class="mdi mdi-employee-edit">Show</i></button>
                           </td>
                         </tr>
         
@@ -90,6 +96,7 @@
     </div>
   </div>
   
+  <!--Edit account details-->
   <ng-template #accountcontent role="document" let-modal>
     <div class="modal-header">
       <h5 class="modal-title mt-0">Edit Account</h5>
@@ -100,6 +107,19 @@
       [bisEditMode]="true"
     [oEditBankAccount]="aAllBankAccounts[nSelectedProductIndex]"></app-addaccount>
   
+    </div>
+  </ng-template>
+
+
+<!-- view account details -->
+  <ng-template #accountviewcontent role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Account Details</h5>
+      <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+    </div>
+    <div class="modal-body">
+      <app-account-details 
+    [oBankAccount]="aAllBankAccounts[nSelectedProductIndex]"></app-account-details>
     </div>
   </ng-template>
   
