@@ -9,34 +9,6 @@ export const CMENU: MenuItem[] = [
         label: 'MENUITEMS.MENU.TEXT',
         isTitle: true
     },
-    ,
-    {
-        id: 10,
-        label: 'MENUITEMS.ECOMMERCE.TEXT',
-        icon: 'bx-store',
-        subItems: [
-
-            {
-                id: 19,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDDISTRICT',
-                link: '/adddistrict',
-                parentId: 10
-            },
-            {
-                id: 20,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDMANDAL',
-                link: '/addmandal',
-                parentId: 10
-            },
-            {
-                id: 21,
-                label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
-                link: '/addvillage',
-                parentId: 10
-             }
-
-        ]
-    },
     {
         id: 2,
         label: 'MENUITEMS.DASHBOARDS.TEXT',
@@ -48,14 +20,9 @@ export const CMENU: MenuItem[] = [
                 link: '/dashboard',
                 parentId: 2
             },
-            {
-                id: 5,
-                label: 'MENUITEMS.DASHBOARDS.LIST.ALLEMPLOYEES',
-                link: '/allemployees',
-                parentId: 2
-            }
+            
         ]
-    },
+    }, 
     {
         id: 35,
         label: 'MENUITEMS.PASSBOOK.TEXT',
@@ -128,6 +95,59 @@ export const CMENU: MenuItem[] = [
                 link: '/AllCategoryBalanceSummary',
                 parentId: 54
             }
+        ]
+    },
+    {
+        id: 301,
+        label: 'MENUITEMS.CHAIRMANEMPLOYEE.TEXT',
+        icon: 'bx-store',
+        subItems: [
+            {
+                id: 5,
+                label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.ADDEMPLOYEE',
+                link: '/allemployees',
+                parentId: 301
+            }
+        ]
+    },
+    {
+        id: 301,
+        label: 'MENUITEMS.CHAIRMANEMPLOYEE.UPDATETEXT',
+        icon: 'bx-store',
+        subItems: [
+            {
+                id: 5,
+                label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.UPDATEEMPLOYEE',
+                link: '/allemployees',
+                parentId: 301
+            }
+        ]
+    },
+    {
+        id: 10,
+        label: 'MENUITEMS.ECOMMERCE.TEXT',
+        icon: 'bx-store',
+        subItems: [
+
+            {
+                id: 19,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDDISTRICT',
+                link: '/adddistrict',
+                parentId: 10
+            },
+            {
+                id: 20,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDMANDAL',
+                link: '/addmandal',
+                parentId: 10
+            },
+            {
+                id: 21,
+                label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
+                link: '/addvillage',
+                parentId: 10
+             }
+
         ]
     }
 ];

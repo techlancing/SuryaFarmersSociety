@@ -10,16 +10,23 @@ export const MMENU: MenuItem[] = [
         isTitle: true
     },
     {
-        id: 25,
-        label: 'MENUITEMS.ECOMMERCE.LIST.ADDEMPLOYEE',
-        link: '/addemployee',
-        parentId: 10
+        id: 400,
+        label: 'MENUITEMS.MANAGEREMPLOYEE.TEXT',
+        icon: 'bx-store',
+        subItems: [
+                {
+                    id: 25,
+                    label: 'MENUITEMS.MANAGEREMPLOYEE.LIST.ADDEMPLOYEE',
+                    link: '/addemployee',
+                    parentId: 400
+                },
+        ]
     },
 
     {
         id: 100,
         label: 'MENUITEMS.MANAGERAPPROVAL.TEXT',
-        icon: 'bxs-report',
+        icon: 'bx-store',
         subItems: [
             {
                 id: 101,
@@ -40,13 +47,6 @@ export const MMENU: MenuItem[] = [
                 parentId: 100
             },
         ]
-    },
-
-    {
-        id: 4,
-        label: 'MENUITEMS.DASHBOARDS.LIST.ALLACCOUNTS',
-        link: '/allaccounts',
-        parentId: 2
     },
     {
         id: 48,
@@ -91,5 +91,18 @@ export const MMENU: MenuItem[] = [
             }
         ]
     },
+    {
+        id: 401,
+        label: 'MENUITEMS.MANAGERACCOUNTS.TEXT',
+        icon: 'bx-store',
+        subItems: [
+                    {
+                        id: 4,
+                        label: 'MENUITEMS.MANAGERACCOUNTS.LIST.BANKACCOUNTUPDATE',
+                        link: '/allaccounts',
+                        parentId: 401
+                    }
+        ]
+    }
     
 ];

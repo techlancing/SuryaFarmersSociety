@@ -8,6 +8,7 @@ import { BankEmployeeService } from 'src/app/core/services/bankemployee.service'
 import { UtilitydateService } from 'src/app/core/services/utilitydate.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 import Swal from 'sweetalert2';
+import { isThisTypeNode } from 'typescript';
 
 @Component({
   selector: 'app-savings-types',
@@ -22,6 +23,7 @@ export class SavingsTypesComponent implements OnInit {
   public oSavingsTypeModel: SavingsType;
   public sButtonText: string;
   public sSavingDepositName : string ;
+  public nTotalMonths : number ;
   @Input() bHideBreadCrumb: boolean = false;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -113,18 +115,19 @@ export class SavingsTypesComponent implements OnInit {
   }
 
   fnCalculateTotalAmount() {
-    if (this.oSavingsTypeModel.nDepositAmount && this.oSavingsTypeModel.nIntrest && this.oSavingsTypeModel.nSavingDays !== null && this.oSavingsTypeModel.nSavingMonths !== null) {
-      let interest = this.oSavingsTypeModel.nDepositAmount * this.oSavingsTypeModel.nIntrest * (this.oSavingsTypeModel.nSavingTotalDays) / (365 * 100);
-      this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount + Number((Math.round(interest*100) / 100).toFixed(2));
-      console.log(this.oSavingsTypeModel.nMaturityAmount);
-      console.log(interest);
-      // this.fnCalculateEMIAmount();
+    if (this.oSavingsTypeModel.nDepositAmount !== null && this.oSavingsTypeModel.nIntrest !== null && 
+      this.oSavingsTypeModel.nSavingDays !== null && this.oSavingsTypeModel.nSavingMonths !== null
+      && this.oSavingsTypeModel.sTypeofSavings !== '') {
+      if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving') {
+        this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount ;
+      } 
+      else this.fnCalculateInterest(); 
     }
 
   }
 
   fnCalculateTotalDays() {
-
+    this.fnCalculateTotalMonthsYearsDays(this.oSavingsTypeModel.sStartDate,this.oSavingsTypeModel.sMaturityDate);
     if (typeof this.oSavingsTypeModel.sStartDate === 'object' &&
       typeof this.oSavingsTypeModel.sMaturityDate === 'object') {
       this.oSavingsTypeModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sStartDate);//new Date(this.oDailySavingDebitModel.sStartDate).toISOString().split('T')[0].split("-").reverse().join("-");
@@ -146,25 +149,50 @@ export class SavingsTypesComponent implements OnInit {
       const diffInMs = +(new Date(this.oSavingsTypeModel.sMaturityDate.split("-").reverse().join("-"))) - +(new Date(this.oSavingsTypeModel.sStartDate.split("-").reverse().join("-")))
       this.oSavingsTypeModel.nSavingTotalDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
     }
-    this.fnGetTotalYears();
-    this.fnGetTotalMonths();
-    this.fnGetDays();
-    //     this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/30-this.oSavingsTypeModel.nSavingTotalYears*12).toFixed(0));
-    
-    // console.log("Months=",this.oSavingsTypeModel.nSavingMonths,"years= ",this.oSavingsTypeModel.nSavingTotalYears,"days=",this.oSavingsTypeModel.nSavingDays);
+    this.fnCalculateTotalAmount();
   }
 
+  fnCalculateTotalMonthsYearsDays(d1, d2) {
+    debugger
+    if(typeof d1 === 'object' && typeof d2 === 'object'){
+      this.fnCalculateTotalMonths(d1,d2)
+    }else if(typeof d1 === 'object' && d2.length > 8){
+      this.fnCalculateTotalMonths(d1,new Date(d2.split("-").reverse().join("-")));
+    }else if(d1.length > 8 && typeof d2 === 'object'){
+      this.fnCalculateTotalMonths(new Date(d1.split("-").reverse().join("-")),d2);
+    }else{
+      this.fnCalculateTotalMonths(new Date(d1.split("-").reverse().join("-")),new Date(d2.split("-").reverse().join("-")));
+    }
+
+  }
+  fnCalculateTotalMonths(d1,d2){
+    let todate = d2.getDate();
+      let fromdate = d1.getDate();
+      this.nTotalMonths =  (d2.getFullYear() - d1.getFullYear())*12 - d1.getMonth() + d2.getMonth() ;
+      if(todate >= fromdate) this.oSavingsTypeModel.nSavingDays = todate - fromdate ;
+      else {
+        this.oSavingsTypeModel.nSavingDays = fromdate - todate ;
+        this.nTotalMonths -= 1;
+      }
+      this.oSavingsTypeModel.nSavingTotalYears = Number(Math.floor(this.nTotalMonths/12).toFixed(0)); 
+      this.oSavingsTypeModel.nSavingMonths = this.nTotalMonths - this.oSavingsTypeModel.nSavingTotalYears * 12 ;
+  }
   fnUpdateSavingsDepositName(){
     this.sSavingDepositName = this.oSavingsTypeModel.sTypeofSavings ;
+    this.fnCalculateTotalAmount();
   }
-  fnGetTotalYears(){
-    this.oSavingsTypeModel.nSavingTotalYears = Number(Math.floor(this.oSavingsTypeModel.nSavingTotalDays/365).toFixed(0)); 
-  }
-  fnGetTotalMonths(){
-    let diff = (this.oSavingsTypeModel.nSavingTotalDays/365)-this.oSavingsTypeModel.nSavingTotalYears;
-    this.oSavingsTypeModel.nSavingMonths = Number(Math.floor(diff/30).toFixed(0));
-  }
-  fnGetDays(){
-    this.oSavingsTypeModel.nSavingDays = this.oSavingsTypeModel.nSavingTotalDays-(this.oSavingsTypeModel.nSavingTotalYears*365+this.oSavingsTypeModel.nSavingMonths*30);
+  
+  fnCalculateInterest(){
+    debugger
+    let principalAmount = 0 ;
+    for(let i=0 ; i < this.nTotalMonths; i++){
+      principalAmount += this.oSavingsTypeModel.nDepositAmount ;
+      principalAmount += (principalAmount * 30 * this.oSavingsTypeModel.nIntrest)/(365*100);
+    }
+    if(this.oSavingsTypeModel.nSavingDays !== 0){
+      principalAmount += this.oSavingsTypeModel.nDepositAmount ;
+      principalAmount += (principalAmount * this.oSavingsTypeModel.nSavingDays * this.oSavingsTypeModel.nIntrest)/(365*100);
+    }
+    this.oSavingsTypeModel.nMaturityAmount = Number((Math.round(principalAmount*100)/100).toFixed(2)) ;
   }
 }

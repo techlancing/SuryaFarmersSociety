@@ -164,13 +164,34 @@
       "LIST" : {
         "LOANAPPROVAL" : "Loan Approval",
         "CREDITAPPROVAL" : "Credit Approval",
-        "SAVINGSTYPEAPPROVAL" : "Savings Deposit Approval"
+        "SAVINGSTYPEAPPROVAL" : "Savings Type Approval"
+      }
+    },
+    "MANAGERACCOUNTS": {
+      "TEXT" : "Bank Accounts Update",
+      "LIST" : {
+        "BANKACCOUNTUPDATE" : "Account Update"
       }
     },
     "APPROVALS": {
       "TEXT" : "Approvals",
       "LIST" : {
         "APPROVALSTATUS" : "Approval Status"
+      }
+    },
+    "CHAIRMANEMPLOYEE" : {
+      "TEXT" : "Employee Approval",
+      "UPDATETEXT" : "Update Employee",
+      "LIST" : {
+        "ADDEMPLOYEE" : "Add Employee Approval",
+        "UPDATEEMPLOYEE" : "Update Employee"
+      }
+    },
+    "MANAGEREMPLOYEE" : {
+      "TEXT" : "Add Employee",
+      "LIST" : {
+        "ADDEMPLOYEE" : "Add Employee",
+        "UPDATEEMPLOYEE" : "Update Employee"
       }
     },
     "EMAIL": {
