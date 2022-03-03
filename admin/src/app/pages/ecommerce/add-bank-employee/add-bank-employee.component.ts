@@ -200,7 +200,7 @@ aBankEmployees: Array<BankEmployee>;
       this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
-        this.redirectTo('/allemployees');
+        this.redirectTo('/allemployeesupdate');
       });
     }
 

@@ -105,7 +105,7 @@ export const CMENU: MenuItem[] = [
             {
                 id: 5,
                 label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.ADDEMPLOYEE',
-                link: '/allemployees',
+                link: '/addemployeeapproval',
                 parentId: 301
             }
         ]
@@ -118,7 +118,7 @@ export const CMENU: MenuItem[] = [
             {
                 id: 5,
                 label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.UPDATEEMPLOYEE',
-                link: '/allemployees',
+                link: '/allemployeesupdate',
                 parentId: 301
             }
         ]

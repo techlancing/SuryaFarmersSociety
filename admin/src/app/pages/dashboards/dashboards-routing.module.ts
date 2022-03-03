@@ -18,8 +18,16 @@ const routes: Routes = [
         component: AllBankAccountsComponent
     },
     {
-        path: 'allemployees',
-        component: AllEmployeesComponent
+        path: 'addemployeeapproval',
+        component: AllEmployeesComponent,
+        data :{
+            type : 'approval', 
+        }
+    },
+    {
+        path: 'allemployeesupdate',
+        component: AllEmployeesComponent,
+        
     },
     {
         path: 'saas',

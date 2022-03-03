@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DropzoneComponent, DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import Swal from 'sweetalert2';
 import { User } from 'src/app/core/models/auth.models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-all-employees',
@@ -46,10 +47,12 @@ export class AllEmployeesComponent implements OnInit {
   }>;
   // page
   currentpage: number;
-  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal) { }
+  sApproval: boolean;
+  constructor(private oBankEmployeeService: BankEmployeeService,private modalService: NgbModal,
+    private activatedroute : ActivatedRoute) { }
 
   ngOnInit(): void {
-
+    
     this.aChairman=[
       {
         displayText: 'Approve',
@@ -95,11 +98,28 @@ export class AllEmployeesComponent implements OnInit {
       }
     ] ;
     this.breadCrumbItems = [{ label: 'Ecommece' }, { label: 'EndUsers', active: true }];
+    if (this.activatedroute.snapshot.data.type === 'approval') this.sApproval = true ;
+
+    
 
     this.currentpage = 1;
     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
       this.aUsers = users;
+      if(this.sApproval) {
+        let employees = [];
+        this.aUsers.map((employee) => {
+          if(employee.sStatus == 'pending') employees.push(employee);
+        });
+        this.aUsers = employees;
+      }else {
+        let employees = [];
+        this.aUsers.map((employee) => {
+          if(employee.sStatus !== 'pending') employees.push(employee);
+        });
+        this.aUsers = employees;
+      }
+      
   });
   this.account = JSON.parse(localStorage.getItem('userData'));
   
