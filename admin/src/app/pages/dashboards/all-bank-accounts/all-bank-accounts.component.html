@@ -33,7 +33,7 @@
                   </div>
                   <div class="table-responsive">
                     <table id="basic-datatable"
-                      class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                      class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline content">
                       <thead>
                         <tr>
                           
@@ -41,7 +41,7 @@
                           <th sortable="sBranchCode" (sort)="onSort($event)">Branch Code</th>
                           <th sortable="sCustomerId" (sort)="onSort($event)">Customer Id</th>
                           <th sortable="sApplicantName" (sort)="onSort($event)">Name</th>
-                          <th sortable="date" (sort)="onSort($event)">Created date</th>
+                          <!-- <th sortable="date" (sort)="onSort($event)">Created date</th> -->
                           <th>Actions</th>
                           <th>Activate / Deactivate</th>
                           <th>View Details</th>
@@ -63,13 +63,13 @@
                             <ngb-highlight [result]="table.sApplicantName" [term]="service.searchTerm"></ngb-highlight>
                           </td>
                           
-                          <td>
+                          <!-- <td>
                             <ngb-highlight [result]="table.createdAt" [term]="service.searchTerm"></ngb-highlight>
-                          </td>
+                          </td> -->
                           
-                          <td>
-                            <button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                              class="mdi mdi-account-edit" ></i>Edit</button>
+                          <td class="actions">
+                            <button class="btn btn-primary" (click)="openModal(accountcontent,i)">Edit</button>
+                              <button class="btn btn-primary" (click)="fnDeleteBankAccount(table)">Delete</button>
                           </td>
                           <td>
                             <button class="btn btn-primary" *ngIf="!table.bIsDeactivated"

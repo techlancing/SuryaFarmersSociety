@@ -141,6 +141,25 @@ fnChangeEmployeeApprovalStatus(oBankemployee : BankEmployee, sStatus : string){
     this.ngOnInit();
   });
 }
+  fnDeleteEmployee(oBankemployee: BankEmployee) {
+    if (oBankemployee !== undefined) {
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Do you want to really Delete this employee?',
+        showConfirmButton: true,
+        showCancelButton: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.close();
+          this.oBankEmployeeService.fnDeleteBankEmployeeInfo(oBankemployee).subscribe((data) => {
+            this.fnDeleteMessage();
+            this.ngOnInit();
+          });
+        }
+      });
+    }
+  }
 
 fnUpdate(){
   this.statusUpdate = true ;
@@ -150,6 +169,15 @@ fnSuccessMessage(){
     position: 'center',
     icon: 'success',
     title: 'Employee status updated Successfully.',
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
+fnDeleteMessage(){
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Employee Deleted Successfully.',
     showConfirmButton: false,
     timer: 1500
   });

@@ -1,37 +1,37 @@
 <div class="container-fluid">
 
   <app-page-title title="All Employees" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
-  bgimageclass="addcategory_header"></app-page-title>
+    bgimageclass="addcategory_header"></app-page-title>
 
   <div class="row">
-      <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
-       <div class="card card-bg">
+    <form class="col-sm-12" novalidate #_categoryFormElem="ngForm">
+      <div class="card card-bg">
         <div class="card-body">
-            <h2>All Employees</h2>
+          <h2>All Employees</h2>
 
 
-           <div class="row mb-md-2">
-                
-         <div class="table-responsive">
-          <table class="table table-centered tableText" id="basic-datatable">
-            <thead>
-              <tr>
-                <th>EmployeeId</th>
-                <th>EmployeeName</th>
-                <th>Phone</th>
-                <th>Joining Date</th>
-               <th *ngIf="sApproval">Approved Status</th>
-               <th>Actions</th>
-               <th>View Employee</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of aUsers ;let i = index;">
-                <td>{{user.nEmployeeID}}</td>
-                <td>{{user.sEmployeeName}}</td>
-                <td>{{user.sMobileNumber}}</td>
-                <td>{{user.sJoiningDate}}</td>
-                <!--<td> 
+          <div class="row mb-md-2">
+
+            <div class="table-responsive">
+              <table class="table table-centered tableText" id="basic-datatable">
+                <thead>
+                  <tr>
+                    <th>EmployeeId</th>
+                    <th>EmployeeName</th>
+                    <th>Phone</th>
+                    <th>Joining Date</th>
+                    <th *ngIf="sApproval">Approved Status</th>
+                    <th>Actions</th>
+                    <th>View Employee</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of aUsers ;let i = index;">
+                    <td>{{user.nEmployeeID}}</td>
+                    <td>{{user.sEmployeeName}}</td>
+                    <td>{{user.sMobileNumber}}</td>
+                    <td>{{user.sJoiningDate}}</td>
+                    <!--<td> 
                   <ng-select [items]="aChairman" [(ngModel)]="user.sStatus" name="sChairman"
                       bindLabel="displayText" bindValue="value" (change)="fnUpdate()">
                       <ng-template ng-label-tmp let-item="item">
@@ -39,30 +39,26 @@
                       </ng-template>
                   </ng-select>
                 </td> [disabled]="user.sStatus==='approve'" [disabled]="user.sStatus==='reject'"-->
-                <td *ngIf="sApproval"><label for="employee-status" class="status">{{user.sStatus}}</label></td>
-                <td class="buttonDisplay" *ngIf="sApproval">
-
-                  <button class="btn btn-primary" (click)="fnChangeEmployeeApprovalStatus(user,'approve')" >
-                  <i class="mdi mdi-employee-edit" >Approve</i></button>
-                  <button class="btn btn-primary" (click)="fnChangeEmployeeApprovalStatus(user,'reject')" >
-                  <i class="mdi mdi-employee-edit" >Reject</i></button>
-
-                </td>
-                <td *ngIf="!sApproval">
-                  <button class="btn btn-primary" (click)="openModal(accountcontent,i)"><i
-                    class="mdi mdi-employee-edit" >Edit</i></button>
-                </td>
-                <td>
-                  <button class="btn btn-primary" (click)="openModal(accountcontentviewemployee,i)">
-                    <i class="mdi mdi-employee-edit">Show Details</i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                    <td *ngIf="sApproval"><label for="employee-status" class="status">{{user.sStatus}}</label></td>
+                    <td class="buttonDisplay" *ngIf="sApproval">
+                      <button class="btn btn-primary" (click)="fnChangeEmployeeApprovalStatus(user,'approve')">Approve</button>
+                      <button class="btn btn-primary" (click)="fnChangeEmployeeApprovalStatus(user,'reject')">Reject</button>
+                    </td>
+                    <td *ngIf="!sApproval" class="actions" >
+                      <button class="btn btn-primary" (click)="openModal(accountcontent,i)">Edit</button>
+                      <button class="btn btn-primary" (click)="fnDeleteEmployee(user)">Delete</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-primary" (click)="openModal(accountcontentviewemployee,i)">
+                        <i class="mdi mdi-employee-edit">Show Details</i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </form>
   </div>
   <!-- end row -->
@@ -75,9 +71,8 @@
     <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
   </div>
   <div class="modal-body">
-    <app-add-bank-employee bHideBreadCrumb='true' 
-    [bisEditMode]="true"
-  [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]"></app-add-bank-employee>
+    <app-add-bank-employee bHideBreadCrumb='true' [bisEditMode]="true"
+      [oEditBankEmployeeModel]="aUsers[nSelectedProductIndex]"></app-add-bank-employee>
 
   </div>
 </ng-template>

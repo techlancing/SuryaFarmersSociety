@@ -27,5 +27,14 @@ h2{
     font-weight: bold;
 }
 .buttonDisplay{
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 48% 48%;
+    justify-content: space-around !important;
+    // justify-content: space-evenly;
+}
+.actions{
+   
+    display: grid;
+    grid-template-columns: 45% 45%;
+    justify-content: space-around !important;
 }

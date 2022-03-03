@@ -93,8 +93,36 @@ export class AllBankAccountsComponent implements OnInit {
       }
     });
   }
- 
+  fnDeleteBankAccount(oBankAccount: BankAccount) {
+    if (oBankAccount !== undefined) {
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'Do you want to really Delete this Account?',
+        showConfirmButton: true,
+        showCancelButton: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.close();
+          this.oBankAccountService.fnDeleteBankAccountInfo(oBankAccount).subscribe((data) => {
+            console.log(data);
+            this.fnDeleteMessage();
+            this.ngOnInit();
+          });
+        }
+      });
+    }
+  }
 
+  fnDeleteMessage(){
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Bank Account Deleted sucessfully.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
   fnSucessMessage() {
     Swal.fire({
       position: 'center',

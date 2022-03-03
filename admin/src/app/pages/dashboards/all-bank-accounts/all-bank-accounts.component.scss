@@ -19,3 +19,11 @@ background-color: antiquewhite;
 h2{
     margin:30px 0;
 }
+.actions{
+    display: grid;
+     grid-template-columns: 44% 54%;
+    justify-content: space-around !important;
+}
+.content{
+    text-align: center;
+}
