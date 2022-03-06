@@ -48,6 +48,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.0",
     "metismenujs": "^1.1.0",
+    "moment": "^2.29.1",
     "ng-apexcharts": "^1.2.0",
     "ng-chartist": "^4.1.0",
     "ng-click-outside": "^5.1.1",

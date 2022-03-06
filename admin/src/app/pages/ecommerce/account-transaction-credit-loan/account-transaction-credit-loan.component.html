@@ -96,7 +96,7 @@
                   <label for="sInstallmentType">Installment Type</label>
                   <ng-select [items]="aInstallmentType" name="sInstallmentType"
                     [(ngModel)]="oCreditLoanModel.sInstallmentType" bindLabel="displayText" bindValue="displayText"
-                    (change)="fnCalculateEMIAmount()">
+                    (change)="fnCalculateTotalAmount()">
                     <ng-template ng-label-tmp let-item="item">
                       {{item.displayText}}
                     </ng-template>
