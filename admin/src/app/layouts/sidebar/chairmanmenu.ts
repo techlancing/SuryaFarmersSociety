@@ -149,6 +149,11 @@ export const CMENU: MenuItem[] = [
              }
 
         ]
+    },
+    {
+        id: 500,
+        label: 'MENUITEMS.LOGOUT.TEXT',
+        link : '/logout'
     }
 ];
 

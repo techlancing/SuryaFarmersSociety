@@ -103,6 +103,11 @@ export const MMENU: MenuItem[] = [
                         parentId: 401
                     }
         ]
+    },
+    {
+        id: 500,
+        label: 'MENUITEMS.LOGOUT.TEXT',
+        link : '/logout'
     }
     
 ];

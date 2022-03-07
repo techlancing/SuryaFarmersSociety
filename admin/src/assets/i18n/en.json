@@ -173,6 +173,9 @@
         "BANKACCOUNTUPDATE" : "Account Update"
       }
     },
+    "LOGOUT":{
+      "TEXT": "Logout"
+    },
     "APPROVALS": {
       "TEXT" : "Approvals",
       "LIST" : {

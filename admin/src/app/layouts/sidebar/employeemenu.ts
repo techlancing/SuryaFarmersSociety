@@ -186,6 +186,11 @@ export const PMENU: MenuItem[] = [
                 parentId: 54
             }
         ]
+    },
+    {
+        id: 500,
+        label: 'MENUITEMS.LOGOUT.TEXT',
+        link : '/logout'
     }
 
 ];

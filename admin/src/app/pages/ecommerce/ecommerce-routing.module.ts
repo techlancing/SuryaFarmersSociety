@@ -30,6 +30,9 @@ import { SavingsTypesComponent } from './savings-types/savings-types.component';
 import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
 import { ManagerApprovalComponent } from './manager-approval/manager-approval.component';
 import { ApprovalsDisplayComponent } from './approvals-display/approvals-display.component';
+import { WelcomeMessageComponent } from './welcome-message/welcome-message.component';
+import { LogoutComponent } from './logout/logout.component';
+
 
 
 const routes: Routes = [
@@ -202,7 +205,26 @@ const routes: Routes = [
     {
         path:'approvaldetails',
         component: ApprovalsDisplayComponent
-    }    
+    }, 
+    {
+        path: 'welcomemanager',
+        component: WelcomeMessageComponent,
+        data: {
+            type: 'manager'
+        }
+    },
+    {
+        path: 'welcomeemployee',
+        component: WelcomeMessageComponent,
+        data: {
+            type: 'employee'
+        }
+    },
+    {
+        path: 'logout',
+        component: LogoutComponent
+    }
+   
 ];
 
 @NgModule({

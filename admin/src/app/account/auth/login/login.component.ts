@@ -65,8 +65,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .subscribe(
         data => {
           if(data.sRole === 'chairman') this.router.navigate(['/dashboard']);
-          else if(data.sRole === 'manager') this.router.navigate(['/addemployee']);
-          else this.router.navigate(['/adddistrict']);
+          else if(data.sRole === 'manager') this.router.navigate(['/welcomemanager']);
+          else this.router.navigate(['/welcomeemployee']);
         },
         error => {
           console.log(error);

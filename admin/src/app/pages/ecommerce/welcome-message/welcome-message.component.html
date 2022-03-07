@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="Welcome" 
+    bgimageclass="addcategory_header"></app-page-title>
+    <!-- *ngIf="manager" *ngIf='!bHideBreadCrumb' [breadcrumbItems]="breadCrumbItems" -->
+    <h1 class="heading" *ngIf="!employee">Welcome Manager</h1>
+    <div class="row mastercard" *ngIf="!employee">
+        <div class="card ">
+            <div class="employee">
+                <a href="/addemployee" class="colorelement">Add Employee</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column margincard2">
+                <a href="/loanapproval" class="colorelement"> Loan Approval</a>
+            </div>
+            <div class="column">
+                <a href="/creditapproval" class="colorelement">Credit Approval</a>
+            </div>
+            <div class="column"> 
+                <a href="/savingsapproval" class="colorelement">SavingType Approval</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column">
+                <a href="/DayWiseTransaction" class="colorelement"> DayWise Transaction</a>
+            </div>
+            <div class="column colorelement">
+                <a href="/DayWiseCumulative" class="colorelement">DayWise Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/DayWiseCumulativeAccount" class="colorelement"> Account Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/Last12MonthsTransaction" class="colorelement"> Monthly Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/CategoryBalanceSummary" class="colorelement"> Category Balance Summary</a>
+            </div>
+        </div>
+
+        <div class="card  ">
+            <div class="employee">
+                <a href="/allaccounts" class="colorelement">Account Update</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <h1 class="heading" *ngIf="employee">Welcome Employee</h1>
+    <div class="row mastercard2" *ngIf="employee">
+        <div class="card ">
+            <div class="employee">
+                <a href="/addemployee" class="colorelement">Add New Account</a>
+            </div>
+            <div>
+                <a href="/addemployee" class="colorelement">Add New Loan</a>
+            </div>
+            <div>
+                <a href="/addemployee" class="colorelement">Add Type of Savings</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column margincard2">
+                <a href="/loanapproval" class="colorelement"> Passbook Print</a>
+            </div>
+            <div class="column">
+                <a href="/creditapproval" class="colorelement">Passbook Transaction Print</a>
+            </div>
+            <div class="column"> 
+                <a href="/savingsapproval" class="colorelement">Balance Enquiry</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column margincard2 employee">
+                <a href="/loanapproval" class="colorelement"> Approval Status</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column margincard2">
+                <a href="/loanapproval" class="colorelement"> Loan Debit</a>
+            </div>
+            <div class="column">
+                <a href="/creditapproval" class="colorelement">Debit</a>
+            </div>
+            <div class="column"> 
+                <a href="/savingsapproval" class="colorelement">Credit</a>
+            </div>
+            <div class="column"> 
+                <a href="/savingsapproval" class="colorelement">Loan Credit</a>
+            </div>
+            <div class="column"> 
+                <a href="/savingsapproval" class="colorelement">Intra Transaction</a>
+            </div>
+        </div>
+
+        <div class="card ">
+            <div class="column">
+                <a href="/DayWiseTransaction" class="colorelement"> DayWise Transaction</a>
+            </div>
+            <div class="column colorelement">
+                <a href="/DayWiseCumulative" class="colorelement">DayWise Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/DayWiseCumulativeAccount" class="colorelement"> Account Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/Last12MonthsTransaction" class="colorelement"> Monthly Cumulative</a>
+            </div>
+            <div class="column">
+                <a href="/CategoryBalanceSummary" class="colorelement"> Category Balance Summary</a>
+            </div>
+        </div>
+    </div>

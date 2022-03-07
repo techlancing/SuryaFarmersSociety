@@ -52,6 +52,10 @@ import { SavingsTypesComponent } from './savings-types/savings-types.component';
 import { SavingsTypeDepositTransactionComponent } from './savings-type-deposit-transaction/savings-type-deposit-transaction.component';
 import { ManagerApprovalComponent } from './manager-approval/manager-approval.component';
 import { ApprovalsDisplayComponent } from './approvals-display/approvals-display.component';
+import { WelcomeMessageComponent } from './welcome-message/welcome-message.component';
+import { LogoutComponent } from './logout/logout.component';
+
+
 
 
 const config: DropzoneConfigInterface = {
@@ -91,6 +95,8 @@ const config: DropzoneConfigInterface = {
      SavingsTypeDepositTransactionComponent,
      ManagerApprovalComponent,
      ApprovalsDisplayComponent,
+     WelcomeMessageComponent,
+     LogoutComponent,
      ],
   imports: [
     CommonModule,
