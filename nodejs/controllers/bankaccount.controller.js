@@ -188,7 +188,30 @@ obankaccountRouter.get("/test", asyncMiddleware(async(oReq, oRes, oNext) => {
 }));
 
 // url: ..../bankaccount/bankaccount_list
-obankaccountRouter.get("/bankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+obankaccountRouter.get("/allbankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await obankaccountModel.find()
+    .populate({
+      path: 'oPassportImageInfo oSignature1Info oSignature2Info oDocument1Info oDocument2Info'
+    }).exec((oError, oAllbankaccounts) => {
+      if(!oError) {
+          oRes.json(oAllbankaccounts);
+      }
+      else{
+          console.log(oError);
+      }
+
+    });
+
+    
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+// url: ..../bankaccount/activebankaccount_list
+obankaccountRouter.get("/activebankaccount_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
       await obankaccountModel.find({bIsDeactivated : false})
       .populate({
