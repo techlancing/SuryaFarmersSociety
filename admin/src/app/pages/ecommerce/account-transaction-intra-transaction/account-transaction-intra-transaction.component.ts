@@ -140,7 +140,7 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
        // this.oBankAccountModel = tempobj;
        this.sButtonText = 'Update';
      }
-     this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+     this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
        //this.aBankAccountTypes = [...data as any];
  
      });
@@ -197,7 +197,7 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
  
  
    fnUpdateParentAfterEdit() {
-     this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+     this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
        // this.fnEditSucessMessage();
        this.bankaccounts = [];
        console.log(this.bankaccounts);

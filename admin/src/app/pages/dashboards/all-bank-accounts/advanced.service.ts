@@ -80,7 +80,7 @@ export class AdvancedService {
         private oBankAccountService : BankAccountService) {
         
 
-        this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+        this.oBankAccountService.fngetAllBankAccountInfo().subscribe((data) => {
             this.tableData  = [...data as any];
             console.log(this.tableData);
             this._search$.pipe(

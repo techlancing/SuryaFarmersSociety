@@ -16,8 +16,13 @@ export class BankAccountService {
         return this.http.post(sMethodUrl, oBankAccount);
     }
 
-    fngetBankAccountInfo(){
-      const sMethodUrl = `${this.sRootUrl}/bankaccount_list`;
+    fngetActiveBankAccountInfo(){
+      const sMethodUrl = `${this.sRootUrl}/activebankaccount_list`;
+      return this.http.get(sMethodUrl);
+    }
+
+    fngetAllBankAccountInfo(){
+      const sMethodUrl = `${this.sRootUrl}/allbankaccount_list`;
       return this.http.get(sMethodUrl);
     }
 

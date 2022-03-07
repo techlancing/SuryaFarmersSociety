@@ -116,7 +116,7 @@ export class LastTransactionComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
       //this.aBankAccountTypes = [...data as any];
 
     });
@@ -137,7 +137,7 @@ export class LastTransactionComponent implements OnInit {
 
 
   fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.bankaccounts = [];
       console.log(this.bankaccounts);

@@ -128,7 +128,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-   this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+   this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
       this.aBankAccounts = [...data as any];
     });
   }

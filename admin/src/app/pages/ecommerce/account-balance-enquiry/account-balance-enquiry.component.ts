@@ -27,7 +27,7 @@ export class AccountBalanceEnquiryComponent implements OnInit {
     this.fnGetAllAccounts();
   }
   fnGetAllAccounts() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.aBankAccounts = [];
       console.log(this.aBankAccounts);

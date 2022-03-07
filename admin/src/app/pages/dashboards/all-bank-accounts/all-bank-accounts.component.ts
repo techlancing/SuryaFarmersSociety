@@ -37,7 +37,7 @@ export class AllBankAccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'All Bank Accounts', active: true }];
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+    this.oBankAccountService.fngetAllBankAccountInfo().subscribe((data) => {
       this.aAllBankAccounts = [...data as any];
 
     });
@@ -74,24 +74,37 @@ export class AllBankAccountsComponent implements OnInit {
  }
 
   fnActivateOrDeactivateBankaccount(oBankAccount: BankAccount,activate : boolean) {
-    if (!oBankAccount) {
-      this.oBankAccount = oBankAccount;
-      return;
-    }
+   let message = activate? 'Activate' : 'Deactivate';
+   if (!oBankAccount) return;
+   else this.oBankAccount = oBankAccount;
 
-    if(activate){
-      if (this.oBankAccount.bIsDeactivated == false) this.oBankAccount.bIsDeactivated = true;
-    }else {
-      if (this.oBankAccount.bIsDeactivated == true) this.oBankAccount.bIsDeactivated = false;
-    }
-
-    this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo, this.oBankAccount.bIsDeactivated).subscribe((data) => {
-      console.log(data);
-      if (data === 'success') {
-        this.fnSucessMessage();
-        this.redirectTo('/allaccounts');
+   Swal.fire({
+    position: 'center',
+    icon: 'info',
+    title: 'Do you want to really '+ message+' this Account?',
+    showConfirmButton: true,
+    showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.close();
+  
+      if(activate){
+        if (this.oBankAccount.bIsDeactivated == true) this.oBankAccount.bIsDeactivated = false;
+      }else {
+        if (this.oBankAccount.bIsDeactivated == false) this.oBankAccount.bIsDeactivated = true;
       }
-    });
+  
+      this.oBankAccountService.fnActivateOrDeactivateBankAccount(this.oBankAccount.sAccountNo, this.oBankAccount.bIsDeactivated).subscribe((data) => {
+        console.log(data);
+        if (data === 'success') {
+           this.fnSucessMessage(message+'d');
+          this.redirectTo('/allaccounts');
+        }
+      });   
+    }
+  });
+  
+   
   }
   fnDeleteBankAccount(oBankAccount: BankAccount) {
     if (oBankAccount !== undefined) {
@@ -123,11 +136,11 @@ export class AllBankAccountsComponent implements OnInit {
       timer: 1500
     });
   }
-  fnSucessMessage() {
+  fnSucessMessage(message) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Bank Account Deactivated sucessfully.',
+      title: 'Bank Account '+message+' sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });

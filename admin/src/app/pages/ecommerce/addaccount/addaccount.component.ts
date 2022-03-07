@@ -135,7 +135,7 @@ export class AddaccountComponent implements OnInit {
       this.sButtonText = 'Update';
       this.bShowPersonal = true;
     }
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
       this.bankaccounts = [...data as any];
 
     });
@@ -363,7 +363,7 @@ export class AddaccountComponent implements OnInit {
       if (!this.bisEditMode) {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];
-          this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+          this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
             this.fnMessage('Account is created sucessfully.','success');
             this.bankaccounts = [...cdata as any];
             //this.oBankAccountModel.sState = '';

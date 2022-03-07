@@ -75,8 +75,8 @@
                             <button class="btn btn-primary" *ngIf="!table.bIsDeactivated"
                                      (click)="fnActivateOrDeactivateBankaccount(table,false)">
                               <i class="mdi mdi-account-edit"></i>Deactivate</button>
-                            <button class="btn btn-primary" *ngIf="table.bIsDeactivated"><i class="mdi mdi-account-edit"
-                                (click)="fnActivateOrDeactivateBankaccount(table,true)"></i>Activate</button>
+                            <button class="btn btn-primary" *ngIf="table.bIsDeactivated" (click)="fnActivateOrDeactivateBankaccount(table,true)">
+                              <i class="mdi mdi-account-edit" ></i>Activate</button>
                           </td>
                           <td>
                             <button class="btn btn-primary" (click)="openModal(accountviewcontent,i)">

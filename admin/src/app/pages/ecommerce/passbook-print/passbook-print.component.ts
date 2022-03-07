@@ -30,7 +30,7 @@ export class PassbookPrintComponent implements OnInit {
     this.opassbookprintmodel = new BankAccount();
     this.bIsBtnActive = false;
     this.bIsPassbookData = false;
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
       this.aBankAccounts = [...data as any];
     });
     

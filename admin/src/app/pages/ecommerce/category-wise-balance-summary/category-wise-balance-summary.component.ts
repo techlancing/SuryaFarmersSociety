@@ -63,13 +63,13 @@ export class CategoryWiseBalanceSummaryComponent implements OnInit {
        // this.oBankAccountModel = tempobj;
        this.sButtonText = 'Update';
      }
-     this.oBankAccountService.fngetBankAccountInfo().subscribe(() => {
+     this.oBankAccountService.fngetActiveBankAccountInfo().subscribe(() => {
        //this.aBankAccountTypes = [...data as any];
  
      });
    }
    fnUpdateParentAfterEdit() {
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((cdata) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.bankaccounts = [];
       console.log(this.bankaccounts);

@@ -65,7 +65,7 @@ export class SavingsTypesComponent implements OnInit {
       }
     ];
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add SavingsType', active: true }];
-    this.oBankAccountService.fngetBankAccountInfo().subscribe((data) => {
+    this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((data) => {
       this.aBankAccounts = [...data as any];
     });
 
