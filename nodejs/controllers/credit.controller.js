@@ -89,7 +89,7 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
       //get mobile number from account number 
       const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
       //debit message for customers
-      req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
+      req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
       \"sender\": \"ADPNXT\",\n  
       \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
       \"acno\": \"${newTransaction.sAccountNo}\",\n  

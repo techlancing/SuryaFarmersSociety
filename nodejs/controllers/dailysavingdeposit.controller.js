@@ -205,7 +205,7 @@ if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
   //get mobile number from account number 
   const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
   //credit message for customers
-  req.write(`{\n  \"flow_id\": \"61cee8fed95a77467e5a686a\",\n  
+  req.write(`{\n  \"flow_id\": \"6205fa53b73c4376f32e3344\",\n  
   \"sender\": \"ADPNXT\",\n  
   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
   \"acno\": \"${newTransaction.sAccountNo}\",\n  
