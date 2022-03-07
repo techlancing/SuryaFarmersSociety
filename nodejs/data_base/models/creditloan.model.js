@@ -18,6 +18,9 @@ var oCreditLoanSchema = new oSchema({
     nTotalAmount : {
       type : Number
     },
+    nOutStandingAmount : {
+      type : Number
+    },
    sTransactionId: {
     type: String,
     trim: true
