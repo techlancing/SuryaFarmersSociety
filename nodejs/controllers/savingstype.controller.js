@@ -26,8 +26,8 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
     let oTransaction = {};
     oTransaction.sAccountNo = newSavings.sAccountNo;
     oTransaction.nLoanId = newSavings.nSavingsId;
-    oTransaction.nCreditAmount = newSavings.nDepositAmount;
-    oTransaction.nDebitAmount = 0;
+    oTransaction.nCreditAmount = 0;
+    oTransaction.nDebitAmount = newSavings.nDepositAmount;
     oTransaction.nBalanceAmount = newSavings.nDepositAmount;
     oTransaction.sDate = newSavings.sStartDate;
     oTransaction.sNarration = newSavings.sTypeofSavings;
