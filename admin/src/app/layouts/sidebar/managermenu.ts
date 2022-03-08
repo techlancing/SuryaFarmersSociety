@@ -107,6 +107,7 @@ export const MMENU: MenuItem[] = [
     {
         id: 500,
         label: 'MENUITEMS.LOGOUT.TEXT',
+        icon: 'bx-home-circle',
         link : '/logout'
     }
     
