@@ -164,9 +164,9 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       const nprincipalAmt = this.oCreditLoanModel.nSanctionAmount;
       let nIntrest = this.oCreditLoanModel.nIntrest / 1200;
       const nMonths = this.fnCalculateMonthsFromDates();
-      let EMI = Math.round(nprincipalAmt * nIntrest / (1-(Math.pow(1/(1 + nIntrest), nMonths)))*100)/100; 
-      this.oCreditLoanModel.nTotalAmount = Math.round((EMI * nMonths)*100)/100;
-      this.oCreditLoanModel.nInstallmentAmount = Math.round((this.oCreditLoanModel.nTotalAmount*1 - nprincipalAmt*1)*100)/100
+      this.oCreditLoanModel.nInstallmentAmount = Math.round(nprincipalAmt * nIntrest / (1-(Math.pow(1/(1 + nIntrest), nMonths)))*100)/100; 
+      this.oCreditLoanModel.nTotalAmount = Math.round((this.oCreditLoanModel.nInstallmentAmount * nMonths)*100)/100;
+      let intrest = Math.round((this.oCreditLoanModel.nTotalAmount*1 - nprincipalAmt*1)*100)/100
       this.fnCalculateEMIAmount();
     }
   }
