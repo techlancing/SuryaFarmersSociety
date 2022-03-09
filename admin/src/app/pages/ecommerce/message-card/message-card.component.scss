@@ -3,9 +3,14 @@
     color : orange;
 }
 .card{
+    
     min-width: 140px;
-    min-height : 70px;
-    font-size: 15px;
+    min-height: 70px;
+    height: 150px;
+    font-size: 16px;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+    padding: 8px;
 }
 .buttonContainer{
     text-align: center;

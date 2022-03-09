@@ -1,8 +1,8 @@
 .mastercard{
     margin-top: 30px;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-column-gap: 4px;
+    grid-template-columns: repeat(auto-fill,minmax(150px, 1fr));
+    grid-column-gap: 8px;
 }
 
 .welcomeheader{
