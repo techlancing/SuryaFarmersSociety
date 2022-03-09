@@ -1,39 +1,11 @@
-.employee{
-    margin-top: 30%;
-    padding-left: 10px;
-    // text-align: center;
-}
-.margincard2{
-    margin-top : 20px;
-}
-.card{
-    color: black;
-    background-color: antiquewhite;
-    border-color: rgba(204, 17, 17, 0.384);
-    // mask-border-width: 10px;
-    border-color: black;
-    border: 5px;
-    font-size: 18px;
-    padding-left: 10px;
-}
-.column{
-    margin-top: 5px;
-}
 .mastercard{
-    margin-top: 20px;
+    margin-top: 30px;
     display: grid;
-    grid-template-columns: 22% 22% 32% 22%;
-    grid-column-gap: 8px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-column-gap: 4px;
 }
-.colorelement{
-    color: #07401c !important;
-}
-.heading{
+
+.welcomeheader{
     text-align: center;
 }
-.mastercard2{
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 18% 25% 15% 20% 20%;
-    grid-column-gap: 8px;
-}
+
