@@ -148,10 +148,6 @@ aBankEmployees: Array<BankEmployee>;
       if(this.oBankEmployeeModel.sAppointmentType==='Regular')
         this.bTRAppointedType=false;
     }
-   // this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((data) => {
-      //this.aBankAccountTypes = [...data as any];
-
-   // });
   }
 
   fnOnBankEmployeeInfoSubmit(): void {
@@ -271,7 +267,7 @@ aBankEmployees: Array<BankEmployee>;
   // }
 
   fnUpdateParentAfterEdit() {
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((cdata) => {
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((cdata) => {
       // this.fnEditSucessMessage();
       this.aBankEmployees = [];
       console.log(this.aBankEmployees);

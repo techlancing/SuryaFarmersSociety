@@ -73,7 +73,7 @@ export class AccountTransactionDebitComponent implements OnInit {
       this.sCaption = 'Debit';
       this.bIsCredit = false;
     }
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
        this.aUsers = users;
      });

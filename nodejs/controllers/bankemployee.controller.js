@@ -124,10 +124,10 @@ oBankEmployeeRouter.post("/delete_bankemployee", oAuthentication, asyncMiddlewar
 
 }));
 
-// url: ..../bankemployee/bankemployee_list
-oBankEmployeeRouter.get("/bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+// url: ..../bankemployee/pending_bankemployee_list
+oBankEmployeeRouter.get("/pending_bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllBankEmployees = await oBankEmployeeModel.find();
+      const oAllBankEmployees = await oBankEmployeeModel.find({sStatus : 'pending'});
 
       if(!oAllBankEmployees){
         return oRes.status(400).send();
@@ -139,6 +139,24 @@ oBankEmployeeRouter.get("/bankemployee_list", oAuthentication, asyncMiddleware(a
       oRes.status(400).send(e);
     }
 }));
+
+
+// url: ..../bankemployee/approved_bankemployee_list
+oBankEmployeeRouter.get("/approved_bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oAllBankEmployees = await oBankEmployeeModel.find({sStatus : 'approve'});
+
+    if(!oAllBankEmployees){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oAllBankEmployees);
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 
 // url: ..../bankemployee/set_bankemployee_status
 oBankEmployeeRouter.post("/set_bankemployee_status", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 

@@ -55,7 +55,7 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
 // url: ..../savingstype/addsavingsdeposit_transaction
 oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
-    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo});
+    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nLoanId});
     if(!oSavings){
       return oRes.status(400).send();  
     }
@@ -143,7 +143,7 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
 // url: ..../savingstype/withdrawsavingsdeposit_transaction
 oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   try{
-    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo});
+    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nLoanId});
     if(!oSavings){
       return oRes.status(400).send();  
     }

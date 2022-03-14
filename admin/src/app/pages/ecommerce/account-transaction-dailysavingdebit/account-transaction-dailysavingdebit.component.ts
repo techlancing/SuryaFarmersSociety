@@ -115,7 +115,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
    
     this.breadCrumbItems = [{ label: 'Transactions' }, { label: this.headerText, active: true }];
     
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
        this.aUsers = users;
      });

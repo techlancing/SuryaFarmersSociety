@@ -69,7 +69,7 @@ export class SavingsTypesComponent implements OnInit {
       this.aBankAccounts = [...data as any];
     });
 
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users: any) => {
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users: any) => {
       console.log('users', users);
       this.aBankEmployees = users;
     });

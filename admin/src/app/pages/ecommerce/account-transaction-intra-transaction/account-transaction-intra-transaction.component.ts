@@ -97,7 +97,7 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
 
-     this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+     this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
        this.aUsers = users;
      });

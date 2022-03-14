@@ -114,7 +114,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       }
     ];
 
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
      console.log('users',users);
       this.aUsers = users;
     });  

@@ -41,7 +41,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       this.fnFecthAccountDetails();
      });
     this.breadCrumbItems = [{ label: 'Transactions' }, { label: this.oSavingsDeposit.sTypeofSavings, active: true }];
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((employees : any)=>{
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((employees : any)=>{
       console.log('users',employees);
        this.aBankEmployees = employees;
      });

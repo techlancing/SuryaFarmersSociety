@@ -103,7 +103,7 @@ export class AllEmployeesComponent implements OnInit {
     
 
     this.currentpage = 1;
-    this.oBankEmployeeService.fngetBankEmployeeInfo().subscribe((users : any)=>{
+    this.oBankEmployeeService.fngetPendingBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);
       this.aUsers = users;
       if(this.sApproval) {

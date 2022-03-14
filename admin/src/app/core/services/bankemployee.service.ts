@@ -16,11 +16,15 @@ export class BankEmployeeService {
         return this.http.post(sMethodUrl, oBankEmployee);
     }
 
-    fngetBankEmployeeInfo(){
-      const sMethodUrl = `${this.sRootUrl}/bankemployee_list`;
+    fngetPendingBankEmployeeInfo(){
+      const sMethodUrl = `${this.sRootUrl}/pending_bankemployee_list`;
       return this.http.get(sMethodUrl);
     }
 
+    fngetApprovedBankEmployeeInfo(){
+      const sMethodUrl = `${this.sRootUrl}/approved_bankemployee_list`;
+      return this.http.get(sMethodUrl);
+    }
     fngetBankEmployeeInfoByNumber(sAccountNo: string) {
       const sMethodUrl = `${this.sRootUrl}/getemployeebynumber`;
       return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
