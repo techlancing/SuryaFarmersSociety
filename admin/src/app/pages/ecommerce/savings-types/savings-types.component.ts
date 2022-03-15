@@ -118,10 +118,11 @@ export class SavingsTypesComponent implements OnInit {
     if (this.oSavingsTypeModel.nDepositAmount !== null && this.oSavingsTypeModel.nIntrest !== null && 
       this.oSavingsTypeModel.nSavingDays !== null && this.oSavingsTypeModel.nSavingMonths !== null
       && this.oSavingsTypeModel.sTypeofSavings !== '') {
-      if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving') {
-        this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount ;
-      } 
-      else this.fnCalculateInterest(); 
+      // if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving') {
+      //   this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount ;
+      // } 
+      // else
+       this.fnCalculateInterest(); 
     }
 
   }
