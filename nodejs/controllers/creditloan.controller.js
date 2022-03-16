@@ -166,7 +166,7 @@ oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMid
 // url: ..../creditloan/getaccountcreditloans
 oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo});
+    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo, sIsApproved: "Approved"});
     let aLoans = [];
     
     if(oCreditLoan.length > 0){
@@ -256,6 +256,32 @@ oCreditLoanRouter.post("/getallcreditloans", oAuthentication, asyncMiddleware(as
     oRes.status(400).send(e);
   }
 }));
+
+
+
+// url: ..../creditloan/need_to_approve_getallcreditloans
+oCreditLoanRouter.post("/need_to_approve_getallcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oCreditLoanModel.find({sIsApproved: "Pending"})
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllCreditLoans) => {
+      if(!oError) {
+          oRes.json(oAllCreditLoans);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+
 
 
 // url: ..../creditloan/getallcreditloansByApproval

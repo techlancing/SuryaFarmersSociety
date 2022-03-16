@@ -16,16 +16,16 @@
             <table class="table table-centered tableText tabledata" id="basic-datatable">
               <thead>
                 <tr>
-                  <th>Account Number</th>
-                  <th>{{sTableContent}} Name</th>
-                  <th>Start Date</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'">Maurity Date</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'">Deposited Amount</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'">Maturity Amount</th>
+                  <th class="mwidth">Account Number</th>
+                  <th class="nwidth">{{sTableContent}} Name</th>
+                  <th class="mwidth">Start Date</th>
+                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maurity Date</th>
+                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Deposited Amount</th>
+                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
                   <!-- <th>Maturity Date</th> -->
-                 <th>Approved Status</th>
+                 <th class="swidth">Approved Status</th>
                  <th>Actions</th>
                  <!-- <th>View Approval</th> -->
                 </tr>
@@ -45,14 +45,12 @@
                   <!-- <td>{{approval.sMobileNumber}}</td>
                   <td>{{approval.sJoiningDate}}</td> -->
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
-                  <td class="buttonDisplay">
-                    <button class="btn btn-primary" 
-                    (click)="fnConfirmationMessage(approval,'Approved')" [disabled]="approval.sIsApproved==='Approved'"><i
-                    class="mdi mdi-employee-edit" >Approve</i></button>
+                  <td class="buttonDisplay actions">
+                    <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 
+                      [disabled]="approval.sIsApproved==='Approved'">Approve</button>
   
-                    <button class="btn btn-primary"  
-                    (click)="fnConfirmationMessage(approval,'Rejected')" [disabled]="approval.sIsApproved==='Rejected'"><i
-                    class="mdi mdi-employee-edit" >Reject</i></button>
+                    <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Rejected')" 
+                      [disabled]="approval.sIsApproved==='Rejected'">Reject</button>
                   </td>
                 </tr>
               </tbody>

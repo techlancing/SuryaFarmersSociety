@@ -156,10 +156,6 @@ export class DailySavingsDepositComponent implements OnInit {
         sAccountNo : oSelectedAccount,
         sTypeofSavings : 'Savings Account'
       });
-      this.aSavingDeposit.push( {
-        sAccountNo : oSelectedAccount,
-        sTypeofSavings : 'Daily Deposit Saving'
-      });
       console.log(data);
       
     });

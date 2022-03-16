@@ -1,3 +1,21 @@
 .tabledata{
     text-align: center;
 }
+.card-bg{
+    background-color: antiquewhite;
+}
+.actions{
+    display: grid;
+     grid-template-columns: 52% 46%;
+    // grid-template-columns: repeat(auto-fill,minmax(70px, 1fr));
+    justify-content: space-around !important;
+}
+.mwidth{
+    width: 11%;
+}
+.swidth{
+    width: 12%;
+}
+.nwidth{
+    width :15%;
+}

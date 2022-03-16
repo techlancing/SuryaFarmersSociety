@@ -17,7 +17,7 @@ export class CreditLoanService {
     }
 
     fngetCreditLoanInfo(sAccountNo: string){
-      const sMethodUrl = `${this.sRootUrl}/creditloan_list`;
+      const sMethodUrl = `${this.sRootUrl}/getallcreditloansByApproval`;
       return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
     }
 
@@ -46,7 +46,7 @@ export class CreditLoanService {
     return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
   }
   fnGetAllCreditLoanInfo() {
-    const sMethodUrl = `${this.sRootUrl}/getallcreditloans`;
+    const sMethodUrl = `${this.sRootUrl}/need_to_approve_getallcreditloans`;
     return this.http.post(sMethodUrl,null);
   }
 
