@@ -29,7 +29,7 @@ export class SavingstypeService {
     return this.http.post(sMethodUrl, oSavinsType);
   }
   fnGetAllSavingDepositAccountsInfo(sAccountNo : string) {
-    const sMethodUrl = `${this.sRootUrl}/savingstype_list`;
+    const sMethodUrl = `${this.sRootUrl}/getallsavingstypeByApproval`;
     return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
   }
   fnAddSavingsDepositTransactionInfo(oSavingsDeposit : Debit){
@@ -42,7 +42,7 @@ export class SavingstypeService {
   }
 
   fnGetAllSavingTypeAccountsInfo(){
-    const sMethodUrl = `${this.sRootUrl}/getallsavingtypes`;
+    const sMethodUrl = `${this.sRootUrl}/need_to_approve_savingstype_list`;
     return this.http.post(sMethodUrl, null);
   }
   fnChangeSavingTypeStatus(oSavinsType: SavingsType){

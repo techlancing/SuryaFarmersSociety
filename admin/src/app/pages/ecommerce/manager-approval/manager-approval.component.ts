@@ -33,25 +33,27 @@ export class ManagerApprovalComponent implements OnInit {
 
   fnGetCreditLoanApprovals(){//BankAccount
     this.oCreditLoanService.fnGetAllCreditLoanInfo().subscribe((loandata)=>{
-      let  aApproval= loandata as any;
+     // let  aApproval= loandata as any;
+      this.aApprovals = loandata as any;
       console.log(loandata);
-      this.fnSortApprovals(aApproval);
+      //this.fnSortApprovals(aApproval);
     });
   }
 
   fnGetSavingDepositApprovals(){
     this.oSavingstypeService.fnGetAllSavingTypeAccountsInfo().subscribe((savingdata) => {
-      let aApproval = savingdata as any;
+      //let aApproval = savingdata as any;
+      this.aApprovals = savingdata as any;
       console.log(savingdata);
-      this.fnSortApprovals(aApproval);
+     // this.fnSortApprovals(aApproval);
     });
   }
-  fnSortApprovals(aApproval){
-    debugger
-    aApproval.map((approval) => {
-      if(approval.sIsApproved === 'Pending') this.aApprovals.push(approval);
-    });
-  }
+  // fnSortApprovals(aApproval){
+  //   debugger
+  //   aApproval.map((approval) => {
+  //     if(approval.sIsApproved === 'Pending') this.aApprovals.push(approval);
+  //   });
+  // }
   fnGetCreditApprovals(){
 
   }

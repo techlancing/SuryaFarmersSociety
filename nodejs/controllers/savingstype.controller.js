@@ -371,6 +371,31 @@ oSavingsTypeRouter.post("/savingstype_list", oAuthentication, asyncMiddleware(as
     }
 }));
 
+
+
+// url: ..../savingstype/need_to_approve_savingstype_list
+oSavingsTypeRouter.post("/need_to_approve_savingstype_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oSavingsTypeModel.find({sIsApproved: "Pending"})
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllSavingsTypes) => {
+      if(!oError) {
+          oRes.json(oAllSavingsTypes);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+
 // url: ..../savingstype/getallsavingtypes
 oSavingsTypeRouter.post("/getallsavingtypes", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
