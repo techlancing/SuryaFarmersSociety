@@ -118,11 +118,15 @@ export class SavingsTypesComponent implements OnInit {
     if (this.oSavingsTypeModel.nDepositAmount !== null && this.oSavingsTypeModel.nIntrest !== null && 
       this.oSavingsTypeModel.nSavingDays !== null && this.oSavingsTypeModel.nSavingMonths !== null
       && this.oSavingsTypeModel.sTypeofSavings !== '') {
-      // if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving') {
-      //   this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount ;
-      // } 
-      // else
-       this.fnCalculateInterest(); 
+      if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving' ||
+       this.oSavingsTypeModel.sTypeofSavings == 'Fixed Deposit Saving'||
+        this.oSavingsTypeModel.sTypeofSavings == 'Child Deposit Saving'||
+       this.oSavingsTypeModel.sTypeofSavings == 'Education Deposit Saving') {
+         let interest = (this.oSavingsTypeModel.nDepositAmount*
+                        this.oSavingsTypeModel.nSavingTotalDays*this.oSavingsTypeModel.nIntrest)/(365*100);
+        this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount +Number((Math.round(interest*100)/100).toFixed(2));
+      } 
+      else this.fnCalculateInterest(); 
     }
 
   }
@@ -167,10 +171,11 @@ export class SavingsTypesComponent implements OnInit {
 
   }
   fnCalculateTotalMonths(d1,d2){
+    debugger
     let todate = d2.getDate();
       let fromdate = d1.getDate();
       this.nTotalMonths =  (d2.getFullYear() - d1.getFullYear())*12 - d1.getMonth() + d2.getMonth() ;
-      if(todate >= fromdate) this.oSavingsTypeModel.nSavingDays = todate - fromdate ;
+      if(todate >= (fromdate-1)) this.oSavingsTypeModel.nSavingDays = todate - fromdate+1 ;
       else {
         this.oSavingsTypeModel.nSavingDays = fromdate - todate ;
         this.nTotalMonths -= 1;
