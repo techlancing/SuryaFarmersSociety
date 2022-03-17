@@ -287,6 +287,8 @@ export class AllTransactionPrintComponent implements OnInit {
   }
 
   fnConfirmationMessage(fromLine: number, toLine: number) {
+    fromLine = Number(fromLine);
+    toLine = Number(toLine);
     if (fromLine > toLine)
       Swal.fire({
         position: 'center',
