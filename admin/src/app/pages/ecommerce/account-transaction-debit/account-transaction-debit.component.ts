@@ -13,6 +13,7 @@ import { CreditService } from 'src/app/core/services/credit.service';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import { UtilitydateService } from 'src/app/core/services/utilitydate.service';
+import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 
 @Component({
   selector: 'app-account-transaction-debit',
@@ -61,7 +62,8 @@ export class AccountTransactionDebitComponent implements OnInit {
     private router: Router,
               private modalService: NgbModal,
               private oBankEmployeeService: BankEmployeeService,
-              private oUtilitydateService : UtilitydateService) { }
+              private oUtilitydateService : UtilitydateService,
+              private oNarrationstringService : NarrationstringService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -91,6 +93,7 @@ export class AccountTransactionDebitComponent implements OnInit {
   }
 
   fnOnDebitInfoSubmit(): void {
+    this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
      //this.bIsAddActive = true;
      // let today = new Date();
     // let dd = String(today.getDate()).padStart(2, '0');
@@ -168,9 +171,8 @@ export class AccountTransactionDebitComponent implements OnInit {
    */
   openModal(content: any, index) {
     this.nSelectedEditIndex = index;
-
     this.modalService.open(content, { centered: true });
-
   }
+  
 
 }

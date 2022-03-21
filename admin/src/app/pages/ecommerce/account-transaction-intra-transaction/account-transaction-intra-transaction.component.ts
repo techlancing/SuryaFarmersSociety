@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -92,7 +93,8 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
     private router: Router,
                private modalService: NgbModal,
                private oBankEmployeeService: BankEmployeeService,
-               private oUtilitydateService : UtilitydateService) { }
+               private oUtilitydateService : UtilitydateService,
+               private oNarrationstringService : NarrationstringService) { }
  
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -169,6 +171,7 @@ import {UtilitydateService} from '../../../core/services/utilitydate.service';
    }
  
   fnOnIntraTransactionInfoSubmit() {
+    this.ointratransactionModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.ointratransactionModel.sNarration);
     this.ointratransactionModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.ointratransactionModel.sDate);
     this.oBankAccountService.fnGetSingleAccountBalance(this.ointratransactionModel.sSenderAccountNumber).subscribe((cdata) => {
       if (cdata && (cdata >= this.ointratransactionModel.nAmount)) {

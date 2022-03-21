@@ -14,6 +14,7 @@ import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { OperationCanceledException } from 'typescript';
+import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 
 @Component({
@@ -104,7 +105,8 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
               private router: Router,
               private oBankEmployeeService: BankEmployeeService,
               private oUtilitydateService : UtilitydateService,
-              private oSavingstypeService : SavingstypeService) { }
+              private oSavingstypeService : SavingstypeService,
+              private oNarrationstringService : NarrationstringService) { }
 
   ngOnInit(): void {
     if(this.bIsDeposit){
@@ -230,6 +232,7 @@ fnCalculateTotalAmount(): void{
 }
 
 fnOnDailySavingDebitInfoSubmit(): void {
+  this.oDailySavingDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingDebitModel.sNarration);
   //this.bIsAddActive = true;
   if(typeof this.oDailySavingDebitModel.sStartDate === 'object' ){
       this.oDailySavingDebitModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingDebitModel.sStartDate);

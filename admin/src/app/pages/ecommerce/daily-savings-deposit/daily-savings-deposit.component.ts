@@ -16,6 +16,7 @@ import { DailySavingDebit } from 'src/app/core/models/dailysavingdebit.model';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 import { SavingsType } from 'src/app/core/models/savingstype.model';
+import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 
 @Component({
   selector: 'app-daily-savings-deposit',
@@ -100,7 +101,8 @@ export class DailySavingsDepositComponent implements OnInit {
               private router: Router,
               private oBankEmployeeService: BankEmployeeService,
               private oUtilitydateService : UtilitydateService,
-              private oSavingstypeService : SavingstypeService) { }
+              private oSavingstypeService : SavingstypeService,
+              private oNarrationstringService : NarrationstringService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -198,6 +200,7 @@ fnCalculateTotalAmount(): void{
 }
 
 fnOnDailySavingsDepositInfoSubmit(): void {
+  this.oDailySavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingsDepositModel.sNarration);
     this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
     if(typeof this.oDailySavingsDepositModel.sEndDate === 'object' ){
       this.oDailySavingsDepositModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sEndDate);

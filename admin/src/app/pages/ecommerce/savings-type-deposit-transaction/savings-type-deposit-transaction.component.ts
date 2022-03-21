@@ -11,6 +11,7 @@ import { DebitService } from 'src/app/core/services/debit.service';
 import { BankAccountService } from 'src/app/core/services/account.service';
 import { BankAccount } from 'src/app/core/models/bankaccount.model';
 import { environment } from 'src/environments/environment';
+import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 
 @Component({
   selector: 'app-savings-type-deposit-transaction',
@@ -32,7 +33,8 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     private router : Router,
     private oUtilitydateService : UtilitydateService,
     private oDebitService : DebitService,
-    private oBankAccountService : BankAccountService) { }
+    private oBankAccountService : BankAccountService,
+    private oNarrationstringService : NarrationstringService) { }
 
   ngOnInit(): void {
     this.sImageRootPath = environment.imagePath;
@@ -56,6 +58,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   }
 
   fnOnSavingsDepositInfoSubmit() {
+    this.oSavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oSavingsDepositModel.sNarration);
     this.oSavingsDepositModel.sAccountNo = this.oSavingsDeposit.sAccountNo;
     this.oSavingsDepositModel.nLoanId = this.oSavingsDeposit.nSavingsId;
     //this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
