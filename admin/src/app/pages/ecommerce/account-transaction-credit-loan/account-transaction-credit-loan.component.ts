@@ -162,11 +162,14 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   fnCalculateTotalAmount() : void {
     if(this.oCreditLoanModel.nSanctionAmount && this.oCreditLoanModel.nIntrest && this.oCreditLoanModel.nLoanDays!==null ){  // && this.oCreditLoanModel.nLoanMonths!==null this.oCreditLoanModel.nLoanMonths*30+
       const nprincipalAmt = this.oCreditLoanModel.nSanctionAmount;
-      let nIntrest = this.oCreditLoanModel.nIntrest / 1200;
+      //let nIntrest = this.oCreditLoanModel.nIntrest / 1200;
+      let nIntrest = this.oCreditLoanModel.nSanctionAmount*this.oCreditLoanModel.nLoanDays*this.oCreditLoanModel.nIntrest/(365*100)
       const nMonths = this.fnCalculateMonthsFromDates();
-      this.oCreditLoanModel.nInstallmentAmount = Math.round(nprincipalAmt * nIntrest / (1-(Math.pow(1/(1 + nIntrest), nMonths)))*100)/100; 
-      this.oCreditLoanModel.nTotalAmount = Math.round((this.oCreditLoanModel.nInstallmentAmount * nMonths)*100)/100;
-      let intrest = Math.round((this.oCreditLoanModel.nTotalAmount*1 - nprincipalAmt*1)*100)/100
+      this.oCreditLoanModel.nTotalAmount = Number((Math.round((nIntrest + this.oCreditLoanModel.nSanctionAmount)*100)/100).toFixed(2));
+     // this.oCreditLoanModel.nInstallmentAmount = Math.round(nprincipalAmt * nIntrest / (1-(Math.pow(1/(1 + nIntrest), nMonths)))*100)/100; 
+      //this.oCreditLoanModel.nTotalAmount = Math.round((this.oCreditLoanModel.nInstallmentAmount * nMonths)*100)/100;
+      this.oCreditLoanModel.nInstallmentAmount = Math.round((this.oCreditLoanModel.nTotalAmount / nMonths)*100)/100 ;
+     // let intrest = Math.round((this.oCreditLoanModel.nTotalAmount*1 - nprincipalAmt*1)*100)/100
       this.fnCalculateEMIAmount();
     }
   }
@@ -181,7 +184,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
       const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
       console.log('months',diffInMs);
-      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24));
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
     }
   
     if (typeof this.oCreditLoanModel.sDate === 'object' &&
@@ -189,7 +192,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
       const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
       console.log('months',diffInMs);
-      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24));
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24))+ 1;
     }
   
     if (this.oCreditLoanModel.sDate.length > 8 &&
@@ -197,7 +200,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       this.oCreditLoanModel.sEndofLoanDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sEndofLoanDate);//new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
       const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
       console.log('months',diffInMs);
-      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24));
+      this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24))+ 1;
     }
     this.fnCalculateTotalAmount();
   }
@@ -212,9 +215,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
           this.oCreditLoanModel.nInstallmentAmount = Math.round(this.oCreditLoanModel.nTotalAmount/this.oCreditLoanModel.nLoanDays * 100)/100;
         else if(this.oCreditLoanModel.sInstallmentType==='Weekly') {
           this.oCreditLoanModel.nInstallmentAmount = Math.round(this.oCreditLoanModel.nTotalAmount/(this.oCreditLoanModel.nLoanDays/7) * 100)/100;
-        }
-        
-         
+        }         
       }
   }
 
