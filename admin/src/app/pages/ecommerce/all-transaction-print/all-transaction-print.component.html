@@ -25,7 +25,7 @@
     
             <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
               print</button>
-              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdfSavingsAccount()">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdf('savings')">
                 print pdf</button>
           </div>
           <div class="card card-bg hide-trans" >
@@ -38,7 +38,8 @@
                   </ng-template>
             
                   <ng-template ngbPanelContent>
-                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo" id="savingsPrint"></app-account-ledger-table>
+                    <app-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf" 
+                    [type]="'savings'" [lineFrom]="lineFrom" [lineTo]="lineTo" ></app-account-ledger-table>
                     
                   </ng-template>
                 </ngb-panel>                
@@ -63,7 +64,7 @@
               
               <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan)">
                 print</button>
-                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrinPdfLoanAccount()">
+                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdf(oCreditLoanmodel.sTypeofLoan)">
                  print pdf</button>
             </div>
 
@@ -139,7 +140,8 @@
                       </div>
                     </div>
                   </div>
-                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
+                  <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' 
+                  [type]="oCreditLoanmodel.sTypeofLoan" [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>
@@ -167,7 +169,7 @@
               
               <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings)">
                 print</button>
-                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrinPdfLoanAccount()">
+                <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdf(oSavingDepositmodel.sTypeofSavings)">
                  print pdf</button>
             </div>
 
@@ -217,7 +219,8 @@
                       </div>
                     </div>
                   </div>
-                  <app-account-ledger-table [aTransactions]='oSavingDepositmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
+                  <app-account-ledger-table [aTransactions]='oSavingDepositmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf"
+                  [type]="oSavingDepositmodel.sTypeofSavings" [lineFrom]="lineFrom" [lineTo]="lineTo"></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>

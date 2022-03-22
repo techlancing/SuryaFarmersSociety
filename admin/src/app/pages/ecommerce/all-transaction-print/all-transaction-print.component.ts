@@ -57,6 +57,7 @@ export class AllTransactionPrintComponent implements OnInit {
   bIsAddActive: boolean;
   bIsEditActive: boolean;
   public sSelectedAccount: string;
+  sAccountNo : string;
   
   bIsBtnActive: boolean;
   bIsAccountData: boolean;
@@ -172,6 +173,7 @@ export class AllTransactionPrintComponent implements OnInit {
   }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
+    this.sAccountNo = oSelectedAccount.sAccountNo;
     this.oCreditLoanServcie.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
       this.aCreditLoan = loandata as any;
       this.oAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((savingdata)=>{
@@ -319,36 +321,22 @@ export class AllTransactionPrintComponent implements OnInit {
       });
   }
   
-  fnPrintPdfSavingsAccount(): void {
-    let data = document.getElementById('savingsPrint');
-      let pdf = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'ledger',
-        putOnlyUsedFonts:true
-       });
-      pdf.setFontSize(10);
-      pdf.html(data,{
-        callback: function (doc) {
-          doc.save('SavingsAccount.pdf');
-        }
-      });
+  fnPrintPdf(type): void {
+    this.oBankAccountService.proceed = true ;
+    this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
+  }
+  fnPrintPdfSavingsAccount(type): void {
+    this.oBankAccountService.proceed = true ;
+    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
+  }
+  fnPrinPdfSavingtypeAccount(type) : void{
+    this.oBankAccountService.proceed = true ;
+    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
   }
 
-  fnPrinPdfLoanAccount(): void{ 
-    let data = document.getElementById('savingsPrint');
-    let pdf = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: 'a4',
-      putOnlyUsedFonts:true
-     });
-    pdf.setFontSize(10);
-    pdf.html(data,{
-      callback: function (doc) {
-        doc.save('LoanAccount.pdf');
-      }
-    });
+  fnPrinPdfLoanAccount(type): void{ 
+    this.oBankAccountService.proceed = true ;
+    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
   }
 
 }  
