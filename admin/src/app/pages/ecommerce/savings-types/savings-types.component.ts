@@ -126,6 +126,17 @@ export class SavingsTypesComponent implements OnInit {
                         this.oSavingsTypeModel.nSavingTotalDays*this.oSavingsTypeModel.nIntrest)/(365*100);
         this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount +Number((Math.round(interest*100)/100).toFixed(2));
       } 
+      else if(this.oSavingsTypeModel.sTypeofSavings == 'Daily Deposit Saving'){
+        debugger
+        let i= 1;
+        let totalInterest = 0;
+        let monthlyprincipalAmount = this.oSavingsTypeModel.nDepositAmount*this.oSavingsTypeModel.nSavingTotalDays/this.nTotalMonths;
+        while(i <= this.nTotalMonths){
+          totalInterest  += ((monthlyprincipalAmount*i)*(this.oSavingsTypeModel.nSavingTotalDays/this.nTotalMonths)*this.oSavingsTypeModel.nIntrest)/(365*100);
+          i++;
+        }
+        this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount*this.oSavingsTypeModel.nSavingTotalDays +Math.round(totalInterest*100)/100;
+      }
       else this.fnCalculateInterest(); 
     }
 
