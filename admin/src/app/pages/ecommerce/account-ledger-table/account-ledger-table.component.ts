@@ -23,9 +23,9 @@ export class AccountLedgerTableComponent implements OnInit {
     this.oBankAccountService.pdfGenerationClicked.subscribe((data) => {
       if(this.oBankAccountService.proceed == true){
         if(data.type === this.type){
+          //this.bNotVisiblePdf = true;
           this.fnPrintPdfSavingsAccount(data.Account,data.type);    
           this.oBankAccountService.proceed= false;
-          this.bNotVisiblePdf = true;
         } 
       }
      
