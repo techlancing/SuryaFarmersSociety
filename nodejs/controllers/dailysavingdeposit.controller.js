@@ -5,7 +5,7 @@ const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model
 const oTransactionModel = require("../data_base/models/transaction.model");
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oAuthentication = require("../middleware/authentication");
-
+const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 const oDailyDepositRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -17,16 +17,20 @@ const asyncMiddleware = fn =>
   
 // url: ..../dailysavingdeposit/add_dailydeposittransaction
 oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
-  const newDeposit = new oDailyDepositModel(oReq.body);
   console.log(oReq.body);
   try{
     // Save Daily deposit Info
-    await newDeposit.save();
+    //await newDeposit.save();
+
+    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nAccountId});
+    if(!oSavings){
+      return oRes.status(400).send();
+    }
     
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try{
-      const olasttransaction = await oTransactionModel.find({nLoanId: newDeposit.nAccountId}).sort({_id:-1}).limit(1);
+      const olasttransaction = await oTransactionModel.find({nLoanId: oSavings.nSavingsId}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
@@ -34,44 +38,45 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       console.log(e);
       oRes.status(400).send(e);
     }
-    sdate=new Date(newDeposit.sStartDate.split("-").reverse().join("-"));
+    sdate=new Date(oReq.body.sStartDate.split("-").reverse().join("-"));
     let today = new Date(sdate);
     let tomorrow = new Date(today);
-    for(let i = 0; i < newDeposit.nTotaldays; i++)
+    for(let i = 0; i < oReq.body.nTotaldays; i++)
     {
       //save transaction model
       
       let oTransaction = {};
-      oTransaction.sAccountNo = newDeposit.sAccountNo;
-      oTransaction.nLoanId = newDeposit.nAccountId;
+      oTransaction.sAccountNo = oReq.body.sAccountNo;
+      oTransaction.nLoanId = oReq.body.nAccountId;
       oTransaction.nCreditAmount = 0;
-      oTransaction.nDebitAmount = newDeposit.nDayAmount;
-      oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + Number(newDeposit.nDayAmount)) * 100) / 100).toFixed(2);
+      oTransaction.nDebitAmount = oReq.body.nDayAmount;
+      oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + Number(oReq.body.nDayAmount)) * 100) / 100).toFixed(2);
       oBalanceAmount = Number(oTransaction.nBalanceAmount);
       oTransaction.sDate = tomorrow.getFullYear().toString() + "-" + ('0'+ (tomorrow.getMonth()+1)).slice(-2).toString() + "-" + ('0' +tomorrow.getDate()).slice(-2).toString();
       oTransaction.sDate = oTransaction.sDate.split("-").reverse().join("-");
       tomorrow.setDate(tomorrow.getDate() + 1 );
       sdate = oTransaction.sDate;
-      oTransaction.sNarration = newDeposit.sNarration;
-      oTransaction.sAccountType = 'Savings Account';
-      oTransaction.sEmployeeName = newDeposit.sReceiverName;
+      oTransaction.sNarration = oReq.body.sNarration;
+      oTransaction.sAccountType = oSavings.sTypeofSavings;//'Savings Account';
+      oTransaction.sEmployeeName = oReq.body.sReceiverName;
       
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
       if(oTransaction.nBalanceAmount > 0)
       {
-        newDeposit.oTransactionInfo = newTransaction._id;
-        await newDeposit.save();
+        oSavings.oTransactionInfo.push(newTransaction);
+        oSavings.nDepositAmount = oTransaction.nBalanceAmount;
+        await oSavings.save();
       }
     }
 
     //update bank account 
-    let oAccount = await obankaccountModel.findOne({sAccountNo: newDeposit.sAccountNo });
+   /* let oAccount = await obankaccountModel.findOne({sAccountNo: newDeposit.sAccountNo });
     if(oAccount){
       oAccount.nAmount = oBalanceAmount;
       await oAccount.save();
-    }
+    }*/
     oRes.json("Success");
 
   }catch(e){
