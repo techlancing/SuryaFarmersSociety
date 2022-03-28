@@ -166,8 +166,16 @@ export class DailySavingsDepositComponent implements OnInit {
     if (this.sSelectedSavingType === 'Savings Account')
       this.bShowLoanData = true;
     else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
-      this.oDailySavingsDepositService.oDailySavingDepositAccount.next(this.oSelectedBankAccount);
+      this.aSavingDeposit.map((savingdeposit) => {
+        if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
+          savingdeposit.transactiontype = 'deposit' ;
+          this.oSavingstypeService.oSavingsDeposit.next(savingdeposit);
+          //this.redirectTo("/savingstypedeposittransaction");
+          this.oDailySavingsDepositService.oDailySavingDepositAccount.next(this.oSelectedBankAccount);
       this.redirectTo("/dailysavingdebit");
+        }
+      });
+      
     }
     else {
       this.aSavingDeposit.map((savingdeposit) => {

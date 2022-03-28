@@ -42,6 +42,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   bIsBtnActive : boolean ;
   oSelectedBankAccount : BankAccount ;
   sLedgerHeading : string ;
+  oSavingsDeposit : any = [];
   public bPdfPrint : boolean = false ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -109,6 +110,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
               private oNarrationstringService : NarrationstringService) { }
 
   ngOnInit(): void {
+    debugger
     if(this.bIsDeposit){
       this.headerText = "Daily Deposit Account";
     }else{
@@ -132,6 +134,10 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.sSuccessMsg = 'Amount deposited sucessfully.'
       this.sLedgerHeading = 'Daily Deposit Saving '
       this.bIsDeposit = true;
+      this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
+        this.oSavingsDeposit = data as any ;
+       // this.fnFecthAccountDetails();
+       });
       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
         console.log("account in dailsaving deposit",account);
         this.fnGetAccountDetails(account);
@@ -140,6 +146,10 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.sButtonText = 'Withdraw & Send SMS';
       this.sSuccessMsg = 'Amount withdrawn sucessfully.';
       this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
+        this.oSavingsDeposit = data as any ;
+        //this.fnFecthAccountDetails();
+       });
       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
         this.fnGetAccountDetails(account);
       });
@@ -158,16 +168,25 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
  }
 
  fnGetAccountDetails(oSelectedAccount : BankAccount){
-    this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
-    this.oDailySavingDebitModel.nAccountId = oSelectedAccount.nAccountId;
-    this.oSelectedBankAccount = oSelectedAccount ;
-    this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
-      this.aTransactionModel = data as any;
-      // this.bShowLoanData = true;
-    });
-    if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'||
-    this.activatedroute.snapshot.data.type === 'deposit')
+   debugger
+   this.oDailySavingDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
+   
+   this.oSelectedBankAccount = oSelectedAccount;
+   if (this.activatedroute.snapshot.data.type !== 'deposit' && this.activatedroute.snapshot.data.type !== 'depositwithdrawl')
+     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
+       this.aTransactionModel = data as any;
+       this.oDailySavingDebitModel.nAccountId = oSelectedAccount.nAccountId;
+       // this.bShowLoanData = true;
+     });
+   if (this.activatedroute.snapshot.data.type === 'depositwithdrawl' ||
+     this.activatedroute.snapshot.data.type === 'deposit') {
      this.bShowLoanData = true;
+     this.aTransactionModel = this.oSavingsDeposit.oTransactionInfo;
+     this.oDailySavingDebitModel.nAccountId = this.oSavingsDeposit.nSavingsId;
+   }
+
+
+     
     if(!(this.activatedroute.snapshot.data.type === 'depositwithdrawl') && 
     !(this.activatedroute.snapshot.data.type === 'deposit'))
       this.fnGetSavingDepositAccounts(oSelectedAccount);
@@ -296,8 +315,16 @@ fnOnDailySavingDebitInfoSubmit(): void {
     if (this.sSelectedSavingType === 'Savings Account')
       this.bShowLoanData = true;
     else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
-      this.redirectTo("/dailysavingdepositwithdrawl");
-      this.oDailySavingDebitService.oDailySavingDepositAccount.next(this.oSelectedBankAccount)
+      this.aSavingDeposit.map((savingdeposit) => {
+        if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
+          savingdeposit.transactiontype = 'withdraw';
+          this.oSavingstypeService.oSavingsDeposit.next(savingdeposit);
+          //this.redirectTo("/savingstypedeposittransaction");
+          this.oDailySavingDebitService.oDailySavingDepositAccount.next(this.oSelectedBankAccount);
+          this.redirectTo("/dailysavingdepositwithdrawl");
+        }
+      });
+      
     }
     else {
       this.aSavingDeposit.map((savingdeposit) => {
