@@ -439,5 +439,26 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
   }
 }));
 
+// url: ..../savingstype/getsavingtype
+oSavingsTypeRouter.post("/getsavingtype", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved",nSavingsId : oReq.body.nSavingsId})
+    .populate({
+      path: 'oTransactionInfo'
+    }).exec((oError, oAllSavingsType) => {
+      if(!oError) {
+          oRes.json(oAllSavingsType);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send();
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 
 module.exports = oSavingsTypeRouter;

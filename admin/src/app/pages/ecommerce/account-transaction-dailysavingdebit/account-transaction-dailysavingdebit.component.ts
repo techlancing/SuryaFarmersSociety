@@ -136,23 +136,24 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.bIsDeposit = true;
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any ;
-       // this.fnFecthAccountDetails();
        });
-      this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
+       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
         console.log("account in dailsaving deposit",account);
         this.fnGetAccountDetails(account);
       });
+      
     }else if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
       this.sButtonText = 'Withdraw & Send SMS';
       this.sSuccessMsg = 'Amount withdrawn sucessfully.';
       this.sLedgerHeading = 'Daily Deposit Saving ';
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any ;
-        //this.fnFecthAccountDetails();
+        this.fnGetSavingTypeInfo();
        });
-      this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
+       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
         this.fnGetAccountDetails(account);
       });
+    
     }else{
       this.sLedgerHeading = 'Savings Account';
       this.sButtonText = 'Withdraw & Send SMS';
@@ -181,12 +182,8 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
    if (this.activatedroute.snapshot.data.type === 'depositwithdrawl' ||
      this.activatedroute.snapshot.data.type === 'deposit') {
      this.bShowLoanData = true;
-     this.aTransactionModel = this.oSavingsDeposit.oTransactionInfo;
-     this.oDailySavingDebitModel.nAccountId = this.oSavingsDeposit.nSavingsId;
+      this.fnGetSavingTypeInfo();
    }
-
-
-     
     if(!(this.activatedroute.snapshot.data.type === 'depositwithdrawl') && 
     !(this.activatedroute.snapshot.data.type === 'deposit'))
       this.fnGetSavingDepositAccounts(oSelectedAccount);
@@ -266,6 +263,7 @@ fnOnDailySavingDebitInfoSubmit(): void {
     this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
       
       this.fnSucessMessage();
+      // this.fnLoadTransactionsAfterSuccess();
       this.redirectTo('/dailysavingdebit');
     });
   }
@@ -348,6 +346,14 @@ fnOnDailySavingDebitInfoSubmit(): void {
   }
   fnPrintPassBook(): void{
     window.print();
+  }
+
+  fnGetSavingTypeInfo(){
+    this.oSavingstypeService.fnGetSpecificSavingTypeInfo(this.oSavingsDeposit).subscribe((data) => {
+      this.oSavingsDeposit = data as any;
+      this.aTransactionModel = this.oSavingsDeposit.oTransactionInfo;
+     this.oDailySavingDebitModel.nAccountId = this.oSavingsDeposit.nSavingsId;
+    })
   }
 
 }
