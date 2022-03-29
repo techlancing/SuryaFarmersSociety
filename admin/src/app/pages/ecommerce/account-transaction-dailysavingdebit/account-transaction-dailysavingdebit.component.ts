@@ -43,6 +43,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   oSelectedBankAccount : BankAccount ;
   sLedgerHeading : string ;
   oSavingsDeposit : any = [];
+  sTransactionString : string ;
   public bPdfPrint : boolean = false ;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
@@ -131,8 +132,9 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
 
     if(this.activatedroute.snapshot.data.type === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
-      this.sSuccessMsg = 'Amount deposited sucessfully.'
-      this.sLedgerHeading = 'Daily Deposit Saving '
+      this.sSuccessMsg = 'Amount deposited sucessfully.';
+      this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.sTransactionString = this.sLedgerHeading + ' - Debit';
       this.bIsDeposit = true;
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any ;
@@ -146,6 +148,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.sButtonText = 'Withdraw & Send SMS';
       this.sSuccessMsg = 'Amount withdrawn sucessfully.';
       this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.sTransactionString = this.sLedgerHeading + ' - Credit';
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any ;
         this.fnGetSavingTypeInfo();
@@ -156,6 +159,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     
     }else{
       this.sLedgerHeading = 'Savings Account';
+      this.sTransactionString = this.sLedgerHeading + ' - Credit';
       this.sButtonText = 'Withdraw & Send SMS';
       this.sSuccessMsg = 'Amount withdrawn sucessfully.';
       this.bIsDeposit = false;

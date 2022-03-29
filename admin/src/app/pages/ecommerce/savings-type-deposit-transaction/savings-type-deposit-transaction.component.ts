@@ -28,6 +28,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   bIsAccountData : boolean ;
   @Input() oSavingsDeposit : any;
   sImageRootPath: string;
+  sTransactionString: string;
   constructor(private oBankEmployeeService : BankEmployeeService,
     private oSavingstypeService : SavingstypeService,
     private router : Router,
@@ -50,9 +51,11 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
      this.oSavingsDepositModel = new Debit();
      if(this.oSavingsDeposit.transactiontype === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
+      this.sTransactionString = 'Saving Type - Deposit' ;
      }
      if (this.oSavingsDeposit.transactiontype === 'withdraw'){
-        this.sButtonText = 'Withdraw & Send SMS'
+        this.sButtonText = 'Withdraw & Send SMS';
+        this.sTransactionString = 'Saving Type - Deposit';
      }
      
   }
