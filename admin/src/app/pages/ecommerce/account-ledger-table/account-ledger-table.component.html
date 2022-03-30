@@ -185,12 +185,11 @@
 
 
 
-  <div class="hide-ledegr" [ngClass]="{'adjustlines1': lineFrom == 2,'adjustlines2': lineFrom == 3,
-'adjustlines3': lineFrom == 4,'adjustlines4': lineFrom == 5,'adjustlines5': lineFrom == 6,'adjustlines6': lineFrom == 7,
-'adjustlines7': lineFrom == 8,'adjustlines8': lineFrom == 9,'adjustlines9': lineFrom == 10,'adjustlines10': lineFrom == 11,
-'adjustlines11': lineFrom == 12,'adjustlines12': lineFrom == 13,'adjustlines13': lineFrom == 14,'adjustlines14': lineFrom == 15,
-'adjustlines15': lineFrom == 16,'adjustlines16': lineFrom == 17,'adjustlines17': lineFrom == 18,'adjustlines18': lineFrom == 19,
-'adjustlines19': lineFrom == 20}">
+  <div class="hide-ledegr" [ngClass]="{'adjustlines1': lineDecide == 2,'adjustlines2': lineDecide == 3,
+'adjustlines3': lineDecide == 4,'adjustlines4': lineDecide == 5,'adjustlines5': lineDecide == 6,'adjustlines6': lineDecide == 7,
+'adjustlines7': lineDecide == 8,'adjustlines8': lineDecide == 9,'adjustlines9': lineDecide == 10,'adjustlines10': lineDecide == 11,
+'adjustlines11': lineDecide == 12,'adjustlines12': lineDecide == 13,'adjustlines13': lineDecide == 14,'adjustlines14': lineDecide == 15,
+'adjustlines15': lineDecide == 16,'adjustlines16': lineDecide == 17,'adjustlines17': lineDecide == 18}">
     <h4 [ngClass]="{'notvisible' : bNotPrintHead }">Account Ledger</h4>
     <div class="row tableheader" [ngClass]="{'notvisible' : bNotPrintHead }">
       <div class="col-sm-1 notvisible" *ngIf="bPrintLine">

@@ -14,6 +14,7 @@ export class AccountLedgerTableComponent implements OnInit {
 @Input() bPrintLine : boolean ;
 @Input() lineFrom : number ;
 @Input() lineTo : number ;
+@Input() lineDecide : number ;
 @Input() bShowEmployee : boolean ;
 @Input() bNotPrintHead : boolean ;
 @Input() type : string;
@@ -23,10 +24,13 @@ export class AccountLedgerTableComponent implements OnInit {
   sImageRootPath : string;
   bVisibleLoan: boolean;
   oCreditLoanmodel: any;
+  nLineFrom: number;
+  
   constructor(private oBankAccountService : BankAccountService) { }
 
   ngOnInit(): void {
     this.sImageRootPath = environment.imagePath;
+    // this.nLineFrom = this.lineFrom % 18;
     this.oBankAccountService.pdfGenerationClicked.subscribe((data) => {
       if(this.oBankAccountService.proceed == true){
         if(data.type === this.type){
@@ -77,19 +81,4 @@ export class AccountLedgerTableComponent implements OnInit {
       this.ngOnInit();
   }
 
-  // fnPrinPdfLoanAccount(): void{ 
-  //   let data = document.getElementById('savingsPrint');
-  //   let pdf = new jsPDF({
-  //     orientation: 'p',
-  //     unit: 'mm',
-  //     format: 'a4',
-  //     putOnlyUsedFonts:true
-  //    });
-  //   pdf.setFontSize(10);
-  //   pdf.html(data,{
-  //     callback: function (doc) {
-  //       doc.save('LoanAccount.pdf');
-  //     }
-  //   });
-  // }
 }

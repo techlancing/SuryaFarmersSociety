@@ -58,6 +58,7 @@ export class AllTransactionPrintComponent implements OnInit {
   bIsEditActive: boolean;
   public sSelectedAccount: string;
   sAccountNo : string;
+  lineDecide : number ;
   
   bIsBtnActive: boolean;
   bIsAccountData: boolean;
@@ -287,6 +288,7 @@ export class AllTransactionPrintComponent implements OnInit {
           Swal.close();
           this.lineFrom = fromLine ;
           this.lineTo = toLine ;
+          this.lineDecide = fromLine % 18 ;
           setTimeout(() => {
             window.print();
           }, 300);
