@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import { BankAccountService } from '../../../core/services/account.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-ledger-table',
@@ -16,23 +17,49 @@ export class AccountLedgerTableComponent implements OnInit {
 @Input() bShowEmployee : boolean ;
 @Input() bNotPrintHead : boolean ;
 @Input() type : string;
-  bNotVisiblePdf: boolean;
+  bVisiblePdf: boolean;
+  accountDetails : any;
+  oAlltransactionprintmodel: any;
+  sImageRootPath : string;
+  bVisibleLoan: boolean;
+  oCreditLoanmodel: any;
   constructor(private oBankAccountService : BankAccountService) { }
 
   ngOnInit(): void {
+    this.sImageRootPath = environment.imagePath;
     this.oBankAccountService.pdfGenerationClicked.subscribe((data) => {
       if(this.oBankAccountService.proceed == true){
         if(data.type === this.type){
-          //this.bNotVisiblePdf = true;
-          this.fnPrintPdfSavingsAccount(data.Account,data.type);    
+          this.oBankAccountService.sendBankAccountDetails.subscribe((cdata) => {
+           this.oAlltransactionprintmodel = cdata as any;
+           if(this.oAlltransactionprintmodel !== null){
+             this.bVisiblePdf = true ;
+             this.oBankAccountService.sendLoanAccountDetails.subscribe((kdata) => {
+              if(kdata !== null){
+                this.bVisibleLoan = true;
+                this.oCreditLoanmodel = kdata as any;
+              }
+             });
+             setTimeout(() => {
+              this.fnPrintPdfSavingsAccount(data.Account,data.type);
+             },1)
+                 
+           }
           this.oBankAccountService.proceed= false;
+          });
+          
         } 
       }
      
     })
+    // setTimeout(() => {
+     
+    //  },3000)
   }
   fnPrintPdfSavingsAccount(Account,type): void {
     let data = document.getElementById(type);
+    this.bVisiblePdf = false;
+    this.bVisibleLoan = false;
       let pdf = new jsPDF({
         orientation: 'l',
         unit: 'pt',
@@ -44,8 +71,10 @@ export class AccountLedgerTableComponent implements OnInit {
       pdf.html(data,{
         callback: function (doc) {
           doc.save(Account+"-"+type+'.pdf');
+         
         }
       });
+      this.ngOnInit();
   }
 
   // fnPrinPdfLoanAccount(): void{ 

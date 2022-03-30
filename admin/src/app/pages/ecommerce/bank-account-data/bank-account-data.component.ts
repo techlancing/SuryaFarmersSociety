@@ -38,6 +38,7 @@ export class BankAccountDataComponent implements OnInit {
     this.oBankAccountService.fngetBankAccountInfoByNumber(this.sSelectedAccount).subscribe((data) => {
       this.oAlltransactionprintmodel = data as any;
       this.bIsAccountData = true;
+      this.oBankAccountService.sendBankAccountDetails.next(this.oAlltransactionprintmodel);
       this.accountDataClicked.emit(this.oAlltransactionprintmodel);
     });
   }
@@ -50,7 +51,6 @@ export class BankAccountDataComponent implements OnInit {
       this.aBankAccounts = [...cdata as any];
       console.log(this.aBankAccounts);
       //this.oCreditModel.sState = '';
-      
     });
   }
 

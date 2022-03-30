@@ -131,34 +131,7 @@ export class AllTransactionPrintComponent implements OnInit {
         value:'06'
       }             
     ];
-    this.aInstallmentType = [
-      {
-        displayText: 'Daily',
-        value:'01'
-      },
-      {
-        displayText: 'Weekly',
-        value:'02'
-      },
-      {
-        displayText: 'Monthly',
-        value:'03'
-      }
-    ];
-    this.aLoanIssueEmployee = [
-      {
-        displayText: 'Venkanna',
-        value:'01'
-      },
-      {
-        displayText: 'Bhaskar',
-        value:'02'
-      },
-      {
-        displayText: 'Naresh',
-        value:'03'
-      }
-    ];
+    
     
     this.sButtonText = 'Print';
     this.bIsAddActive = false;
@@ -322,21 +295,11 @@ export class AllTransactionPrintComponent implements OnInit {
   }
   
   fnPrintPdf(type): void {
+    
     this.oBankAccountService.proceed = true ;
+    this.aCreditLoan.map((loan) => {
+      if(loan.sTypeofLoan == type) this.oBankAccountService.sendLoanAccountDetails.next(loan);
+    })
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }
-  fnPrintPdfSavingsAccount(type): void {
-    this.oBankAccountService.proceed = true ;
-    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
-  }
-  fnPrinPdfSavingtypeAccount(type) : void{
-    this.oBankAccountService.proceed = true ;
-    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
-  }
-
-  fnPrinPdfLoanAccount(type): void{ 
-    this.oBankAccountService.proceed = true ;
-    this.oBankAccountService.pdfGenerationClicked.emit({type : type});
-  }
-
 }  

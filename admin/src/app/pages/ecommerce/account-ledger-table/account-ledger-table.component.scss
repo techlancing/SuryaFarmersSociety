@@ -78,3 +78,48 @@
 .adjustlines{
    padding-left: 13px !important;
 }
+
+
+.account-detail{
+   color: orange;
+   margin-left: 15px;
+}
+.img-container{
+   display: grid;
+}
+
+.card-bg{
+   background-color: antiquewhite;
+   }
+
+   h4{
+       text-align: center;
+       margin:10px;
+   }
+
+   img:nth-child(2){
+       width:50px;
+   }
+   img:nth-child(3){
+      
+       width:50px;
+   }
+   img:nth-child(4){
+     
+       width:50px;
+   }
+tr.imagewidth{
+   td{
+       column-width: 150px;
+   }
+
+}
+.photoWidth{
+   width : 145px;
+   height: 120px;
+   
+}
+.signWidth{
+   width : 100px;
+   height: 80px;
+}

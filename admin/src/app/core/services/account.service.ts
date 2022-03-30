@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BankAccount } from '../models/bankaccount.model';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
@@ -10,6 +11,8 @@ export class BankAccountService {
     sRootUrl: string = environment.apiUrl + "nodejs/bankaccount";
 
     pdfGenerationClicked = new EventEmitter();
+    sendBankAccountDetails = new BehaviorSubject(null);
+    sendLoanAccountDetails = new BehaviorSubject(null);
     proceed : boolean = false;
     constructor(private http: HttpClient) { }
 
