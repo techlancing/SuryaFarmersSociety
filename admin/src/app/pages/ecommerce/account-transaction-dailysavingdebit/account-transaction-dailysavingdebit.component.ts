@@ -285,16 +285,16 @@ fnOnDailySavingDebitInfoSubmit(): void {
   //   });
 
   //  }
-   this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
-     console.log("cdata", cdata);
-     this.nBalance = cdata as number;
-     if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
+  //  this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
+  //    console.log("cdata", cdata);
+  //    this.nBalance = cdata as number;
+  //    if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
        this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
          this.fnSucessMessage();
          this.redirectTo('/withdrawal');
        });
-     }
-   });
+  //    }
+  //  });
  }
 }
   fnSucessMessage() {

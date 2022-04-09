@@ -145,9 +145,13 @@ oDailyDepositRouter.post("/dailydeposittransaction_list", oAuthentication, async
 // url: ..../dailysavingdeposit/withdraw_dailydeposittransaction
 oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   //To get last transaction data to get the balance amount
+  const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nAccountId});
+  if(!oSavings){
+     return oRes.status(400).send();
+  }
   let oBalanceAmount = 0;
   try{
-    const olasttransaction = await oTransactionModel.find({nLoanId: oReq.body.nAccountId}).sort({_id:-1}).limit(1);
+    const olasttransaction = await oTransactionModel.find({nLoanId: oSavings.nSavingsId}).sort({_id:-1}).limit(1);
   
     if(olasttransaction.length > 0) {
       oBalanceAmount = olasttransaction[0].nBalanceAmount;
@@ -169,12 +173,17 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
     oBalanceAmount = Number(oTransaction.nBalanceAmount);
     oTransaction.sDate = oReq.body.sEndDate;
     oTransaction.sNarration = oReq.body.sNarration;
-    oTransaction.sAccountType = 'Savings Account'; 
+    oTransaction.sAccountType = oSavings.sTypeofSavings; 
     oTransaction.sEmployeeName = oReq.body.sReceiverName;
-
-    
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
+
+    if(oTransaction.nBalanceAmount >= 0)
+      {
+        oSavings.oTransactionInfo.push(newTransaction);
+        oSavings.nDepositAmount = oTransaction.nBalanceAmount;
+        await oSavings.save();
+      }
 
     //update bank account 
     let oAccount = await obankaccountModel.findOne({sAccountNo: oReq.body.sAccountNo });
@@ -214,7 +223,7 @@ if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
   \"sender\": \"ADPNXT\",\n  
   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
   \"acno\": \"${newTransaction.sAccountNo}\",\n  
-  \"amount\": \"${newTransaction.nDebitAmount}\",\n  
+  \"amount\": \"${newTransaction.nCreditAmount}\",\n  
   \"date\":\"${newTransaction.sDate}\",\n  
   \"tid\":\"${newTransaction.nTransactionId}\",\n  
   \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
