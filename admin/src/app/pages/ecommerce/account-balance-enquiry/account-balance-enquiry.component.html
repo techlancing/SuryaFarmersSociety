@@ -24,21 +24,31 @@
     </div>
   </div>
   <div class="row">
-    <div *ngIf="bShowBalance && nAccountBalance >= 0" class="col-sm-6 balance">
+    <div *ngIf="bShowBalance && nAccountBalance >= 0" class="col-sm-4 balance">
       <h2>Savings Account </h2>
-      <p>_________________________________________________</p>
+      <p>_______________________________</p>
       <div class="row sbalance">
         <h3>Balance :</h3>
         <p class="account-balance"> Rs/- {{this.nAccountBalance}}</p>
       </div>
     </div>
-    <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-6 balance">
+    <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-4 balance">
       <h2>Loan Account </h2>
-      <p>_________________________________________________</p>
+      <p>_______________________________</p>
       <div *ngFor="let loan of aCreditLoans" class="row">
         <div class="col-sm-12 row" *ngIf="loan.nLoanBalance >= 0">
           <h3>{{loan.sLoanName}} :</h3>
           <p class="account-balance"> Rs/- {{loan.nLoanBalance}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="bShowSavingTypeBalance && aSavingType.length !==0" class="col-sm-4 balance">
+      <h2>Saving Type </h2>
+      <p>_______________________________</p>
+      <div *ngFor="let type of aSavingType" class="row">
+        <div class="col-sm-12 row" *ngIf="type.nDepositAmount >= 0">
+          <h3>{{type.sTypeofSavings}} :</h3>
+          <p class="account-balance"> Rs/- {{type.nDepositAmount}}</p>
         </div>
       </div>
     </div>

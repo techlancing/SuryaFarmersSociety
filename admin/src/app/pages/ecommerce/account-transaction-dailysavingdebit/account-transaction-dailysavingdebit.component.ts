@@ -133,7 +133,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
       this.sSuccessMsg = 'Amount deposited sucessfully.';
-      this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.sLedgerHeading = 'Daily Saving ';
       this.sTransactionString = this.sLedgerHeading + ' - Debit';
       this.bIsDeposit = true;
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
@@ -147,7 +147,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     }else if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
       this.sButtonText = 'Withdraw & Send SMS';
       this.sSuccessMsg = 'Amount withdrawn sucessfully.';
-      this.sLedgerHeading = 'Daily Deposit Saving ';
+      this.sLedgerHeading = 'Daily Saving ';
       this.sTransactionString = this.sLedgerHeading + ' - Credit';
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any ;
@@ -316,7 +316,7 @@ fnOnDailySavingDebitInfoSubmit(): void {
   fnGetSavingsDeposit(){
     if (this.sSelectedSavingType === 'Savings Account')
       this.bShowLoanData = true;
-    else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
+    else if (this.sSelectedSavingType === 'Daily Deposit'){
       this.aSavingDeposit.map((savingdeposit) => {
         if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
           savingdeposit.transactiontype = 'withdraw';

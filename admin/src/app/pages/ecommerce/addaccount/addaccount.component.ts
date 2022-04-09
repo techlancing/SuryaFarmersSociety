@@ -257,14 +257,21 @@ export class AddaccountComponent implements OnInit {
   }
 
   fnCalculateAge(){
-    if(typeof this.oBankAccountModel.sDOB==='object'){
-      let today=new Date().getFullYear();  
-      let sDateOfBirth=new Date(this.oBankAccountModel.sDOB);
-      let sdob=sDateOfBirth.getFullYear();
-      console.log(today);
-      console.log(sdob);
-     this.oBankAccountModel.sAge= ""+(today-sdob);
-   }
+    if (typeof this.oBankAccountModel.sDOB === 'object') { 
+      let toDay = new Date();
+      let age = 0;
+      let sDateOfBirth = new Date(this.oBankAccountModel.sDOB);
+      age = toDay.getFullYear() - sDateOfBirth.getFullYear();
+      if (age > 0) {
+        if (toDay.getMonth() > sDateOfBirth.getMonth()) age--;
+        else if (toDay.getMonth() == sDateOfBirth.getMonth()) {
+          if (toDay.getDate() >= (sDateOfBirth.getDate() - 1)) age++;
+          else age--;
+        }
+        else age--;
+      }
+      this.oBankAccountModel.sAge = "" + age;
+    }
   }
 
   fnCreateAccountDetails(){
@@ -336,6 +343,10 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.oSignature1Info === null ||
     this.oBankAccountModel.oSignature2Info === null){
       this.fnMessage('Please fill all the fields.','warning');
+      return;
+    }
+    if(Number(this.oBankAccountModel.sAge) < 18){
+      this.fnMessage('Age is under 18, so we can not open the account','warning');
       return;
     }
     if(this.bankaccounts != undefined && this.bankaccounts !== null){

@@ -26,6 +26,13 @@
           Loan
         </label>
       </div>
+      <div class="form-check form-group">
+        <input class="form-check-input" type="radio" name="accountRadio" id="accountRadio3" value="savingtype"
+        [(ngModel)]="ointratransactionModel.sRecieverAccountType" (change)="fnGetSavingTypes()">
+        <label class="form-check-label" for="accountRadio3">
+          Saving Type
+        </label>
+      </div>
     </div>
     </div>
 
@@ -50,6 +57,28 @@
             </div>  
             
              
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12" *ngIf="ointratransactionModel.sRecieverAccountType === 'savingtype'">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h2>Select SavingType</h2>
+           <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="sReceiverName">Select SavingType</label>
+                <ng-select [items]="aSavingType" name="saving type"
+                  [(ngModel)]="ointratransactionModel.nLoanId" 
+                  bindLabel="sTypeofSavings" bindValue="nSavingsId">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{item.sTypeofSavings}}
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>  
           </div>
         </div>
       </div>

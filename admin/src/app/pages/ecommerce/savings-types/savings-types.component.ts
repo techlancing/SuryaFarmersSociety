@@ -36,31 +36,31 @@ export class SavingsTypesComponent implements OnInit {
   ngOnInit(): void {
     this.aTypeofSavings = [
       {
-        displayText: 'Daily Deposit Saving',
+        displayText: 'Daily Deposit',
         value: '01'
       },
       {
-        displayText: 'Fixed Deposit Saving',
+        displayText: 'Fixed Deposit',
         value: '02'
       },
       {
-        displayText: 'Recuring Deposit Saving',
+        displayText: 'Recuring Deposit',
         value: '03'
       },
       {
-        displayText: 'Monthly Deposit Saving',
+        displayText: 'Monthly Deposit',
         value: '04'
       },
       {
-        displayText: 'Pension Deposit Saving',
+        displayText: 'Pension Deposit',
         value: '05'
       },
       {
-        displayText: 'Child Deposit Saving',
+        displayText: 'Child Deposit',
         value: '06'
       },
       {
-        displayText: 'Education Deposit Saving',
+        displayText: 'Education Deposit',
         value: '07'
       }
     ];
@@ -118,15 +118,17 @@ export class SavingsTypesComponent implements OnInit {
     if (this.oSavingsTypeModel.nDepositAmount !== null && this.oSavingsTypeModel.nIntrest !== null && 
       this.oSavingsTypeModel.nSavingDays !== null && this.oSavingsTypeModel.nSavingMonths !== null
       && this.oSavingsTypeModel.sTypeofSavings !== '') {
-      if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit Saving' ||
-       this.oSavingsTypeModel.sTypeofSavings == 'Fixed Deposit Saving'||
-        this.oSavingsTypeModel.sTypeofSavings == 'Child Deposit Saving'||
-       this.oSavingsTypeModel.sTypeofSavings == 'Education Deposit Saving') {
+      if(this.oSavingsTypeModel.sTypeofSavings == 'Pension Deposit' ||
+       this.oSavingsTypeModel.sTypeofSavings == 'Fixed Deposit'||
+        this.oSavingsTypeModel.sTypeofSavings == 'Child Deposit'||
+       this.oSavingsTypeModel.sTypeofSavings == 'Education Deposit') {
          let interest = (this.oSavingsTypeModel.nDepositAmount*
                         this.oSavingsTypeModel.nSavingTotalDays*this.oSavingsTypeModel.nIntrest)/(365*100);
         this.oSavingsTypeModel.nMaturityAmount = this.oSavingsTypeModel.nDepositAmount +Number((Math.round(interest*100)/100).toFixed(2));
+        if(this.oSavingsTypeModel.sTypeofSavings === 'Pension Deposit') 
+          this.oSavingsTypeModel.nPensionInterestAddAmount = Math.round((interest / this.nTotalMonths)*100)/100;
       } 
-      else if(this.oSavingsTypeModel.sTypeofSavings == 'Daily Deposit Saving'){
+      else if(this.oSavingsTypeModel.sTypeofSavings == 'Daily Deposit'){
         debugger
         let i= 1;
         let totalInterest = 0;

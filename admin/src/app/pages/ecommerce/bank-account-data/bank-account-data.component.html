@@ -1,8 +1,8 @@
 <form class="col-12" [ngClass]="{'notvisible': bPdfPrint}" >
     <div class="card card-bg" >
       <div class="card-body">
-        <h2>{{headerText}}</h2>
-        <div  class="row passbook-acc-input">
+        <h2 *ngIf="notfordailysavings">{{headerText}}</h2>
+        <div  class="row passbook-acc-input" *ngIf="notfordailysavings">
           <div class="col-sm-6">
             <div class="form-group" >
               <label class="control-label">Account Number</label>

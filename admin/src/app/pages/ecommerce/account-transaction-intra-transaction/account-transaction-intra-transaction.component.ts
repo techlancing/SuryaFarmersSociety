@@ -14,6 +14,7 @@ import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
+import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -86,6 +87,7 @@ import { NarrationstringService } from 'src/app/core/services/narrationstring.se
     displayText:string,
     value:string
   }>;
+  aSavingType: any=[];
    
    constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanService: CreditLoanService,
@@ -94,7 +96,8 @@ import { NarrationstringService } from 'src/app/core/services/narrationstring.se
                private modalService: NgbModal,
                private oBankEmployeeService: BankEmployeeService,
                private oUtilitydateService : UtilitydateService,
-               private oNarrationstringService : NarrationstringService) { }
+               private oNarrationstringService : NarrationstringService,
+               private oSavingstypeService : SavingstypeService) { }
  
    ngOnInit(): void {
      this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
@@ -168,6 +171,11 @@ import { NarrationstringService } from 'src/app/core/services/narrationstring.se
     this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
     this.fnOnUpdateNarration();
    // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`
+   }
+   fnGetSavingTypes(){
+    this.oSavingstypeService.fnGetAllSavingDepositAccountsInfo(this.ointratransactionModel.sRecieverAccountNumber).subscribe((data) => {
+      this.aSavingType = data as any;
+    });
    }
  
   fnOnIntraTransactionInfoSubmit() {

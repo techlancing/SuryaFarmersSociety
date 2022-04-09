@@ -5,7 +5,7 @@
     <app-bank-account-data headerText='' 
     (accountDataClicked)="fnGetAccountDetails($event)" [bPdfPrint]="bPdfPrint"
      *ngIf = "activatedroute.snapshot.data.type === 'withdraw'"></app-bank-account-data>
-
+     <app-bank-account-data [bForDailySavings] = 'true' *ngIf = "activatedroute.snapshot.data.type !== 'withdraw'"></app-bank-account-data>
 
     <div class="col-12 card card-bg" *ngIf = "activatedroute.snapshot.data.type === 'withdraw'">
       <div class="card-body">

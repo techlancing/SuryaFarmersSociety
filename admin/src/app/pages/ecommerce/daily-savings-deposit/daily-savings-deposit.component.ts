@@ -165,7 +165,7 @@ export class DailySavingsDepositComponent implements OnInit {
   fnGetSavingsDeposit(){
     if (this.sSelectedSavingType === 'Savings Account')
       this.bShowLoanData = true;
-    else if (this.sSelectedSavingType === 'Daily Deposit Saving'){
+    else if (this.sSelectedSavingType === 'Daily Deposit'){
       this.aSavingDeposit.map((savingdeposit) => {
         if(savingdeposit.sTypeofSavings === this.sSelectedSavingType){
           savingdeposit.transactiontype = 'deposit' ;

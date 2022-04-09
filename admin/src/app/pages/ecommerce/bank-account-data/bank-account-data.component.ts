@@ -3,6 +3,7 @@ import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model'
 import { environment } from 'src/environments/environment';
+import { DailySavingDebitService } from 'src/app/core/services/dailysavingdebit.service';
 
 @Component({
   selector: 'app-bank-account-data',
@@ -19,13 +20,27 @@ export class BankAccountDataComponent implements OnInit {
   aBankAccounts: Array<BankAccount>;
   @Input() headerText: string;
   @Input() bPdfPrint : boolean ;
+  @Input() bForDailySavings : boolean ;
+ // @Input() Account : BankAccount ;
   @Output() accountDataClicked = new EventEmitter<BankAccount>();
-  constructor(private oBankAccountService: BankAccountService) { }
+  notfordailysavings: boolean = true;
+  constructor(private oBankAccountService: BankAccountService,
+    private oDailySavingsDepositService :DailySavingDebitService) { }
 
   ngOnInit(): void {
     this.oAlltransactionprintmodel = new BankAccount();
     this.sImageRootPath = environment.imagePath;
-    this.fnGetAllAccounts();
+    if(this.bForDailySavings == true){
+      this.bIsAccountData = true;  
+      this.notfordailysavings = false;  
+      this.oDailySavingsDepositService.oDailySavingDepositAccount.subscribe((account) => {
+        let Account = account as any
+        this.oBankAccountService.fngetBankAccountInfoByNumber(Account.sAccountNo).subscribe((data) => {
+          this.oAlltransactionprintmodel = data as any;      
+        });
+      });
+    }
+    else this.fnGetAllAccounts();
   } 
 
   fnGetAccountNumber(): void{
