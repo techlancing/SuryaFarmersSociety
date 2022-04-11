@@ -51,11 +51,11 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
      this.oSavingsDepositModel = new Debit();
      if(this.oSavingsDeposit.transactiontype === 'deposit'){
       this.sButtonText = 'Deposit & Send SMS';
-      this.sTransactionString = 'Saving Type - Deposit' ;
+      this.sTransactionString = this.oSavingsDeposit.sTypeofSavings+' - Debit' ;
      }
      if (this.oSavingsDeposit.transactiontype === 'withdraw'){
         this.sButtonText = 'Withdraw & Send SMS';
-        this.sTransactionString = 'Saving Type - Deposit';
+        this.sTransactionString = this.oSavingsDeposit.sTypeofSavings+' - Crebit' ;
      }
      
   }
