@@ -346,7 +346,7 @@ export class AddaccountComponent implements OnInit {
       return;
     }
     if(Number(this.oBankAccountModel.sAge) < 18){
-      this.fnMessage('Age is under 18, so we can not open the account','warning');
+      this.fnMessage('Age should be above 18 years','warning');
       return;
     }
     if(this.bankaccounts != undefined && this.bankaccounts !== null){
