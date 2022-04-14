@@ -192,34 +192,36 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
       await oAccount.save();
     }
 /* SmS code Start */
-if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
-  const options = {
-    "method": "POST",
-    "hostname": "api.msg91.com",
-    "port": null,
-    "path": "/api/v5/flow/",
-    "headers": {
-      "authkey": "371253A5XBmjXj61cc5295P1",
-      "content-type": "application/JSON"
-    }
-  };
+    if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
+      //get mobile number from account number 
+      const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+      if (oAccount.sSMSAlert === "YES") {
+        const options = {
+          "method": "POST",
+          "hostname": "api.msg91.com",
+          "port": null,
+          "path": "/api/v5/flow/",
+          "headers": {
+            "authkey": "371253A5XBmjXj61cc5295P1",
+            "content-type": "application/JSON"
+          }
+        };
 
-  const req = http.request(options, function (res) {
-    const chunks = [];
+        const req = http.request(options, function (res) {
+          const chunks = [];
 
-    res.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
+          res.on("data", function (chunk) {
+            chunks.push(chunk);
+          });
 
-    res.on("end", function () {
-      const body = Buffer.concat(chunks);
-      console.log(body.toString());
-    });
-  });
-  //get mobile number from account number 
-  const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
-  //credit message for customers
-  req.write(`{\n  \"flow_id\": \"6205fa53b73c4376f32e3344\",\n  
+          res.on("end", function () {
+            const body = Buffer.concat(chunks);
+            console.log(body.toString());
+          });
+        });
+
+        //credit message for customers
+        req.write(`{\n  \"flow_id\": \"6205fa53b73c4376f32e3344\",\n  
   \"sender\": \"ADPNXT\",\n  
   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
   \"acno\": \"${newTransaction.sAccountNo}\",\n  
@@ -227,8 +229,9 @@ if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
   \"date\":\"${newTransaction.sDate}\",\n  
   \"tid\":\"${newTransaction.nTransactionId}\",\n  
   \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
-  req.end();
-}
+        req.end();
+      }
+    }
 /* SmS code End */
     oRes.json("Success");
   }catch(e){

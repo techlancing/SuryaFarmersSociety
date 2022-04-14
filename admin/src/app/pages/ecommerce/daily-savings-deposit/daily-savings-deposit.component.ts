@@ -14,9 +14,11 @@ import { BankEmployee } from '../../../core/models/bankemployee.model';
 import { BankEmployeeService } from 'src/app/core/services/bankemployee.service';
 import { DailySavingDebit } from 'src/app/core/models/dailysavingdebit.model';
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
+import { DebitService } from 'src/app/core/services/debit.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 import { SavingsType } from 'src/app/core/models/savingstype.model';
 import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
+import { Debit } from 'src/app/core/models/debit.model';
 
 @Component({
   selector: 'app-daily-savings-deposit',
@@ -32,7 +34,7 @@ export class DailySavingsDepositComponent implements OnInit {
   @Input() oEditBankAccount: DailySavingsDeposit;
   @Output() savingDepositClicked = new EventEmitter<any>();
 
-  public oDailySavingsDepositModel: DailySavingsDeposit;
+  //public oDailySavingsDepositModel: DailySavingsDeposit;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
@@ -93,9 +95,11 @@ export class DailySavingsDepositComponent implements OnInit {
   public sButtonText: string;
   public sSuccessMsg: string;
   public bIsDeposit : boolean;
+  oDebitModel: Debit;
   
   constructor(private oBankAccountService: BankAccountService,
               private oDailySavingsDepositService :DailySavingDebitService,
+              private oDebitService : DebitService,
               private modalService: NgbModal,
               public activatedroute : ActivatedRoute,
               private router: Router,
@@ -112,10 +116,10 @@ export class DailySavingsDepositComponent implements OnInit {
        this.aUsers = users;
      });
 
-    if(this.bIsDeposit) this.headerText = "Daily Deposit Account";
-    else this.headerText = "Daily WithDrawal Account";
-    this.oDailySavingsDepositModel = new DailySavingDebit();
-    this.oDailySavingsDepositModel.nTotaldays=1;
+    // if(this.bIsDeposit) this.headerText = "Daily Deposit Account";
+    // else this.headerText = "Daily WithDrawal Account";
+    this.oDebitModel = new Debit();
+    // this.oDailySavingsDepositModel.nTotaldays=1;
     this.bIsAddActive = false;
     this.bIsEditActive = false;
 
@@ -141,8 +145,8 @@ export class DailySavingsDepositComponent implements OnInit {
 }
 
   fnGetSavingsAccountTransactions(oSelectedAccount : BankAccount){
-    this.oDailySavingsDepositModel.sAccountNo = oSelectedAccount.sAccountNo;
-    this.oDailySavingsDepositModel.nAccountId = oSelectedAccount.nAccountId;
+    this.oDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
+    this.oDebitModel.nLoanId = oSelectedAccount.nAccountId;
     this.oSelectedBankAccount = oSelectedAccount ;
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
       this.aTransactionModel = data as any;
@@ -200,24 +204,24 @@ fnDatediff(first, second) {
   return Math.round((second-first)/(1000*60*60*24));
 }
 
-fnCalculateTotalAmount(): void{
-  if(this.oDailySavingsDepositModel.nDayAmount !== undefined && this.oDailySavingsDepositModel.nTotaldays !== undefined){
-    this.oDailySavingsDepositModel.nAmount = this.oDailySavingsDepositModel.nDayAmount * this.oDailySavingsDepositModel.nTotaldays;
-  }
+// fnCalculateTotalAmount(): void{
+//   if(this.oDailySavingsDepositModel.nDayAmount !== undefined && this.oDailySavingsDepositModel.nTotaldays !== undefined){
+//     this.oDailySavingsDepositModel.nAmount = this.oDailySavingsDepositModel.nDayAmount * this.oDailySavingsDepositModel.nTotaldays;
+//   }
   
-}
+// }
 
 fnOnDailySavingsDepositInfoSubmit(): void {
-  this.oDailySavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingsDepositModel.sNarration);
-    this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
-    if(typeof this.oDailySavingsDepositModel.sEndDate === 'object' ){
-      this.oDailySavingsDepositModel.sEndDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sEndDate);
-      this.oDailySavingsDepositModel.sStartDate=this.oDailySavingsDepositModel.sEndDate;
+  this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
+    // this.oDebitModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
+    if(typeof this.oDebitModel.sDate === 'object' ){
+      this.oDebitModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
+     // this.oDebitModel.sStartDate=this.oDebitModel.sEndDate;
       }
     
  if(this.bIsDeposit)
   {
-    this.oDailySavingsDepositService.fnAddDailySavingDepositInfo(this.oDailySavingsDepositModel).subscribe((data) => {
+    this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
       
       this.fnSucessMessage();
       this.redirectTo('/dailysavingsdeposit');
@@ -225,7 +229,7 @@ fnOnDailySavingsDepositInfoSubmit(): void {
   }
   /*
   else{
-    this.oDailySavingsDepositService.fnWithDrawDailySavingDepositInfo(this.oDailySavingsDepositModel).subscribe((data) => {
+    this.oDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingsDepositModel).subscribe((data) => {
       
       this.fnSucessMessage();
       this.redirectTo('/withdrawal');
