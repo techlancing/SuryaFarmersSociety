@@ -6,7 +6,7 @@
   <app-bank-account-data headerText="Credit Loan" (accountDataClicked)="fnGetActiveAccount($event)">
   </app-bank-account-data>
 
-  <div class="row">
+  <div class="row" *ngIf = "bLoadFrameDetails">
     <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnCreditLoanInfoSubmit()">
       <div class="card card-bg">
 

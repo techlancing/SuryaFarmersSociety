@@ -62,6 +62,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   public aBankAccounts: Array<BankAccount>;
   public sSelectedAccount: string;
   aUsers: Array<BankEmployee>;
+  bLoadFrameDetails: boolean;
 
 
   constructor(private oCreditLoanService: CreditLoanService,
@@ -135,6 +136,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   fnGetActiveAccount(oActiveAccount: BankAccount){
     this.oCreditLoanModel.sAccountNo = oActiveAccount.sAccountNo;
+    this.bLoadFrameDetails = true ;
   }
 
   fnOnCreditLoanInfoSubmit(): void {
