@@ -19,9 +19,14 @@ const asyncMiddleware = fn =>
 oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newSavings = new oSavingsTypeModel(oReq.body);
   try{
+    //checking the savingtype already exists or not
+    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nSavingsId});
+    if(!oSavings){
+      return  oRes.json("Exists").send();  
+    }
     // Save savingstype Info
     await newSavings.save();
-    
+
     //save transaction model
     let oTransaction = {};
     oTransaction.sAccountNo = newSavings.sAccountNo;
@@ -76,8 +81,8 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     let oTransaction = {};
     oTransaction.sAccountNo = oSavings.sAccountNo;
     oTransaction.nLoanId = oSavings.nSavingsId;
-    oTransaction.nCreditAmount = oReq.body.nAmount;
-    oTransaction.nDebitAmount = 0;
+    oTransaction.nCreditAmount = 0;
+    oTransaction.nDebitAmount = oReq.body.nAmount;
     oTransaction.nBalanceAmount = oBalanceAmount + oReq.body.nAmount;
     oTransaction.sDate = oReq.body.sDate;
     oTransaction.sNarration = oReq.body.sNarration;
