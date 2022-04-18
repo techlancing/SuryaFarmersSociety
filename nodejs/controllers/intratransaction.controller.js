@@ -7,6 +7,7 @@ const oDailyDepositModel = require("../data_base/models/dailysavingdeposit.model
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oBankAccountModel = require("../data_base/models/bankaccount.model");
 const oAuthentication = require("../middleware/authentication");
+const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 
 
 
@@ -102,6 +103,31 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
                   
       }
       
+
+      else if (oReq.body.sRecieverAccountType == 'savingtype')  // saving type
+      {
+        const oSavingsType = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sRecieverAccountNumber, nSavingsId: oReq.body.nLoanId });
+        if (!oSavingsType) {
+          return oRes.status(400).send();
+        }
+        oTransaction.nCreditAmount = 0;
+        oTransaction.nDebitAmount = oReq.body.nAmount;
+        oTransaction.nLoanId = oReq.body.nLoanId;
+        const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nLoanId }).sort({ _id: -1 }).limit(1);
+        if (olasttransaction.length > 0)
+          oBalanceAmount = olasttransaction[0].nBalanceAmount;
+
+        oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + oReq.body.nAmount) * 100) / 100).toFixed(2);
+        oTransaction.sAccountType = oSavingsType.sTypeofSavings;
+        const newTransaction = new oTransactionModel(oTransaction);
+        await newTransaction.save();
+
+        if(oTransaction.nBalanceAmount > 0){
+          oSavingsType.oTransactionInfo.push(newTransaction);
+          oSavingsType.nDepositAmount = oTransaction.nBalanceAmount;
+          await oSavingsType.save();
+        }
+      }
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
@@ -126,8 +152,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     let oTransactionInfo = {};
     oTransactionInfo.sAccountNo = oReq.body.sSenderAccountNumber;
     oTransactionInfo.nLoanId = oReq.body.nSenderAccountId;
-    oTransactionInfo.nCreditAmount = 0;
-    oTransactionInfo.nDebitAmount = oReq.body.nAmount;
+    oTransactionInfo.nCreditAmount = oReq.body.nAmount;
+    oTransactionInfo.nDebitAmount = 0;
     console.log(oBalanceAmt);
     oTransactionInfo.nBalanceAmount = (Math.round((oBalanceAmt - oReq.body.nAmount) * 100) / 100).toFixed(2);
     oTransactionInfo.sDate = oReq.body.sDate;

@@ -88,6 +88,8 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     value:string
   }>;
   aSavingType: any=[];
+  bShowReciever: boolean;
+  bShowFormDetails: boolean;
    
    constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanService: CreditLoanService,
@@ -163,6 +165,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
     this.fnOnUpdateNarration();
+    this.bShowReciever = true ;
     //this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
    }
 
@@ -170,6 +173,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     this.ointratransactionModel.sRecieverAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
     this.fnOnUpdateNarration();
+    this.bShowFormDetails = true ;
    // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`
    }
    fnGetSavingTypes(){
