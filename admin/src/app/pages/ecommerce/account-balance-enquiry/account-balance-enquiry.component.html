@@ -29,7 +29,7 @@
       <p>_______________________________</p>
       <div class="row sbalance">
         <h3>Balance :</h3>
-        <p class="account-balance"> Rs/- {{this.nAccountBalance}}</p>
+        <p class="account-balance"> Rs. {{this.nAccountBalance}}/-</p>
       </div>
     </div>
     <div *ngIf="bShowBalance && aCreditLoans.length !==0" class="col-sm-4 balance">
@@ -38,7 +38,7 @@
       <div *ngFor="let loan of aCreditLoans" class="row">
         <div class="col-sm-12 row" *ngIf="loan.nLoanBalance >= 0">
           <h3>{{loan.sLoanName}} :</h3>
-          <p class="account-balance"> Rs/- {{loan.nLoanBalance}}</p>
+          <p class="account-balance"> Rs. {{loan.nLoanBalance}}/-</p>
         </div>
       </div>
     </div>
@@ -48,8 +48,8 @@
       <div *ngFor="let type of aSavingType" class="row">
         <div class="col-sm-12 row" *ngIf="type.nDepositAmount >= 0">
           <h3>{{type.sTypeofSavings}} :</h3>
-          <p class="account-balance"> Rs/- {{type.nDepositAmount}}</p>
+          <p class="account-balance"> Rs. {{type.nDepositAmount}}/-</p>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
