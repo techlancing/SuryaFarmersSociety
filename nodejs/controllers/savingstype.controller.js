@@ -18,9 +18,10 @@ const asyncMiddleware = fn =>
 // url: ..../savingstype/add_savingstype
 oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newSavings = new oSavingsTypeModel(oReq.body);
+  console.log('newSavings',newSavings)
   try{
     //checking the savingtype already exists or not
-    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nSavingsId});
+    const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, sTypeofSavings : oReq.body.sTypeofSavings});
     if(!oSavings){
       return  oRes.json("Exists").send();  
     }

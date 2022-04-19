@@ -95,8 +95,11 @@ export class SavingsTypesComponent implements OnInit {
     this.oSavingsTypeModel.sMonthInterestAddDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sMonthInterestAddDate);
     this.oSavingstypeService.fnAddSavingsDepositInfo(this.oSavingsTypeModel).subscribe((data) => {
       console.log(data);
-      this.fnSucessMessage();
-      this.redirectTo('/savingstype');
+      if(data == 'Exists') this.fnWarningMessage();
+      else {
+        this.fnSucessMessage();
+        this.redirectTo('/savingstype');
+      }
     });
   }
   fnSucessMessage() {
@@ -104,6 +107,15 @@ export class SavingsTypesComponent implements OnInit {
       position: 'center',
       icon: 'success',
       title: this.oSavingsTypeModel.sTypeofSavings+' is created sucessfully.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+  fnWarningMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: this.oSavingsTypeModel.sTypeofSavings+' is Already Existed.',
       showConfirmButton: false,
       timer: 1500
     });
