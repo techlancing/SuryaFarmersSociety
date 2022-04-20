@@ -44,7 +44,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     oTransaction.nLoanId = newDebit.nLoanId;
     oTransaction.nCreditAmount = 0;
     oTransaction.nDebitAmount = newDebit.nAmount;
-    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount + newDebit.nAmount) * 100) / 100).toFixed(2);
+    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - newDebit.nAmount) * 100) / 100).toFixed(2);
     oTransaction.sDate = newDebit.sDate;
     oTransaction.sNarration = newDebit.sNarration;
     oTransaction.sAccountType = '';

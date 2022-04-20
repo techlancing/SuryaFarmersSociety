@@ -42,7 +42,7 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
     oTransaction.nLoanId = newCredit.nLoanId;
     oTransaction.nCreditAmount = newCredit.nAmount;
     oTransaction.nDebitAmount = 0;
-    oTransaction.nBalanceAmount = oBalanceAmount - newCredit.nAmount;
+    oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
     oTransaction.sDate = newCredit.sDate;
     oTransaction.sNarration = newCredit.sNarration;
     oTransaction.sAccountType = '';
