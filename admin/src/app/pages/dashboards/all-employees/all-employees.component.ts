@@ -30,21 +30,6 @@ export class AllEmployeesComponent implements OnInit {
   public account : any ;
   public statusUpdate : boolean ;
   public oDropZone: DropzoneComponent;
-  aChairman : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
-  rChairman : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
-  pChairman : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
   // page
   currentpage: number;
   sApproval: boolean;
@@ -52,77 +37,21 @@ export class AllEmployeesComponent implements OnInit {
     private activatedroute : ActivatedRoute) { }
 
   ngOnInit(): void {
-    
-    this.aChairman=[
-      {
-        displayText: 'Approve',
-        value:'approved'
-      },
-      {
-      displayText: 'Reject',
-        value:'rejected'
-      },
-      {
-        displayText: 'Pending',
-          value:'pending'
-      }
-    ];
-
-    this.rChairman =[
-      {
-        displayText: 'Reject',
-        value: 'rejected'
-      },
-      {
-        displayText: 'Pending',
-        value: 'pending'
-      },
-      {
-        displayText: 'Approve',
-        value: 'approved'
-      }
-    ];
-
-    this.pChairman = [
-      {
-        displayText: 'Pending',
-        value: 'pending'
-      },
-      {
-        displayText: 'Approve',
-        value: 'approved'
-      },
-      {
-        displayText: 'Reject',
-        value: 'rejected'
-      }
-    ] ;
     this.breadCrumbItems = [{ label: 'Ecommece' }, { label: 'EndUsers', active: true }];
-    if (this.activatedroute.snapshot.data.type === 'approval') this.sApproval = true ;
-
-    
-
+    if (this.activatedroute.snapshot.data.type === 'approval') {
+      this.sApproval = true;
+      this.oBankEmployeeService.fngetPendingBankEmployeeInfo().subscribe((users: any) => {
+        console.log('users', users);
+        this.aUsers = users;
+      });
+    } else {
+      this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users: any) => {
+        console.log('users', users);
+        this.aUsers = users;
+      });
+    }
     this.currentpage = 1;
-    this.oBankEmployeeService.fngetPendingBankEmployeeInfo().subscribe((users : any)=>{
-      console.log('users',users);
-      this.aUsers = users;
-      if(this.sApproval) {
-        let employees = [];
-        this.aUsers.map((employee) => {
-          if(employee.sStatus == 'pending') employees.push(employee);
-        });
-        this.aUsers = employees;
-      }else {
-        let employees = [];
-        this.aUsers.map((employee) => {
-          if(employee.sStatus !== 'pending') employees.push(employee);
-        });
-        this.aUsers = employees;
-      }
-      
-  });
   this.account = JSON.parse(localStorage.getItem('userData'));
-  
 }
 /**
    * Open modal
