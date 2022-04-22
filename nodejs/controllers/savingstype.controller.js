@@ -22,7 +22,7 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
   try{
     //checking the savingtype already exists or not
     const oSavings = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, sTypeofSavings : oReq.body.sTypeofSavings});
-    if(!oSavings){
+    if(oSavings){
       return  oRes.json("Exists").send();  
     }
     // Save savingstype Info
