@@ -58,7 +58,7 @@
                   <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                   showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                   dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker name="sDate"
-                    class="form-control" [(ngModel)]="oDebitModel.sDate">
+                    class="form-control" [(ngModel)]="oDailySavingsDepositModel.sStartDate">
                 </div>
               </div>
 
@@ -68,14 +68,14 @@
                   <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                   showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                   dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker name="sDate"
-                    class="form-control" [(ngModel)]="oDebitModel.sDate">
+                    class="form-control" [(ngModel)]="oDailySavingsDepositModel.sStartDate">
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="nAmount">Total Amount</label>
-                  <input id="nAmount" name="nAmount" [(ngModel)]="oDebitModel.nAmount" type="number"
+                  <input id="nAmount" name="nAmount" [(ngModel)]="oDailySavingsDepositModel.nAmount" type="number"
                     class="form-control">
                 </div>
               </div>
@@ -83,7 +83,7 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sReceiverName">Received Employee</label>
-                  <ng-select [items]="aUsers" name="sReceiverName" [(ngModel)]="oDebitModel.sReceiverName"
+                  <ng-select [items]="aUsers" name="sReceiverName" [(ngModel)]="oDailySavingsDepositModel.sReceiverName"
                     bindLabel="sEmployeeName" bindValue="sEmployeeName">
                     <ng-template ng-label-tmp let-item="item">
                       {{item.sEmployeeName}}
@@ -95,7 +95,7 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="sNarration">Narration</label>
-                  <input id="sNarration" name="sNarration" [(ngModel)]="oDebitModel.sNarration"
+                  <input id="sNarration" name="sNarration" [(ngModel)]="oDailySavingsDepositModel.sNarration"
                     type="text" class="form-control">
                 </div>
               </div>

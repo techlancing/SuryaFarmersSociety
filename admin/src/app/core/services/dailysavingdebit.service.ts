@@ -37,4 +37,15 @@ export class DailySavingDebitService {
       const sMethodUrl = `${this.sRootUrl}/delete_dailydeposittransaction`;
       return this.http.post(sMethodUrl, oDailyDeposit);
   }
+
+  // savings account deposit and withdrawl 
+  fnAddSavingsDebitInfo(oDailyDeposit: DailySavingDebit) {
+    const sMethodUrl = `${this.sRootUrl}/add_savingstransaction`;
+    return this.http.post(sMethodUrl, oDailyDeposit);
+}
+
+fnWithDrawSavingsInfo(oDailyDeposit: DailySavingDebit) {
+  const sMethodUrl = `${this.sRootUrl}/withdrawl_savingstransaction`;
+  return this.http.post(sMethodUrl, oDailyDeposit);
+}
 }

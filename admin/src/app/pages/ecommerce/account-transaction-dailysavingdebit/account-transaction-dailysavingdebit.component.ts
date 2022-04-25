@@ -282,32 +282,32 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         //   this.nBalance = cdata as number;
         //   if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
         this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-          this.fnSucessMessage();
-          this.redirectTo('/withdrawal');
+          if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
+          else {
+            this.fnSucessMessage();
+            this.redirectTo('/withdrawal');
+          }
+          // this.fnSucessMessage();
+          // this.redirectTo('/withdrawal');
         });
         //   }
         // });
       }
       else {
-        this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
-          console.log("cdata", cdata);
-          this.nBalance = cdata as number;
-          if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
-
-
-            this.oCreditModel.sAccountNo = this.oDailySavingDebitModel.sAccountNo;
-            this.oCreditModel.nLoanId = this.oDailySavingDebitModel.nAccountId;
-            this.oCreditModel.sDate = this.oDailySavingDebitModel.sEndDate;
-            this.oCreditModel.sReceiverName = this.oDailySavingDebitModel.sReceiverName;
-            this.oCreditModel.sNarration = this.oDailySavingDebitModel.sNarration;
-            this.oCreditModel.nAmount = this.oDailySavingDebitModel.nAmount;
-            this.oCreditService.fnAddCreditInfo(this.oCreditModel).subscribe((data) => {
-              //this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-              this.fnSucessMessage();
-              this.redirectTo('/withdrawal');
+        // this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
+        //   console.log("cdata", cdata);
+        //   this.nBalance = cdata as number;
+        //   if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
+            this.oDailySavingDebitModel.sStartDate = this.oDailySavingDebitModel.sEndDate;
+            this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
+              if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
+              else {
+                this.fnSucessMessage();
+                this.redirectTo('/withdrawal');
+              }
             });
-          }
-        });
+        //   }
+        // });
       }
     }
   }
@@ -320,7 +320,15 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       timer: 1500
     });
   }
-
+  fnLowBalanceWarningMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Low balance Amount',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
   fnEnableButton(): void {
     if (this.sSelectedSavingType.length > 0) {

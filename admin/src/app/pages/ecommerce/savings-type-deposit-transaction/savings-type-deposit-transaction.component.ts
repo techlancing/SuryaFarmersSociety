@@ -78,9 +78,12 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     if (this.oSavingsDeposit.transactiontype === 'withdraw') {
       this.oSavingstypeService.fnAddSavingsWithdrawTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
-        this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
-        this.fnSucessMessage();
-        this.redirectTo('/withdrawal');
+        if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
+        else {
+          this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
+          this.fnSucessMessage();
+          this.redirectTo('/withdrawal');
+        } 
       });
     }
   }
@@ -97,6 +100,15 @@ fnSucessMessage() {
     position: 'center',
     icon: 'success',
     title: this.sSuccessMsg,
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
+fnLowBalanceWarningMessage() {
+  Swal.fire({
+    position: 'center',
+    icon: 'warning',
+    title: 'Low balance Amount',
     showConfirmButton: false,
     timer: 1500
   });
