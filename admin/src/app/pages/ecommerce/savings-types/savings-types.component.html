@@ -116,11 +116,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="sMonthInterestAddDate">Every Month Interest Add Date</label>
-                                <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                                <!-- <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                           showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker
                                     name="sMonthInterestAddDate" class="form-control"
-                                    [(ngModel)]="oSavingsTypeModel.sMonthInterestAddDate">
+                                    [(ngModel)]="oSavingsTypeModel.sMonthInterestAddDate"> -->
+                                    <input id="sMonthInterestAddDate" name="sMonthInterestAddDate" [(ngModel)]="oSavingsTypeModel.sMonthInterestAddDate"
+                                    type="text" class="form-control" >
                             </div>
                         </div>
 
@@ -160,11 +162,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="sPensionAmountAddDate">Pension Deposit Interest Add Date</label>
-                                    <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
+                                    <!-- <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
                           showTodayButton: true, todayPosition: 'center',containerClass: 'theme-orange',
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker
                                         name="savingsDepositStartDate" class="form-control"
-                                        [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate">
+                                        [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate"> -->
+                                        <input id="savingsDepositStartDate" name="savingsDepositStartDate" [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate"
+                                    type="text" class="form-control" >
                                 </div>
                             </div>
 
