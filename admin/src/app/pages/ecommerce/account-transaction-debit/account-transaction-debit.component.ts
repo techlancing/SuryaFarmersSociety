@@ -103,6 +103,11 @@ export class AccountTransactionDebitComponent implements OnInit {
       //   let datetoday = `${dd}-${mm}-${yyyy}`;
     // this.oDebitModel.sDate = datetoday.toString();
     this.oDebitModel.sDate= this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
+    if(this.oDebitModel.sDate ==''|| this.oDebitModel.nAmount == null ||
+     this.oDebitModel.sNarration == ''|| this.oDebitModel.sReceiverName == ''){
+       this.fnWarningMessage();
+       return;
+     }
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
@@ -163,7 +168,15 @@ export class AccountTransactionDebitComponent implements OnInit {
       timer: 1500
     });
   }
-
+  fnWarningMessage(){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please fill all the fields',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
  
   /**
    * Open modal
