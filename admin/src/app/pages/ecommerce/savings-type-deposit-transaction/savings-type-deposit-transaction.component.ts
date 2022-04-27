@@ -67,10 +67,16 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     //this.oDailySavingsDepositModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
     if (typeof this.oSavingsDepositModel.sDate === 'object')
       this.oSavingsDepositModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsDepositModel.sDate);
+    if (this.oSavingsDepositModel.sDate == '' || this.oSavingsDepositModel.sAccountNo == '' ||
+      this.oSavingsDepositModel.nAmount == null || this.oSavingsDepositModel.sNarration == '' ||
+      this.oSavingsDepositModel.sReceiverName == '') {
+      this.fnEmptyFieldsMessage();
+      return;
+    }
     if (this.oSavingsDeposit.transactiontype === 'deposit') {
       this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
-        this.sSuccessMsg = 'Amount Successfully Deposited' ;
+        this.sSuccessMsg = 'Amount Successfully Deposited';
         this.fnSucessMessage();
         this.redirectTo('/dailysavingsdeposit');
       });
@@ -78,12 +84,12 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     if (this.oSavingsDeposit.transactiontype === 'withdraw') {
       this.oSavingstypeService.fnAddSavingsWithdrawTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
-        if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
+        if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
         else {
           this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
           this.fnSucessMessage();
           this.redirectTo('/withdrawal');
-        } 
+        }
       });
     }
   }
@@ -94,7 +100,15 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     });
   }
 
-
+  fnEmptyFieldsMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please Fill All the Fields',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
 fnSucessMessage() {
   Swal.fire({
     position: 'center',
