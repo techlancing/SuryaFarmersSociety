@@ -212,32 +212,36 @@ fnDatediff(first, second) {
   
 // }
 
-fnOnDailySavingsDepositInfoSubmit(): void {
-  this.oDailySavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingsDepositModel.sNarration);
+  fnOnDailySavingsDepositInfoSubmit(): void {
+    this.oDailySavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingsDepositModel.sNarration);
     // this.oDebitModel.nDayAmount=this.oDailySavingsDepositModel.nAmount;
-    if(typeof this.oDailySavingsDepositModel.sStartDate === 'object' ){
+    if (typeof this.oDailySavingsDepositModel.sStartDate === 'object') {
       this.oDailySavingsDepositModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oDailySavingsDepositModel.sStartDate);
-     // this.oDebitModel.sStartDate=this.oDebitModel.sEndDate;
-      }
-    
- if(this.bIsDeposit)
-  {
-    this.oDailySavingsDepositService.fnAddSavingsDebitInfo(this.oDailySavingsDepositModel).subscribe((data) => {
-      
-      this.fnSucessMessage();
-      this.redirectTo('/dailysavingsdeposit');
-    });
+      // this.oDebitModel.sStartDate=this.oDebitModel.sEndDate;
+    }
+    if(this.oDailySavingsDepositModel.sStartDate == ''|| this.oDailySavingsDepositModel.nAmount == null 
+    ||this.oDailySavingsDepositModel.sAccountNo == ''|| this.oDailySavingsDepositModel.sReceiverName == ''||
+    this.oDailySavingsDepositModel.sNarration == ''){
+        this.fnEmptyFieldsMessage();
+        return;
+    }
+    if (this.bIsDeposit) {
+      this.oDailySavingsDepositService.fnAddSavingsDebitInfo(this.oDailySavingsDepositModel).subscribe((data) => {
+
+        this.fnSucessMessage();
+        this.redirectTo('/dailysavingsdeposit');
+      });
+    }
+    /*
+    else{
+      this.oDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingsDepositModel).subscribe((data) => {
+        
+        this.fnSucessMessage();
+        this.redirectTo('/withdrawal');
+      });
+    }
+    */
   }
-  /*
-  else{
-    this.oDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingsDepositModel).subscribe((data) => {
-      
-      this.fnSucessMessage();
-      this.redirectTo('/withdrawal');
-    });
-  }
-  */
-}
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
@@ -247,7 +251,15 @@ fnOnDailySavingsDepositInfoSubmit(): void {
       timer: 1500
     });
   }
-
+  fnEmptyFieldsMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please Fill All the Fields',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
   /**
    * Open modal
