@@ -187,6 +187,13 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     this.ointratransactionModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.ointratransactionModel.sDate);
     // this.oBankAccountService.fnGetSingleAccountBalance(this.ointratransactionModel.sSenderAccountNumber).subscribe((cdata) => {
     //   if (cdata && (cdata >= this.ointratransactionModel.nAmount)) {
+    if(this.ointratransactionModel.sDate == '' || this.ointratransactionModel.sRecieverAccountNumber == ''||
+     this.ointratransactionModel.sSenderAccountNumber == ''|| this.ointratransactionModel.sTransactionEmployee == ''||
+     this.ointratransactionModel.nAmount == null ||this.ointratransactionModel.sNarration == ''||
+      this.ointratransactionModel.nSenderAccountId == null||this.ointratransactionModel.nReceiverAccountId == null){
+        this.fnEmptyFieldsMessage()
+        return;
+    }
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);
       if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
@@ -246,11 +253,11 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
      });
    }
  
-   fnEmptyCarNameMessage() {
+   fnEmptyFieldsMessage() {
      Swal.fire({
        position: 'center',
        icon: 'warning',
-       title: 'Please enter a valid Car Name',
+       title: 'Please Fill All the Fields',
        showConfirmButton: false,
        timer: 2000
      });
