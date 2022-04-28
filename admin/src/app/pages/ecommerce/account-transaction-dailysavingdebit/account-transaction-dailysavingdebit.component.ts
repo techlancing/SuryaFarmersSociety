@@ -268,49 +268,64 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     }
 
     if (this.bIsDeposit) {
+      if (this.oDailySavingDebitModel.sAccountNo == '' || this.oDailySavingDebitModel.sStartDate == '' ||
+        this.oDailySavingDebitModel.sEndDate == '' || this.oDailySavingDebitModel.nDayAmount == null ||
+        this.oDailySavingDebitModel.nAmount == null || this.oDailySavingDebitModel.nTotaldays == null ||
+        this.oDailySavingDebitModel.sNarration == '' || this.oDailySavingDebitModel.sReceiverName == '') {
+        this.fnEmptyFieldsMessage();
+        return;
+      }
       this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-
         this.fnSucessMessage();
-        // this.fnLoadTransactionsAfterSuccess();
         this.redirectTo('/dailysavingdebit');
       });
     }
     else {
       if (this.activatedroute.snapshot.data.type === 'depositwithdrawl') {
-        // this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
-        //   console.log("cdata", cdata);
-        //   this.nBalance = cdata as number;
-        //   if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
+        if (this.oDailySavingDebitModel.sAccountNo == '' || this.oDailySavingDebitModel.sEndDate == '' ||
+          this.oDailySavingDebitModel.nAmount == null || this.oDailySavingDebitModel.sNarration == '' ||
+          this.oDailySavingDebitModel.sReceiverName == '') {
+          this.fnEmptyFieldsMessage();
+          return;
+        }
+        
         this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-          if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
+          if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
           else {
             this.fnSucessMessage();
             this.redirectTo('/withdrawal');
           }
-          // this.fnSucessMessage();
-          // this.redirectTo('/withdrawal');
         });
-        //   }
-        // });
       }
       else {
-        // this.oBankAccountService.fnGetSingleAccountBalance(this.oDailySavingDebitModel.sAccountNo).subscribe((cdata) => {
-        //   console.log("cdata", cdata);
-        //   this.nBalance = cdata as number;
-        //   if (this.nBalance && (this.nBalance >= this.oDailySavingDebitModel.nAmount)) {
-            this.oDailySavingDebitModel.sStartDate = this.oDailySavingDebitModel.sEndDate;
-            this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
-              if(data == 'Low Balance') this.fnLowBalanceWarningMessage();
-              else {
-                this.fnSucessMessage();
-                this.redirectTo('/withdrawal');
-              }
-            });
-        //   }
-        // });
+        this.oDailySavingDebitModel.sStartDate = this.oDailySavingDebitModel.sEndDate;
+        if (this.oDailySavingDebitModel.sAccountNo == '' || this.oDailySavingDebitModel.sStartDate == '' ||
+        this.oDailySavingDebitModel.nAmount == null  || this.oDailySavingDebitModel.sNarration == '' ||
+         this.oDailySavingDebitModel.sReceiverName == '') {
+        this.fnEmptyFieldsMessage();
+        return;
+      }
+        this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
+          if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
+          else {
+            this.fnSucessMessage();
+            this.redirectTo('/withdrawal');
+          }
+        });
       }
     }
   }
+
+  fnEmptyFieldsMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please Fill All the Fields',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+
   fnSucessMessage() {
     Swal.fire({
       position: 'center',
@@ -381,6 +396,5 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.oDailySavingDebitModel.nAccountId = this.oSavingsDeposit.nSavingsId;
     })
   }
-
 }
 
