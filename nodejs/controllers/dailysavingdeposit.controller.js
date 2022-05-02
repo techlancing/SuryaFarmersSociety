@@ -58,7 +58,8 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       oTransaction.sNarration = oReq.body.sNarration;
       oTransaction.sAccountType = oSavings.sTypeofSavings;//'Savings Account';
       oTransaction.sEmployeeName = oReq.body.sReceiverName;
-
+      oTransaction.sIsApproved = 'Pending';
+      
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
@@ -176,6 +177,7 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
       oTransaction.sNarration = oReq.body.sNarration;
       oTransaction.sAccountType = oSavings.sTypeofSavings;
       oTransaction.sEmployeeName = oReq.body.sReceiverName;
+      oTransaction.sIsApproved = 'Pending';
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
@@ -280,6 +282,8 @@ oDailyDepositRouter.post("/add_savingstransaction", oAuthentication, asyncMiddle
     oTransaction.sNarration = oReq.body.sNarration;
     oTransaction.sAccountType = 'Savings Account';
     oTransaction.sEmployeeName = oReq.body.sReceiverName;
+    oTransaction.sIsApproved = 'Pending';
+    
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
 
@@ -334,6 +338,7 @@ oDailyDepositRouter.post("/withdrawl_savingstransaction", oAuthentication, async
       oTransaction.sNarration = oReq.body.sNarration;
       oTransaction.sAccountType = 'Savings Account';
       oTransaction.sEmployeeName = oReq.body.sReceiverName;
+      oTransaction.sIsApproved = 'Pending';
 
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();

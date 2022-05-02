@@ -89,4 +89,24 @@ oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMi
   }
 }));
 
+// url: ..../transaction/settransactionapprovalstatus
+oCreditLoanRouter.post("/settransactionapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    
+    let oTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
+    if(!oTransaction){
+      return oRes.status(400).send();
+    }
+    await oTransactionModel.findByIdAndUpdate(oTransaction._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    oRes.json("Success");  
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
+
+
+
 module.exports = oTransactionRouter;

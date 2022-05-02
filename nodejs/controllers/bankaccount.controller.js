@@ -7,7 +7,7 @@ var fs = require('fs');
 
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oImageModel = require("../data_base/models/image.model");
-const oTransactionModel = require("../data_base/models/transaction.model");
+const oTransactionModel = require("../data_base/models/");
 const oAuthentication = require("../middleware/authentication");
 
 
@@ -93,7 +93,8 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
     oTransaction.sDate = newbankaccount.sDate;
     oTransaction.sNarration = "NewAccountCreated";
     oTransaction.sAccountType = 'Savings Account';
-    oTransaction.sEmployeeName = newbankaccount.sEmployeeName;  
+    oTransaction.sEmployeeName = newbankaccount.sEmployeeName;
+    oTransaction.sIsApproved = 'Pending';
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

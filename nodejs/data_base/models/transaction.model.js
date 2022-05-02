@@ -34,6 +34,10 @@ var oTransactionSchema = new oSchema({
    sAccountType: { 
     type: String,
     trim: true
+   },
+   sIsApproved: { 
+    type: String,
+    trim: true
    }
    
 });

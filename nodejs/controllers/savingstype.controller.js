@@ -39,8 +39,9 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
     oTransaction.sNarration = newSavings.sTypeofSavings;
     oTransaction.sAccountType = newSavings.sTypeofSavings;
     oTransaction.sEmployeeName = newSavings.sEmployeeName;
-
-
+    oTransaction.sIsApproved = 'Pending';
+    
+    
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
 
@@ -89,7 +90,8 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     oTransaction.sNarration = oReq.body.sNarration;
     oTransaction.sEmployeeName = oReq.body.sReceiverName;
     oTransaction.sAccountType = oSavings.sTypeofSavings;
-
+    oTransaction.sIsApproved = 'Pending';
+    
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();
 
@@ -179,6 +181,7 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
       oTransaction.sNarration = oReq.body.sNarration;
       oTransaction.sEmployeeName = oReq.body.sReceiverName;
       oTransaction.sAccountType = oSavings.sTypeofSavings;
+      oTransaction.sIsApproved = 'Pending';
 
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();

@@ -49,6 +49,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     oTransaction.sNarration = newDebit.sNarration;
     oTransaction.sAccountType = '';
     oTransaction.sEmployeeName = newDebit.sReceiverName;
+    oTransaction.sIsApproved = 'Pending';
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

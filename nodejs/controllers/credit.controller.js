@@ -46,7 +46,8 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
     oTransaction.sDate = newCredit.sDate;
     oTransaction.sNarration = newCredit.sNarration;
     oTransaction.sAccountType = '';
-    oTransaction.sEmployeeName = newCredit.sReceiverName;  
+    oTransaction.sEmployeeName = newCredit.sReceiverName;
+    oTransaction.sIsApproved = 'Pending';
     
     const newTransaction = new oTransactionModel(oTransaction);
     await newTransaction.save();

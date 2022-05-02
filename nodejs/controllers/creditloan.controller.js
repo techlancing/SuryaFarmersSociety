@@ -3,7 +3,7 @@ const oMongoose = require('mongoose');
 const http = require('https');
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
-const oTransactionModel = require("../data_base/models/transaction.model");
+const oTransactionModel = require("../data_base/models/");
 const oAuthentication = require("../middleware/authentication");
 
 const oCreditLoanRouter = oExpress.Router();
@@ -33,6 +33,7 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
     oTransaction.sNarration = newCreditLoan.sTypeofLoan;
     oTransaction.sAccountType = newCreditLoan.sTypeofLoan;
     oTransaction.sEmployeeName = newCreditLoan.sEmployeeName;
+    oTransaction.sIsApproved = 'Pending';
     
     
     const newTransaction = new oTransactionModel(oTransaction);

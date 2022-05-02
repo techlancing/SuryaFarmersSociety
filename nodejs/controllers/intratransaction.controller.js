@@ -56,6 +56,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
         oTransaction.sDate = oReq.body.sDate;
         oTransaction.sNarration = oReq.body.sNarration;
         oTransaction.sEmployeeName = oReq.body.sTransactionEmployee;
+        oTransaction.sIsApproved = 'Pending';
 
         try {
           if (oReq.body.sRecieverAccountType == 'savings')    // savings account
@@ -168,6 +169,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
         oTransactionInfo.sNarration = oReq.body.sNarration;
         oTransactionInfo.sEmployeeName = 'Savings Account';
         oTransactionInfo.sEmployeeName = oReq.body.sTransactionEmployee;
+        oTransactionInfo.sIsApproved = 'Pending';
 
         const newTransaction = new oTransactionModel(oTransactionInfo);
         await newTransaction.save();
