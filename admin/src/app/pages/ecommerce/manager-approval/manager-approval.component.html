@@ -18,12 +18,13 @@
                 <tr>
                   <th class="mwidth">Account Number</th>
                   <th class="nwidth">{{sTableContent}} Name</th>
-                  <th class="mwidth">Start Date</th>
+                  <th class="mwidth" *ngIf="sTableContent === 'Saving Deposits' || sTableContent === 'Loan'">Start Date</th>
                   <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maurity Date</th>
                   <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Deposited Amount</th>
                   <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
+                  <th *ngIf="sTableContent === 'Credit'">Total Amount</th>
                   <!-- <th>Maturity Date</th> -->
                  <th class="swidth">Approved Status</th>
                  <th>Actions</th>
@@ -35,6 +36,7 @@
                   <td>{{approval.sAccountNo}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.sTypeofLoan}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sTypeofSavings}}</td>
+                  <td *ngIf="sTableContent === 'Credit'">{{approval.sAccountType}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.sDate}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sStartDate}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sMaturityDate}}</td>
@@ -44,6 +46,7 @@
                   <td *ngIf="sTableContent === 'Loan'">{{approval.nTotalAmount}}</td>
                   <!-- <td>{{approval.sMobileNumber}}</td>
                   <td>{{approval.sJoiningDate}}</td> -->
+                  <td><label for="amount-for-transaction" *ngIf="sTableContent === 'Credit'">{{approval.nDebitAmount}}</label></td>
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
                   <td class="buttonDisplay actions">
                     <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 

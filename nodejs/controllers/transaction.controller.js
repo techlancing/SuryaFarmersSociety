@@ -72,11 +72,29 @@ oTransactionRouter.get("/Transaction_list", oAuthentication, asyncMiddleware(asy
     }
 }));
 
-// url: ..../transaction/gettransactionsbetweendates
-oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+
+
+// url: ..../Transaction/Need_to_approve_Transaction_list
+oTransactionRouter.get("/Need_to_approve_Transaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    const oAllTransactions = await oTransactionModel.find({ sDate:{ $gte: oReq.body.from_date,
-    $lte: oReq.body.to_date} });
+    const oAllTransactions = await oTransactionModel.find({sIsApproved : 'Pending'});
+    console.log("transactions",oAllTransactions)
+ 
+    if(!oAllTransactions){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oAllTransactions);
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+// url: ..../Transaction/approved_Transaction_list
+oTransactionRouter.get("/approved_Transaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oAllTransactions = await oTransactionModel.find({nLoanId: newTransaction.nLoanId, sIsApproved : 'Approved'});
 
     if(!oAllTransactions){
       return oRes.status(400).send();
@@ -89,11 +107,37 @@ oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMi
   }
 }));
 
+
+
+
+
+
+
+
+// url: ..../transaction/gettransactionsbetweendates
+oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    const oAllTransactions = await oTransactionModel.find({ sDate:{ $gte: oReq.body.from_date,
+    $lte: oReq.body.to_date} , sIsApproved : 'Approved' });
+
+    if(!oAllTransactions){
+      return oRes.status(400).send();
+    }
+
+    oRes.json(oAllTransactions);
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
 // url: ..../transaction/settransactionapprovalstatus
-oCreditLoanRouter.post("/settransactionapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     
     let oTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
+    console.log("transaction",oTransaction)
     if(!oTransaction){
       return oRes.status(400).send();
     }
@@ -105,8 +149,5 @@ oCreditLoanRouter.post("/settransactionapprovalstatus", oAuthentication, asyncMi
     oRes.status(400).send(e);
   }  
 }));
-
-
-
 
 module.exports = oTransactionRouter;

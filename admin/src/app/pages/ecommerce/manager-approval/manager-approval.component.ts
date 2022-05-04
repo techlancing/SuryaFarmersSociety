@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 import { CreditLoanService } from 'src/app/core/services/creditloan.service';
+import {TransactionService} from 'src/app/core/services/transaction.service';
+import {Transaction} from 'src/app/core/models/transaction.model';
 import { SavingsType } from 'src/app/core/models/savingstype.model';
 import Swal from 'sweetalert2';
 
@@ -15,11 +17,12 @@ export class ManagerApprovalComponent implements OnInit {
   breadCrumbItems : Array<any>;
   aApprovals: any = [];
   sTableContent : string ;
+  oTransactionModel : Transaction ;
   
   constructor(private oSavingstypeService : SavingstypeService,
     public activatedroute : ActivatedRoute,
     private oCreditLoanService : CreditLoanService,
-    private router : Router) { }
+    private router : Router, private oTransactionService : TransactionService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Approvals' }, { label: 'transactions', active: true }];
@@ -55,6 +58,11 @@ export class ManagerApprovalComponent implements OnInit {
   //   });
   // }
   fnGetCreditApprovals(){
+    this.oTransactionService.fngetNeedToApproveTransactionInfo().subscribe((data) =>{
+      this.aApprovals = data as any;
+      this.oTransactionModel = new Transaction()
+      console.log(data);
+    });
 
   }
   fnChangeApprovalStatus(approval : any,status : string){
@@ -66,8 +74,11 @@ export class ManagerApprovalComponent implements OnInit {
       });
     }
     else if (this.activatedroute.snapshot.data.type === 'credit'){
-      this.fnSuccessMessage('Credit Transaction Status Changed Successfully');
-      this.redirectTo('/savingsapproval');
+      approval.sIsApproved = status ;
+      this.oTransactionService.fnChangeApprovedStatus(approval).subscribe((data) => {
+       this.fnSuccessMessage('Credit Transaction Status Changed Successfully');
+       this.redirectTo('/creditapproval');
+      });
     }
     else {
       approval.sIsApproved = status ;
@@ -100,8 +111,8 @@ export class ManagerApprovalComponent implements OnInit {
       amount = approval.nMaturityAmount;
    }
    else if(this.activatedroute.snapshot.data.type === 'credit'){
-    name = approval.sTypeofSavings;
-    amount = approval.nMaturityAmount;
+    name = approval.sAccountType;
+    amount = approval.nDebitAmount;
    }
    else {
     name = approval.sTypeofLoan;

@@ -7,7 +7,7 @@ var fs = require('fs');
 
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oImageModel = require("../data_base/models/image.model");
-const oTransactionModel = require("../data_base/models/");
+const oTransactionModel = require("../data_base/models/transaction.model");
 const oAuthentication = require("../middleware/authentication");
 
 
