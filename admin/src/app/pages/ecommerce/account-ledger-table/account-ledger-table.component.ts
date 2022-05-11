@@ -62,21 +62,26 @@ export class AccountLedgerTableComponent implements OnInit {
   }
   fnPrintPdfSavingsAccount(Account,type): void {
     let data = document.getElementById(type);
+    data.classList.add("pdfstyle");
     this.bVisiblePdf = false;
     this.bVisibleLoan = false;
       let pdf = new jsPDF({
-        orientation: 'l',
-        unit: 'pt',
+        orientation: 'p',
+        unit: 'px',
         format: 'a4',  
         putOnlyUsedFonts:false
        });
        //putOnlyUsedFonts:true
-      pdf.setFontSize(5);
+      pdf.setFontSize(1);
       pdf.html(data,{
         callback: function (doc) {
           doc.save(Account+"-"+type+'.pdf');
-         
-        }
+          data.classList.remove("pdfstyle");
+        },
+        margin:[10,0,10,0],
+        autoPaging:'text',
+        width:450,
+        windowWidth:450
       });
       this.ngOnInit();
   }
