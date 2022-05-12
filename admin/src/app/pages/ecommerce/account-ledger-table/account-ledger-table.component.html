@@ -1,5 +1,5 @@
 <div id="{{type}}" class="adjustlines">
-  <div class="row" *ngIf="bVisiblePdf" >
+  <div class="row accountDetails" *ngIf="bVisiblePdf" >
     <!-- <div class="row col-sm-12" >
       <div class="col-sm-6">
         <div class="form-group">
@@ -122,7 +122,7 @@
 
 
 <h2 *ngIf="bVisibleLoan" style="margin-top: 75px;">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
-  <div class="row col-sm-12" *ngIf="bVisibleLoan">
+  <div class="row col-sm-12 accountDetails" *ngIf="bVisibleLoan">
     <div class="col-sm-3">
       <div class="form-group">
         <label for="sDate">Loan Issue Date:</label>
@@ -190,7 +190,7 @@
 'adjustlines7': lineDecide == 8,'adjustlines8': lineDecide == 9,'adjustlines9': lineDecide == 10,'adjustlines10': lineDecide == 11,
 'adjustlines11': lineDecide == 12,'adjustlines12': lineDecide == 13,'adjustlines13': lineDecide == 14,'adjustlines14': lineDecide == 15,
 'adjustlines15': lineDecide == 16,'adjustlines16': lineDecide == 17,'adjustlines17': lineDecide == 0}">
-    <h4 [ngClass]="{'notvisible' : bNotPrintHead }">Account Ledger</h4>
+    <h4 class="ledgerString" [ngClass]="{'notvisible' : bNotPrintHead }">Account Ledger</h4>
     <div class="row tableheader" [ngClass]="{'notvisible' : bNotPrintHead }">
       <div class="col-1 notvisible" *ngIf="bPrintLine">
         <div class="form-group">

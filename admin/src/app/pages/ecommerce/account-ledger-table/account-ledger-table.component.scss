@@ -11,6 +11,10 @@
    font-size: 8px;
    font-weight: normal;
 }
+.pdfstyle .ledgerString{
+   font-size: 12px;
+}
+
 .pdfstyle .form-group{
    margin-bottom: 0!important;
 }
@@ -133,4 +137,7 @@ tr.imagewidth{
 .signWidth{
    width : 100px;
    height: 80px;
+}
+.accountDetails{
+   font-size: 8px;
 }
