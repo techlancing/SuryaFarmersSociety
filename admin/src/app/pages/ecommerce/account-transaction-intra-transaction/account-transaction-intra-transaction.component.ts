@@ -262,6 +262,10 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
        timer: 2000
      });
    }
+
+   fnClear(){
+    this.redirectTo('/intratransaction');
+   }
    fnOnUpdateNarration(){
     this.ointratransactionModel.sNarration=`From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`;
    }
