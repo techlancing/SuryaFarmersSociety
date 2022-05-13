@@ -150,7 +150,7 @@
             <div class="col-sm-8 add-category-btn-container">
               <button type="submit" class="btn btn-primary mr-1"
                 [disabled]="bIsAddActive || bIsEditActive">{{sButtonText}}</button>
-              <button type="button" class="btn btn-secondary">Clear</button>
+              <button type="button" class="btn btn-secondary" (click)="fnClear()">Clear</button>
             </div>
           </div>
         </div>

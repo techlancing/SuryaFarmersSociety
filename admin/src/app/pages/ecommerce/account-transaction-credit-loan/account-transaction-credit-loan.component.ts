@@ -263,7 +263,20 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     });
   }
 
-
+  fnClear(){
+   // this.oCreditLoanModel.sAccountNo = '';
+    this.oCreditLoanModel.sDate = '';
+    this.oCreditLoanModel.sEndofLoanDate = '';
+    this.oCreditLoanModel.nSanctionAmount = null;
+    this.oCreditLoanModel.nIntrest = null;
+    this.oCreditLoanModel.nLoanDays = null;
+    this.oCreditLoanModel.nTotalAmount = null;
+    this.oCreditLoanModel.sInstallmentType = '';
+    this.oCreditLoanModel.sTypeofLoan = '';
+    this.oCreditLoanModel.nInstallmentAmount = null;
+    this.oCreditLoanModel.nLetPenaltyPercentage = null;
+    this.oCreditLoanModel.sEmployeeName = '';
+  }
   // fnEditSucessMessage() {
   //   Swal.fire({
   //     position: 'center',

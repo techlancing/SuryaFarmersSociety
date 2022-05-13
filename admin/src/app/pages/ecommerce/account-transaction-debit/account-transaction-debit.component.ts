@@ -137,7 +137,6 @@ export class AccountTransactionDebitComponent implements OnInit {
   }
 
   fnFecthLoanData() : void{
-    
     this.aCreditLoan.map((loan : CreditLoan,index)=>{
       if(loan.nLoanId === this.oDebitModel.nLoanId){
         this.nActiveLoanIndex = index;
@@ -177,7 +176,12 @@ export class AccountTransactionDebitComponent implements OnInit {
       timer: 1500
     });
   }
- 
+  fnClear(){
+    this.oDebitModel.sDate = '';
+    this.oDebitModel.nAmount = null;
+    this.oDebitModel.sNarration = '';
+    this.oDebitModel.sReceiverName = '';
+  }
   /**
    * Open modal
    * @param content modal content
