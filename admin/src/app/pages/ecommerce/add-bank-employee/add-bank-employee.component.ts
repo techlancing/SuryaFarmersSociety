@@ -299,7 +299,31 @@ aBankEmployees: Array<BankEmployee>;
     });
   }
 
-
+  fnClear(){
+    this.oBankEmployeeModel.nEmployeeID  = '';
+    this.oBankEmployeeModel.sAccountNo = null;
+    this.oBankEmployeeModel.sEmployeeName = '';
+    this.oBankEmployeeModel.sReligion = '';
+    this.oBankEmployeeModel.sNationality  = '';
+    this.oBankEmployeeModel.sSpeakLanguage = '';
+    this.oBankEmployeeModel.sFatherOrHusbandName = '';
+    this.oBankEmployeeModel.sMotherName = '';        
+    this.oBankEmployeeModel.sMobileNumber  = '';
+    this.oBankEmployeeModel.sEmployeeCallLetterID = '';
+    this.oBankEmployeeModel.sCallLetterIssuedDate = '';
+    this.oBankEmployeeModel.sAppointmentType = '';
+    this.oBankEmployeeModel.sDesignation = '';
+    this.oBankEmployeeModel.sIFSCCode = '';
+    this.oBankEmployeeModel.sBranchName = '';
+    this.oBankEmployeeModel.sPlace = '';
+    this.oBankEmployeeModel.sAadharNo = '';
+    this.oBankEmployeeModel.sJoiningDate= ''
+    // this.oBankEmployeeModel.oPassportImageInfo = null ;
+    // this.oBankEmployeeModel.oAadharUpload = null ;
+    // this.oBankEmployeeModel.oBankPassBookUpload = null ;
+    // this.oBankEmployeeModel.oCallLetterUpload = null ;
+    // this.oBankEmployeeModel.oEmployeePhotoUpload = null
+  }
   // fnEditSucessMessage() {
   //   Swal.fire({
   //     position: 'center',
