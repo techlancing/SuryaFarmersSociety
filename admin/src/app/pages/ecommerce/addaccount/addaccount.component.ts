@@ -438,6 +438,43 @@ export class AddaccountComponent implements OnInit {
       timer: 1500
     });
   }
+  fnClear(){
+    // this.oBankAccountModel.sState = '';
+    // this.oBankAccountModel.nDistrictId = null ; 
+    // this.oBankAccountModel.nMandalId = null ; 
+    // this.oBankAccountModel.nVillageId = null ; 
+    this.oBankAccountModel.sDate = '' ; 
+    this.oBankAccountModel.sApplicantName = '' ;
+    this.oBankAccountModel.sApplicantSurName = '' ;
+    this.oBankAccountModel.sGender = '' ;
+    this.oBankAccountModel.sDOB = '' ;
+    this.oBankAccountModel.sAge = '' ;
+    this.oBankAccountModel.sAccountType = '' ;
+    this.oBankAccountModel.sAccountCategory = '' ;
+    this.oBankAccountModel.sShareType = '' ;
+    this.oBankAccountModel.sSMSAlert = '' ;
+    this.oBankAccountModel.sFatherOrHusbandName = '' ;
+    this.oBankAccountModel.sMotherName = '' ;
+    this.oBankAccountModel.sNomineeName = '' ;
+    this.oBankAccountModel.sVoterIdNo = '' ;
+    this.oBankAccountModel.sAadharNo = '' ;
+    this.oBankAccountModel.sRationCardNo = '' ;
+    this.oBankAccountModel.sFlatNo = '' ;
+    this.oBankAccountModel.sStreetName = '' ;
+    this.oBankAccountModel.sVillageAddress = '' ;
+    this.oBankAccountModel.sMandalAddress = '' ;
+    this.oBankAccountModel.sDistrictAddress = '' ;
+    this.oBankAccountModel.sPinCode = '' ;
+    this.oBankAccountModel.sMobileNumber = '' ;
+    this.oBankAccountModel.sEmail = '' ;
+    this.oBankAccountModel.nAmount = null ;
+    this.oBankAccountModel.sEmployeeName = '';
+    this.oBankAccountModel.oDocument1Info = null ;
+    this.oBankAccountModel.oDocument2Info = null ;
+    this.oBankAccountModel.oPassportImageInfo = null ;
+    this.oBankAccountModel.oSignature1Info = null ;
+    this.oBankAccountModel.oSignature2Info = null
+  }
   /**
    * Open modal
    * @param content modal content

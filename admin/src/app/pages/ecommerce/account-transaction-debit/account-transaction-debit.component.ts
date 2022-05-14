@@ -93,21 +93,17 @@ export class AccountTransactionDebitComponent implements OnInit {
   }
 
   fnOnDebitInfoSubmit(): void {
+    if(
+      this.oDebitModel.sDate == ''||
+      this.oDebitModel.nAmount == null ||
+      this.oDebitModel.sNarration == '' ||
+      this.oDebitModel.sReceiverName == ''
+    ){
+      this.fnWarningMessage();
+      return;
+    }
     this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
-     //this.bIsAddActive = true;
-     // let today = new Date();
-    // let dd = String(today.getDate()).padStart(2, '0');
-     // let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-     // let yyyy = today.getFullYear();
-
-      //   let datetoday = `${dd}-${mm}-${yyyy}`;
-    // this.oDebitModel.sDate = datetoday.toString();
     this.oDebitModel.sDate= this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
-    if(this.oDebitModel.sDate ==''|| this.oDebitModel.nAmount == null ||
-     this.oDebitModel.sNarration == ''|| this.oDebitModel.sReceiverName == ''){
-       this.fnWarningMessage();
-       return;
-     }
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
