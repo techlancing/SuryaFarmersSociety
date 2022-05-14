@@ -115,12 +115,16 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         value:'03'
       },
       {
-        displayText: 'Half-Yearly',
+        displayText: 'Quarterly',
         value:'04'
       },
       {
-        displayText: 'Yearly',
+        displayText: 'Half-Yearly',
         value:'05'
+      },
+      {
+        displayText: 'Yearly',
+        value:'06'
       }
     ];
 
@@ -150,7 +154,26 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
   fnOnCreditLoanInfoSubmit(): void {
     //this.bIsAddActive = true;
-
+    if(
+      this.oCreditLoanModel.sAccountNo == '' ||
+        this.oCreditLoanModel.nLoanId == null ||
+        this.oCreditLoanModel.nSanctionAmount == null ||
+        this.oCreditLoanModel.nIntrest == null ||
+        this.oCreditLoanModel.nLoanMonths == null ||
+        this.oCreditLoanModel.nLoanDays == null ||
+        this.oCreditLoanModel.nTotalAmount == null ||
+        this.oCreditLoanModel.sDate == '' ||        
+        this.oCreditLoanModel.sTypeofLoan == '' ||
+        this.oCreditLoanModel.sInstallmentType == '' ||
+       // this.oCreditLoanModel.nLoanRepaymentPeriod == null ||
+        this.oCreditLoanModel.nInstallmentAmount == null || 
+        this.oCreditLoanModel.sEndofLoanDate == '' ||       
+        this.oCreditLoanModel.nLetPenaltyPercentage == null ||        
+        this.oCreditLoanModel.sEmployeeName == '' 
+    ){
+      this.fnWarningMessage();
+      return ;
+    }
     this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
     this.oCreditLoanModel.sEndofLoanDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sEndofLoanDate);//new Date(this.oCreditLoanModel.sEndofLoanDate).toISOString().split('T')[0].split("-").reverse().join("-");
 
@@ -228,6 +251,9 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         else if(this.oCreditLoanModel.sInstallmentType==='Weekly') {
           this.oCreditLoanModel.nInstallmentAmount = Math.round(this.oCreditLoanModel.nTotalAmount/(this.oCreditLoanModel.nLoanDays/7) * 100)/100;
         }
+        else if(this.oCreditLoanModel.sInstallmentType==='Quarterly') {
+          this.oCreditLoanModel.nInstallmentAmount = Math.round((this.oCreditLoanModel.nTotalAmount / this.nMonths)*3* 100)/100;
+        }
         else if(this.oCreditLoanModel.sInstallmentType==='Half-Yearly') {
           this.oCreditLoanModel.nInstallmentAmount = Math.round((this.oCreditLoanModel.nTotalAmount / this.nMonths)*6* 100)/100;
         }
@@ -253,13 +279,13 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     });
   }
 
-  fnEmptyCarNameMessage() {
+  fnWarningMessage() {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please enter a valid Car Name',
+      title: 'Please Fill All the Fields',
       showConfirmButton: false,
-      timer: 2000
+      timer: 1500
     });
   }
 
@@ -277,15 +303,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     this.oCreditLoanModel.nLetPenaltyPercentage = null;
     this.oCreditLoanModel.sEmployeeName = '';
   }
-  // fnEditSucessMessage() {
-  //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: 'Car is updated sucessfully.',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   });
-  // }
+
   /**
    * Open modal
    * @param content modal content
