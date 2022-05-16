@@ -257,6 +257,16 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   }
 
   fnOnDailySavingDebitInfoSubmit(): void {
+    
+    // if(
+    //   this.oDailySavingDebitModel.sAccountNo == '' ||
+    //     this.oDailySavingDebitModel.nAmount == null ||
+    //     this.oDailySavingDebitModel.sReceiverName == '' ||
+    //     this.oDailySavingDebitModel.sNarration == '' 
+    // ){
+    //   this.fnWarningMessage();
+    //   return ;
+    // }
     this.oDailySavingDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDailySavingDebitModel.sNarration);
     //this.bIsAddActive = true;
     if (typeof this.oDailySavingDebitModel.sStartDate === 'object') {
@@ -345,6 +355,16 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     });
   }
 
+  fnWarningMessage() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Please Fill All the Fields',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
   fnEnableButton(): void {
     if (this.sSelectedSavingType.length > 0) {
       this.bIsBtnActive = true;
@@ -373,6 +393,30 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
           this.redirectTo("/savingstypedeposittransaction");
         }
       });
+    }
+  }
+  fnClear(){
+    if (this.activatedroute.snapshot.data.type === 'deposit') {
+      this.oDailySavingDebitModel.sStartDate = '';
+      this.oDailySavingDebitModel.sEndDate = '';
+      this.oDailySavingDebitModel.nTotaldays = null ;
+      this.oDailySavingDebitModel.nDayAmount = null ;
+      this.oDailySavingDebitModel.nAmount =  null ;
+      this.oDailySavingDebitModel.sReceiverName =  '' ;
+      this.oDailySavingDebitModel.sNarration =  '' ;
+    }
+    else if(this.activatedroute.snapshot.data.type === 'depositwithdrawl'){
+      this.oDailySavingDebitModel.sEndDate = '';
+      this.oDailySavingDebitModel.nAmount =  null ;
+      this.oDailySavingDebitModel.sReceiverName =  '' ;
+      this.oDailySavingDebitModel.sNarration =  '' ;
+    }
+    else {
+      this.oDailySavingDebitModel.sStartDate = '';
+      this.oDailySavingDebitModel.sEndDate = '';
+      this.oDailySavingDebitModel.nAmount =  null ;
+      this.oDailySavingDebitModel.sReceiverName =  '' ;
+      this.oDailySavingDebitModel.sNarration =  '' ;
     }
   }
   /**
