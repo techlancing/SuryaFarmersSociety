@@ -44,9 +44,7 @@
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.nMaturityAmount}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.nSanctionAmount}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.nTotalAmount}}</td>
-                  <!-- <td>{{approval.sMobileNumber}}</td>
-                  <td>{{approval.sJoiningDate}}</td> -->
-                  <td><label for="amount-for-transaction" *ngIf="sTableContent === 'Credit'">{{approval.nDebitAmount}}</label></td>
+                  <td *ngIf="sTableContent === 'Credit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td>
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
                   <td class="buttonDisplay actions">
                     <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 
