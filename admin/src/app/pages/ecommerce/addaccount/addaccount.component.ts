@@ -86,8 +86,8 @@ export class AddaccountComponent implements OnInit {
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 100,
-  maxFiles: 1
+  maxFilesize: 2,
+  maxFiles: 1,
   };
 
   // bread crumb items
@@ -474,6 +474,12 @@ export class AddaccountComponent implements OnInit {
     this.oBankAccountModel.oPassportImageInfo = null ;
     this.oBankAccountModel.oSignature1Info = null ;
     this.oBankAccountModel.oSignature2Info = null
+    this.oPhotoDropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oSignature1DropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oSignature2DropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oDocument1DropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oDocument2DropZone.directiveRef.dropzone().removeAllFiles(true);
+   
   }
   /**
    * Open modal
