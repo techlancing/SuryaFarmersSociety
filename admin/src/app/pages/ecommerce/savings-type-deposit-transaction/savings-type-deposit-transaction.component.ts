@@ -94,6 +94,13 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     }
   }
 
+  fnClear(){
+    this.oSavingsDepositModel.sDate = '';
+    this.oSavingsDepositModel.nAmount = null ;
+    this.oSavingsDepositModel.sReceiverName ='';
+    this.oSavingsDepositModel.sNarration = '';
+  }
+
   fnFecthAccountDetails(): void{
     this.oBankAccountService.fngetBankAccountInfoByNumber(this.oSavingsDeposit.sAccountNo).subscribe((data) => {
       this.oAccountprintmodel = data as any;
