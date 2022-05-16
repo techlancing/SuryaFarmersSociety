@@ -31,8 +31,14 @@ aBankEmployees: Array<BankEmployee>;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
-  @ViewChild('addcardropzoneElem')
-  public oDropZone: DropzoneComponent;
+  @ViewChild('addphotoropzoneElem')
+  public oPhotoDropZone: DropzoneComponent;
+  @ViewChild('addpassbookropzoneElem')
+  public oBankPassBookDropZone: DropzoneComponent;
+  @ViewChild('addcallletterropzoneElem')
+  public oCallLetterDropZone: DropzoneComponent;
+  @ViewChild('addaadharropzoneElem')
+  public oAadharDropZone: DropzoneComponent;
   aState : Array<
   {
     displayText:string,
@@ -318,11 +324,15 @@ aBankEmployees: Array<BankEmployee>;
     this.oBankEmployeeModel.sPlace = '';
     this.oBankEmployeeModel.sAadharNo = '';
     this.oBankEmployeeModel.sJoiningDate= ''
-    // this.oBankEmployeeModel.oPassportImageInfo = null ;
-    // this.oBankEmployeeModel.oAadharUpload = null ;
-    // this.oBankEmployeeModel.oBankPassBookUpload = null ;
-    // this.oBankEmployeeModel.oCallLetterUpload = null ;
-    // this.oBankEmployeeModel.oEmployeePhotoUpload = null
+    this.oBankEmployeeModel.oPassportImageInfo = null ;
+    this.oBankEmployeeModel.oAadharUpload = null ;
+    this.oBankEmployeeModel.oBankPassBookUpload = null ;
+    this.oBankEmployeeModel.oCallLetterUpload = null ;
+    this.oBankEmployeeModel.oEmployeePhotoUpload = null;
+    this.oPhotoDropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oBankPassBookDropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oCallLetterDropZone.directiveRef.dropzone().removeAllFiles(true);
+    this.oAadharDropZone.directiveRef.dropzone().removeAllFiles(true);
   }
   // fnEditSucessMessage() {
   //   Swal.fire({
