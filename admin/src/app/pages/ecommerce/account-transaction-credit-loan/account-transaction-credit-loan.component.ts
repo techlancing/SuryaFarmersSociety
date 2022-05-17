@@ -156,16 +156,14 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     //this.bIsAddActive = true;
     if(
       this.oCreditLoanModel.sAccountNo == '' ||
-        this.oCreditLoanModel.nLoanId == null ||
         this.oCreditLoanModel.nSanctionAmount == null ||
         this.oCreditLoanModel.nIntrest == null ||
-        this.oCreditLoanModel.nLoanMonths == null ||
+        // this.oCreditLoanModel.nLoanMonths == null ||
         this.oCreditLoanModel.nLoanDays == null ||
         this.oCreditLoanModel.nTotalAmount == null ||
         this.oCreditLoanModel.sDate == '' ||        
         this.oCreditLoanModel.sTypeofLoan == '' ||
         this.oCreditLoanModel.sInstallmentType == '' ||
-       // this.oCreditLoanModel.nLoanRepaymentPeriod == null ||
         this.oCreditLoanModel.nInstallmentAmount == null || 
         this.oCreditLoanModel.sEndofLoanDate == '' ||       
         this.oCreditLoanModel.nLetPenaltyPercentage == null ||        
