@@ -71,7 +71,11 @@
             <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true" [ngClass]="oCreditLoanmodel.sTypeofLoan.split(' ')[0]">
               <ngb-panel id="static-1">
                 <ng-template ngbPanelTitle class="text-black">
-                  <h2 [ngClass]="{'notvisible' : !bPdf}">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+                  <div class="row">
+                    <h2 [ngClass]="{'notvisible' : !bPdf}" >{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+                    <h2 *ngIf="oCreditLoanmodel.oTransactionInfo.length !== 0" class="loanoutstanding">Loan Amount Outstanding : {{oCreditLoanmodel.oTransactionInfo[oCreditLoanmodel.oTransactionInfo.length-1].nBalanceAmount}}</h2>
+                  </div>
+                  
                 </ng-template>
                 <ng-template ngbPanelContent>
                   <div class="row" [ngClass]="{'notvisible' : !bPdf }">
