@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges,HostListener } from '@angular/core';
 import MetisMenu from 'metismenujs/dist/metismenujs';
 import { EventService } from '../../core/services/event.service';
+import { AutologoutService } from '../../core/services/autologout.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 import { CMENU } from './chairmanmenu';
 import { PMENU} from './employeemenu';
@@ -27,16 +29,22 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   configData;
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
+  timer : number = 10 ;
+  startTime: Date;
+  expireTime: Date;
 
-  constructor(private eventService: EventService, private router: Router, public translate: TranslateService) {
+  constructor(private eventService: EventService, private router: Router, public translate: TranslateService,
+    private oAuthenticationService : AuthenticationService,private oAutologoutService : AutologoutService) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
       }
     });
-  }
+  } 
 
   ngOnInit() {
+
+    //this.fnSetTime();
     this.initialize();
 
     document.body.setAttribute('data-sidebar', 'dark');
@@ -46,6 +54,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       wheelSpeed: 0.3
     };
   }
+  
   /**
    * Change the layout onclick
    * @param layout Change the layout
@@ -211,4 +220,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   hasItems(item: MenuItem) {
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
+
+  
 }

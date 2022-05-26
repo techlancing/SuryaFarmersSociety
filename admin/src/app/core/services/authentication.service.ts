@@ -124,9 +124,9 @@ export class AuthenticationService {
     this.tokenExpirationTimer = null;
   }
 
-  autoLogout(expirationDuration: number) {
-    // this.tokenExpirationTimer = setTimeout(() => {
-    //   this.logout();
+  autoLogout() {
+     //this.tokenExpirationTimer = setTimeout(() => { expirationDuration: number
+       this.logout();
     // }, expirationDuration);
  }
 
