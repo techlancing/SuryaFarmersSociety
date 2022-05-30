@@ -63,8 +63,7 @@ export class AccountLedgerTableComponent implements OnInit {
   fnPrintPdfSavingsAccount(Account,type): void {
     let data = document.getElementById(type);
     data.classList.add("pdfstyle");
-    this.bVisiblePdf = false;
-    this.bVisibleLoan = false;
+    
       let pdf = new jsPDF({
         orientation: 'p',
         unit: 'px',
@@ -83,6 +82,8 @@ export class AccountLedgerTableComponent implements OnInit {
         width:450,
         windowWidth:450
       });
+      this.bVisiblePdf = false;
+      this.bVisibleLoan = false;
       this.ngOnInit();
   }
 
