@@ -86,9 +86,17 @@ export class AddaccountComponent implements OnInit {
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 2,
+  maxFilesize: 0.20161290,
   maxFiles: 1,
+  addRemoveLinks : true,
+  init: function() {
+    this.on("error", function(file){
+         alert(file.name+" is above 250kb!");
+         this.removeFile(file);
+     });
+  }
   };
+ 
 
   // bread crumb items
   breadCrumbItems: Array<{}>;

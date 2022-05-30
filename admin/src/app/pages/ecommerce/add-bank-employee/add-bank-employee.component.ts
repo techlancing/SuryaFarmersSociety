@@ -67,8 +67,14 @@ aBankEmployees: Array<BankEmployee>;
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 100,
-  maxFiles: 1
+  maxFilesize: 0.20161290,
+  maxFiles: 1,
+  init: function() {
+    this.on("error", function(file){
+         alert(file.name+" is above 250kb!");
+         this.removeFile(file);
+     });
+  }
   };
 
   // bread crumb items
