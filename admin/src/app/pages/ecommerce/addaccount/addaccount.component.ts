@@ -375,7 +375,7 @@ export class AddaccountComponent implements OnInit {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];
           this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
-            this.fnMessage('Account is created sucessfully.','success');
+            this.fnMessage(this.oBankAccountModel.sAccountNo+' is created sucessfully.','success');
             this.bankaccounts = [...cdata as any];
             //this.oBankAccountModel.sState = '';
             this.bIsAddActive = false;
@@ -386,7 +386,7 @@ export class AddaccountComponent implements OnInit {
       }else{
         this.oBankAccountService.fnEditBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           console.log(data);
-          this.fnMessage('Account updated sucessfully.','success');
+          this.fnMessage(this.oBankAccountModel.sAccountNo+' is updated sucessfully.','success');
           this.redirectTo('/allaccounts');
         });
       }

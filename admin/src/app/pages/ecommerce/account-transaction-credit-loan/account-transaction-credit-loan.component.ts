@@ -177,7 +177,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
-        this.fnSucessMessage();
+        this.fnSucessMessage(this.oCreditLoanModel.sTypeofLoan);
         this.redirectTo('/creditloan');
       });
   }
@@ -267,11 +267,11 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     this.router.navigate([uri]));
  }
   
-  fnSucessMessage() {
+  fnSucessMessage(loan : string) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'CreditLoan is created sucessfully.',
+      title: loan+' is created sucessfully.',
       showConfirmButton: false,
       timer: 1500
     });
