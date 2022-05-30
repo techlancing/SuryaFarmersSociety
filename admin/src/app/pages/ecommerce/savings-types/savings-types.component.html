@@ -113,7 +113,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" *ngIf="oSavingsTypeModel.sTypeofSavings !== 'Pension Deposit'">
                             <div class="form-group">
                                 <label for="sMonthInterestAddDate">Every Month Interest Add Date</label>
                                 <!-- <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
@@ -134,9 +134,9 @@
                             </div>
                         </div>
 
-                        <div class="row"
-                            *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
-                            <div class="col-sm-6">
+                        <!-- <div class="row"
+                            *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText"> -->
+                            <div class="col-sm-6" *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
                                 <label class="font-size-14 mb-3">Do You Add Pension Deposit Interest on Account :
                                 </label>
                                 <div class="radio-container">
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
                                 <div class="form-group">
                                     <label for="sPensionAmountAddDate">Pension Deposit Interest Add Date</label>
                                     <!-- <input [bsConfig]="{startView: 'month', showWeekNumbers: false,
@@ -167,12 +167,12 @@
                           dateInputFormat: 'DD-MM-YYYY' }" placeholder="Select Date" bsDatepicker
                                         name="savingsDepositStartDate" class="form-control"
                                         [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate"> -->
-                                        <input id="savingsDepositStartDate" name="savingsDepositStartDate" [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate"
+                                        <input id="sPensionInterestAddDate" name="sPensionInterestAddDate" [(ngModel)]="oSavingsTypeModel.sPensionInterestAddDate"
                                     type="text" class="form-control" >
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
                                 <div class="form-group">
                                     <label for="nPensionInterestAddAmount">Interest Add amount </label>
                                     <input id="nPensionInterestAddAmount" name="nPensionInterestAddAmount" type="number"
@@ -180,14 +180,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" *ngIf="oSavingsTypeModel && oSavingsTypeModel.sTypeofSavings === aTypeofSavings[4].displayText">
                                 <div class="form-group">
                                     <label for="nPensionAmountMonths">How Many Months Amount Add</label>
                                     <input id="nPensionAmountMonths" name="nPensionAmountMonths" type="number"
                                         [(ngModel)]="oSavingsTypeModel.nPensionAmountMonths" class="form-control">
                                 </div>
                             </div>
-                        </div>
+                        <!-- </div> -->
 
                         <div class="col-sm-6">
                             <div class="add-container">
@@ -207,7 +207,7 @@
                         <div class="col-sm-8 add-category-btn-container">
                             <button type="submit" class="btn btn-primary mr-1"
                                 [disabled]="bIsAddActive || bIsEditActive">{{sButtonText}}</button>
-                            <button type="button" class="btn btn-secondary">Clear</button>
+                            <button type="button" class="btn btn-secondary" (click)="fnClear()">Clear</button>
                         </div>
 
                     </div>
