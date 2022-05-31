@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   apiUrl: "https://staging.adaptnext.com/",
   imagePath: "https://staging.adaptnext.com/nodejs/",
-  applicationName: "suryafarmerssociety",
+  applicationName: "Surya Co-Operative Society Limited",
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',
