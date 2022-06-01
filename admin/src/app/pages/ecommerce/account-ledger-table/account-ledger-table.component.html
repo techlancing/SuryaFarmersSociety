@@ -120,7 +120,11 @@
 </div> 
 <p *ngIf="bVisiblePdf" class="pstyle">-------------------------------------------------------------------------</p>
 
-<h2 *ngIf="bVisibleLoan" style="margin-top: 10px;" class="ledgerString">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+<div *ngIf="bVisibleLoan" class="row" style="margin-top: 10px;">
+  <h2  class="ledgerString">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+  <h2 class="ledgerString"style="padding-left: 30px;">Loan Amount Outstanding : {{nOutstandingAmount}}</h2>
+  
+</div>
   <div class="row col-sm-12 accountDetails" *ngIf="bVisibleLoan">
     <div class="col-sm-3">
       <div class="form-group">

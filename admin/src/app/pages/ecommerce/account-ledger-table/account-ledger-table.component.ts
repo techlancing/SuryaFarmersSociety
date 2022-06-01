@@ -25,12 +25,15 @@ export class AccountLedgerTableComponent implements OnInit {
   bVisibleLoan: boolean;
   oCreditLoanmodel: any;
   nLineFrom: number;
+  nOutstandingAmount: any;
   
   constructor(private oBankAccountService : BankAccountService) { }
 
   ngOnInit(): void {
     this.sImageRootPath = environment.imagePath;
     // this.nLineFrom = this.lineFrom % 18;
+    console.log("outstanding",this.nOutstandingAmount)
+    this.nOutstandingAmount = this.aTransactions[this.aTransactions.length-1].nBalanceAmount ;
     this.oBankAccountService.pdfGenerationClicked.subscribe((data) => {
       if(this.oBankAccountService.proceed == true){
         if(data.type === this.type){
