@@ -99,7 +99,7 @@ export class AccountTransactionDebitComponent implements OnInit {
       this.oDebitModel.sNarration == '' ||
       this.oDebitModel.sReceiverName == ''
     ){
-      this.fnWarningMessage();
+      this.fnWarningMessage('Please fill all the fields');
       return;
     }
     this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
@@ -107,8 +107,11 @@ export class AccountTransactionDebitComponent implements OnInit {
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
-        this.fnSucessMessage();
-        this.redirectTo('/debit');
+        if(data == 'Success'){
+          this.fnSucessMessage();
+          this.redirectTo('/debit');
+        }
+        else this.fnWarningMessage(data);
       });
     }else{
       this.oCreditService.fnAddCreditInfo(this.oDebitModel).subscribe((data) => {
@@ -163,11 +166,11 @@ export class AccountTransactionDebitComponent implements OnInit {
       timer: 1500
     });
   }
-  fnWarningMessage(){
+  fnWarningMessage(msg){
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please fill all the fields',
+      title: msg,
       showConfirmButton: false,
       timer: 1500
     });

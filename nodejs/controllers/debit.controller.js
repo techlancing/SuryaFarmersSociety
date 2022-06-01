@@ -18,58 +18,60 @@ const asyncMiddleware = fn =>
   };
 
   
-  
+
 // url: ..../debit/add_debit
-oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
+oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   const newDebit = new oDebitModel(oReq.body);
-  try{
+  try {
     // Save Debit Info
     await newDebit.save();
-    
+
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
-    try{
-      const olasttransaction = await oTransactionModel.find({nLoanId: newDebit.nLoanId}).sort({_id:-1}).limit(1);
-      if(olasttransaction.length > 0) {
+    try {
+      const olasttransaction = await oTransactionModel.find({ nLoanId: newDebit.nLoanId }).sort({ _id: -1 }).limit(1);
+      if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
-    }catch(e){
+
+    } catch (e) {
       console.log(e);
       oRes.status(400).send(e);
     }
+    if (oReq.body.nAmount > oBalanceAmount) oRes.json("outstanding balance is low");
+    else {
+      //save transaction model
+      let oTransaction = {};
+      oTransaction.sAccountNo = newDebit.sAccountNo;
+      oTransaction.nLoanId = newDebit.nLoanId;
+      oTransaction.nCreditAmount = 0;
+      oTransaction.nDebitAmount = newDebit.nAmount;
+      oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - newDebit.nAmount) * 100) / 100).toFixed(2);
+      oTransaction.sDate = newDebit.sDate;
+      oTransaction.sNarration = newDebit.sNarration;
+      oTransaction.sAccountType = '';
+      oTransaction.sEmployeeName = newDebit.sReceiverName;
+      oTransaction.sIsApproved = 'Pending';
 
-    //save transaction model
-    let oTransaction = {};
-    oTransaction.sAccountNo = newDebit.sAccountNo;
-    oTransaction.nLoanId = newDebit.nLoanId;
-    oTransaction.nCreditAmount = 0;
-    oTransaction.nDebitAmount = newDebit.nAmount;
-    oTransaction.nBalanceAmount = (Math.round((oBalanceAmount - newDebit.nAmount) * 100) / 100).toFixed(2);
-    oTransaction.sDate = newDebit.sDate;
-    oTransaction.sNarration = newDebit.sNarration;
-    oTransaction.sAccountType = '';
-    oTransaction.sEmployeeName = newDebit.sReceiverName;
-    oTransaction.sIsApproved = 'Pending';
-    
-    const newTransaction = new oTransactionModel(oTransaction);
-    await newTransaction.save();
-
-    const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newDebit.nLoanId});
-
-    if(oCreditLoan){
-      newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+      const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
-      if(oTransaction.nBalanceAmount > 0){
-        oCreditLoan.oTransactionInfo.push(newTransaction);
-      }else{
-        oCreditLoan.oTransactionInfo.push(newTransaction);
-        oCreditLoan.sLoanStatus = 'Completed';
-      }
+      const oCreditLoan = await oCreditLoanModel.findOne({ nLoanId: newDebit.nLoanId });
+
+      if (oCreditLoan) {
+        newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+        await newTransaction.save();
+
+        if (oTransaction.nBalanceAmount > 0) {
+          oCreditLoan.oTransactionInfo.push(newTransaction);
+        } else {
+          oCreditLoan.oTransactionInfo.push(newTransaction);
+          oCreditLoan.sLoanStatus = 'Completed';
+        }
         // oCreditLoan.sLoanStatus = 'Completed';
-      await oCreditLoan.save();
-    }
-      if(oTransaction.nBalanceAmount > 0){
+        await oCreditLoan.save();
+      }
+      if (oTransaction.nBalanceAmount > 0) {
         /* SmS code Start */
         if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
           //get mobile number from account number 
@@ -111,11 +113,11 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
             req.end();
           }
         }
-      /* SmS code End */
-      } 
-    oRes.json("Success");
-
-  }catch(e){
+        /* SmS code End */
+      }
+      oRes.json("Success");
+    }
+  } catch (e) {
     console.log(e);
     oRes.status(400).send(e);
 
