@@ -73,7 +73,7 @@
                 <ng-template ngbPanelTitle class="text-black">
                   <div class="row">
                     <h2 [ngClass]="{'notvisible' : !bPdf}" >{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
-                    <h2 *ngIf="oCreditLoanmodel.oTransactionInfo.length !== 0" class="loanoutstanding">Loan Amount Outstanding : {{oCreditLoanmodel.oTransactionInfo[oCreditLoanmodel.oTransactionInfo.length-1].nBalanceAmount}}</h2>
+                    <h2 [ngClass]="{'notvisible' : !bPdf}" *ngIf="oCreditLoanmodel.oTransactionInfo.length !== 0" class="loanoutstanding">Loan Amount Outstanding : {{oCreditLoanmodel.oTransactionInfo[oCreditLoanmodel.oTransactionInfo.length-1].nBalanceAmount}}</h2>
                   </div>
                   
                 </ng-template>
