@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { BankAccount } from '../../../core/models/bankaccount.model';
 import { BankAccountService }from '../../../core/services/account.service';
-import { AdvancedService } from './advanced.service';
-import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+
+import { SearchService} from './search.service';
+
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,13 +12,13 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-bank-accounts',
-  templateUrl: './all-bank-accounts.component.html',
+  templateUrl: './all-bank-accounts.component.html', 
   styleUrls: ['./all-bank-accounts.component.scss'],
-  providers: [AdvancedService, DecimalPipe]
+  providers: [ DecimalPipe,SearchService]
 })
 export class AllBankAccountsComponent implements OnInit {
 
-  @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
+  // @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
   aAllBankAccounts : Array<BankAccount> = null;
   oBankAccount : BankAccount =null;
   breadCrumbItems: Array<{}>;
@@ -27,12 +28,12 @@ export class AllBankAccountsComponent implements OnInit {
   nSelectedProductIndex : number;
   
   constructor(private oBankAccountService : BankAccountService,
-    public service: AdvancedService,
+    public service: SearchService,
     private modalService: NgbModal,
     private router : Router) {
       this.tables$ = service.tables$;
       console.log(this.tables$);
-    this.total$ = service.total$;
+    // this.total$ = service.total$;
      }
 
   ngOnInit(): void {
@@ -57,16 +58,6 @@ export class AllBankAccountsComponent implements OnInit {
    * @param param0 sort the column
    *
    */
-   onSort({ column, direction }: SortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
-  }
 
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>

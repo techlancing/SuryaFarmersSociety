@@ -27,7 +27,7 @@
                       <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
                           class="d-inline-flex align-items-center">Search:
                           <input type="text" name="searchTerm" class="form-control form-control-sm ml-2"
-                            aria-controls="tickets-table" [(ngModel)]="service.searchTerm"></label></div>
+                            aria-controls="tickets-table" [(ngModel)]="service.searchTerm" (input)="service.search($event)"></label></div>
                     </div>
                     <!-- End search -->
                   </div>
@@ -36,11 +36,15 @@
                       class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline content">
                       <thead>
                         <tr>
-                          
-                          <th sortable="sAccountNo" (sort)="onSort($event)">Account No</th>
-                          <th sortable="sBranchCode" (sort)="onSort($event)">Branch Code</th>
-                          <th sortable="sCustomerId" (sort)="onSort($event)">Customer Id</th>
-                          <th sortable="sApplicantName" (sort)="onSort($event)">Name</th>
+                          <!-- (sort)="onSort($event)"
+                          (sort)="onSort($event)"
+                          (sort)="onSort($event)"
+                          (sort)="onSort($event)" -->
+
+                          <th sortable="sAccountNo" >Account No</th>  
+                          <th sortable="sBranchCode">Branch Code</th>
+                          <th sortable="sCustomerId" >Customer Id</th>
+                          <th sortable="sApplicantName" >Name</th>
                           <!-- <th sortable="date" (sort)="onSort($event)">Created date</th> -->
                           <th>Actions</th>
                           <th>Activate / Deactivate</th>
