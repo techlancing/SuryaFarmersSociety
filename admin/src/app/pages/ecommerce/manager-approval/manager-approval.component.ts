@@ -69,21 +69,22 @@ export class ManagerApprovalComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'savings'){
       approval.sIsApproved = status ;
       this.oSavingstypeService.fnChangeSavingTypeStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage('SavingType Status Changed Successfully');
+        this.fnSuccessMessage(approval.sTypeofSavings+' is '+status+' Successfully');
         this.redirectTo('/savingsapproval');
       });
     }
     else if (this.activatedroute.snapshot.data.type === 'credit'){
       approval.sIsApproved = status ;
+      let amount = approval.nDebitAmount !== 0 ? approval.nDebitAmount : approval.nCreditAmount ;
       this.oTransactionService.fnChangeApprovedStatus(approval).subscribe((data) => {
-       this.fnSuccessMessage('Credit Transaction Status Changed Successfully');
-       this.redirectTo('/creditapproval');
+       this.fnSuccessMessage('Transaction : '+approval.sAccountType+'-'+amount +' is '+status+' Successfully');
+       this.redirectTo('/creditapproval'); 
       });
     }
     else {
       approval.sIsApproved = status ;
       this.oCreditLoanService.fnChangeCreditLoanStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage('CreditLoan Status Changed Successfully');
+        this.fnSuccessMessage(approval.sTypeofLoan+' is '+status+' Successfully');
         this.redirectTo('/loanapproval');
       });
     }
@@ -95,7 +96,7 @@ export class ManagerApprovalComponent implements OnInit {
       icon: 'success',
       title: msg,
       showConfirmButton: false,
-      timer: 1500
+      timer: 3500
     });
   }
 
