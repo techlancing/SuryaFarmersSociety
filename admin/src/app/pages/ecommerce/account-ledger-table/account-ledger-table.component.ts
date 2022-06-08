@@ -26,10 +26,15 @@ export class AccountLedgerTableComponent implements OnInit {
   oCreditLoanmodel: any;
   nLineFrom: number;
   nOutstandingAmount: any;
+  bVisibleSavings : boolean ;
+  oSavingDepositmodel : any ;
   
   constructor(private oBankAccountService : BankAccountService) { }
 
   ngOnInit(): void {
+    this.bVisiblePdf = false;
+    this.bVisibleLoan = false;
+    this.bVisibleSavings = false ;
     this.sImageRootPath = environment.imagePath;
     // this.nLineFrom = this.lineFrom % 18;
     console.log("outstanding",this.nOutstandingAmount)
@@ -41,39 +46,49 @@ export class AccountLedgerTableComponent implements OnInit {
            this.oAlltransactionprintmodel = cdata as any;
            if(this.oAlltransactionprintmodel !== null){
              this.bVisiblePdf = true ;
-             this.oBankAccountService.sendLoanAccountDetails.subscribe((kdata) => {
-              if(kdata !== null){
-                this.bVisibleLoan = true;
-                this.oCreditLoanmodel = kdata as any;
-              }
-             });
+             if(this.type.split(' ')[1]== 'Loan'){
+              this.oBankAccountService.sendLoanAccountDetails.subscribe((kdata) => {
+                if(kdata !== null){
+                  this.bVisibleLoan = true;
+                  this.bVisibleSavings = false;
+                  this.oSavingDepositmodel = null;
+                  this.oCreditLoanmodel = kdata as any;
+                }
+               });
+             }else if(this.type.split(' ')[1]== 'Deposit'){
+              this.oBankAccountService.sendSavingDepositDetails.subscribe((kdata) => {
+                if(kdata !== null){
+                  this.bVisibleLoan = false;
+                  this.bVisibleSavings = true;
+                  this.oCreditLoanmodel = null;
+                  this.oSavingDepositmodel = kdata as any;
+                }
+               });
+             }
+             console.log(this.bVisibleLoan, this.bVisibleSavings,this.oSavingDepositmodel,this.oCreditLoanmodel);
              setTimeout(() => {
               this.fnPrintPdfSavingsAccount(data.Account,data.type);
-             },1)
+             },100)
                  
            }
           this.oBankAccountService.proceed= false;
-          });
-          
+          });   
         } 
       }
-     
     })
-    // setTimeout(() => {
-     
-    //  },3000)
   }
   fnPrintPdfSavingsAccount(Account,type): void {
     let data = document.getElementById(type);
     data.classList.add("pdfstyle");
-    
+    this.bVisibleLoan = false;
+    this.bVisiblePdf = false;
+    this.bVisibleSavings = false ;
       let pdf = new jsPDF({
         orientation: 'p',
         unit: 'px',
         format: 'a4',  
         putOnlyUsedFonts:false
        });
-       //putOnlyUsedFonts:true
       pdf.setFontSize(1);
       pdf.html(data,{
         callback: function (doc) {
@@ -85,8 +100,8 @@ export class AccountLedgerTableComponent implements OnInit {
         width:450,
         windowWidth:450
       });
-      this.bVisiblePdf = false;
-      this.bVisibleLoan = false;
+      this.oSavingDepositmodel = null;
+      this.oCreditLoanmodel = null ;
       this.ngOnInit();
   }
 

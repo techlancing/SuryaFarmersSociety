@@ -13,6 +13,7 @@ export class BankAccountService {
     pdfGenerationClicked = new EventEmitter();
     sendBankAccountDetails = new BehaviorSubject(null);
     sendLoanAccountDetails = new BehaviorSubject(null);
+    sendSavingDepositDetails = new BehaviorSubject(null);
     proceed : boolean = false;
     constructor(private http: HttpClient) { }
 

@@ -143,7 +143,7 @@ export class AllTransactionPrintComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'statement'){
       this.sHeaderText='Bank Statement';
       this.bPdf =true ;
-    }
+    }   
   }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
@@ -301,6 +301,9 @@ export class AllTransactionPrintComponent implements OnInit {
     this.oBankAccountService.proceed = true ;
     this.aCreditLoan.map((loan) => {
       if(loan.sTypeofLoan == type) this.oBankAccountService.sendLoanAccountDetails.next(loan);
+    })
+    this.aSavingDeposit.map((savings) => {
+      if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
     })
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }

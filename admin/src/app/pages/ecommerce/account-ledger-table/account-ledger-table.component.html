@@ -1,134 +1,109 @@
 <div id="{{type}}" class="adjustlines">
-  <div class="row accountDetails" *ngIf="bVisiblePdf" >
-    <!-- <div class="row col-sm-12" >
+  <div class="row accountDetails" *ngIf="bVisiblePdf">    
+   <div class="row col-sm-12">
       <div class="col-sm-6">
         <div class="form-group">
-          <table class="col-sm-6 text-center">
-            <thead>
-              <tr class="imagewidth">
-              <th ><label for="sPassportPhoto">Photo</label></th>
-              <th><label for="sSignature-1">Sign-1</label></th>
-              <th><label for="sSignature-2">Sign-2</label></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="imagewidth">
-              <td> <img src="{{sImageRootPath + oAlltransactionprintmodel.oPassportImageInfo?.sImageURL}}" class="photoWidth"/></td>
-              <td><img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature1Info?.sImageURL}}" class="signWidth"/></td>
-              <td><img src="{{sImageRootPath + oAlltransactionprintmodel.oSignature2Info?.sImageURL}}" class="signWidth"/></td>
-            </tr>  
-        </tbody> 
-        </table>           
-           </div>
+          <label for="sAccountNo">Account No :</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sAccountNo}}</label>
+        </div>
       </div>
-    </div>  -->
-      <div class="row col-sm-6">
-        
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sDate">Date of Issue:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sDate}}</label>
+        </div>
       </div>
-      
-         
-   <div class="row col-sm-12">
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sAccountNo">Account No :</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sAccountNo}}</label>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sApplicantName">Customer Name:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sApplicantName}}</label>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sDate">Date of Issue:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sDate}}</label>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sNomineeName">Nominee Name:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sNomineeName}}</label>
+        </div>
       </div>
-    </div>
-    
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sApplicantName">Customer Name:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sApplicantName}}</label>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sFatherOrHusbandName">Father/Husband Name:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sFatherOrHusbandName}}</label>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sNomineeName">Nominee Name:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sNomineeName}}</label>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sMobileNumber">Mobile No:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sMobileNumber}}</label>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sFatherOrHusbandName">Father/Husband Name:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sFatherOrHusbandName}}</label>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sAddress">Address:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sFlatNo}}<span>,
+            </span>{{oAlltransactionprintmodel.sStreetName}}<span>, </span>
+            {{oAlltransactionprintmodel.sVillageAddress}}<span>,
+            </span>{{oAlltransactionprintmodel.sMandalAddress}}<span>, </span>
+            {{oAlltransactionprintmodel.sDistrictAddress}}</label>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sMobileNumber">Mobile No:</label> 
-        <label class="account-detail">{{oAlltransactionprintmodel.sMobileNumber}}</label>
-      </div>
-    </div>
-    
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sAddress">Address:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sFlatNo}}<span>, </span>{{oAlltransactionprintmodel.sStreetName}}<span>, </span>
-          {{oAlltransactionprintmodel.sVillageAddress}}<span>, </span>{{oAlltransactionprintmodel.sMandalAddress}}<span>, </span>
-          {{oAlltransactionprintmodel.sDistrictAddress}}</label>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-          <label for="sAccountCategory">Account Category:</label>  
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sAccountCategory">Account Category:</label>
           <label class="account-detail">
             {{oAlltransactionprintmodel.sAccountCategory}}
           </label>
+        </div>
       </div>
-    </div>
-                
-    <div class="col-sm-6">
-      <div class="form-group">
-          <label for="sShareType">Types of Share:</label>
-          <label class="account-detail">{{oAlltransactionprintmodel.sShareType}}</label>                     
-      </div>
-    </div>
-    
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sDOB">Date Of Birth:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sDOB}}</label>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group"> 
-          <label for="sCustomerId">Customer ID:</label>
-          <label class="account-detail">{{oAlltransactionprintmodel.sCustomerId}}</label>                 
-      </div>
-    </div>
-    
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sAccountType">Type Of Account</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sAccountType}}</label>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="sAadharNo">Aadhar No:</label>                  
-        <label class="account-detail">{{oAlltransactionprintmodel.sAadharNo}}</label>
-      </div>
-    </div>
-                
-  </div>
-</div> 
-<p *ngIf="bVisiblePdf" class="pstyle">-------------------------------------------------------------------------</p>
 
-<div *ngIf="bVisibleLoan" class="row" style="margin-top: 10px;">
-  <h2  class="ledgerString">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
-  <h2 class="ledgerString"style="padding-left: 30px;">Loan Amount Outstanding : {{nOutstandingAmount}}</h2>
-  
-</div>
-  <div class="row col-sm-12 accountDetails" *ngIf="bVisibleLoan">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sShareType">Types of Share:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sShareType}}</label>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sDOB">Date Of Birth:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sDOB}}</label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sCustomerId">Customer ID:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sCustomerId}}</label>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sAccountType">Type Of Account</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sAccountType}}</label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="sAadharNo">Aadhar No:</label>
+          <label class="account-detail">{{oAlltransactionprintmodel.sAadharNo}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="bVisiblePdf && aTransactions !== null" class="pstyle">-------------------------------------------------------------------------</p>
+
+  <div *ngIf="bVisibleLoan && type == oCreditLoanmodel.sTypeofLoan" class="row" style="margin-top: 10px;padding-left: 10px;">
+    <h2 class="ledgerString">{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+    <h2 class="ledgerString" style="padding-left: 30px;">Loan Amount Outstanding : {{nOutstandingAmount}}</h2>
+  </div>
+
+  <div class="row col-sm-12 accountDetails" *ngIf="bVisibleLoan  && type == oCreditLoanmodel.sTypeofLoan">
     <div class="col-sm-3">
       <div class="form-group">
-        <label for="sDate">Loan Issue Date:</label>
+        <label for="sDate">Loan Issue Date:</label> 
         <label class="account-detail">{{oCreditLoanmodel.sDate}}</label>
       </div>
     </div>
@@ -162,7 +137,7 @@
         <label class="account-detail">{{oCreditLoanmodel.sInstallmentType}}</label>
       </div>
     </div>
-    
+
     <div class="col-sm-3">
       <div class="form-group">
         <label for="nInstallmentAmount">Installment Amount:</label>
@@ -179,10 +154,55 @@
 
 
 
+  <h2 style="margin-top: 10px;padding-left: 10px;" class="ledgerString" *ngIf="bVisibleSavings">{{oSavingDepositmodel.sTypeofSavings}} - {{oSavingDepositmodel.nMaturityAmount}}</h2>
+  <div class="row col-sm-12 accountDetails"  *ngIf="bVisibleSavings">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="sDate">Created Date:</label>
+        <label class="account-detail">{{oSavingDepositmodel.sStartDate}}</label>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="sTypeofLoan">Type of SavingDeposit:</label>
+        <label class="account-detail">{{oSavingDepositmodel.sTypeofSavings}}</label>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="nSanctionAmount">Maturity Amount:</label>
+        <label class="account-detail">{{oSavingDepositmodel.nMaturityAmount}}</label>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="nIntrest">Intrest:</label>
+        <label class="account-detail">{{oSavingDepositmodel.nIntrest}}</label>
+      </div>
+    </div>
+
+     <div class="col-sm-3">
+      <div class="form-group">
+        <label for="nIntrest">Monthly Intrest Add Date:</label>
+        <label class="account-detail">{{oSavingDepositmodel.sMonthInterestAddDate}}</label>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="sEndofLoanDate">Maturity Date:</label>
+        <label class="account-detail">{{oSavingDepositmodel.sMaturityDate}}</label>
+      </div>
+    </div>
+  </div>
 
 
 
-  <p *ngIf="bVisibleLoan" class="pstyle">-------------------------------------------------------------------------</p>
+
+
+
+
+  <p *ngIf="(bVisibleLoan && type == oCreditLoanmodel.sTypeofLoan)|| (bVisibleSavings && type == oSavingDepositmodel.sTypeofSavings)" class="pstyle">-------------------------------------------------------------------------</p>
 
 
 
