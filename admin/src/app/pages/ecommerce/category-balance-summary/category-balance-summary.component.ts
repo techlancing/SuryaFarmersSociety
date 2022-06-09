@@ -123,7 +123,7 @@ export class CategoryBalanceSummaryComponent implements OnInit {
        });*/
       console.log("uniqueTransactions ", this.uniqueTransactions);
       console.log(this.uniqueArr);
-      this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      this.nbalanceAmount = this.ntotalDebit - this.ntotalCredit;
       this.ntotalCredit = Number((Math.round(this.ntotalCredit * 100) / 100).toFixed(2));
       this.ntotalDebit = Number((Math.round(this.ntotalDebit * 100) / 100).toFixed(2));
       this.nbalanceAmount = Number((Math.round(this.nbalanceAmount * 100) / 100).toFixed(2));
@@ -155,7 +155,7 @@ export class CategoryBalanceSummaryComponent implements OnInit {
   }
   fnAmountRoundToTwoDigits(group) {
     group.map((item) => {
-      item.nBalanceAmount = Number((Math.round((item.nCreditAmount - item.nDebitAmount) * 100) / 100).toFixed(2));
+      item.nBalanceAmount = Number((Math.round((item.nDebitAmount - item.nCreditAmount) * 100) / 100).toFixed(2));
       item.nCreditAmount = Number((Math.round(item.nCreditAmount * 100) / 100).toFixed(2));
       item.nDebitAmount = Number((Math.round(item.nDebitAmount * 100) / 100).toFixed(2));
     });

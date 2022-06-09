@@ -46,7 +46,7 @@ public bShowEmployee : boolean = true ;
         this.ntotalCredit = this.ntotalCredit + transaction.nCreditAmount;
         this.ntotalDebit = this.ntotalDebit + transaction.nDebitAmount;
       });
-      this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      this.nbalanceAmount = this.ntotalDebit - this.ntotalCredit;
       this.ntotalCredit = Number((Math.round(this.ntotalCredit*100)/100).toFixed(2)) ;
       this.ntotalDebit = Number((Math.round(this.ntotalDebit*100)/100).toFixed(2));
       this.nbalanceAmount = Number((Math.round(this.nbalanceAmount*100)/100).toFixed(2));  

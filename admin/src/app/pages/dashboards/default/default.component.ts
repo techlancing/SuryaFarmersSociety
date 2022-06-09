@@ -41,7 +41,7 @@ export class DefaultComponent implements OnInit {
       this.oBankAccountService.fnGetAllSavingsAccountBalanceInfo().subscribe((data) => {
         this.nAllSavingsBalance= data as Number;
         this.nAllSavingsBalance = Number((Math.round(this.nAllSavingsBalance*100)/100).toFixed(2));
-        this.nTotalBalance = Number((Math.round((this.nAllCreditLoanBalance-this.nAllSavingsBalance)*100)/100).toFixed(2));
+        this.nTotalBalance = Number((Math.round((this.nAllSavingsBalance-this.nAllCreditLoanBalance)*100)/100).toFixed(2));
       });
       
     });

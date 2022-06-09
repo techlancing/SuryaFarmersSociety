@@ -57,18 +57,18 @@ toDate :any;
             sDate:transaction.sDate,
             nCreditAmount:transaction.nCreditAmount,
             nDebitAmount:transaction.nDebitAmount,
-            nBalanceAmount:transaction.nCreditAmount- transaction.nDebitAmount
+            nBalanceAmount:transaction.nDebitAmount- transaction.nCreditAmount
           }];
         }else{
           this.uniqueArr[this.uniqueArr.length - 1].nCreditAmount += transaction.nCreditAmount;
           this.uniqueArr[this.uniqueArr.length - 1].nDebitAmount += transaction.nDebitAmount;
-          this.uniqueArr[this.uniqueArr.length - 1].nBalanceAmount = this.uniqueArr[this.uniqueArr.length - 1].nCreditAmount - 
-          this.uniqueArr[this.uniqueArr.length - 1].nDebitAmount;
+          this.uniqueArr[this.uniqueArr.length - 1].nBalanceAmount = this.uniqueArr[this.uniqueArr.length - 1].nDebitAmount - 
+          this.uniqueArr[this.uniqueArr.length - 1].nCreditAmount;
           
         }
       });
       console.log(this.uniqueArr);
-      this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+      this.nbalanceAmount = this.ntotalDebit - this.ntotalCredit;
       this.ntotalCredit = Number((Math.round(this.ntotalCredit*100)/100).toFixed(2)) ;
       this.ntotalDebit = Number((Math.round(this.ntotalDebit*100)/100).toFixed(2));
       this.nbalanceAmount = Number((Math.round(this.nbalanceAmount*100)/100).toFixed(2));

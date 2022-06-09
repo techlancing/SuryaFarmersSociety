@@ -74,10 +74,10 @@ export class Last12MonthsTransactionComponent implements OnInit {
               sAccountNo:saccno,
               nCreditAmount:totalcredit,
               nDebitAmount:totaldebit,
-              nBalanceAmount:totalcredit- totaldebit
+              nBalanceAmount:totaldebit- totalcredit
             }];
         });
-        this.nbalanceAmount = this.ntotalCredit - this.ntotalDebit;
+        this.nbalanceAmount = this.ntotalDebit - this.ntotalCredit;
         this.ntotalCredit = Number((Math.round(this.ntotalCredit*100)/100).toFixed(2)) ;
         this.ntotalDebit = Number((Math.round(this.ntotalDebit*100)/100).toFixed(2));
         this.nbalanceAmount = Number((Math.round(this.nbalanceAmount*100)/100).toFixed(2));
