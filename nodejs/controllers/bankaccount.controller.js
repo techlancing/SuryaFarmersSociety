@@ -258,7 +258,7 @@ obankaccountRouter.post("/activate_or_deactivate_account", oAuthentication, asyn
 // url: ..../bankaccount/getallsavingstransactions
 obankaccountRouter.post("/getallsavingstransactions", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId})
+    let oAllTransactions = await oTransactionModel.find({nLoanId : oReq.body.nAccountId , sIsApproved : 'Approved'})
       if(oAllTransactions) {
           oRes.json(oAllTransactions);
       }
@@ -310,12 +310,17 @@ obankaccountRouter.get("/getallsavingsaccountbalance", oAuthentication, asyncMid
 obankaccountRouter.post("/getsingleaccountbalance", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     let accountBalance = 0;
-    let obankaccount = await obankaccountModel.findOne({bIsDeactivated : false, sAccountNo : oReq.body.sAccountNo});
+    let oBankaccount = await obankaccountModel.findOne({bIsDeactivated : false, sAccountNo : oReq.body.sAccountNo});
+    const olasttransaction = await oTransactionModel.find({ nLoanId: oBankaccount.nAccountId , sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
+      
 
-    if(!obankaccount){
+    if(!oBankaccount){
       return oRes.status(400).send();
     }else{
-      accountBalance = obankaccount.nAmount; 
+      if (olasttransaction.length > 0) {
+        accountBalance = olasttransaction[0].nBalanceAmount;
+      }
+     // accountBalance = obankaccount.nAmount; 
     }
     oRes.json(accountBalance);
 
