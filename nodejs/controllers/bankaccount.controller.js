@@ -146,9 +146,9 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
     oRes.json("Success");
 
   }catch(e){
-    console.log(e);
-    oRes.status(400).send(e);
-
+    console.log(e); //{"driver": e.driver,"name":e.name,"error_code":e.code}
+    if(e.code === 11000) oRes.json(e);
+    else  oRes.status(400).send(e);
   }
 }));
 

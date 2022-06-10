@@ -382,14 +382,24 @@ export class AddaccountComponent implements OnInit {
       if (!this.bisEditMode) {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];
-          this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
-            this.fnMessage(this.oBankAccountModel.sAccountNo+' is created sucessfully.','success');
-            this.bankaccounts = [...cdata as any];
-            //this.oBankAccountModel.sState = '';
-            this.bIsAddActive = false;
-            this.addClicked.emit();
-            this.redirectTo('/newaccountform');
-          });
+          if(data == 'Success'){
+            this.oBankAccountService.fngetActiveBankAccountInfo().subscribe((cdata) => {
+              this.fnMessage(this.oBankAccountModel.sAccountNo+' is created sucessfully.','success');
+              this.bankaccounts = [...cdata as any];
+              //this.oBankAccountModel.sState = '';
+              this.bIsAddActive = false;
+              this.addClicked.emit();
+              this.redirectTo('/newaccountform');
+            });
+          }else if((data as any).code == 11000){
+            let pBankaccount = this.oBankAccountModel.sAccountNo ;
+            this.oBankAccountService.fngetLastBankAccountInfo(this.oBankAccountModel.nVillageId).subscribe((data:any) => {
+              if(data.accno.toString().length === 1) this.oBankAccountModel.sAccountNo = ''+this.oBankAccountModel.sBranchCode +'000' + data.accno;
+              else this.oBankAccountModel.sAccountNo = '0'+(parseInt(data.accno) + 1).toString();
+              this.fnMessage(pBankaccount+' is Already exists, so we are creating another account using '+ this.oBankAccountModel.sAccountNo,'warning');
+              this.fnOnBankAccountInfoSubmit();
+            });
+          }
         });
       }else{
         this.oBankAccountService.fnEditBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
@@ -443,7 +453,7 @@ export class AddaccountComponent implements OnInit {
       icon: icon,
       title: message,
       showConfirmButton: false,
-      timer: 1500
+      timer: 2000
     });
   }
   fnClear(){
@@ -527,4 +537,5 @@ export class AddaccountComponent implements OnInit {
     else if(sErrorName === 'pin') this.bErrorPin = flag ;
     else if(sErrorName === 'email') this.bErrorEmail = flag ;
   }
+
 }
