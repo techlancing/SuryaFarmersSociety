@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BankEmployee } from 'src/app/core/models/bankemployee.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-employee',
@@ -10,10 +11,12 @@ export class ViewEmployeeComponent implements OnInit {
   @Input() oEditBankEmployeeModel: BankEmployee;
   public oBankEmployeeModel: BankEmployee;
   aDesignation : any;
+  sImageRootPath : string ;
   public sDesignation : string ='';
   constructor() { }
 
   ngOnInit(): void {
+    this.sImageRootPath = environment.imagePath;
     this.aDesignation = [
       {
         displayText: 'Manager',

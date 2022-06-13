@@ -127,13 +127,18 @@ oBankEmployeeRouter.post("/delete_bankemployee", oAuthentication, asyncMiddlewar
 // url: ..../bankemployee/pending_bankemployee_list
 oBankEmployeeRouter.get("/pending_bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
     try{
-      const oAllBankEmployees = await oBankEmployeeModel.find({sStatus : 'pending'});
+      await oBankEmployeeModel.find({sStatus : 'pending'})
+      .populate({
+        path: 'oEmployeePhotoUpload oBankPassBookUpload oCallLetterUpload oAadharUpload'
+      }).exec((oError, oAllBankEmployees) => {
+        if(!oError) {
+            oRes.json(oAllBankEmployees);
+        }
+        else{
+            console.log(oError);
+        }
+      });
 
-      if(!oAllBankEmployees){
-        return oRes.status(400).send();
-      }
-
-      oRes.json(oAllBankEmployees);
     }catch(e){
       console.log(e);
       oRes.status(400).send(e);
@@ -144,13 +149,18 @@ oBankEmployeeRouter.get("/pending_bankemployee_list", oAuthentication, asyncMidd
 // url: ..../bankemployee/approved_bankemployee_list
 oBankEmployeeRouter.get("/approved_bankemployee_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    const oAllBankEmployees = await oBankEmployeeModel.find({sStatus : 'approve'});
+    await oBankEmployeeModel.find({sStatus : 'approve'})
+    .populate({
+      path: 'oEmployeePhotoUpload oBankPassBookUpload oCallLetterUpload oAadharUpload'
+    }).exec((oError, oAllBankEmployees) => {
+      if(!oError) {
+          oRes.json(oAllBankEmployees);
+      }
+      else{
+          console.log(oError);
+      }
+    });
 
-    if(!oAllBankEmployees){
-      return oRes.status(400).send();
-    }
-
-    oRes.json(oAllBankEmployees);
   }catch(e){
     console.log(e);
     oRes.status(400).send(e);
