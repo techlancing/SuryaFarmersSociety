@@ -66,7 +66,7 @@ aBankEmployees: Array<BankEmployee>;
   }>;
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
-  url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
+  url: environment.apiUrl + "nodejs/bankemployee/upload_file",//"/nodejs/car/upload_file", 
   maxFilesize: 0.20161290,
   maxFiles: 1,
   init: function() {
@@ -181,12 +181,12 @@ aBankEmployees: Array<BankEmployee>;
     this.oBankEmployeeModel.sBranchName === ''||
     this.oBankEmployeeModel.sPlace === ''||
     this.oBankEmployeeModel.sAadharNo === ''||
-    this.oBankEmployeeModel.sJoiningDate=== ''
+    this.oBankEmployeeModel.sJoiningDate=== ''||
     // this.oBankEmployeeModel.oPassportImageInfo === null ||
-    // this.oBankEmployeeModel.oAadharUpload === null ||
-    // this.oBankEmployeeModel.oBankPassBookUpload === null ||
-    // this.oBankEmployeeModel.oCallLetterUpload === null ||
-    // this.oBankEmployeeModel.oEmployeePhotoUpload === null
+    this.oBankEmployeeModel.oAadharUpload === null ||
+    this.oBankEmployeeModel.oBankPassBookUpload === null ||
+    this.oBankEmployeeModel.oCallLetterUpload === null ||
+    this.oBankEmployeeModel.oEmployeePhotoUpload === null
     ){
       this.fnShowFieldsAreEmpty();
       return;
@@ -235,6 +235,101 @@ aBankEmployees: Array<BankEmployee>;
       timer: 1500
     });
   }
+
+  ngAfterViewInit() {
+    if (this.bisEditMode) {
+      
+      this.fnDisplayExistingImageThumbnail();
+    }
+  }
+
+  private fnDisplayExistingImageThumbnail(): void{
+    // if(!this.oPhotoDropZone && !this.oSignature1DropZone && !this.oSignature2DropZone
+    //   && !this.oDocument1DropZone && !this.oDocument2DropZone) return;
+    // setTimeout(() => {
+
+
+    //   const oDZ = this.oPhotoDropZone.directiveRef.dropzone();
+    //   let oImageInfo = this.oBankAccountModel.oPassportImageInfo;
+    //   if (!oImageInfo) return;
+
+    //   var imgURL = environment.imagePath + oImageInfo.sImageURL;
+    //   var mockFile = { name: oImageInfo.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURL };
+
+    //   var crossorigin = "anonymous";
+    //   oDZ.displayExistingFile(mockFile, imgURL, function (img) {
+    //     console.log(img);
+    //   }, crossorigin);
+
+    //   const oDZM = this.oSignature1DropZone.directiveRef.dropzone();
+    //   let oImageInfoMob = this.oBankAccountModel.oSignature1Info;
+    //   if (!oImageInfoMob) return;
+
+    //   var imgURLmob = environment.imagePath + oImageInfoMob.sImageURL;
+    //   var mockFileMob = { name: oImageInfoMob.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLmob };
+
+    //   crossorigin = "anonymous";
+    //   oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
+    //     console.log(img);
+    //   }, crossorigin);
+
+    //   const os2DZM = this.oSignature2DropZone.directiveRef.dropzone();
+    //   let oImageInfos2 = this.oBankAccountModel.oSignature2Info;
+    //   if (!oImageInfos2) return;
+
+    //   var imgURLs2 = environment.imagePath + oImageInfos2.sImageURL;
+    //   var mockFiles2 = { name: oImageInfos2.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLs2 };
+
+    //   crossorigin = "anonymous";
+    //   os2DZM.displayExistingFile(mockFiles2, imgURLs2, function (img) {
+    //     console.log(img);
+    //   }, crossorigin);
+
+    //   const od1DZM = this.oDocument1DropZone.directiveRef.dropzone();
+    //   let oImageInfod1 = this.oBankAccountModel.oDocument1Info;
+    //   if (!oImageInfod1) return;
+
+    //   var imgURLd1 = environment.imagePath + oImageInfod1.sImageURL;
+    //   var mockFiled1 = { name: oImageInfod1.sImageName, size: 12345, accepted: true,  dataURL: imgURLd1 };
+
+    //   crossorigin = "anonymous";
+    //   od1DZM.displayExistingFile(mockFiled1, imgURLd1, function (img) {
+    //     console.log(img);
+    //   }, crossorigin);
+
+    //   const od2DZM = this.oDocument2DropZone.directiveRef.dropzone();
+    //   let oImageInfd2 = this.oBankAccountModel.oDocument2Info;
+    //   if (!oImageInfd2) return;
+
+    //   var imgURLd2 = environment.imagePath + oImageInfd2.sImageURL;
+    //   var mockFiled2 = { name: oImageInfd2.sImageName, size: 12345, accepted: true, dataURL: imgURLd2 };
+
+    //   crossorigin = "anonymous";
+    //   od2DZM.displayExistingFile(mockFiled2, imgURLd2, function (img) {
+    //     console.log(img);
+    //   }, crossorigin);
+
+    // }, 500);
+
+  }
+
+  
+  fnonUploadPhotoSuccess(args: any){
+    this.oBankEmployeeModel.oEmployeePhotoUpload = args[1].oImageRefId;
+  }
+  
+  fnonUploadAadhaarSuccess(args: any){
+    this.oBankEmployeeModel.oAadharUpload = args[1].oImageRefId;
+  }
+  
+  fnonUploadCallLetterSuccess(args: any){
+    this.oBankEmployeeModel.oCallLetterUpload = args[1].oImageRefId;
+  }
+  
+  fnonUploadBankPassbookSuccess(args: any){
+    this.oBankEmployeeModel.oBankPassBookUpload = args[1].oImageRefId;
+  }
+
 
   fnResetState() {
     // this.oBankEmployeeModel.sState = '';

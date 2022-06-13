@@ -189,7 +189,7 @@
               <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addphotoropzoneElem
-                    [message]="'Photo Upload'"
+                    [message]="'Photo Upload'" (success)="fnonUploadPhotoSuccess($event)"
                     ></dropzone>
                 </div>
               </div>
@@ -197,7 +197,7 @@
               <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addpassbookropzoneElem
-                    [message]="'Bank Passbook Upload'"
+                    [message]="'Bank Passbook Upload'" (success)="fnonUploadBankPassbookSuccess($event)"
                     ></dropzone>
                 </div>
               </div>
@@ -205,7 +205,7 @@
               <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addcallletterropzoneElem
-                    [message]="'CallLetter Upload'"
+                    [message]="'CallLetter Upload'" (success)="fnonUploadCallLetterSuccess($event)"
                     ></dropzone>
                 </div>
               </div>
@@ -213,7 +213,7 @@
               <div class="col-sm-3">
                 <div class="form-group">
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #addaadharropzoneElem
-                    [message]="'Aadhar Upload'"
+                    [message]="'Aadhar Upload'" (success)="fnonUploadAadhaarSuccess($event)"
                     ></dropzone>
                 </div>
               </div>    
