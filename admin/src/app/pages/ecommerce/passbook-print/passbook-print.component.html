@@ -1,178 +1,176 @@
-
 <div class="container-fluid passbook-root-layout">
-    <!-- page title -->
-    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
+  <!-- page title -->
+  <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
-  
-    <div class="row ">
-      <form class="col-12" novalidate #_bankaccountFormElem="ngForm" >
-        <div class="card card-bg">
-          <div class="card-body">
-            <h2 class="passbook-heading">Pass Book Print</h2>
-            <div  class="row passbook-acc-input">
-              <div class="col-sm-6">
-                <div class="form-group" >
-                  <label class="control-label">Account Number</label>
-                  <ng-select [items]="aBankAccounts" name="accountno" [(ngModel)]="sSelectedAccount"
-                    bindLabel="sAccountNo" bindValue="sAccountNo" (change)="fnGetAccountNumber()">
-                    <ng-template ng-label-tmp let-item="item">
-                      {{item.sAccountNo}}
-                    </ng-template>
-                  </ng-select>
-                </div>
-              </div>
-              <div class="col-sm-5 btn-container">
-                <button type="button" class="btn btn-primary mr-1" 
-                [disabled]="!bIsBtnActive" 
-                (click)="fnFecthAccountDetails()">
-                Show Account Details</button>
-                
-              </div>
-              <div class="col-sm-1 btn-container">
-                <button type="button" class="btn btn-primary mr-1" 
-                [disabled]="!bIsBtnActive" 
-                (click)="fnPrintPassBook()">
-                print</button>
-                
+
+  <div class="row ">
+    <form class="col-12" novalidate #_bankaccountFormElem="ngForm">
+      <div class="card card-bg">
+        <div class="card-body">
+          <h2 class="passbook-heading">Pass Book Print</h2>
+          <div class="row passbook-acc-input">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label">Account Number</label>
+                <ng-select [items]="aBankAccounts" name="accountno" [(ngModel)]="sSelectedAccount"
+                  bindLabel="sAccountNo" bindValue="sAccountNo" (change)="fnGetAccountNumber()">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{item.sAccountNo}}
+                  </ng-template>
+                </ng-select>
               </div>
             </div>
-             <div *ngIf="bIsPassbookData" class="row passbook-border passbookfont">
-              <div class="col-sm-12 passBookDetailsmargin">                
+            <div class="col-sm-5 btn-container">
+              <button type="button" class="btn btn-primary mr-1" [disabled]="!bIsBtnActive"
+                (click)="fnFecthAccountDetails()">
+                Show Account Details</button>
+
+            </div>
+            <div class="col-sm-1 btn-container">
+              <button type="button" class="btn btn-primary mr-1" [disabled]="!bIsBtnActive" (click)="fnPrintPassBook()">
+                print</button>
+
+            </div>
+          </div>
+          <div *ngIf="bIsPassbookData" class="row passbook-border passbookfont">
+            <div class="col-sm-12 passBookDetailsmargin">
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sAccountNo" class="account-label">Account Number : </label>
+                <span class="account-detail">{{opassbookprintmodel.sAccountNo}}</span>
               </div>
-              
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sAccountNo" class="account-label">Account Number : </label>
-                  <span class="account-detail">{{opassbookprintmodel.sAccountNo}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sCustomerId" class="account-label">Customer ID : </label>
+                <span class="account-detail">{{opassbookprintmodel.sCustomerId}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sCustomerId"  class="account-label">Customer ID : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sCustomerId}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sBranchCode" class="account-label">Branch Code : </label>
+                <span class="account-detail">{{opassbookprintmodel.sBranchCode}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sBranchCode"  class="account-label">Branch Code : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sBranchCode}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sApplicantName" class="account-label">Customer Name : </label>
+                <span class="account-detail">{{opassbookprintmodel.sApplicantName}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sApplicantName"  class="account-label">Customer Name : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sApplicantName}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sAadharNo" class="account-label">Aadhar No : </label>
+                <span class="account-detail">{{opassbookprintmodel.sAadharNo}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sAadharNo"  class="account-label">Aadhar No : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sAadharNo}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sBranchName" class="account-label">Branch Name : </label>
+                <span class="account-detail">Gudoor</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sBranchName"  class="account-label">Branch Name : </label>                  
-                  <span class="account-detail">Gudoor</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sFatherOrHusbandName" class="account-label">Father/Husband Name : </label>
+                <span class="account-detail">{{opassbookprintmodel.sFatherOrHusbandName}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sFatherOrHusbandName"  class="account-label">Father/Husband Name : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sFatherOrHusbandName}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sMobileNumber" class="account-label">Phone No : </label>
+                <span class="account-detail">{{opassbookprintmodel.sMobileNumber}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sMobileNumber"  class="account-label">Phone No : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sMobileNumber}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                                   
-                </div>
-              </div>
-              <div class="col-sm-4">  
-                <div class="form-group">
-                  <label for="sAddress"  class="account-label">Address : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sFlatNo}}<span>, </span>{{opassbookprintmodel.sStreetName}}<span>, </span>
-                  {{opassbookprintmodel.sVillageAddress}}<span>, </span>{{opassbookprintmodel.sMandalAddress}}<span>, </span>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sAddress" class="account-label">Address : </label>
+                <span class="account-detail">{{opassbookprintmodel.sFlatNo}}<span>,
+                  </span>{{opassbookprintmodel.sStreetName}}<span>, </span>
+                  {{opassbookprintmodel.sVillageAddress}}<span>, </span>{{opassbookprintmodel.sMandalAddress}}<span>,
+                  </span>
                   {{opassbookprintmodel.sDistrictAddress}} {{opassbookprintmodel.sPinCode}}</span>
-                  
-                </div>
+
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sMandalAddress"  class="account-label">Branch Address :</label>                  
-                  <span class="account-detail">Nekkonda Road,
-                    Near Gudoor Post Office,
-                    Gudoor, Mahabubabad
-                    506134</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sMandalAddress" class="account-label">Branch Address :</label>
+                <span class="account-detail">Nekkonda Road,
+                  Near Gudoor Post Office,
+                  Gudoor, Mahabubabad
+                  506134</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sDate"  class="account-label">Date Of Issue : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sDate}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sDate" class="account-label">Date Of Issue : </label>
+                <span class="account-detail">{{opassbookprintmodel.sDate}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-               <!--   <label for="sEmail">Email : </label>                  
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <!--   <label for="sEmail">Email : </label>                  
                   <span class="account-detail">suryacoperativesocietylimited@gmail.com</span>-->
-                </div>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sAccountType"  class="account-label">Type Of Account : </label>                  
-                  <span class="account-detail">{{opassbookprintmodel.sAccountType}}</span>
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sAccountType" class="account-label">Type Of Account : </label>
+                <span class="account-detail">{{opassbookprintmodel.sAccountType}}</span>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
               </div>
-              <div class="col-sm-4 site">
-                <div class="form-group">
-                  <label>www.suryacoperativesocietylimited.com</label>
-                </div>
+            </div>
+            <div class="col-sm-4 site">
+              <div class="form-group">
+                <label>www.suryacoperativesocietylimited.com</label>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
               </div>
-              
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="sBranchCode">Society Branch Authorised
-                    Sign</label>
-                </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label for="sBranchCode">Society Branch Authorised
+                  Sign</label>
               </div>
-              <div class="col-sm-4">
-                <div class="form-group">                  
-                </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
               </div>
-  
-              <!-- <div class="col-sm-8 add-category-btn-container">
+            </div>
+
+            <!-- <div class="col-sm-8 add-category-btn-container">
                 <button type="submit" class="btn btn-primary mr-1" [disabled]="bIsBtnActive || bIsEditActive"
                 >{{sButtonText}}</button>
                 <button type="button" class="btn btn-secondary"
                 >Clear</button>
                 <button type="button" class="btn btn-secondary"
                 >Clear</button> -->
-              <!-- </div> -->
-            </div>
+            <!-- </div> -->
           </div>
         </div>
-      </form>
+      </div>
+    </form>
   </div>
