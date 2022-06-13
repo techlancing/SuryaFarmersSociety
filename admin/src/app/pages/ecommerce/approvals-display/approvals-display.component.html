@@ -76,4 +76,44 @@
         </div>
     </div>
 
+
+    <div class="row col-sm-12">
+        <div class="card card-bg">
+            <div class="card-body">
+                <h2>All Credit/Debit Approvals</h2>
+                <!-- <div class="row mb-md-2"> -->
+                    <div class="table-responsive">
+                        <table class=" table table-bordered dt-responsive nowrap datatables no-footer dtr-inline table-centered tableText tabledata " id="basic-datatable">
+                            <thead>
+                                <tr>
+                                    <th>Account Number</th>
+                                    <th>Account Type</th>
+                                    <th>Credit Amount</th>
+                                    <th>Debit Amount Amount</th>
+                                    <th>Balance Amount</th>
+                                    <th>Date</th>
+                                    <th>Approved Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="trans-detail">
+                                <tr *ngFor="let approval of aCreditApprovals ;let i = index;">
+                                    <td>{{approval.sAccountNo}}</td>
+                                    <td>{{approval.sAccountType}}</td>
+                                    <td>{{approval.nCreditAmount}}</td>
+                                    <td>{{approval.nDebitAmount}}</td>
+                                    <td>{{approval.nBalanceAmount}}</td>
+                                    <td>{{approval.sDate}}</td>
+                                    <td><label for="approval-status" class="status">{{approval.sIsApproved}}</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
