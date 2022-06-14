@@ -244,72 +244,72 @@ aBankEmployees: Array<BankEmployee>;
   }
 
   private fnDisplayExistingImageThumbnail(): void{
-    // if(!this.oPhotoDropZone && !this.oSignature1DropZone && !this.oSignature2DropZone
-    //   && !this.oDocument1DropZone && !this.oDocument2DropZone) return;
-    // setTimeout(() => {
+    if(!this.oPhotoDropZone && !this.oBankPassBookDropZone && !this.oCallLetterDropZone
+      && !this.oAadharDropZone ) return;
+      //&& !this.oDocument2DropZone
+    
+      setTimeout(() => {
+      const oDZ = this.oPhotoDropZone.directiveRef.dropzone();
+      let oImageInfo = this.oBankEmployeeModel.oEmployeePhotoUpload;
+      if (!oImageInfo) return;
 
+      var imgURL = environment.imagePath + oImageInfo.sImageURL;
+      var mockFile = { name: oImageInfo.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURL };
 
-    //   const oDZ = this.oPhotoDropZone.directiveRef.dropzone();
-    //   let oImageInfo = this.oBankAccountModel.oPassportImageInfo;
-    //   if (!oImageInfo) return;
+      var crossorigin = "anonymous";
+      oDZ.displayExistingFile(mockFile, imgURL, function (img) {
+        console.log(img);
+      }, crossorigin);
 
-    //   var imgURL = environment.imagePath + oImageInfo.sImageURL;
-    //   var mockFile = { name: oImageInfo.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURL };
+      const oDZM = this.oBankPassBookDropZone.directiveRef.dropzone();
+      let oImageInfoMob = this.oBankEmployeeModel.oBankPassBookUpload;
+      if (!oImageInfoMob) return;
 
-    //   var crossorigin = "anonymous";
-    //   oDZ.displayExistingFile(mockFile, imgURL, function (img) {
-    //     console.log(img);
-    //   }, crossorigin);
+      var imgURLmob = environment.imagePath + oImageInfoMob.sImageURL;
+      var mockFileMob = { name: oImageInfoMob.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLmob };
 
-    //   const oDZM = this.oSignature1DropZone.directiveRef.dropzone();
-    //   let oImageInfoMob = this.oBankAccountModel.oSignature1Info;
-    //   if (!oImageInfoMob) return;
+      crossorigin = "anonymous";
+      oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
+        console.log(img);
+      }, crossorigin);
 
-    //   var imgURLmob = environment.imagePath + oImageInfoMob.sImageURL;
-    //   var mockFileMob = { name: oImageInfoMob.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLmob };
+      const os2DZM = this.oCallLetterDropZone.directiveRef.dropzone();
+      let oImageInfos2 = this.oBankEmployeeModel.oCallLetterUpload;
+      if (!oImageInfos2) return;
 
-    //   crossorigin = "anonymous";
-    //   oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
-    //     console.log(img);
-    //   }, crossorigin);
+      var imgURLs2 = environment.imagePath + oImageInfos2.sImageURL;
+      var mockFiles2 = { name: oImageInfos2.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLs2 };
 
-    //   const os2DZM = this.oSignature2DropZone.directiveRef.dropzone();
-    //   let oImageInfos2 = this.oBankAccountModel.oSignature2Info;
-    //   if (!oImageInfos2) return;
+      crossorigin = "anonymous";
+      os2DZM.displayExistingFile(mockFiles2, imgURLs2, function (img) {
+        console.log(img);
+      }, crossorigin);
 
-    //   var imgURLs2 = environment.imagePath + oImageInfos2.sImageURL;
-    //   var mockFiles2 = { name: oImageInfos2.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLs2 };
+      const od1DZM = this.oAadharDropZone.directiveRef.dropzone();
+      let oImageInfod1 = this.oBankEmployeeModel.oAadharUpload;
+      if (!oImageInfod1) return;
 
-    //   crossorigin = "anonymous";
-    //   os2DZM.displayExistingFile(mockFiles2, imgURLs2, function (img) {
-    //     console.log(img);
-    //   }, crossorigin);
+      var imgURLd1 = environment.imagePath + oImageInfod1.sImageURL;
+      var mockFiled1 = { name: oImageInfod1.sImageName, size: 12345, accepted: true,  dataURL: imgURLd1 };
 
-    //   const od1DZM = this.oDocument1DropZone.directiveRef.dropzone();
-    //   let oImageInfod1 = this.oBankAccountModel.oDocument1Info;
-    //   if (!oImageInfod1) return;
+      crossorigin = "anonymous";
+      od1DZM.displayExistingFile(mockFiled1, imgURLd1, function (img) {
+        console.log(img);
+      }, crossorigin);
 
-    //   var imgURLd1 = environment.imagePath + oImageInfod1.sImageURL;
-    //   var mockFiled1 = { name: oImageInfod1.sImageName, size: 12345, accepted: true,  dataURL: imgURLd1 };
+      // const od2DZM = this.oDocument2DropZone.directiveRef.dropzone();
+      // let oImageInfd2 = this.oBankEmployeeModel.oDocument2Info;
+      // if (!oImageInfd2) return;
 
-    //   crossorigin = "anonymous";
-    //   od1DZM.displayExistingFile(mockFiled1, imgURLd1, function (img) {
-    //     console.log(img);
-    //   }, crossorigin);
+      // var imgURLd2 = environment.imagePath + oImageInfd2.sImageURL;
+      // var mockFiled2 = { name: oImageInfd2.sImageName, size: 12345, accepted: true, dataURL: imgURLd2 };
 
-    //   const od2DZM = this.oDocument2DropZone.directiveRef.dropzone();
-    //   let oImageInfd2 = this.oBankAccountModel.oDocument2Info;
-    //   if (!oImageInfd2) return;
+      // crossorigin = "anonymous";
+      // od2DZM.displayExistingFile(mockFiled2, imgURLd2, function (img) {
+      //   console.log(img);
+      // }, crossorigin);
 
-    //   var imgURLd2 = environment.imagePath + oImageInfd2.sImageURL;
-    //   var mockFiled2 = { name: oImageInfd2.sImageName, size: 12345, accepted: true, dataURL: imgURLd2 };
-
-    //   crossorigin = "anonymous";
-    //   od2DZM.displayExistingFile(mockFiled2, imgURLd2, function (img) {
-    //     console.log(img);
-    //   }, crossorigin);
-
-    // }, 500);
+    }, 500);
 
   }
 
