@@ -42,9 +42,17 @@ export class AutologoutService {
       document.body.addEventListener('click', () => this.reset());
       document.body.addEventListener('keyup', () => this.reset());
       document.body.addEventListener('mousemove', () => this.reset());
+     window.addEventListener("beforeunload", () => this.fnTabClose());
     });
   }
 
+  //tab close event function
+  fnTabClose(){
+    alert("logging off");
+    localStorage.removeItem('userData');
+    localStorage.removeItem('lastAction');
+    this.oAuthenticationService.logout();
+  }
   /**
    * time interval
    */

@@ -33,6 +33,13 @@ export class AuthGuard implements CanActivate {
             const currentUser = JSON.parse(localStorage.getItem('userData'));
             if (currentUser) {
                 // logged in so return true
+                // let truth = false ;  
+                // if(currentUser.sRole == 'manager') this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                // this.router.navigate(['/welcomemanager']));
+                // if(currentUser.sRole == 'employee') this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=> {  this.router.navigate(['/welcomeemployee'])
+                // return truth;});
+               
+                // else truth = true ;
                 return true;
             }
         }
