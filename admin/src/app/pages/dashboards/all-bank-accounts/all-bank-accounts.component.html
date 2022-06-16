@@ -36,11 +36,6 @@
                       class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline content">
                       <thead>
                         <tr>
-                          <!-- (sort)="onSort($event)"
-                          (sort)="onSort($event)"
-                          (sort)="onSort($event)"
-                          (sort)="onSort($event)" -->
-
                           <th sortable="sAccountNo" >Account No</th>  
                           <th sortable="sBranchCode">Branch Code</th>
                           <th sortable="sCustomerId" >Customer Id</th>
@@ -72,7 +67,7 @@
                           </td> -->
                           
                           <td class="actions">
-                            <button class="btn btn-primary" (click)="openModal(accountcontent,i)">Edit</button>
+                            <button class="btn btn-primary" (click)="openModal(accountcontent,table)">Edit</button>
                               <button class="btn btn-primary" (click)="fnDeleteBankAccount(table)">Delete</button>
                           </td>
                           <td>
@@ -83,7 +78,7 @@
                               <i class="mdi mdi-account-edit" ></i>Activate</button>
                           </td>
                           <td>
-                            <button class="btn btn-primary" (click)="openModal(accountviewcontent,i)">
+                            <button class="btn btn-primary" (click)="openModal(accountviewcontent,table)">
                               <i class="mdi mdi-employee-edit">Show</i></button>
                           </td>
                         </tr>

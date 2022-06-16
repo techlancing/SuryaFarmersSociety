@@ -48,8 +48,9 @@ export class AllBankAccountsComponent implements OnInit {
    * Open modal
    * @param content modal content
    */
-   openModal(content: any, selectedindex: number) {
-     this.nSelectedProductIndex = selectedindex;
+   openModal(content: any, selectedindex : any ) {
+    this.nSelectedProductIndex = this.aAllBankAccounts.findIndex((account) => { return account.sAccountNo === selectedindex.sAccountNo});
+    console.log(this.aAllBankAccounts[this.nSelectedProductIndex]);
     this.modalService.open(content, { centered: true, size: 'xl' });
   }
 
