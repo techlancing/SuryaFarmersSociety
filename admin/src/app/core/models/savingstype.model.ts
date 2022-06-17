@@ -17,7 +17,8 @@ export class SavingsType {
         public nPensionInterestAddAmount : number = null,
         public nPensionAmountMonths : number =null ,    
         public sTypeofSavings : string = '',
-        public sIsApproved : string ='',           
+        public sIsApproved : string ='',         
+        public sStatus : string = '',  
         public sEmployeeName : string = '',
         public sPensionDepositInterestOnAccount : string = '',
         public oTransactionInfo: any = null

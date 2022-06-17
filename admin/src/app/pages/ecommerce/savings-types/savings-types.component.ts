@@ -75,6 +75,7 @@ export class SavingsTypesComponent implements OnInit {
     });
     this.oSavingsTypeModel = new SavingsType();
     this.oSavingsTypeModel.sIsApproved = 'Pending';
+    this.oSavingsTypeModel.sStatus = 'InActive';
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
     this.bIsEditActive = false;

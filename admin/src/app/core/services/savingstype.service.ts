@@ -59,4 +59,9 @@ export class SavingstypeService {
     const sMethodUrl = `${this.sRootUrl}/getsavingtype`;
     return this.http.post(sMethodUrl, oSavinsType);
   }
+
+  fnDeactivateSavingType(oSavinsType: SavingsType){
+    const sMethodUrl = `${this.sRootUrl}/deactivate`;
+    return this.http.post(sMethodUrl, oSavinsType);
+  }
 }

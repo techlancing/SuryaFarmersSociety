@@ -21,7 +21,7 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
   console.log('newSavings', newSavings)
   try {
     //checking the savingtype already exists or not
-    const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sTypeofSavings: oReq.body.sTypeofSavings });
+    const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sTypeofSavings: oReq.body.sTypeofSavings ,sStatus : 'Active'});
     if (oSavings) {
       return oRes.json("Exists").send();
     }
@@ -242,6 +242,25 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
   }
 }));
 
+//url : ..../savingstype/deactivate
+oSavingsTypeRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq ,oRes ,oNext) => {
+  try{
+    const oSavingType = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo ,nSavingsId : oReq.body.nSavingsId, sStatus : 'Active'});
+    if(!oSavingType) {
+      return oRes.status(400).send();
+    }
+    console.log(oSavingType);
+    oSavingType.sStatus = oReq.body.sStatus ;
+    // await oSavingsTypeModel.findByIdAndUpdate(oSavingType._id, { sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
+    oSavingType.save();
+    oRes.json("Success");
+  }
+  catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
 // url: ..../savingstype/edit_savingstype
 oSavingsTypeRouter.post("/edit_savingstype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
@@ -337,7 +356,7 @@ oSavingsTypeRouter.post("/setsavingstypeapprovalstatus", oAuthentication, asyncM
     if (!oSavingsType) {
       return oRes.status(400).send();
     }
-    await oSavingsTypeModel.findByIdAndUpdate(oSavingsType._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+    await oSavingsTypeModel.findByIdAndUpdate(oSavingsType._id, { sIsApproved: oReq.body.sIsApproved, sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
     oRes.json("Success");
 
   } catch (e) {
@@ -367,7 +386,7 @@ oSavingsTypeRouter.post("/delete_savingstype", oAuthentication, asyncMiddleware(
 // url: ..../savingstype/savingstype_list
 oSavingsTypeRouter.post("/savingstype_list", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
-    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo })
+    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo  })
       .populate({
         path: 'oTransactionInfo'
       }).exec((oError, oAllSavingsTypes) => {
@@ -435,7 +454,7 @@ oSavingsTypeRouter.post("/getallsavingtypes", oAuthentication, asyncMiddleware(a
 // url: ..../savingstype/getallsavingstypeByApproval
 oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
-    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved" })
+    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", sStatus : 'Active' })
       .populate({
         path: 'oTransactionInfo'
       }).exec((oError, oAllSavingsType) => {
@@ -456,7 +475,7 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
 // url: ..../savingstype/getsavingtype
 oSavingsTypeRouter.post("/getsavingtype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
-    await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", nSavingsId: oReq.body.nSavingsId })
+    await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", nSavingsId: oReq.body.nSavingsId , sStatus : 'Active' })
       .populate({
         path: 'oTransactionInfo'
       }).exec((oError, oAllSavingsType) => {

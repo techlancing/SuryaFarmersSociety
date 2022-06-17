@@ -23,6 +23,7 @@
             </div>
             
     
+
             <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
               print</button>
               <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdf('savings')">
@@ -170,9 +171,13 @@
               <label for="sLineNumberLoanTo" *ngIf="!bPdf">Print lIne number To</label>
               <input id="sLineNumberLoanTo" *ngIf="!bPdf" name="sLineNumberLoanTo"  type="text" class="form-control" [(ngModel)]="nInputLineTo2">
              </div>
-              
-              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings)">
-                print</button>
+             <!--&& user.sRole == 'manager'-->
+             <div>
+              <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf"  (click)="fnConfirmationMessageForDeactive(oSavingDepositmodel)">
+                Close</button>
+                <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings)">
+                  print</button>
+             </div>
                 <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf"  (click)="fnPrintPdf(oSavingDepositmodel.sTypeofSavings)">
                  print pdf</button>
             </div>

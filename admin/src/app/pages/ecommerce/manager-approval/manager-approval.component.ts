@@ -67,6 +67,7 @@ export class ManagerApprovalComponent implements OnInit {
   }
   fnChangeApprovalStatus(approval : any,status : string){
     if(this.activatedroute.snapshot.data.type === 'savings'){
+      if(status == 'Approved') approval.sStatus = 'Active';
       approval.sIsApproved = status ;
       this.oSavingstypeService.fnChangeSavingTypeStatus(approval).subscribe((data) => {
         this.fnSuccessMessage(approval.sTypeofSavings+' is '+status+' Successfully');

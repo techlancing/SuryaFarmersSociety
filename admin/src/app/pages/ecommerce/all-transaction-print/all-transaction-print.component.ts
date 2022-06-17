@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
+import { SavingsType } from 'src/app/core/models/savingstype.model';
 @Component({
   selector: 'app-all-transaction-print',
   templateUrl: './all-transaction-print.component.html',
@@ -94,7 +95,8 @@ export class AllTransactionPrintComponent implements OnInit {
   public sButtonText: string;
   @Input() bisEditMode: boolean;
   aSavingDeposit: any;
-  
+  oSelectedAccount: BankAccount;
+  user : any ;
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
@@ -104,6 +106,7 @@ export class AllTransactionPrintComponent implements OnInit {
     private oSavingstypeService : SavingstypeService) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('userData'));
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
     
     this.aTypeofLoan = [
@@ -148,6 +151,7 @@ export class AllTransactionPrintComponent implements OnInit {
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){
     this.sAccountNo = oSelectedAccount.sAccountNo;
+    this.oSelectedAccount = oSelectedAccount ;
     this.oCreditLoanServcie.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
       this.aCreditLoan = loandata as any;
       this.oAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((savingdata)=>{
@@ -306,5 +310,42 @@ export class AllTransactionPrintComponent implements OnInit {
       if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
     })
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
+  }
+  fnDeactivateSavingType(savingtype : SavingsType){
+    savingtype.sStatus = 'InActive'
+    this.oSavingstypeService.fnDeactivateSavingType(savingtype).subscribe((data) =>{
+      if(data == 'Success'){
+        this.fnSuccessMessage(savingtype.sAccountNo +
+          ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' is Closed Successfully.')
+          this.fnGetSavingDepositAccounts(this.oSelectedAccount);
+      }
+    });
+  }
+  fnConfirmationMessageForDeactive(savingtype : SavingsType){
+    Swal.fire(
+      {
+        position: 'center',
+        icon: 'question',
+        title: 'Do you want to Close ? ',
+        text: savingtype.sAccountNo +
+        ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount +' )',
+        showConfirmButton: true,
+        showCancelButton: true,
+
+      }
+    ).then((result) => {
+      if (result.isConfirmed) {
+        Swal.close();
+        this.fnDeactivateSavingType(savingtype);
+      }
+    });
+  }
+  fnSuccessMessage(msg : string){
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Successful',
+      text: msg
+    });
   }
 }  
