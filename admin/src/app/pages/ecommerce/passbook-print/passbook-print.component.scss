@@ -7,7 +7,7 @@
 
 .passbook-border{
     border: 2px solid grey;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
 }
 
@@ -37,4 +37,7 @@
 .account-label{
     color: black;
     font-weight: bold;
+}
+.padding-sign{
+    margin-bottom: -20px !important;
 }
