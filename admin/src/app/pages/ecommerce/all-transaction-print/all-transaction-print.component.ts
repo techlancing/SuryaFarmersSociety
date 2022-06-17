@@ -225,31 +225,31 @@ export class AllTransactionPrintComponent implements OnInit {
 
   fnPrintSavingDepositAccount(type){
     console.log(type);
-    if(type === 'Daily Deposit Saving'){
+    if(type === 'Daily Deposit'){
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
       this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
     }
-    else if(type === 'Fixed Deposit Saving') {
+    else if(type === 'Fixed Deposit') {
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
     }
-    else if(type === 'Recuring Deposit Saving'){
+    else if(type === 'Recuring Deposit'){
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
     } 
-    else if(type === 'Monthly Deposit Saving') {
+    else if(type === 'Monthly Deposit') {
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
     } 
-    else if(type === 'Pension Deposit Saving') {
+    else if(type === 'Pension Deposit') {
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
     } 
-    else if(type === 'Child Deposit Saving') {
+    else if(type === 'Child Deposit') {
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
     } 
-    else if(type === 'Education Deposit Saving') {
+    else if(type === 'Education Deposit') {
       this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
       this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
     } 

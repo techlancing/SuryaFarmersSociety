@@ -172,7 +172,7 @@
               <input id="sLineNumberLoanTo" *ngIf="!bPdf" name="sLineNumberLoanTo"  type="text" class="form-control" [(ngModel)]="nInputLineTo2">
              </div>
              <!--&& user.sRole == 'manager'-->
-             <div>
+             <div class = "notvisible">
               <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf"  (click)="fnConfirmationMessageForDeactive(oSavingDepositmodel)">
                 Close</button>
                 <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings)">
