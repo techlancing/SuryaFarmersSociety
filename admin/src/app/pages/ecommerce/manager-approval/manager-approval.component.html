@@ -24,7 +24,11 @@
                   <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
                   <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
-                  <th *ngIf="sTableContent === 'Credit'">Total Amount</th>
+                  <th *ngIf="sTableContent === 'Credit/Debit'">Credit Amount</th>
+                  <th *ngIf="sTableContent === 'Credit/Debit'">Debit Amount Amount</th>
+                  <th *ngIf="sTableContent === 'Credit/Debit'">Balance Amount</th>
+                  <th *ngIf="sTableContent === 'Credit/Debit'">Date</th>
+                  <!-- <th *ngIf="sTableContent === 'Credit/Debit'">Total Amount</th> -->
                   <!-- <th>Maturity Date</th> -->
                  <th class="swidth">Approved Status</th>
                  <th>Actions</th>
@@ -36,7 +40,7 @@
                   <td>{{approval.sAccountNo}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.sTypeofLoan}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sTypeofSavings}}</td>
-                  <td *ngIf="sTableContent === 'Credit'">{{approval.sAccountType}}</td>
+                  <td *ngIf="sTableContent === 'Credit/Debit'">{{approval.sAccountType}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.sDate}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sStartDate}}</td>
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sMaturityDate}}</td>
@@ -44,7 +48,14 @@
                   <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.nMaturityAmount}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.nSanctionAmount}}</td>
                   <td *ngIf="sTableContent === 'Loan'">{{approval.nTotalAmount}}</td>
-                  <td *ngIf="sTableContent === 'Credit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td>
+
+                  <td *ngIf="sTableContent === 'Credit/Debit'">{{approval.nCreditAmount}}</td>
+                  <td *ngIf="sTableContent === 'Credit/Debit'">{{approval.nDebitAmount}}</td>
+                  <td *ngIf="sTableContent === 'Credit/Debit'">{{approval.nBalanceAmount}}</td>
+                  <td *ngIf="sTableContent === 'Credit/Debit'">{{approval.sDate}}</td>
+
+
+                  <!-- <td *ngIf="sTableContent === 'Credit/Debit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td> -->
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
                   <td class="buttonDisplay actions">
                     <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 
