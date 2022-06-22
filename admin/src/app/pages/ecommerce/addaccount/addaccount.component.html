@@ -404,6 +404,8 @@
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #document1dropzoneElem
                     [message]="'Document-1 Upload'"
                     (success)="fnonUploadDocument1ImageSuccess($event)"></dropzone>
+                    <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
+                    (click)="fnViewLarge(imageviewcontent,'Document-1')">zoom</button>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -411,6 +413,8 @@
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #document2dropzoneElem
                     [message]="'Document-2 Upload'"
                     (success)="fnonUploadDocument2ImageSuccess($event)"></dropzone>
+                    <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
+                    (click)="fnViewLarge(imageviewcontent,'Document-2')">zoom</button>
                 </div>
               </div>
                                                   
@@ -485,3 +489,16 @@
     </div>
   </ng-template> -->
   
+  <!--view Image-->
+<ng-template #imageviewcontent role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Document view</h5>
+    <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
+  </div>
+  <div class="modal-body">
+    <embed src="{{imageUrl}}" width="750" height="750">
+    <!-- <img src="{{imageUrl}}" class="photoWidth" /> -->
+    <!-- <app-account-details 
+  [oBankAccount]="aAllBankAccounts[nSelectedProductIndex]"></app-account-details> -->
+  </div>
+</ng-template>

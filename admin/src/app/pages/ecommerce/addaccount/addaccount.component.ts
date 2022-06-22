@@ -105,6 +105,8 @@ export class AddaccountComponent implements OnInit {
 
   public sButtonText: string;
   @Input() bisEditMode: boolean;
+  imageUrl: string;
+  sImageRootPath: string;
   constructor(private oBankAccountService: BankAccountService,
     private oDistrictService: DistrictService,
     private oMandalService: MandalService,
@@ -116,6 +118,7 @@ export class AddaccountComponent implements OnInit {
               private element : ElementRef) { }
 
   ngOnInit(): void {
+    this.sImageRootPath = environment.imagePath;
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
     
     this.oDistrictService.fngetDistrictInfo().subscribe((data) => {
@@ -538,4 +541,20 @@ export class AddaccountComponent implements OnInit {
     else if(sErrorName === 'email') this.bErrorEmail = flag ;
   }
 
+
+
+
+  // openModal(content: any, selectedindex : any ) {
+  //   this.nSelectedProductIndex = this.aAllBankAccounts.findIndex((account) => { return account.sAccountNo === selectedindex.sAccountNo});
+  //   console.log(this.aAllBankAccounts[this.nSelectedProductIndex]);
+  //   this.modalService.open(content, { centered: true, size: 'xl' });
+  // }
+  fnViewLarge(content : any , image : string){
+    if(image == 'Document-1') this.imageUrl = this.sImageRootPath + this.oBankAccountModel.oDocument1Info?.sImageURL ;
+    else if(image == 'Document-2') this.imageUrl = this.sImageRootPath + this.oBankAccountModel.oDocument2Info?.sImageURL ;
+    // else if(image == '')
+    // else if(image == '')
+    // else 
+    this.modalService.open(content, { centered: true, size: 'xl' });
+  }
 }
