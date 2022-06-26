@@ -104,14 +104,14 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
     /* SmS code Start */
     if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES"){
       const oAccount = await obankaccountModel.findOne({sAccountNo: newTransaction.sAccountNo});
-      if (oAccount.sSMSAlert === "YES") {
+      if (oAccount.sSMSAlert === "Yes") {
         const options = {
           "method": "POST",
           "hostname": "api.msg91.com",
           "port": null,
           "path": "/api/v5/flow/",
           "headers": {
-            "authkey": "371253A5XBmjXj61cc5295P1",
+            "authkey": "371253At5xrfgrK62b82597P1",
             "content-type": "application/JSON"
           }
         };
