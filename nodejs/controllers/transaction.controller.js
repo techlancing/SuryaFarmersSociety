@@ -148,7 +148,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
       /* SmS code Start */
       if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
         //get mobile number from account number 
-        const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+        const oAccount = await obankaccountModel.findOne({ sAccountNo: oTransaction.sAccountNo });
         if (oAccount.sSMSAlert === "Yes") {
           const options = {
             "method": "POST",
