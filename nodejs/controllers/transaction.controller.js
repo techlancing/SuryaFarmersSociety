@@ -224,11 +224,11 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
         req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
       \"sender\": \"ADPNXT\",\n  
       \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      \"acno\": \"${newTransaction.sAccountNo}\",\n  
-      \"amount\": \"${newTransaction.nCreditAmount}\",\n  
-      \"date\":\"${newTransaction.sDate}\",\n  
-      \"tid\":\"${newTransaction.nTransactionId}\",\n  
-      \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+      \"acno\": \"${oTransaction.sAccountNo}\",\n  
+      \"amount\": \"${oTransaction.nCreditAmount}\",\n  
+      \"date\":\"${oTransaction.sDate}\",\n  
+      \"tid\":\"${oTransaction.nTransactionId}\",\n  
+      \"bal\":\"${oTransaction.nBalanceAmount}\"\n}`);
           req.end();
         }
       }
