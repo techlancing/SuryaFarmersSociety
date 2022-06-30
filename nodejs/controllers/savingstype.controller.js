@@ -100,43 +100,43 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     await oSavings.save();
 
     /* SmS code Start */
-    if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
-      const options = {
-        "method": "POST",
-        "hostname": "api.msg91.com",
-        "port": null,
-        "path": "/api/v5/flow/",
-        "headers": {
-          "authkey": "371253At5xrfgrK62b82597P1",
-          "content-type": "application/JSON"
-        }
-      };
+    // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
+    //   const options = {
+    //     "method": "POST",
+    //     "hostname": "api.msg91.com",
+    //     "port": null,
+    //     "path": "/api/v5/flow/",
+    //     "headers": {
+    //       "authkey": "371253At5xrfgrK62b82597P1",
+    //       "content-type": "application/JSON"
+    //     }
+    //   };
 
-      const req = http.request(options, function (res) {
-        const chunks = [];
+    //   const req = http.request(options, function (res) {
+    //     const chunks = [];
 
-        res.on("data", function (chunk) {
-          chunks.push(chunk);
-        });
+    //     res.on("data", function (chunk) {
+    //       chunks.push(chunk);
+    //     });
 
-        res.on("end", function () {
-          const body = Buffer.concat(chunks);
-          console.log(body.toString());
-        });
-      });
-      //get mobile number from account number 
-      const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
-      //debit message for customers
-      req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
-      \"sender\": \"ADPNXT\",\n  
-      \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      \"acno\": \"${newTransaction.sAccountNo}\",\n  
-      \"amount\": \"${newTransaction.nCreditAmount}\",\n  
-      \"date\":\"${newTransaction.sDate}\",\n  
-      \"tid\":\"${newTransaction.nTransactionId}\",\n  
-      \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
-      req.end();
-    }
+    //     res.on("end", function () {
+    //       const body = Buffer.concat(chunks);
+    //       console.log(body.toString());
+    //     });
+    //   });
+    //   //get mobile number from account number 
+    //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+    //   //debit message for customers
+    //   req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
+    //   \"sender\": \"ADPNXT\",\n  
+    //   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+    //   \"acno\": \"${newTransaction.sAccountNo}\",\n  
+    //   \"amount\": \"${newTransaction.nCreditAmount}\",\n  
+    //   \"date\":\"${newTransaction.sDate}\",\n  
+    //   \"tid\":\"${newTransaction.nTransactionId}\",\n  
+    //   \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+    //   req.end();
+    // }
     /* SmS code End */
 
     oRes.json("Success");
@@ -191,46 +191,46 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
       await oSavings.save();
 
       /* SmS code Start */
-      if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
-        //get mobile number from account number 
-        const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
-        if (oAccount.sSMSAlert === "Yes") {
-          const options = {
-            "method": "POST",
-            "hostname": "api.msg91.com",
-            "port": null,
-            "path": "/api/v5/flow/",
-            "headers": {
-              "authkey": "371253At5xrfgrK62b82597P1",
-              "content-type": "application/JSON"
-            }
-          };
+      // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
+      //   //get mobile number from account number 
+      //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+      //   if (oAccount.sSMSAlert === "Yes") {
+      //     const options = {
+      //       "method": "POST",
+      //       "hostname": "api.msg91.com",
+      //       "port": null,
+      //       "path": "/api/v5/flow/",
+      //       "headers": {
+      //         "authkey": "371253At5xrfgrK62b82597P1",
+      //         "content-type": "application/JSON"
+      //       }
+      //     };
 
-          const req = http.request(options, function (res) {
-            const chunks = [];
+      //     const req = http.request(options, function (res) {
+      //       const chunks = [];
 
-            res.on("data", function (chunk) {
-              chunks.push(chunk);
-            });
+      //       res.on("data", function (chunk) {
+      //         chunks.push(chunk);
+      //       });
 
-            res.on("end", function () {
-              const body = Buffer.concat(chunks);
-              console.log(body.toString());
-            });
-          });
+      //       res.on("end", function () {
+      //         const body = Buffer.concat(chunks);
+      //         console.log(body.toString());
+      //       });
+      //     });
 
-          //debit message for customers
-          req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
-      \"sender\": \"ADPNXT\",\n  
-      \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      \"acno\": \"${newTransaction.sAccountNo}\",\n  
-      \"amount\": \"${newTransaction.nCreditAmount}\",\n  
-      \"date\":\"${newTransaction.sDate}\",\n  
-      \"tid\":\"${newTransaction.nTransactionId}\",\n  
-      \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
-          req.end();
-        }
-      }
+      //     //debit message for customers
+      //     req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
+      // \"sender\": \"ADPNXT\",\n  
+      // \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+      // \"acno\": \"${newTransaction.sAccountNo}\",\n  
+      // \"amount\": \"${newTransaction.nCreditAmount}\",\n  
+      // \"date\":\"${newTransaction.sDate}\",\n  
+      // \"tid\":\"${newTransaction.nTransactionId}\",\n  
+      // \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+      //     req.end();
+      //   }
+      // }
       /* SmS code End */
 
       oRes.json("Success");
