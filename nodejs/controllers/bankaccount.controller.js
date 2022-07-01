@@ -358,7 +358,7 @@ obankaccountRouter.get("/getequalaccountscount", oAuthentication, asyncMiddlewar
     let nEqualAccounts = 0;
     if(obankaccount.length >= 0){
       await Promise.all(obankaccount.map(async (oAccount) => {
-      let oTransaction = await oTransactionModel.find({nAccountId : oAccount.nAccountId});
+      let oTransaction = await oTransactionModel.find({nAccountId : oAccount.nAccountId,sIsApproved : 'Approved'});
         if(oTransaction.length == 1)
           nEqualAccounts = nEqualAccounts + 1;
       }));

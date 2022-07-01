@@ -44,7 +44,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     if (!oBankAccount) {
       return oRes.status(400).send();
     }
-    const olasttransactionAccount = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId }).sort({ _id: -1 }).limit(1);
+    const olasttransactionAccount = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
     if (olasttransactionAccount.length > 0) {
       let oBalance = olasttransactionAccount[0].nBalanceAmount
       if (oBalance < oReq.body.nAmount) return oRes.json("Low Balance");
@@ -66,7 +66,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
             oTransaction.nDebitAmount = oReq.body.nAmount;
             oTransaction.nLoanId = oReq.body.nReceiverAccountId;
 
-            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nReceiverAccountId }).sort({ _id: -1 }).limit(1);
+            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nReceiverAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
             if (olasttransaction.length > 0)
               oBalanceAmount = olasttransaction[0].nBalanceAmount;
 
@@ -90,7 +90,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
             oTransaction.nCreditAmount = 0;
             oTransaction.nDebitAmount = oReq.body.nAmount;
             oTransaction.nLoanId = oReq.body.nLoanId;
-            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nLoanId }).sort({ _id: -1 }).limit(1);
+            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nLoanId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
             if (olasttransaction.length > 0)
               oBalanceAmount = olasttransaction[0].nBalanceAmount;
 
@@ -122,7 +122,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
             oTransaction.nCreditAmount = 0;
             oTransaction.nDebitAmount = oReq.body.nAmount;
             oTransaction.nLoanId = oReq.body.nLoanId;
-            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nLoanId }).sort({ _id: -1 }).limit(1);
+            const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nLoanId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
             if (olasttransaction.length > 0)
               oBalanceAmount = olasttransaction[0].nBalanceAmount;
 
@@ -146,7 +146,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
         //To Debit amount from sender account
         let oBalanceAmt = 0;
         try {
-          const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nSenderAccountId }).sort({ _id: -1 }).limit(1);
+          const olasttransaction = await oTransactionModel.find({ nLoanId: oReq.body.nSenderAccountId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
           if (olasttransaction.length > 0) {
             console.log('olasttransaction', olasttransaction[0]);
 

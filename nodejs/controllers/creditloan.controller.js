@@ -134,7 +134,7 @@ oCreditLoanRouter.get("/getallcreditloanbalance", oAuthentication, asyncMiddlewa
     if(oCreditLoan.length > 0){
       await Promise.all(oCreditLoan.map(async (oLoan) => {
         //Get credit loan last transacton for balance amount
-        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
+        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId,sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
           oBalance = oBalance + olasttransaction[0].nBalanceAmount;
         }
@@ -182,7 +182,7 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
         };
         loans.sLoanName = oLoan.sTypeofLoan;
         //Get credit loan last transacton for balance amount
-        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId}).sort({_id:-1}).limit(1);
+        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
       
         if(olasttransaction.length > 0) {
             accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;

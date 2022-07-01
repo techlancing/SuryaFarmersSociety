@@ -30,7 +30,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
@@ -150,7 +150,7 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
   }
   let oBalanceAmount = 0;
   try {
-    const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+    const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
 
     if (olasttransaction.length > 0) {
       oBalanceAmount = olasttransaction[0].nBalanceAmount;
@@ -261,7 +261,7 @@ oDailyDepositRouter.post("/add_savingstransaction", oAuthentication, asyncMiddle
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }
@@ -316,7 +316,7 @@ oDailyDepositRouter.post("/withdrawl_savingstransaction", oAuthentication, async
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }

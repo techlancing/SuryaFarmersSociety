@@ -26,7 +26,7 @@ oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, 
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try{
-      const olasttransaction = await oTransactionModel.find({nLoanId: newCredit.nLoanId}).sort({_id:-1}).limit(1);
+      const olasttransaction = await oTransactionModel.find({nLoanId: newCredit.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
       if(olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
        // oRes.send("Success");

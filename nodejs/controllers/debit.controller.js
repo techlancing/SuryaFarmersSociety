@@ -29,7 +29,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: newDebit.nLoanId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: newDebit.nLoanId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
       }

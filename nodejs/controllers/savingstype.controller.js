@@ -69,7 +69,7 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
         // oRes.send("Success");
@@ -158,7 +158,7 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
         oBalanceAmount = olasttransaction[0].nBalanceAmount;
         // send the response if balance is low 
@@ -301,7 +301,7 @@ oSavingsTypeRouter.get("/getallsavingstypebalance", oAuthentication, asyncMiddle
     if (oSavingsType.length > 0) {
       await Promise.all(oSavingsType.map(async (oSavings) => {
         //Get credit loan last transacton for balance amount
-        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
         if (olasttransaction.length > 0) {
           oBalance = oBalance + olasttransaction[0].nBalanceAmount;
         }
@@ -330,7 +330,7 @@ oSavingsTypeRouter.post("/getaccountsavingstypes", oAuthentication, asyncMiddlew
         };
         savings.sSavingsName = oSavings.sTypeofSavings;
         //Get savingstype  last transacton for balance amount
-        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId }).sort({ _id: -1 }).limit(1);
+        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
 
         if (olasttransaction.length > 0) {
           accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
