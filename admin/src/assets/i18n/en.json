@@ -163,7 +163,7 @@
       "TEXT" : "APPROVALS",
       "LIST" : {
         "LOANAPPROVAL" : "Loan Approval",
-        "CREDITAPPROVAL" : "Credit Approval",
+        "CREDITAPPROVAL" : "Credit and Debit Approval",
         "SAVINGSTYPEAPPROVAL" : "Savings Type Approval"
       }
     },

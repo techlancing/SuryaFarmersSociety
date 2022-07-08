@@ -192,7 +192,7 @@ const routes: Routes = [
         component : ManagerApprovalComponent,
         data :{
             type : 'credit',
-            tableContent : 'Credit/Debit'
+            tableContent : 'Credit and Debit'
         }
     },
     {
