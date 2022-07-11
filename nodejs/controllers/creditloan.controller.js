@@ -293,7 +293,8 @@ oCreditLoanRouter.post("/getallcreditloansByApproval", oAuthentication, asyncMid
   try{
     await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved"})
     .populate({
-      path: 'oTransactionInfo'
+      path: 'oTransactionInfo',
+      match : { 'sIsApproved' : 'Approved' }
     }).exec((oError, oAllCreditLoans) => {
       if(!oError) {
           oRes.json(oAllCreditLoans);

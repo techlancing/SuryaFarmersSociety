@@ -456,7 +456,8 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
   try {
     await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", sStatus : 'Active' })
       .populate({
-        path: 'oTransactionInfo'
+        path: 'oTransactionInfo',
+        match : { 'sIsApproved' : 'Approved' }
       }).exec((oError, oAllSavingsType) => {
         if (!oError) {
           oRes.json(oAllSavingsType);
@@ -475,9 +476,31 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
 // url: ..../savingstype/getsavingtype
 oSavingsTypeRouter.post("/getsavingtype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
+
+    // let refIds = []; 
+    // const oTransactions = await oTransactionModel.find({sAccountNo: oReq.body.sAccountNo,nLoanId: oReq.body.nAccountId,sIsApproved:'Approved' });
+    // await Promise.all(oTransactions.map(async(oItem) => {
+    //   refIds.push(oItem.nTransactionId);
+    // }));
+      
+    // await oDailyDepositModel.find({ sAccountNo: oReq.body.sAccountNo })
+    //   .populate({
+    //     path: 'oTransactionInfo',
+    //     match: {'nTransactionId':{$in: refIds}},
+    //   }).exec((oError, oAllDeposits) => {
+    //     if (!oError) {
+    //       oRes.json(oAllDeposits);
+    //     }
+    //     else {
+    //       console.log(oError);
+    //       return oRes.status(400).send();
+    //     }
+    //   });
+
     await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", nSavingsId: oReq.body.nSavingsId , sStatus : 'Active' })
       .populate({
-        path: 'oTransactionInfo'
+        path: 'oTransactionInfo',
+        match : { 'sIsApproved' : 'Approved' }
       }).exec((oError, oAllSavingsType) => {
         if (!oError) {
           oRes.json(oAllSavingsType);

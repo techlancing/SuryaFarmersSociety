@@ -124,7 +124,7 @@ oDailyDepositRouter.post("/delete_dailydeposittransaction", oAuthentication, asy
 oDailyDepositRouter.post("/dailydeposittransaction_list", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
     let refIds = []; 
-    const oTransactions = await oTransactionModel.find({sAccountNo: oReq.body.sAccountNo,nLoanId: oReq.body.nLoanId,sIsApproved:'Approved' });
+    const oTransactions = await oTransactionModel.find({sAccountNo: oReq.body.sAccountNo,nLoanId: oReq.body.nAccountId,sIsApproved:'Approved' });
     await Promise.all(oTransactions.map(async(oItem) => {
       refIds.push(oItem.nTransactionId);
     }));
