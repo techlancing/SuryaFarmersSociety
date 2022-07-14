@@ -173,6 +173,12 @@
         "BANKACCOUNTUPDATE" : "Account Update"
       }
     },
+    "MANAGERCLOSING" :{
+      "TEXT": "SavingType Closing",
+      "LIST" : {
+        "SAVINGTYPECLOSING" : "SavingType Closing"
+      }
+    },
     "LOGOUT":{
       "TEXT": "Logout"
     },

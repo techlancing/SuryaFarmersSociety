@@ -48,6 +48,20 @@ export const MMENU: MenuItem[] = [
             },
         ]
     },
+
+    {
+        id: 35,
+        label: 'MENUITEMS.MANAGERCLOSING.TEXT',
+        icon: 'bx-book-open',
+        subItems: [
+            {
+                id: 37,
+                label: 'MENUITEMS.MANAGERCLOSING.LIST.SAVINGTYPECLOSING',
+                link: '/accountStatement',
+                parentId: 35
+            },
+        ]
+    },
     {
         id: 48,
         label: 'MENUITEMS.REPORTS.TEXT',

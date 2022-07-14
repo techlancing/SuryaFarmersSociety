@@ -87,7 +87,7 @@ export const PMENU: MenuItem[] = [
     },
 
     {
-        id: 35,
+        id: 300,
         label: 'MENUITEMS.APPROVALS.TEXT',
         icon: 'bx-book-open',
         subItems: [
@@ -95,7 +95,7 @@ export const PMENU: MenuItem[] = [
                 id: 36,
                 label: 'MENUITEMS.APPROVALS.LIST.APPROVALSTATUS',
                 link: '/approvaldetails',
-                parentId: 35
+                parentId: 300
             }
         ]
     },
