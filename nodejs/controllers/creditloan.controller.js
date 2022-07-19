@@ -262,6 +262,35 @@ oCreditLoanRouter.post("/getallcreditloans", oAuthentication, asyncMiddleware(as
 }));
 
 
+//url : ..../creditloan/deactivate
+oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq ,oRes ,oNext) => {
+  try{
+    //let oCreditLoan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo, sIsApproved: "Approved",nLoanId : oReq.body.nLoanId, sLoanStatus : 'Active'});
+    const oCreditLoan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo ,nLoanId : oReq.body.nLoanId, sIsApproved: "Approved", sLoanStatus : 'Active'});
+    if(!oCreditLoan) {
+      return oRes.status(400).send();
+    }
+    
+    const olasttransaction = await oTransactionModel.find({ nLoanId: oCreditLoan.nLoanId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
+
+    if (olasttransaction.length > 0) {
+      if(olasttransaction[0].nBalanceAmount !== 0){
+       oRes.json("Pending");
+      }
+    }
+    oCreditLoan.sStatus = oReq.body.sLoanStatus ;
+    oCreditLoan.save();
+     oRes.json("Success");
+  }
+  catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+
+
 
 // url: ..../creditloan/need_to_approve_getallcreditloans
 oCreditLoanRouter.post("/need_to_approve_getallcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {

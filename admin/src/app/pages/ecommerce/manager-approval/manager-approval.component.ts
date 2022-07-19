@@ -114,7 +114,7 @@ export class ManagerApprovalComponent implements OnInit {
    }
    else if(this.activatedroute.snapshot.data.type === 'credit'){
     name = approval.sAccountType;
-    if(approval.nDayAmount !== 0) amount = approval.nDebitAmount;
+    if(approval.nDebitAmount !== 0) amount = approval.nDebitAmount;
     else amount = approval.nCreditAmount;
    }
    else {

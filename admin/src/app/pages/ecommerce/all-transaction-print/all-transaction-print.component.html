@@ -29,7 +29,6 @@
             </div>
             
     
-
             <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
               print</button>
               <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf && user.sRole !== 'manager'"  (click)="fnPrintPdf('savings')">
@@ -74,6 +73,9 @@
               
              </div>
               
+             
+            <button type="button" class="btn btn-primary mr-1"  *ngIf="bPdf && user.sRole == 'manager'"  (click)="fnConfirmationForCreditLoanDeactive(oCreditLoanmodel)">
+              Close</button>
               <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan)">
                 print</button>
                 <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf && user.sRole !== 'manager'"  (click)="fnPrintPdf(oCreditLoanmodel.sTypeofLoan)">

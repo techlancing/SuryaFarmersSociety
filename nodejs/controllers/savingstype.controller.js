@@ -249,7 +249,14 @@ oSavingsTypeRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oRe
     if(!oSavingType) {
       return oRes.status(400).send();
     }
-    console.log(oSavingType);
+    
+    const olasttransaction = await oTransactionModel.find({ nLoanId: oSavingType.nSavingsId,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
+    if (olasttransaction.length > 0) {
+      if(olasttransaction[0].nBalanceAmount !== 0){
+        oRes.json("Pending");
+      }
+    }
+
     oSavingType.sStatus = oReq.body.sStatus ;
     // await oSavingsTypeModel.findByIdAndUpdate(oSavingType._id, { sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
     oSavingType.save();

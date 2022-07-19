@@ -66,7 +66,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
           oCreditLoan.oTransactionInfo.push(newTransaction);
         } else {
           oCreditLoan.oTransactionInfo.push(newTransaction);
-          oCreditLoan.sLoanStatus = 'Completed';
+          //oCreditLoan.sLoanStatus = 'InActive';
         }
         // oCreditLoan.sLoanStatus = 'Completed';
         await oCreditLoan.save();

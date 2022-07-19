@@ -16,6 +16,7 @@ export class CreditLoan {
         public sInstallmentType : string = '',
         public nLoanRepaymentPeriod : number = null,
         public sIsApproved : string = '',
+        public sLoanStatus : string = '',
         public nInstallmentAmount : number = null, 
         public sEndofLoanDate : string = '',       
         public nLetPenaltyPercentage : number = null,        

@@ -311,6 +311,8 @@ export class AllTransactionPrintComponent implements OnInit {
     })
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }
+
+  //deactivating the savingtype
   fnDeactivateSavingType(savingtype : SavingsType){
     savingtype.sStatus = 'InActive'
     this.oSavingstypeService.fnDeactivateSavingType(savingtype).subscribe((data) =>{
@@ -319,8 +321,29 @@ export class AllTransactionPrintComponent implements OnInit {
           ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' is Closed Successfully.')
           this.fnGetSavingDepositAccounts(this.oSelectedAccount);
       }
+      else if(data === 'Pending'){
+        this.fnWarningMessage('Withdraw the All the Amount in '+savingtype.sAccountNo +
+          ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' before Closing it.')
+      }
     });
   }
+
+// deactivation creditloan
+fnDeactivateCreditLoan(creditloan : CreditLoan){
+  creditloan.sLoanStatus = 'InActive'
+  this.oCreditLoanServcie.fnDeactivateSavingType(creditloan).subscribe((data) =>{
+    if(data == 'Success'){
+      this.fnSuccessMessage(creditloan.sAccountNo +
+        ' - '+creditloan.sTypeofLoan+'( '+creditloan.nSanctionAmount+' )'+' is Closed Successfully.')
+        this.fnGetCreditLoans(this.oSelectedAccount);
+    }
+    else if(data === 'Pending'){
+      this.fnWarningMessage('Repay '+creditloan.sAccountNo +
+        ' - '+creditloan.sTypeofLoan+'('+creditloan.nSanctionAmount+')'+' before Closing it.')
+    }
+  });
+}
+  //confirmation message for closing the savingtype account
   fnConfirmationMessageForDeactive(savingtype : SavingsType){
     Swal.fire(
       {
@@ -340,11 +363,44 @@ export class AllTransactionPrintComponent implements OnInit {
       }
     });
   }
+
+  //confirmation message for closing the savingtype account
+  fnConfirmationForCreditLoanDeactive(creditloan : CreditLoan){
+    Swal.fire(
+      {
+        position: 'center',
+        icon: 'question',
+        title: 'Do you want to Close ? ',
+        text: creditloan.sAccountNo +
+        ' - '+creditloan.sTypeofLoan+'( '+creditloan.nSanctionAmount +' )',
+        showConfirmButton: true,
+        showCancelButton: true,
+
+      }
+    ).then((result) => {
+      if (result.isConfirmed) {
+        Swal.close();
+        this.fnDeactivateCreditLoan(creditloan);
+      }
+    });
+  }
+
+
+
   fnSuccessMessage(msg : string){
     Swal.fire({
       position: 'center',
       icon: 'success',
       title: 'Successful',
+      text: msg
+    });
+  }
+
+  fnWarningMessage(msg : string){
+    Swal.fire({
+      position: 'center',
+      icon: 'info',
+      title: 'Information',
       text: msg
     });
   }

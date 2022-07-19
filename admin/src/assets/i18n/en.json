@@ -174,9 +174,9 @@
       }
     },
     "MANAGERCLOSING" :{
-      "TEXT": "SavingType Closing",
+      "TEXT": "Account Closing",
       "LIST" : {
-        "SAVINGTYPECLOSING" : "SavingType Closing"
+        "SAVINGTYPECLOSING" : "SavingType & Loan Closing"
       }
     },
     "LOGOUT":{
