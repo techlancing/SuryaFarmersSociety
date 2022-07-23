@@ -144,7 +144,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     await oTransactionModel.findByIdAndUpdate(oTransaction._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
 
 
-    if (oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount === 0 && oTransaction.nDebitAmount !== 0 ) {
+    if (oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount === 0 && oTransaction.nDebitAmount !== 0 && oTransaction.sIsApproved === 'Approved') {
       /* SmS code Start */
       if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
         //get mobile number from account number 
