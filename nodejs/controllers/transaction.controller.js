@@ -190,7 +190,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     }
 
     // Credit transactions
-    else if(oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount !== 0 && oTransaction.nDebitAmount === 0 ){
+    else if(oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount !== 0 && oTransaction.nDebitAmount === 0 && oTransaction.sIsApproved === 'Approved'){
        /* SmS code Start */
        if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
         //get mobile number from account number 
