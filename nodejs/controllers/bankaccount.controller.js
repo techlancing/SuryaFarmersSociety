@@ -35,7 +35,7 @@ var storage = multer.diskStorage({
   },
   filename: function (oReq, oFile, cb) {
     try {
-      cb(null, oFile.originalname);
+      cb(null, Math.floor(Math.random()*1000000000000000000000)+"_"+oFile.originalname);
     } catch (e) {
       console.log(e);
     }

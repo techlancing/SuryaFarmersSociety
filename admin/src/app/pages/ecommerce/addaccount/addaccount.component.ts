@@ -85,16 +85,27 @@ export class AddaccountComponent implements OnInit {
   }>;
   public oDropZoneConfig: DropzoneConfigInterface = {
     // Change this to your upload POST address:
-  url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
-  maxFilesize: 0.20161290,
-  maxFiles: 1,
-  addRemoveLinks : true,
-  init: function() {
-    this.on("error", function(file){
-         alert(file.name+" is above 250kb!");
-         this.removeFile(file);
-     });
-  }
+    url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
+    maxFilesize: 0.20161290,
+    maxFiles: 1,
+    addRemoveLinks: true,
+    init: function () {
+     
+      this.on("error", function (file) {
+        alert(file.name + " is above 250kb!");
+        this.removeFile(file);
+      });
+
+      this.on("addedfile", function (file) {
+        if (this.files.length > 1) {
+          this.removeFile(this.files[0]);
+        }
+      });
+
+      this.on("thumbnail",function (file){
+        console.log("thumbnail : ",file.name,this.thumbnail);
+      })
+    }
   };
  
 
@@ -541,6 +552,9 @@ export class AddaccountComponent implements OnInit {
     else if(sErrorName === 'email') this.bErrorEmail = flag ;
   }
 
+  fnRemove(ref : string){
+    if(ref == 'Document-2')  this.oDocument2DropZone.directiveRef.dropzone().removeAllFiles(true);
+  }
 
 
 
@@ -550,7 +564,8 @@ export class AddaccountComponent implements OnInit {
   //   this.modalService.open(content, { centered: true, size: 'xl' });
   // }
   fnViewLarge(content : any , image : string){
-    if(image == 'Document-1') this.imageUrl = this.sImageRootPath + this.oBankAccountModel.oDocument1Info?.sImageURL ;
+    if(image == 'Document-1') this.imageUrl = './AmeenbabuChintha.pdf'; //'F:/GithubC/admin/src/assets/images/AmeenbabuChintha.pdf'
+    //this.sImageRootPath + this.oBankAccountModel.oDocument1Info?.sImageURL ;
     else if(image == 'Document-2') this.imageUrl = this.sImageRootPath + this.oBankAccountModel.oDocument2Info?.sImageURL ;
     // else if(image == '')
     // else if(image == '')

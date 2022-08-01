@@ -404,17 +404,20 @@
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #document1dropzoneElem
                     [message]="'Document-1 Upload'"
                     (success)="fnonUploadDocument1ImageSuccess($event)"></dropzone>
-                    <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
-                    (click)="fnViewLarge(imageviewcontent,'Document-1')">zoom</button>
+                    <!-- <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
+                    (click)="fnViewLarge(imageviewcontent,'Document-1')">zoom</button> -->
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
+                  <!-- <button  type="button" (click)="fnRemove('Document-2')" class="btn btn-secondary">X</button> -->
                     <dropzone [config]="oDropZoneConfig" class="dropzone" #document2dropzoneElem
                     [message]="'Document-2 Upload'"
-                    (success)="fnonUploadDocument2ImageSuccess($event)"></dropzone>
-                    <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
-                    (click)="fnViewLarge(imageviewcontent,'Document-2')">zoom</button>
+                    (success)="fnonUploadDocument2ImageSuccess($event)">
+                   
+                  </dropzone>
+                    <!-- <button *ngIf ="bisEditMode" type="button" class="btn btn-secondary"
+                    (click)="fnViewLarge(imageviewcontent,'Document-2')">zoom</button> -->
                 </div>
               </div>
                                                   
@@ -496,7 +499,15 @@
     <button type="button" class="close" aria-hidden="true" (click)="modal.dismiss('Cross click')">×</button>
   </div>
   <div class="modal-body">
-    <embed src="{{imageUrl}}" width="750" height="750">
+    <!-- <div *ngIf="dataLocalUrl != undefined"> -->
+      <h5>iframe whit local url</h5>
+      <iframe width="500" height="600" [attr.src]="imageUrl" type="application/pdf"></iframe>
+      <h5>object whit local url</h5>
+      <object [attr.data]="imageUrl" type="application/pdf" width="100%" height="100%"></object>
+      <h5>embed whit local url</h5>
+      <embed [attr.src]="imageUrl" type="application/pdf" width="100%" height="100%">
+  <!-- </div> -->
+    <embed src="F:/GithubC/admin/src/assets/images/AmeenbabuChintha.pdf" width="750" height="750">
     <!-- <img src="{{imageUrl}}" class="photoWidth" /> -->
     <!-- <app-account-details 
   [oBankAccount]="aAllBankAccounts[nSelectedProductIndex]"></app-account-details> -->
