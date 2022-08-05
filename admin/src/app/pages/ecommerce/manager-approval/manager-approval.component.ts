@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./manager-approval.component.scss']
 })
 export class ManagerApprovalComponent implements OnInit {
-
+  bDisableButton : boolean;
   breadCrumbItems : Array<any>;
   aApprovals: any = [];
   sTableContent : string ;
@@ -106,6 +106,7 @@ export class ManagerApprovalComponent implements OnInit {
     this.router.navigate([uri]));
  }
  fnConfirmationMessage(approval : any,status: string){
+   this.bDisableButton = true ;
    let name='';
    let amount = '' ;
    if(this.activatedroute.snapshot.data.type === 'savings'){
@@ -138,7 +139,7 @@ export class ManagerApprovalComponent implements OnInit {
     if (result.isConfirmed) {
       Swal.close();
       this.fnChangeApprovalStatus(approval,status);
-    }
+    }else this.bDisableButton = false ;
   });
  }
 }

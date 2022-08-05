@@ -59,10 +59,10 @@
                   <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
                   <td class="buttonDisplay actions">
                     <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 
-                      [disabled]="approval.sIsApproved==='Approved'">Approve</button>
+                      [disabled]="approval.sIsApproved==='Approved' || bDisableButton">Approve</button>
   
                     <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Rejected')" 
-                      [disabled]="approval.sIsApproved==='Rejected'">Reject</button>
+                      [disabled]="approval.sIsApproved==='Rejected' || bDisableButton">Reject</button>
                   </td>
                 </tr>
               </tbody>
