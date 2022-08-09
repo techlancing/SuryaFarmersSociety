@@ -78,7 +78,7 @@ oTransactionRouter.get("/Transaction_list", oAuthentication, asyncMiddleware(asy
 oTransactionRouter.get("/Need_to_approve_Transaction_list", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     const oAllTransactions = await oTransactionModel.find({sIsApproved : 'Pending'});
-    console.log("transactions",oAllTransactions)
+    //console.log("transactions",oAllTransactions)
  
     if(!oAllTransactions){
       return oRes.status(400).send();
@@ -137,18 +137,18 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
   try{
     
     let oTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
-    console.log("transaction",oTransaction)
+    // console.log("transaction",oTransaction)
     if(!oTransaction){
       return oRes.status(400).send();
     }
     await oTransactionModel.findByIdAndUpdate(oTransaction._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
-
-
-    if (oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount === 0 && oTransaction.nDebitAmount !== 0 && oTransaction.sIsApproved === 'Approved') {
+    let oUpdatedTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
+    
+    if (oUpdatedTransaction.nBalanceAmount >= 0 && oUpdatedTransaction.nCreditAmount === 0 && oUpdatedTransaction.nDebitAmount !== 0 && oUpdatedTransaction.sIsApproved === "Approved") {
       /* SmS code Start */
       if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
         //get mobile number from account number 
-        const oAccount = await obankaccountModel.findOne({ sAccountNo: oTransaction.sAccountNo });
+        const oAccount = await obankaccountModel.findOne({ sAccountNo: oUpdatedTransaction.sAccountNo });
         if (oAccount.sSMSAlert === "Yes") {
           const options = {
             "method": "POST",
@@ -178,23 +178,24 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
           req.write(`{\n  \"flow_id\": \"6205fa53b73c4376f32e3344\",\n  
       \"sender\": \"ADPNXT\",\n  
       \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      \"acno\": \"${oTransaction.sAccountNo}\",\n  
-      \"amount\": \"${oTransaction.nDebitAmount}\",\n  
-      \"date\":\"${oTransaction.sDate}\",\n  
-      \"tid\":\"${oTransaction.nTransactionId}\",\n  
-      \"bal\":\"${oTransaction.nBalanceAmount}\"\n}`);
+      \"acno\": \"${oUpdatedTransaction.sAccountNo}\",\n  
+      \"amount\": \"${oUpdatedTransaction.nDebitAmount}\",\n  
+      \"date\":\"${oUpdatedTransaction.sDate}\",\n  
+      \"tid\":\"${oUpdatedTransaction.nTransactionId}\",\n  
+      \"bal\":\"${oUpdatedTransaction.nBalanceAmount}\"\n}`);
+     
           req.end();
         }
       }
       /* SmS code End */  
     }
 
-    // Credit transactions
-    else if(oTransaction.nBalanceAmount >= 0 && oTransaction.nCreditAmount !== 0 && oTransaction.nDebitAmount === 0 && oTransaction.sIsApproved === 'Approved'){
+    // Credit transactions   && oTransaction.sIsApproved === 'Approved'
+    else if(oUpdatedTransaction.nBalanceAmount >= 0 && oUpdatedTransaction.nCreditAmount !== 0 && oUpdatedTransaction.nDebitAmount === 0 && oUpdatedTransaction.sIsApproved === "Approved"){
        /* SmS code Start */
        if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
         //get mobile number from account number 
-        const oAccount = await obankaccountModel.findOne({ sAccountNo: oTransaction.sAccountNo });
+        const oAccount = await obankaccountModel.findOne({ sAccountNo: oUpdatedTransaction.sAccountNo });
         if (oAccount.sSMSAlert === "Yes") {
           const options = {
             "method": "POST",
@@ -224,11 +225,11 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
         req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
       \"sender\": \"ADPNXT\",\n  
       \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      \"acno\": \"${oTransaction.sAccountNo}\",\n  
-      \"amount\": \"${oTransaction.nCreditAmount}\",\n  
-      \"date\":\"${oTransaction.sDate}\",\n  
-      \"tid\":\"${oTransaction.nTransactionId}\",\n  
-      \"bal\":\"${oTransaction.nBalanceAmount}\"\n}`);
+      \"acno\": \"${oUpdatedTransaction.sAccountNo}\",\n  
+      \"amount\": \"${oUpdatedTransaction.nCreditAmount}\",\n  
+      \"date\":\"${oUpdatedTransaction.sDate}\",\n  
+      \"tid\":\"${oUpdatedTransaction.nTransactionId}\",\n  
+      \"bal\":\"${oUpdatedTransaction.nBalanceAmount}\"\n}`);
           req.end();
         }
       }
