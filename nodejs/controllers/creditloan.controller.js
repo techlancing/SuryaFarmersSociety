@@ -19,6 +19,10 @@ const asyncMiddleware = fn =>
 oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newCreditLoan = new oCreditLoanModel(oReq.body);
   try{
+    const oCreditLoan = await oCreditLoanModel.findOne({ sAccountNo: oReq.body.sAccountNo,sTypeofLoan: oReq.body.sTypeofLoan,sLoanStatus : 'Active'});
+    if (oCreditLoan) {
+      return oRes.json("Exists").send();
+    }
     // Save creditloan Info
     await newCreditLoan.save();
     
@@ -41,7 +45,7 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
 
     //push transaction info and again save credit loan
     newCreditLoan.oTransactionInfo = newTransaction._id;
-    newCreditLoan.sLoanStatus = "Active";
+    newCreditLoan.sLoanStatus = "InActive";
     await newCreditLoan.save();
 /* SmS code Start */
   //   if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
@@ -155,9 +159,9 @@ oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMid
     let oBalance = 0;
     let oCreditLoan = await oCreditLoanModel.findOne({nLoanId: oReq.body.nLoanId});
     if(!oCreditLoan){
-      return oRes.status(400).send();
+      return oRes.status(400).send({error : 'This Loan does not exists'});
     }
-    await oCreditLoanModel.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
+    await oCreditLoanModel.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved,sLoanStatus : oReq.body.sLoanStatus},{ new: true, runValidators : true});
     oRes.json("Success");  
 
   }catch(e){
@@ -268,7 +272,7 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
     //let oCreditLoan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo, sIsApproved: "Approved",nLoanId : oReq.body.nLoanId, sLoanStatus : 'Active'});
     const oCreditLoan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo ,nLoanId : oReq.body.nLoanId, sIsApproved: "Approved", sLoanStatus : 'Active'});
     if(!oCreditLoan) {
-      return oRes.status(400).send();
+      return oRes.status(400).send({error : 'CreditLoan does not exist'});
     }
     
     const olasttransaction = await oTransactionModel.find({ nLoanId: oCreditLoan.nLoanId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
@@ -278,7 +282,7 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
        oRes.json("Pending");
       }
     }
-    oCreditLoan.sStatus = oReq.body.sLoanStatus ;
+    oCreditLoan.sLoanStatus = oReq.body.sLoanStatus ;
     oCreditLoan.save();
      oRes.json("Success");
   }

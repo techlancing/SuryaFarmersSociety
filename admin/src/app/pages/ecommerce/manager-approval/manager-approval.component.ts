@@ -83,6 +83,8 @@ export class ManagerApprovalComponent implements OnInit {
       });
     }
     else {
+      if(status == 'Approved') approval.sLoanStatus = 'Active';
+      else approval.sLoanStatus = 'InActive';
       approval.sIsApproved = status ;
       this.oCreditLoanService.fnChangeCreditLoanStatus(approval).subscribe((data) => {
         this.fnSuccessMessage(approval.sTypeofLoan+' is '+status+' Successfully');

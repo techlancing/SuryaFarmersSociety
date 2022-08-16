@@ -169,7 +169,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         this.oCreditLoanModel.nLetPenaltyPercentage == null ||        
         this.oCreditLoanModel.sEmployeeName == '' 
     ){
-      this.fnWarningMessage();
+      this.fnWarningMessage('Please Fill All the Fields');
       return ;
     }
     this.oCreditLoanModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oCreditLoanModel.sDate);//new Date(this.oCreditLoanModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
@@ -177,8 +177,13 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
-        this.fnSucessMessage(this.oCreditLoanModel.sTypeofLoan);
-        this.redirectTo('/creditloan');
+        if(data == 'Success'){
+          this.fnSucessMessage(this.oCreditLoanModel.sTypeofLoan);
+          this.redirectTo('/creditloan');
+        }else{
+          this.fnWarningMessage(this.oCreditLoanModel.sTypeofLoan+' is Already Exists');
+        }
+        
       });
   }
 
@@ -277,11 +282,11 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     });
   }
 
-  fnWarningMessage() {
+  fnWarningMessage(msg : string) {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please Fill All the Fields',
+      title: msg,
       showConfirmButton: false,
       timer: 1500
     });
