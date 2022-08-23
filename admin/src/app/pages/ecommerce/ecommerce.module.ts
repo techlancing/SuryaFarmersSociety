@@ -10,7 +10,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { Ng5SliderModule } from 'ng5-slider';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgbNavModule, NgbDropdownModule, NgbPaginationModule, NgbAccordionModule,
-  NgbCollapseModule,NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+  NgbCollapseModule,NgbTooltipModule,NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
   import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
@@ -117,6 +117,7 @@ const config: DropzoneConfigInterface = {
     NgbAccordionModule,
     NgbCollapseModule,
     NgbTooltipModule,
+    NgbTypeaheadModule,
     ArchwizardModule,
     BsDatepickerModule
   ],

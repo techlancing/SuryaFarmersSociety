@@ -1,76 +1,135 @@
 <div class="container-fluid">
 
-    <app-page-title title="All Loan Approvals" [breadcrumbItems]="breadCrumbItems" 
-    bgimageclass="addcategory_header"></app-page-title>
-  
-    <div class="row">
-        <form class="col-sm-12" novalidate #_categoryFormElem="ngForm" >
-         <div class="card card-bg">
-          <div class="card-body">
-              <h2>All {{sTableContent}} Approvals</h2>
-  
-  
-             <div class="row mb-md-2">
-                  
-           <div class="table-responsive">
-            <table class="table table-centered tableText tabledata" id="basic-datatable">
-              <thead>
-                <tr>
-                  <th class="mwidth">Account Number</th>
-                  <th class="nwidth">{{sTableContent}} Name</th>
-                  <th class="mwidth" *ngIf="sTableContent === 'Saving Deposits' || sTableContent === 'Loan'">Start Date</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maurity Date</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Deposited Amount</th>
-                  <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
-                  <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
-                  <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
-                  <th *ngIf="sTableContent === 'Credit and Debit'">Credit Amount</th>
-                  <th *ngIf="sTableContent === 'Credit and Debit'">Debit Amount Amount</th>
-                  <th *ngIf="sTableContent === 'Credit and Debit'">Balance Amount</th>
-                  <th *ngIf="sTableContent === 'Credit and Debit'">Date</th>
-                  <!-- <th *ngIf="sTableContent === 'Credit and Debit'">Total Amount</th> -->
-                  <!-- <th>Maturity Date</th> -->
-                 <th class="swidth">Approved Status</th>
-                 <th>Actions</th>
-                 <!-- <th>View Approval</th> -->
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let approval of aApprovals ;let i = index;">
-                  <td>{{approval.sAccountNo}}</td>
-                  <td *ngIf="sTableContent === 'Loan'">{{approval.sTypeofLoan}}</td>
-                  <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sTypeofSavings}}</td>
-                  <td *ngIf="sTableContent === 'Credit and Debit'">{{approval.sAccountType}}</td>
-                  <td *ngIf="sTableContent === 'Loan'">{{approval.sDate}}</td>
-                  <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sStartDate}}</td>
-                  <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.sMaturityDate}}</td>
-                  <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.nDepositAmount}}</td>
-                  <td *ngIf="sTableContent === 'Saving Deposits'">{{approval.nMaturityAmount}}</td>
-                  <td *ngIf="sTableContent === 'Loan'">{{approval.nSanctionAmount}}</td>
-                  <td *ngIf="sTableContent === 'Loan'">{{approval.nTotalAmount}}</td>
+  <app-page-title title="All Loan Approvals" [breadcrumbItems]="breadCrumbItems" bgimageclass="addcategory_header">
+  </app-page-title>
 
-                  <td *ngIf="sTableContent === 'Credit and Debit'">{{approval.nCreditAmount}}</td>
-                  <td *ngIf="sTableContent === 'Credit and Debit'">{{approval.nDebitAmount}}</td>
-                  <td *ngIf="sTableContent === 'Credit and Debit'">{{approval.nBalanceAmount}}</td>
-                  <td *ngIf="sTableContent === 'Credit and Debit'">{{approval.sDate}}</td>
-
-
-                  <!-- <td *ngIf="sTableContent === 'Credit and Debit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td> -->
-                  <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
-                  <td class="buttonDisplay actions">
-                    <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')" 
-                      [disabled]="approval.sIsApproved==='Approved' || bDisableButton">Approve</button>
-  
-                    <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Rejected')" 
-                      [disabled]="approval.sIsApproved==='Rejected' || bDisableButton">Reject</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+  <div class="row">
+    <form class="col-sm-12" novalidate #_categoryFormElem="ngForm">
+      <div class="card card-bg">
+       
+        <div class="card-body">
+          <div class="row">
+            <h2>All {{sTableContent}} Approvals</h2>
+             <!-- Search -->
+        <div class="col-sm-12 col-md-6">
+          <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
+              class="d-inline-flex align-items-center">Search:
+              <input type="text" name="searchTerm" class="form-control form-control-sm ml-2"
+                aria-controls="tickets-table" [(ngModel)]="service.searchTerm"
+                (input)="service.search(this.activatedroute.snapshot.data.type,$event)"></label></div>
+        </div>
+        <!-- End search -->
           </div>
+          
+               
+
+
+          <div class="row mb-md-2">
+       
+            <div class="table-responsive">
+              <table class="table table-centered tableText tabledata" id="basic-datatable">
+                <thead>
+                  <tr>
+                    <th class="mwidth">Account Number</th>
+                    <th class="nwidth">{{sTableContent}} Name</th>
+                    <th class="mwidth" *ngIf="sTableContent === 'Saving Deposits' || sTableContent === 'Loan'">Start
+                      Date</th>
+                    <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maurity Date</th>
+                    <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Deposited Amount</th>
+                    <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
+                    <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
+                    <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
+                    <th *ngIf="sTableContent === 'Credit and Debit'">Credit Amount</th>
+                    <th *ngIf="sTableContent === 'Credit and Debit'">Debit Amount Amount</th>
+                    <th *ngIf="sTableContent === 'Credit and Debit'">Balance Amount</th>
+                    <th *ngIf="sTableContent === 'Credit and Debit'">Transaction ID</th>
+                    <!-- <th *ngIf="sTableContent === 'Credit and Debit'">Total Amount</th> -->
+                    <!-- <th>Maturity Date</th> -->
+                    <th class="swidth">Approved Status</th>
+                    <th>Actions</th>
+                    <!-- <th>View Approval</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let approval of aApprovals ;let i = index;">
+                    <td>
+                      <!-- {{approval.sAccountNo}} -->
+                      <ngb-highlight [result]="approval.sAccountNo" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Loan'">
+                    <ngb-highlight [result]="approval.sTypeofLoan" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Saving Deposits'">
+                      <!-- {{approval.sTypeofSavings}} -->
+                      <ngb-highlight [result]="approval.sTypeofSavings" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <!-- {{approval.sAccountType}} -->
+                      <ngb-highlight [result]="approval.sAccountType" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Loan'">
+                      <ngb-highlight [result]="approval.sDate" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.sDate}} -->
+                    </td>
+                    <td *ngIf="sTableContent === 'Saving Deposits'">
+                      <ngb-highlight [result]="approval.sStartDate" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.sStartDate}} -->
+                    </td>
+                    <td *ngIf="sTableContent === 'Saving Deposits'">
+                      <!-- {{approval.sMaturityDate}} -->
+                      <ngb-highlight [result]="approval.sMaturityDate" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Saving Deposits'">
+                      <!-- {{approval.nDepositAmount}} -->
+                      <ngb-highlight [result]="approval.nDepositAmount" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Saving Deposits'">
+                      <ngb-highlight [result]="approval.nMaturityAmount" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.nMaturityAmount}} -->
+                    </td>
+                    <td *ngIf="sTableContent === 'Loan'">
+                      <!-- {{approval.nSanctionAmount}} -->
+                      <ngb-highlight [result]="approval.nSanctionAmount" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Loan'">
+                      <!-- {{approval.nTotalAmount}} -->
+                      <ngb-highlight [result]="approval.nTotalAmount" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <!-- {{approval.nCreditAmount}} -->
+                      <ngb-highlight [result]="approval.nCreditAmount" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <ngb-highlight [result]="approval.nDebitAmount" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.nDebitAmount}} -->
+                    </td>
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <ngb-highlight [result]="approval.nBalanceAmount" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.nBalanceAmount}} -->
+                    </td>
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <ngb-highlight [result]="approval.nTransactionId" [term]="service.searchTerm"></ngb-highlight>
+                      <!-- {{approval.nTransactionId}} -->
+                    </td>
+
+
+                    <!-- <td *ngIf="sTableContent === 'Credit and Debit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td> -->
+                    <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
+                    <td class="buttonDisplay actions">
+                      <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')"
+                        [disabled]="approval.sIsApproved==='Approved' || bDisableButton">Approve</button>
+
+                      <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Rejected')"
+                        [disabled]="approval.sIsApproved==='Rejected' || bDisableButton">Reject</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      </form>
-    </div> 
-  </div>  
+    </form>
+  </div>
+</div>

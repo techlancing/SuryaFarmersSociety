@@ -6,23 +6,31 @@ import {TransactionService} from 'src/app/core/services/transaction.service';
 import {Transaction} from 'src/app/core/models/transaction.model';
 import { SavingsType } from 'src/app/core/models/savingstype.model';
 import Swal from 'sweetalert2';
+import { SearchService } from './search.service';
+import { DecimalPipe } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-manager-approval',
   templateUrl: './manager-approval.component.html',
-  styleUrls: ['./manager-approval.component.scss']
+  styleUrls: ['./manager-approval.component.scss'],
+  providers: [ DecimalPipe,SearchService]
 })
 export class ManagerApprovalComponent implements OnInit {
   bDisableButton : boolean;
   breadCrumbItems : Array<any>;
-  aApprovals: any = [];
+  aApprovals: Observable<any> ;
   sTableContent : string ;
   oTransactionModel : Transaction ;
   
   constructor(private oSavingstypeService : SavingstypeService,
     public activatedroute : ActivatedRoute,
     private oCreditLoanService : CreditLoanService,
-    private router : Router, private oTransactionService : TransactionService) { }
+    private router : Router, private oTransactionService : TransactionService,
+    public service: SearchService,) {
+      this.aApprovals = this.service._tables$;
+      console.log(this.aApprovals);
+     }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Approvals' }, { label: 'transactions', active: true }];
@@ -31,6 +39,10 @@ export class ManagerApprovalComponent implements OnInit {
     else if(this.activatedroute.snapshot.data.type === 'credit') this.fnGetCreditApprovals();
     else this.fnGetCreditLoanApprovals();
     this.sTableContent = this.activatedroute.snapshot.data.tableContent ;
+    this.service.route.next(this.activatedroute.snapshot.data.type);
+    this.service._tables$.subscribe((data) => {
+      this.aApprovals = data as any;
+    })
   }
 
 
