@@ -128,18 +128,18 @@ export class SavingsTypesComponent implements OnInit {
       console.log(data);
       if (data == 'Exists') this.fnWarningMessage();
       else {
-        this.fnSucessMessage();
+        this.fnSucessMessage((data as any).id);
         this.redirectTo('/savingstype');
       }
     });
   }
-  fnSucessMessage() {
+  fnSucessMessage(transactionid) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: this.oSavingsTypeModel.sTypeofSavings + ' is created sucessfully.',
-      showConfirmButton: false,
-      timer: 1500
+      title: this.oSavingsTypeModel.sTypeofSavings + ' is created sucessfully.<br /> Transaction id "'+transactionid+'" is need to be Approved.',
+      showConfirmButton: true,
+      //timer: 1500
     });
   }
   fnWarningMessage() {

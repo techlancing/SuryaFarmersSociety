@@ -40,6 +40,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
     //To Credit amount to reciever account
     let oBalanceAmount = 0;
+    let transactionid = '';
     const oBankAccount = await oBankAccountModel.findOne({ sAccountNo: oReq.body.sSenderAccountNumber });
     if (!oBankAccount) {
       return oRes.status(400).send();
@@ -84,6 +85,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
             const newTransaction = new oTransactionModel(oTransaction);
             await newTransaction.save();
+            transactionid += newTransaction.nTransactionId + '-';
           }
           else if (oReq.body.sRecieverAccountType == 'loan')  // credit loan
           {
@@ -100,6 +102,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
             const newTransaction = new oTransactionModel(oTransaction);
             await newTransaction.save();
+            transactionid += newTransaction.nTransactionId + '-';
 
             // Update total amount in creditloan model
             let oCreditLoan = await oCreditLoanModel.findOne({ nLoanId: oReq.body.nLoanId });
@@ -130,6 +133,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
             oTransaction.sAccountType = oSavingsType.sTypeofSavings;
             const newTransaction = new oTransactionModel(oTransaction);
             await newTransaction.save();
+
+            transactionid += newTransaction.nTransactionId + '-';
 
             if (oTransaction.nBalanceAmount > 0) {
               oSavingsType.oTransactionInfo.push(newTransaction);
@@ -173,6 +178,9 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
         const newTransaction = new oTransactionModel(oTransactionInfo);
         await newTransaction.save();
+
+        transactionid += newTransaction.nTransactionId + '-';
+
         console.log('newtransaction', newTransaction);
 
         // Update total amount in dailysavingdeposit model
@@ -185,7 +193,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
         if (oSenderBankAccount)
           await oBankAccountModel.findByIdAndUpdate(oSenderBankAccount._id, { nAmount: oTransactionInfo.nBalanceAmount }, { new: true, runValidators: true });
 
-        oRes.json("Success");
+        oRes.json({status : "Success", id: transactionid});
 
       }
     }

@@ -227,9 +227,11 @@ fnDatediff(first, second) {
     }
     if (this.bIsDeposit) {
       this.oDailySavingsDepositService.fnAddSavingsDebitInfo(this.oDailySavingsDepositModel).subscribe((data) => {
-
-        this.fnSucessMessage();
-        this.redirectTo('/dailysavingsdeposit');
+        if((data as any).status == 'Success'){
+          this.fnSucessMessage((data as any).id);
+          this.redirectTo('/dailysavingsdeposit');
+        }
+       
       });
     }
     /*
@@ -242,13 +244,13 @@ fnDatediff(first, second) {
     }
     */
   }
-  fnSucessMessage() {
+  fnSucessMessage(transactionid) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: this.sSuccessMsg,
-      showConfirmButton: false,
-      timer: 1500
+      title: this.sSuccessMsg + '<br /> Transaction id "'+transactionid+ '" is need to be Approved.',
+      showConfirmButton: true,
+      // timer: 1500
     });
   }
   fnEmptyFieldsMessage() {

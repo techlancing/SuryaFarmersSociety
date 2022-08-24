@@ -68,8 +68,8 @@ export class SearchService {
     }else if(route == 'credit'){
       return table.sAccountNo.toLowerCase().includes(term.toLowerCase())
       ||table.nTransactionId.toString().includes(term.toLowerCase())
-      || table.sAccountType.toLowerCase().includes(term.toLowerCase())
-      || table.sEmployeeName.toLowerCase().includes(term.toLowerCase())
+      //|| table.sAccountType.toLowerCase().includes(term.toLowerCase())
+      
       || table.nBalanceAmount.toString().toLowerCase().includes(term.toLowerCase())
       || table.nCreditAmount.toString().toLowerCase().includes(term.toLowerCase())
       || table.nDebitAmount.toString().toLowerCase().includes(term.toLowerCase())

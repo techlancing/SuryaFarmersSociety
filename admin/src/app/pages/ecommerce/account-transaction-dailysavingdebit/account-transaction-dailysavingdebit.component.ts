@@ -286,7 +286,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         return;
       }
       this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-        this.fnSucessMessage();
+        this.fnSucessMessage((data as any).id);
         this.redirectTo('/dailysavingdebit');
       });
     }
@@ -302,7 +302,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
           if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
           else {
-            this.fnSucessMessage();
+            this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
           }
         });
@@ -318,7 +318,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
           if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
           else {
-            this.fnSucessMessage();
+            this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
           }
         });
@@ -336,13 +336,13 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
     });
   }
 
-  fnSucessMessage() {
+  fnSucessMessage(transactionid) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: this.sSuccessMsg,
-      showConfirmButton: false,
-      timer: 1500
+      title: this.sSuccessMsg + '<br /> Transaction id "'+transactionid+ '" is need to be Approved.',
+      showConfirmButton: true,
+      //timer: 1500
     });
   }
   fnLowBalanceWarningMessage() {

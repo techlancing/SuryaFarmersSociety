@@ -115,7 +115,7 @@ oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oR
         // }
         /* SmS code End */
       }
-      oRes.json("Success");
+      oRes.json({status :"Success",id : newTransaction.nTransactionId});
     }
   } catch (e) {
     console.log(e);

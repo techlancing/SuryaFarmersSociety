@@ -50,7 +50,7 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
     //newSavings.sLoanStatus = "Active";
     await newSavings.save();
 
-    oRes.json("Success");
+    oRes.json({status : "Success",id : newTransaction.nTransactionId});
 
   } catch (e) {
     console.log(e);
@@ -139,7 +139,7 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
     // }
     /* SmS code End */
 
-    oRes.json("Success");
+    oRes.json({status : "Success",id : newTransaction.nTransactionId});
 
   } catch (e) {
     console.log(e);
@@ -233,7 +233,7 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
       // }
       /* SmS code End */
 
-      oRes.json("Success");
+      oRes.json({status : "Success",id : newTransaction.nTransactionId});
     }
   } catch (e) {
     console.log(e);

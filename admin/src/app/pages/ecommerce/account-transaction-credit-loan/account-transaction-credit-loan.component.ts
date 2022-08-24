@@ -177,8 +177,8 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
 
       this.oCreditLoanService.fnAddCreditLoanInfo(this.oCreditLoanModel).subscribe((data) => {
         console.log(data);
-        if(data == 'Success'){
-          this.fnSucessMessage(this.oCreditLoanModel.sTypeofLoan);
+        if((data as any).status == 'Success'){
+          this.fnSucessMessage(this.oCreditLoanModel.sTypeofLoan,(data as any).id);
           this.redirectTo('/creditloan');
         }else{
           this.fnWarningMessage(this.oCreditLoanModel.sTypeofLoan+' is Already Exists');
@@ -272,11 +272,11 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
     this.router.navigate([uri]));
  }
   
-  fnSucessMessage(loan : string) {
+  fnSucessMessage(loan : string,transactionid : string) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: loan+' is created sucessfully.',
+      title: loan+' is created sucessfully.'+ '<br /> Transaction id "'+transactionid+'" is need to be Approved.',
       showConfirmButton: false,
       timer: 1500
     });

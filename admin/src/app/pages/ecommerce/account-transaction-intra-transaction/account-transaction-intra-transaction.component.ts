@@ -198,7 +198,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
       console.log(data);
       if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
       else {
-        this.fnSucessMessage();
+        this.fnSucessMessage((data as any).id);
         this.redirectTo('/intratransaction');
       }
     });
@@ -243,13 +243,13 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
  
  
  
-   fnSucessMessage() {
+   fnSucessMessage(transactionid) {
      Swal.fire({
        position: 'center',
        icon: 'success',
-       title: 'State is saved sucessfully.',
-       showConfirmButton: false,
-       timer: 1500
+       title: 'State is saved sucessfully.'+'<br /> Transaction id "'+transactionid+'" are need to be Approved.',
+       showConfirmButton: true,
+      //  timer: 1500
      });
    }
  

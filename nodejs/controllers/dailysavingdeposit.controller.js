@@ -29,6 +29,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
 
     //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
+    let transactionid = '';
     try {
       const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
       if (olasttransaction.length > 0) {
@@ -63,6 +64,9 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
+      if(i == 0 || i== oReq.body.nTotaldays-1){
+        transactionid += newTransaction.nTransactionId + '-';
+      }
       if (oTransaction.nBalanceAmount > 0) {
         oSavings.oTransactionInfo.push(newTransaction);
         oSavings.nDepositAmount = oTransaction.nBalanceAmount;
@@ -76,7 +80,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
        oAccount.nAmount = oBalanceAmount;
        await oAccount.save();
      }*/
-    oRes.json("Success");
+    oRes.json({status : "Success", id : transactionid});
 
   } catch (e) {
     console.log(e);
@@ -242,7 +246,7 @@ oDailyDepositRouter.post("/withdraw_dailydeposittransaction", oAuthentication, a
   //       }
   //     }
       /* SmS code End */
-      oRes.json("Success");
+      oRes.json({status : "Success", id: newTransaction.nTransactionId});
     }
 
   } catch (e) {
@@ -298,7 +302,7 @@ oDailyDepositRouter.post("/add_savingstransaction", oAuthentication, asyncMiddle
       oBankAccount.nAmount = oTransaction.nBalanceAmount;
       await oBankAccount.save();
     }
-    oRes.json("Success");
+    oRes.json({status : "Success",id: newTransaction.nTransactionId});
 
   } catch (e) {
     console.log(e);
@@ -354,7 +358,7 @@ oDailyDepositRouter.post("/withdrawl_savingstransaction", oAuthentication, async
         oBankAccount.nAmount = oTransaction.nBalanceAmount;
         await oBankAccount.save();
       }
-      oRes.json("Success");
+      oRes.json({status : "Success",id: newTransaction.nTransactionId});
     }
 
   } catch (e) {

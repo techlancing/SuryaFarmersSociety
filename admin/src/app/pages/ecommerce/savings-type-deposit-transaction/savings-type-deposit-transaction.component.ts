@@ -77,7 +77,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
         this.sSuccessMsg = 'Amount Successfully Deposited';
-        this.fnSucessMessage();
+        this.fnSucessMessage((data as any).id);
         this.redirectTo('/dailysavingsdeposit');
       });
     }
@@ -87,7 +87,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
         if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
         else {
           this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
-          this.fnSucessMessage();
+          this.fnSucessMessage((data as any).id);
           this.redirectTo('/withdrawal');
         }
       });
@@ -116,13 +116,13 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       timer: 2000
     });
   }
-fnSucessMessage() {
+fnSucessMessage(transactionid) {
   Swal.fire({
     position: 'center',
     icon: 'success',
-    title: this.sSuccessMsg,
-    showConfirmButton: false,
-    timer: 1500
+    title: this.sSuccessMsg + '<br /> Transaction id "'+transactionid+ '" is need to be Approved.',
+    showConfirmButton: true,
+    //timer: 1500
   });
 }
 fnLowBalanceWarningMessage() {

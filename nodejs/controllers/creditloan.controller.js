@@ -89,7 +89,7 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
   //     }
   //   }
 /* SmS code End */
-    oRes.json("Success");
+    oRes.json({status : "Success",id : newTransaction.nTransactionId});
 
   }catch(e){
     console.log(e);

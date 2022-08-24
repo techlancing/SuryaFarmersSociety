@@ -81,8 +81,11 @@ export class ManagerApprovalComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'savings'){
       if(status == 'Approved') approval.sStatus = 'Active';
       approval.sIsApproved = status ;
+
+      let msg ='';
+      if(approval.oTransactionInfo[0].sIsApproved == 'Pending')  msg = '<br /> Transaction id "'+approval.oTransactionInfo[0].nTransactionId+'" is need to be Approved';
       this.oSavingstypeService.fnChangeSavingTypeStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage(approval.sTypeofSavings+' is '+status+' Successfully');
+        this.fnSuccessMessage(approval.sTypeofSavings+' is '+status+' Successfully'+msg);
         this.redirectTo('/savingsapproval');
       });
     }
@@ -90,7 +93,7 @@ export class ManagerApprovalComponent implements OnInit {
       approval.sIsApproved = status ;
       let amount = approval.nDebitAmount !== 0 ? approval.nDebitAmount : approval.nCreditAmount ;
       this.oTransactionService.fnChangeApprovedStatus(approval).subscribe((data) => {
-       this.fnSuccessMessage('Transaction : '+approval.sAccountType+'-'+amount +' is '+status+' Successfully');
+       this.fnSuccessMessage('Transaction : '+approval.sAccountType+'-'+amount +' is '+status+' Successfully.');
        this.redirectTo('/creditapproval'); 
       });
     }
@@ -98,8 +101,10 @@ export class ManagerApprovalComponent implements OnInit {
       if(status == 'Approved') approval.sLoanStatus = 'Active';
       else approval.sLoanStatus = 'InActive';
       approval.sIsApproved = status ;
+      let msg ='';
+      if(approval.oTransactionInfo[0].sIsApproved == 'Pending')  msg = '<br /> Transaction id "'+approval.oTransactionInfo[0].nTransactionId+'" is need to be Approved';
       this.oCreditLoanService.fnChangeCreditLoanStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage(approval.sTypeofLoan+' is '+status+' Successfully');
+        this.fnSuccessMessage(approval.sTypeofLoan+' is '+status+' Successfully'+msg);
         this.redirectTo('/loanapproval');
       });
     }
@@ -110,8 +115,8 @@ export class ManagerApprovalComponent implements OnInit {
       position: 'center',
       icon: 'success',
       title: msg,
-      showConfirmButton: false,
-      timer: 3500
+      showConfirmButton: true,
+     // timer: 3500
     });
   }
 

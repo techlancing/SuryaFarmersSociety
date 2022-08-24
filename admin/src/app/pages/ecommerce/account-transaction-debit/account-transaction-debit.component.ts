@@ -107,8 +107,8 @@ export class AccountTransactionDebitComponent implements OnInit {
     if(!this.bIsCredit){
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
-        if(data == 'Success'){
-          this.fnSucessMessage();
+        if((data as any).status == 'Success'){
+          this.fnSucessMessage((data as any).id);
           this.redirectTo('/debit');
         }
         else this.fnWarningMessage(data);
@@ -116,8 +116,10 @@ export class AccountTransactionDebitComponent implements OnInit {
     }else{
       this.oCreditService.fnAddCreditInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
-        this.fnSucessMessage();
+        if((data as any).status == 'Success'){  
+        this.fnSucessMessage((data as any).id);
         this.redirectTo('/credit');
+        }
       });
     }
       
@@ -151,7 +153,7 @@ export class AccountTransactionDebitComponent implements OnInit {
     })
     
   }
-  fnSucessMessage() {
+  fnSucessMessage(transactionid) {
     let msg = '';
     if(this.bIsCredit){
       msg = 'Amount is credited successfully.';
@@ -161,9 +163,8 @@ export class AccountTransactionDebitComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: msg,
-      showConfirmButton: false,
-      timer: 1500
+      title: msg + '<br /> Transaction id "'+transactionid+ '" is need to be Approved.',
+      showConfirmButton: true
     });
   }
   fnWarningMessage(msg){
