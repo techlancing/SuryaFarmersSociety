@@ -88,6 +88,8 @@ export class AddaccountComponent implements OnInit {
     url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
     maxFilesize: 0.20161290,
     maxFiles: 1,
+    thumbnailWidth:8,
+    thumbnailHeight :8,
     addRemoveLinks: true,
     init: function () {
      
@@ -204,6 +206,7 @@ export class AddaccountComponent implements OnInit {
       crossorigin = "anonymous";
       oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
         console.log(img);
+        
       }, crossorigin);
 
       const os2DZM = this.oSignature2DropZone.directiveRef.dropzone();

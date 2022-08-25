@@ -68,6 +68,8 @@ aBankEmployees: Array<BankEmployee>;
     // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/bankemployee/upload_file",//"/nodejs/car/upload_file", 
   maxFilesize: 0.20161290,
+  thumbnailWidth:8,
+  thumbnailHeight :8,
   maxFiles: 1,
   init: function() {
     this.on("error", function(file){
