@@ -57,7 +57,7 @@ export const MMENU: MenuItem[] = [
             {
                 id: 37,
                 label: 'MENUITEMS.MANAGERCLOSING.LIST.SAVINGTYPECLOSING',
-                link: '/accountStatement',
+                link: '/accountClosing',
                 parentId: 35
             },
         ]

@@ -164,6 +164,13 @@ const routes: Routes = [
         }
     },
     {
+        path: 'accountClosing',
+        component: AllTransactionPrintComponent,
+        data: {
+            type: 'closing'
+        }
+    },
+    {
         path : 'savingstype',
         component : SavingsTypesComponent
     },

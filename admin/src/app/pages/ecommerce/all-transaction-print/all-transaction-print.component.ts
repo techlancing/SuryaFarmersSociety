@@ -97,6 +97,7 @@ export class AllTransactionPrintComponent implements OnInit {
   aSavingDeposit: any;
   oSelectedAccount: BankAccount;
   user : any ;
+  bClosing: boolean;
   
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanServcie : CreditLoanService,
@@ -146,7 +147,14 @@ export class AllTransactionPrintComponent implements OnInit {
     if(this.activatedroute.snapshot.data.type === 'statement'){
       this.sHeaderText='Bank Statement';
       this.bPdf =true ;
-    }   
+      this.bClosing = false;
+    }
+    
+    if(this.activatedroute.snapshot.data.type === 'closing'){
+      this.sHeaderText='Account Closing';
+      this.bPdf =false ;
+      this.bClosing = true;
+    }
   }
 
   fnGetCreditLoans(oSelectedAccount : BankAccount){

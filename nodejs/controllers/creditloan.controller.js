@@ -279,11 +279,13 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
 
     if (olasttransaction.length > 0) {
       if(olasttransaction[0].nBalanceAmount !== 0){
-       oRes.json("Pending");
+       oRes.json("Pending").send();
+      }
+      else {
+        oCreditLoan.sLoanStatus = oReq.body.sLoanStatus ;
+        oCreditLoan.save();
       }
     }
-    oCreditLoan.sLoanStatus = oReq.body.sLoanStatus ;
-    oCreditLoan.save();
      oRes.json("Success");
   }
   catch(e){
@@ -324,7 +326,7 @@ oCreditLoanRouter.post("/need_to_approve_getallcreditloans", oAuthentication, as
 // url: ..../creditloan/getallcreditloansByApproval
 oCreditLoanRouter.post("/getallcreditloansByApproval", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved"})
+    await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved", sLoanStatus : 'Active'})
     .populate({
       path: 'oTransactionInfo',
       match : { 'sIsApproved' : 'Approved' }
