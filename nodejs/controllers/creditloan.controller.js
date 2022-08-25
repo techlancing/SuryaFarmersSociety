@@ -174,7 +174,7 @@ oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMid
 // url: ..../creditloan/getaccountcreditloans
 oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
-    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo, sIsApproved: "Approved"});
+    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : oReq.body.sAccountNo, sIsApproved: "Approved",sLoanStatus : 'Active'});
     let aLoans = [];
     
     if(oCreditLoan.length > 0){
