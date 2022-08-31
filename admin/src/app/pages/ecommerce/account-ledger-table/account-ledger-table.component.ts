@@ -55,8 +55,8 @@ export class AccountLedgerTableComponent implements OnInit {
       if (this.oBankAccountService.proceed === true) {
         if (data.type === this.type) {
           //  this.oBankAccountService.sendBankAccountDetails.subscribe((cdata) => {
-          // if(localStorage.getItem("savings") !== null){
-          //   this.oAlltransactionprintmodel = JSON.parse(localStorage.getItem("savings"));
+          if(localStorage.getItem("savings") !== null){
+            this.oAlltransactionprintmodel = JSON.parse(localStorage.getItem("savings"));
           // this.oAlltransactionprintmodel = cdata as any;
           //if(this.oAlltransactionprintmodel !== null && this.oBankAccountService.proceed === true){
           this.bVisiblePdf = true;
@@ -106,6 +106,7 @@ export class AccountLedgerTableComponent implements OnInit {
           // this.oCreditLoanmodel = this.loan;
           this.oBankAccountService.proceed = false;
           //  });   
+        }
         }
       }
     })
