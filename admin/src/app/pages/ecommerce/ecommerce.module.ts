@@ -59,6 +59,7 @@ import { MessageCardComponent } from './message-card/message-card.component';
 
 
 
+
 const config: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: environment.apiUrl + "nodejs/car/upload_file", //'https://httpbin.org/post',
@@ -119,7 +120,8 @@ const config: DropzoneConfigInterface = {
     NgbTooltipModule,
     NgbTypeaheadModule,
     ArchwizardModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+   
   ],
   exports:[AddaccountComponent, AddBankEmployeeComponent ],
   providers: [

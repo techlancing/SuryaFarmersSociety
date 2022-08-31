@@ -87,8 +87,8 @@ export class SavingsTypesComponent implements OnInit {
     console.log(this.oSavingsTypeModel.sAccountNo);
   }
 
-  fnOnCreditLoanInfoSubmit(): void {
-    //this.bIsAddActive = true;
+  fnOnSavingsTypeInfoSubmit(): void {
+    this.bIsAddActive = true;
 
     this.oSavingsTypeModel.sStartDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sStartDate);
     this.oSavingsTypeModel.sMaturityDate = this.oUtilitydateService.fnChangeDateFormate(this.oSavingsTypeModel.sMaturityDate);
@@ -131,6 +131,9 @@ export class SavingsTypesComponent implements OnInit {
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/savingstype');
       }
+      this.bIsAddActive = false;
+    },(error) =>{
+      this.bIsAddActive = false;
     });
   }
   fnSucessMessage(transactionid) {

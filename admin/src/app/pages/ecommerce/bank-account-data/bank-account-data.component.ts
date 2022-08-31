@@ -53,7 +53,9 @@ export class BankAccountDataComponent implements OnInit {
     this.oBankAccountService.fngetBankAccountInfoByNumber(this.sSelectedAccount).subscribe((data) => {
       this.oAlltransactionprintmodel = data as any;
       this.bIsAccountData = true;
+      localStorage.setItem("savings",JSON.stringify(this.oAlltransactionprintmodel))
       this.oBankAccountService.sendBankAccountDetails.next(this.oAlltransactionprintmodel);
+      this.oBankAccountService.accountUpdate = true;
       this.accountDataClicked.emit(this.oAlltransactionprintmodel);
     });
   }

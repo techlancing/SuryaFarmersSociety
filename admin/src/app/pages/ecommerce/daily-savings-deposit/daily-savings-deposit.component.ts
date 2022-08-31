@@ -225,13 +225,17 @@ fnDatediff(first, second) {
         this.fnEmptyFieldsMessage();
         return;
     }
+    this.bIsAddActive = true;
     if (this.bIsDeposit) {
       this.oDailySavingsDepositService.fnAddSavingsDebitInfo(this.oDailySavingsDepositModel).subscribe((data) => {
         if((data as any).status == 'Success'){
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/dailysavingsdeposit');
         }
+        this.bIsAddActive = true;
        
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }
     /*

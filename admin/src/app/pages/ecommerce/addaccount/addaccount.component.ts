@@ -404,7 +404,6 @@ export class AddaccountComponent implements OnInit {
               this.fnMessage(this.oBankAccountModel.sAccountNo+' is created sucessfully.','success');
               this.bankaccounts = [...cdata as any];
               //this.oBankAccountModel.sState = '';
-              this.bIsAddActive = false;
               this.addClicked.emit();
               this.redirectTo('/newaccountform');
             });
@@ -417,13 +416,20 @@ export class AddaccountComponent implements OnInit {
               this.fnOnBankAccountInfoSubmit();
             });
           }
+          this.bIsAddActive = false;
+        },(error) => {
+          this.bIsAddActive = false;
         });
       }else{
         this.oBankAccountService.fnEditBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           console.log(data);
           this.fnMessage(this.oBankAccountModel.sAccountNo+' is updated sucessfully.','success');
+          this.bIsAddActive = false;
           this.redirectTo('/allaccounts');
+        },(error) => {
+          this.bIsAddActive = false;
         });
+        
       }
   }
 

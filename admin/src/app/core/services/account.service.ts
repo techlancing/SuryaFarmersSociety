@@ -12,10 +12,12 @@ export class BankAccountService {
     sRootUrl: string = environment.apiUrl + "nodejs/bankaccount";
 
     pdfGenerationClicked = new EventEmitter();
+
     sendBankAccountDetails = new BehaviorSubject(null);
     sendLoanAccountDetails = new BehaviorSubject(null);
     sendSavingDepositDetails = new BehaviorSubject(null);
     proceed : boolean = false;
+    accountUpdate : boolean = false;
     constructor(private http: HttpClient) { }
 
     fnAddBankAccountInfo(oBankAccount: BankAccount) {

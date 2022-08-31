@@ -102,6 +102,7 @@ export class AccountTransactionDebitComponent implements OnInit {
       this.fnWarningMessage('Please fill all the fields');
       return;
     }
+    this.bIsAddActive = true;
     this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
     this.oDebitModel.sDate= this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
     if(!this.bIsCredit){
@@ -112,6 +113,9 @@ export class AccountTransactionDebitComponent implements OnInit {
           this.redirectTo('/debit');
         }
         else this.fnWarningMessage(data);
+        this.bIsAddActive = false;
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }else{
       this.oCreditService.fnAddCreditInfo(this.oDebitModel).subscribe((data) => {
@@ -120,6 +124,9 @@ export class AccountTransactionDebitComponent implements OnInit {
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/credit');
         }
+        this.bIsAddActive = false;
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }
       

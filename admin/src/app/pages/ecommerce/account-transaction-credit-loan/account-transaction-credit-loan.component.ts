@@ -153,7 +153,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
   }
 
   fnOnCreditLoanInfoSubmit(): void {
-    //this.bIsAddActive = true;
+    this.bIsAddActive = true;
     if(
       this.oCreditLoanModel.sAccountNo == '' ||
         this.oCreditLoanModel.nSanctionAmount == null ||
@@ -183,7 +183,9 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         }else{
           this.fnWarningMessage(this.oCreditLoanModel.sTypeofLoan+' is Already Exists');
         }
-        
+        this.bIsAddActive = false;
+      },(error) => {
+        this.bIsAddActive = false;
       });
   }
 

@@ -194,6 +194,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
         this.fnEmptyFieldsMessage()
         return;
     }
+    this.bIsAddActive =true;
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);
       if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
@@ -201,6 +202,9 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/intratransaction');
       }
+      this.bIsAddActive = false;
+    },(error) => {
+      this.bIsAddActive = false;
     });
     // }
     //   else

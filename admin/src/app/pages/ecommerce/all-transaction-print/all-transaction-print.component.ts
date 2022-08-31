@@ -312,10 +312,16 @@ export class AllTransactionPrintComponent implements OnInit {
     
     this.oBankAccountService.proceed = true ;
     this.aCreditLoan.map((loan) => {
-      if(loan.sTypeofLoan == type) this.oBankAccountService.sendLoanAccountDetails.next(loan);
+      if(loan.sTypeofLoan == type) {
+        this.oBankAccountService.sendLoanAccountDetails.next(loan);
+        localStorage.setItem("loan",JSON.stringify(loan));
+      }
     })
     this.aSavingDeposit.map((savings) => {
-      if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
+      
+      if(savings.sTypeofSavings == type) {  //this.oBankAccountService.sendSavingDepositDetails.next(savings);
+        localStorage.setItem("savingtype",JSON.stringify(savings));
+      }
     })
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }
@@ -412,4 +418,6 @@ fnDeactivateCreditLoan(creditloan : CreditLoan){
       text: msg
     });
   }
+
+
 }  

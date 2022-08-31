@@ -6,7 +6,7 @@
     <app-bank-account-data headerText="Savings Deposit type" (accountDataClicked)="fnGetActiveAccount($event)">
     </app-bank-account-data>
     <div *ngIf="oSavingsTypeModel.sAccountNo !==''">
-        <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnCreditLoanInfoSubmit()">
+        <form class="col-12" novalidate #_CreditLoanFormElem="ngForm" (ngSubmit)="fnOnSavingsTypeInfoSubmit()">
             <div class="card card-bg">
 
                 <div class="card-body">

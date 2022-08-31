@@ -285,9 +285,12 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         this.fnEmptyFieldsMessage();
         return;
       }
+      this.bIsAddActive = true;
       this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/dailysavingdebit');
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }
     else {
@@ -298,13 +301,16 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
           this.fnEmptyFieldsMessage();
           return;
         }
-        
+        this.bIsAddActive = true;
         this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
           if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
           else {
             this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
           }
+          this.bIsAddActive = false;
+        },(error) => {
+          this.bIsAddActive = false;
         });
       }
       else {
@@ -315,12 +321,16 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         this.fnEmptyFieldsMessage();
         return;
       }
+      this.bIsAddActive = true;
         this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
           if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
           else {
             this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
           }
+          this.bIsAddActive = false;
+        },(error) => {
+          this.bIsAddActive = false;
         });
       }
     }

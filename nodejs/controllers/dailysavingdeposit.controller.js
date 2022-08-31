@@ -64,7 +64,7 @@ oDailyDepositRouter.post("/add_dailydeposittransaction", oAuthentication, asyncM
       const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
 
-      if(i == 0 || i== oReq.body.nTotaldays-1){
+      if(i === 0 || i=== (oReq.body.nTotaldays-1)){
         transactionid += newTransaction.nTransactionId + '-';
       }
       if (oTransaction.nBalanceAmount > 0) {

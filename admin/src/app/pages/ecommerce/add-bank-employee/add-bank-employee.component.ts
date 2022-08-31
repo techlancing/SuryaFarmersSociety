@@ -193,7 +193,7 @@ aBankEmployees: Array<BankEmployee>;
       this.fnShowFieldsAreEmpty();
       return;
     }
-    //this.bIsAddActive = true;
+    this.bIsAddActive = true;
     if (this.oBankEmployeeModel.sCallLetterIssuedDate !== undefined && this.oBankEmployeeModel.sCallLetterIssuedDate !== '')
       this.oBankEmployeeModel.sCallLetterIssuedDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankEmployeeModel.sCallLetterIssuedDate);
     if (this.oBankEmployeeModel.sJoiningDate !== undefined && this.oBankEmployeeModel.sJoiningDate !== '')
@@ -203,14 +203,20 @@ aBankEmployees: Array<BankEmployee>;
       this.oBankEmployeeService.fnAddBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.bIsAddActive = false ;
         this.redirectTo('/addemployee');
+      },(error) => {
+        this.bIsAddActive = false ;
       });
     }
     else {
       this.oBankEmployeeService.fnEditBankEmployeeInfo(this.oBankEmployeeModel).subscribe((data) => {
         console.log(data);
         this.fnSucessMessage();
+        this.bIsAddActive = false ;
         this.redirectTo('/allemployeesupdate');
+      },(error) => {
+        this.bIsAddActive = false ;
       });
     }
 
