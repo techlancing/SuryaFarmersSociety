@@ -247,7 +247,7 @@
 
                             <div class="col-sm-8 add-category-btn-container">
                                 <button type="submit" class="btn btn-primary mr-1"
-                                    >{{sButtonText}}</button><!--[disabled]="bIsAddActive || bIsEditActive"-->
+                                [disabled]="bIsAddActive">{{sButtonText}}</button>
                                 <button type="button" class="btn btn-secondary"
                                 (click) = "fnClear()">Clear</button> 
 

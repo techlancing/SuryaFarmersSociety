@@ -29,6 +29,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   @Input() oSavingsDeposit : any;
   sImageRootPath: string;
   sTransactionString: string;
+  bIsAddActive : boolean;
   constructor(private oBankEmployeeService : BankEmployeeService,
     private oSavingstypeService : SavingstypeService,
     private router : Router,
@@ -39,6 +40,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.sImageRootPath = environment.imagePath;
+    this.bIsAddActive = false;
     this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
       this.oSavingsDeposit = data as any ;
       this.fnFecthAccountDetails();
@@ -61,6 +63,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
   }
 
   fnOnSavingsDepositInfoSubmit() {
+    
     this.oSavingsDepositModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oSavingsDepositModel.sNarration);
     this.oSavingsDepositModel.sAccountNo = this.oSavingsDeposit.sAccountNo;
     this.oSavingsDepositModel.nLoanId = this.oSavingsDeposit.nSavingsId;
@@ -73,12 +76,16 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       this.fnEmptyFieldsMessage();
       return;
     }
+    this.bIsAddActive = true;
     if (this.oSavingsDeposit.transactiontype === 'deposit') {
       this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
         this.sSuccessMsg = 'Amount Successfully Deposited';
         this.fnSucessMessage((data as any).id);
+        this.bIsAddActive = false;
         this.redirectTo('/dailysavingsdeposit');
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }
     if (this.oSavingsDeposit.transactiontype === 'withdraw') {
@@ -90,6 +97,9 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/withdrawal');
         }
+        this.bIsAddActive = false;
+      },(error) => {
+        this.bIsAddActive = false;
       });
     }
   }
