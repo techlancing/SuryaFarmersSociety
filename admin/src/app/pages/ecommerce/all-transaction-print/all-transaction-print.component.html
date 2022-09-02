@@ -159,8 +159,7 @@
                     </div>
                   </div>
                   <app-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' 
-                  [type]="oCreditLoanmodel.sTypeofLoan" [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo" [lineDecide]="lineDecide" 
-                  [loan]="oCreditLoanmodel" [account] = "oSelectedAccount"></app-account-ledger-table>
+                  [type]="oCreditLoanmodel.sTypeofLoan" [bNotPrintHead]="!bPdf" [lineFrom]="lineFrom" [lineTo]="lineTo" [lineDecide]="lineDecide" ></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>
@@ -252,8 +251,7 @@
                     </div>
                   </div>
                   <app-account-ledger-table [aTransactions]='oSavingDepositmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf"
-                  [type]="oSavingDepositmodel.sTypeofSavings" [lineFrom]="lineFrom" [lineTo]="lineTo" [lineDecide]="lineDecide" 
-                  [savingtype]="oSavingDepositmodel" [account] = "oSelectedAccount"></app-account-ledger-table>
+                  [type]="oSavingDepositmodel.sTypeofSavings" [lineFrom]="lineFrom" [lineTo]="lineTo" [lineDecide]="lineDecide"></app-account-ledger-table>
                   
                 </ng-template>
               </ngb-panel>
