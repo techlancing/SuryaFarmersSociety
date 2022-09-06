@@ -3,6 +3,7 @@ import { emailSentBarChart, monthlyEarningChart, transactions, statData } from '
 import { ChartType } from './dashboard.model';
 import { BankAccountService }from '../../../core/services/account.service';
 import {CreditLoanService} from '../../../core/services/creditloan.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-default',
@@ -22,8 +23,20 @@ export class DefaultComponent implements OnInit {
   nTotalBalance : number ;
   nEqualAccountsCount : number ;
 
-  constructor(private oBankAccountService : BankAccountService,
-    private oCreditLoanService: CreditLoanService) { }
+  constructor(private oBankAccountService: BankAccountService,
+    private oCreditLoanService: CreditLoanService,
+    private router: Router) {
+    if (localStorage.getItem("userData") !== null && localStorage.getItem("userData") !== undefined) {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      if (user) {
+        let uri = '';
+        if (user.sRole === 'manager') uri = '/welcomemanager'
+        if (user.sRole === 'employee') uri = '/welcomeemployee';
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+          this.router.navigate([uri]));
+      }
+    }
+  }
 
   ngOnInit() {
     this.oBankAccountService.fngetSavingsBankAccountCountInfo().subscribe((data) => {
