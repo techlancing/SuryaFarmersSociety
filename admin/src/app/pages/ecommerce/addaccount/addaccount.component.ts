@@ -88,8 +88,8 @@ export class AddaccountComponent implements OnInit {
     url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
     maxFilesize: 0.20161290,
     maxFiles: 1,
-    thumbnailWidth:8,
-    thumbnailHeight :8,
+    thumbnailWidth:25,
+    thumbnailHeight :25,
     addRemoveLinks: true,
     init: function () {
      
@@ -201,7 +201,7 @@ export class AddaccountComponent implements OnInit {
       if (!oImageInfoMob) return;
 
       var imgURLmob = environment.imagePath + oImageInfoMob.sImageURL;
-      var mockFileMob = { name: oImageInfoMob.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLmob };
+      var mockFileMob = { name: oImageInfoMob.sImageName, size: 24690, accepted: true, kind: "image", dataURL: imgURLmob };
 
       crossorigin = "anonymous";
       oDZM.displayExistingFile(mockFileMob, imgURLmob, function (img) {
@@ -214,7 +214,7 @@ export class AddaccountComponent implements OnInit {
       if (!oImageInfos2) return;
 
       var imgURLs2 = environment.imagePath + oImageInfos2.sImageURL;
-      var mockFiles2 = { name: oImageInfos2.sImageName, size: 12345, accepted: true, kind: "image", dataURL: imgURLs2 };
+      var mockFiles2 = { name: oImageInfos2.sImageName, size: 24690, accepted: true, kind: "image", dataURL: imgURLs2 };
 
       crossorigin = "anonymous";
       os2DZM.displayExistingFile(mockFiles2, imgURLs2, function (img) {
