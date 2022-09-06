@@ -26,16 +26,16 @@ export class DefaultComponent implements OnInit {
   constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanService: CreditLoanService,
     private router: Router) {
-    if (localStorage.getItem("userData") !== null && localStorage.getItem("userData") !== undefined) {
-      const user = JSON.parse(localStorage.getItem("userData"));
-      if (user) {
-        let uri = '';
-        if (user.sRole === 'manager') uri = '/welcomemanager'
-        if (user.sRole === 'employee') uri = '/welcomeemployee';
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-          this.router.navigate([uri]));
-      }
-    }
+    // if (localStorage.getItem("userData") !== null && localStorage.getItem("userData") !== undefined) {
+    //   const user = JSON.parse(localStorage.getItem("userData"));
+    //   if (user) {
+    //     let uri = '';
+    //     if (user.sRole === 'manager') uri = '/welcomemanager'
+    //     if (user.sRole === 'employee') uri = '/welcomeemployee';
+    //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+    //       this.router.navigate([uri]));
+    //   }
+    // }
   }
 
   ngOnInit() {
