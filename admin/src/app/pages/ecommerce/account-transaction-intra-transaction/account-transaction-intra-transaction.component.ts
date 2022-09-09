@@ -33,6 +33,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
    bIsAddActive: boolean;
    bIsEditActive: boolean;
    aUsers: Array<BankEmployee>;
+   sSelectedSenderSavingType : string = '';
  
    @ViewChild('_BankAccountFormElem')
    public oBankAccountfoFormElem: any;
@@ -90,6 +91,10 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
   aSavingType: any=[];
   bShowReciever: boolean;
   bShowFormDetails: boolean;
+  aSavingDeposit = [];
+  bIsBtnActive: boolean;
+  oSelectedSenderSavingtype: any = null;
+  bSenderSavingType: boolean;
    
    constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanService: CreditLoanService,
@@ -153,6 +158,37 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
      });
    }
 
+   fnGetSavingDepositAccounts(oSenderAccount : BankAccount){
+    this.oSavingstypeService.fnGetAllSavingDepositAccountsInfo(oSenderAccount.sAccountNo).subscribe((data) => {
+      this.aSavingDeposit = data as any ;
+      this.aSavingDeposit.push({
+        sAccountNo : oSenderAccount,
+        sTypeofSavings : 'Savings Account'
+      });
+      console.log(data);
+      
+    });
+  }
+  fnEnableButton(): void{
+    if(this.sSelectedSenderSavingType.length > 0 ){
+      this.bIsBtnActive = true;
+    }
+  }
+
+  fnGetSavingsDeposit(){
+    if (this.sSelectedSenderSavingType !== 'Savings Account'){
+      this.aSavingDeposit.map((savingdeposit) => {
+        if(savingdeposit.sTypeofSavings === this.sSelectedSenderSavingType){
+          this.ointratransactionModel.nSenderAccountId = savingdeposit.nSavingsId;
+          this.ointratransactionModel.sSenderAccountType = 'savingtype';
+          debugger
+          this.oSelectedSenderSavingtype = savingdeposit ;
+          this.bShowReciever = true ;
+        }
+      });
+    }
+  }
+
    fnGetCreditLoans(){
      
     this.sAccountype = 'savings'
@@ -161,11 +197,14 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     });
   }
 
+
    fnGetSenderAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
+    this.ointratransactionModel.sSenderAccountType = 'savings';
+    this.bSenderSavingType = true;
     this.fnOnUpdateNarration();
-    this.bShowReciever = true ;
+    this.fnGetSavingDepositAccounts(oSelectedAccount);
     //this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
    }
 

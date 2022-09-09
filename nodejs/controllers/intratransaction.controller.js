@@ -41,11 +41,26 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     //To Credit amount to reciever account
     let oBalanceAmount = 0;
     let transactionid = '';
+    let nAccountId = null;
+    let sSenderAccountType = '';
     const oBankAccount = await oBankAccountModel.findOne({ sAccountNo: oReq.body.sSenderAccountNumber });
     if (!oBankAccount) {
-      return oRes.status(400).send();
+      return oRes.status(400).send("Bank Does not Exists!");
     }
-    const olasttransactionAccount = await oTransactionModel.find({ nLoanId: oBankAccount.nAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
+    if(oReq.body.sSenderAccountType === 'savingtype'){
+      const oSavingType = await oSavingsTypeModel.findOne({nSavingsId : oReq.body.nSenderAccountId , sAccountNo : oBankAccount.sAccountNo})
+      if (!oSavingType) {
+        return oRes.status(400).send("This transaction is not possible because the sender account does not exists!");
+      }
+      nAccountId = oSavingType.nSavingsId;
+      sSenderAccountType = oSavingType.sTypeofSavings;
+    }else {
+      nAccountId = oBankAccount.nAccountId;
+      sSenderAccountType = 'Savings Account';
+    }
+
+
+    const olasttransactionAccount = await oTransactionModel.find({ nLoanId: nAccountId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
     if (olasttransactionAccount.length > 0) {
       let oBalance = olasttransactionAccount[0].nBalanceAmount
       if (oBalance < oReq.body.nAmount) return oRes.json("Low Balance");
@@ -172,7 +187,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
         oTransactionInfo.nBalanceAmount = (Math.round((oBalanceAmt - oReq.body.nAmount) * 100) / 100).toFixed(2);
         oTransactionInfo.sDate = oReq.body.sDate;
         oTransactionInfo.sNarration = oReq.body.sNarration;
-        oTransactionInfo.sEmployeeName = 'Savings Account';
+        oTransactionInfo.sAccountType = sSenderAccountType;
         oTransactionInfo.sEmployeeName = oReq.body.sTransactionEmployee;
         oTransactionInfo.sIsApproved = 'Pending';
 

@@ -13,6 +13,10 @@ var oIntraTransactionSchema = new oSchema({
     type: String,
     trim: true,
    },//unique: true},
+   sSenderAccountType: { 
+    type: String,
+    trim: true,
+   },
    sRecieverAccountType: { 
     type: String,
     trim: true,
