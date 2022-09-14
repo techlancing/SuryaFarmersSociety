@@ -22,48 +22,13 @@
           </div>
           <div class="col-sm-5 btn-container">
             <button type="button" class="btn btn-primary mr-1 buttonadjust" (click)="fnGetSavingsDeposit()" [disabled]="!bIsBtnActive">
-              Get SavingType Details</button>
+              Select & Get Balance</button>
           </div>
          
-            <div class="row" *ngIf="oSelectedSenderSavingtype !== null">
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="sDate" class="colorAdjust">Created Date:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.sStartDate}}</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="sTypeofLoan"  class="colorAdjust">Type of SavingDeposit:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.sTypeofSavings}}</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="nSanctionAmount"  class="colorAdjust">Maturity Amount:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.nMaturityAmount}}</label>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="nIntrest"  class="colorAdjust">Intrest:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.nIntrest}}</label>
-                </div>
-              </div>
-
-               <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="nIntrest"  class="colorAdjust">Monthly Intrest Add Date:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.sMonthInterestAddDate}}</label>
-                </div>
-              </div>
-
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="sEndofLoanDate"  class="colorAdjust">Maturity Date:</label>
-                  <label class="account-detail">{{oSelectedSenderSavingtype.sMaturityDate}}</label>
-                </div>
-              </div>
+            <div class="margin-balance" *ngIf="nAccountBalance !== null && nAccountBalance !== undefined">
+               <h4>{{sSelectedSenderSavingType}}</h4>
+               <p>------------------------------------</p>
+              <h5> Balance : <label for="">{{nAccountBalance}}</label></h5>
             </div>
                       
          

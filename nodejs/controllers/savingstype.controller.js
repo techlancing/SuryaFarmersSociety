@@ -322,6 +322,31 @@ oSavingsTypeRouter.get("/getallsavingstypebalance", oAuthentication, asyncMiddle
   }
 }));
 
+// url: ..../savingstype/getsinglesavingtypebalance
+oSavingsTypeRouter.post("/getsinglesavingtypebalance", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
+  try {
+    let oBalance = 0;
+    let oSavingsType = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, nSavingsId: oReq.body.nSavingsId,sIsApproved : 'Approved', sStatus : 'Active'});
+    console.log("savingtype",oSavingsType)
+    if (oSavingsType) {
+      
+        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavingsType.nSavingsId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
+        if (olasttransaction.length > 0) {
+          oBalance = oBalance + olasttransaction[0].nBalanceAmount;
+        }
+      
+    }
+    oRes.json(oBalance);
+
+  } catch (e) {
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+
+
 // url: ..../savingstype/getaccountsavingstypes
 oSavingsTypeRouter.post("/getaccountsavingstypes", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {

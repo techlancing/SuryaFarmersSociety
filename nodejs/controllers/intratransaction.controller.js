@@ -43,6 +43,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     let transactionid = '';
     let nAccountId = null;
     let sSenderAccountType = '';
+    let oSenderSavingType = null;
     const oBankAccount = await oBankAccountModel.findOne({ sAccountNo: oReq.body.sSenderAccountNumber });
     if (!oBankAccount) {
       return oRes.status(400).send("Bank Does not Exists!");
@@ -54,6 +55,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
       }
       nAccountId = oSavingType.nSavingsId;
       sSenderAccountType = oSavingType.sTypeofSavings;
+      oSenderSavingType = oSavingType;
     }else {
       nAccountId = oBankAccount.nAccountId;
       sSenderAccountType = 'Savings Account';
@@ -198,6 +200,13 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
 
         console.log('newtransaction', newTransaction);
 
+
+        //if sender account is savingtype, update savingtype transactionInfo  
+        if (oTransaction.nBalanceAmount > 0 && oSenderSavingType !== null) {
+          oSenderSavingType.oTransactionInfo.push(newTransaction);
+          oSenderSavingType.nDepositAmount = oTransaction.nBalanceAmount;
+          await oSenderSavingType.save();
+        }
         // Update total amount in dailysavingdeposit model
         let oSenderAccount = await oDailyDepositModel.findOne({ nAccountId: oReq.body.nSenderAccountId });
         if (oSenderAccount)

@@ -15,6 +15,7 @@ import { BankEmployeeService } from 'src/app/core/services/bankemployee.service'
 import {UtilitydateService} from '../../../core/services/utilitydate.service';
 import { NarrationstringService } from 'src/app/core/services/narrationstring.service';
 import { SavingstypeService } from 'src/app/core/services/savingstype.service';
+import { SavingsType } from 'src/app/core/models/savingstype.model';
 
 @Component({
   selector: 'app-account-transaction-intra-transaction',
@@ -95,6 +96,8 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
   bIsBtnActive: boolean;
   oSelectedSenderSavingtype: any = null;
   bSenderSavingType: boolean;
+  nAccountBalance: any;
+  oSelectedSenderAccount: BankAccount;
    
    constructor(private oBankAccountService: BankAccountService,
     private oCreditLoanService: CreditLoanService,
@@ -175,17 +178,32 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
     }
   }
 
+  fnFecthAccountBalance(){    
+    this.oBankAccountService.fnGetSingleAccountBalance(this.oSelectedSenderAccount.sAccountNo).subscribe((cdata) => {
+    this.nAccountBalance = cdata as any;
+    this.bShowReciever = true ;
+    });
+  }
+  fnFetchSavingTypeBalance(oSavingsTpe : SavingsType){
+    this.oSavingstypeService.fnGetSingleSavingTypeBalance(oSavingsTpe).subscribe((data) => {
+      this.nAccountBalance = data as any;
+      this.bShowReciever = true ;
+    });
+  }
+
   fnGetSavingsDeposit(){
     if (this.sSelectedSenderSavingType !== 'Savings Account'){
       this.aSavingDeposit.map((savingdeposit) => {
         if(savingdeposit.sTypeofSavings === this.sSelectedSenderSavingType){
           this.ointratransactionModel.nSenderAccountId = savingdeposit.nSavingsId;
           this.ointratransactionModel.sSenderAccountType = 'savingtype';
-          debugger
           this.oSelectedSenderSavingtype = savingdeposit ;
-          this.bShowReciever = true ;
+          this.fnFetchSavingTypeBalance(savingdeposit);
         }
       });
+    }
+    if (this.sSelectedSenderSavingType == 'Savings Account'){
+      this.fnFecthAccountBalance();
     }
   }
 
@@ -199,6 +217,7 @@ import { SavingstypeService } from 'src/app/core/services/savingstype.service';
 
 
    fnGetSenderAccount(oSelectedAccount : BankAccount){
+    this.oSelectedSenderAccount = oSelectedAccount;
     this.ointratransactionModel.sSenderAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
     this.ointratransactionModel.sSenderAccountType = 'savings';
