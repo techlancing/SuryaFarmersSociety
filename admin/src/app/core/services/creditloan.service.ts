@@ -54,9 +54,13 @@ export class CreditLoanService {
     const sMethodUrl = `${this.sRootUrl}/setcreditloanapprovalstatus`;
     return this.http.post(sMethodUrl,oCreditLoan);
   }
-  fnDeactivateSavingType(oCreditLoan: CreditLoan){
+  fnDeactivateCreditLoan(oCreditLoan: CreditLoan){
     const sMethodUrl = `${this.sRootUrl}/deactivate`;
     return this.http.post(sMethodUrl, oCreditLoan);
+  }
+  fnGetClosedCreditLoans(sAccountNo: string){
+    const sMethodUrl = `${this.sRootUrl}/getclosedallcreditloans`;
+    return this.http.post(sMethodUrl, {sAccountNo : sAccountNo});
   }
 
 }

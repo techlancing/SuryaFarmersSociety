@@ -19,7 +19,7 @@ const asyncMiddleware = fn =>
 oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
   const newCreditLoan = new oCreditLoanModel(oReq.body);
   try{
-    const oCreditLoan = await oCreditLoanModel.findOne({ sAccountNo: oReq.body.sAccountNo,sTypeofLoan: oReq.body.sTypeofLoan,sLoanStatus : 'Active'});
+    const oCreditLoan = await oCreditLoanModel.findOne({ sAccountNo: oReq.body.sAccountNo,sTypeofLoan: oReq.body.sTypeofLoan,sIsApproved : 'Approved', sLoanStatus : 'Active'});
     if (oCreditLoan) {
       return oRes.json("Exists").send();
     }
@@ -344,6 +344,31 @@ oCreditLoanRouter.post("/getallcreditloansByApproval", oAuthentication, asyncMid
     oRes.status(400).send(e);
   }
 }));
+
+
+// url: ..../creditloan/getclosedallcreditloans
+oCreditLoanRouter.post("/getclosedallcreditloans", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    await oCreditLoanModel.find({sAccountNo : oReq.body.sAccountNo,sIsApproved: "Approved", sLoanStatus : 'InActive'})
+    .populate({
+      path: 'oTransactionInfo',
+      match : { 'sIsApproved' : 'Approved' }
+    }).exec((oError, oAllCreditLoans) => {
+      if(!oError) {
+          oRes.json(oAllCreditLoans);
+      }
+      else{
+          console.log(oError);
+          return oRes.status(400).send({"error" : "No creditloans found"});
+      }
+    });
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
 
 
 module.exports = oCreditLoanRouter;

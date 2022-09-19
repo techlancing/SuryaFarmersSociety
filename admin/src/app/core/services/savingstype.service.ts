@@ -32,6 +32,12 @@ export class SavingstypeService {
     const sMethodUrl = `${this.sRootUrl}/getallsavingstypeByApproval`;
     return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
   }
+
+  fnGetClosedSavingDepositAccountsInfo(sAccountNo : string) {
+    const sMethodUrl = `${this.sRootUrl}/getallclosedsavingstypeByApproval`;
+    return this.http.post(sMethodUrl, {sAccountNo:sAccountNo});
+  }
+
   fnAddSavingsDepositTransactionInfo(oSavingsDeposit : Debit){
     const sMethodUrl = `${this.sRootUrl}/addsavingsdeposit_transaction`;
     return this.http.post(sMethodUrl, oSavingsDeposit);

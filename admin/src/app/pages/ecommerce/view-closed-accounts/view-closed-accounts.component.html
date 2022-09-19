@@ -1,0 +1,203 @@
+<div class="container-fluid">
+    <!-- page title -->
+    <app-page-title title="" [breadcrumbItems]="breadCrumbItems" 
+    bgimageclass="addcategory_header"></app-page-title>
+    <app-bank-account-data [headerText]="sHeaderText" 
+    (accountDataClicked)="fnGetCreditLoans($event)" [bPdfPrint]="!bPdf"></app-bank-account-data>
+
+    
+
+    <div class="row " [ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
+        'agri' : bAgriculturalLoan,'gold' : bGoldLoan,'silver' : bSilverLoan,'temp' : bTemporaryLoan,
+      'Daily' : bDaily,'Fixed' : bFixed,'Recuring' : bRecuring,'Monthly' : bMonthly,'Pension' : bPension,
+    'Child' : bChild,'Education' : bEducation}">      
+      <div class="row col-12 " *ngIf="aTransactions && aTransactions.length > 0">
+        <div class="col-12 " >
+          <div class="savings-header printAlign">            
+            <div></div>
+            <button type="button" class="btn btn-primary mr-1"    (click)="fnPrintSavingAccount()">
+              print</button>
+              
+          </div>
+          <div class="card card-bg hide-trans" >
+            <div class="card-body">
+              <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true">
+                <ngb-panel id="static-1">
+                  
+                  <ng-template ngbPanelTitle class="text-black">
+                    <h2 class="hide-savings">Savings Account</h2>
+                  </ng-template>
+            
+                  <ng-template ngbPanelContent>
+                    <app-closed-account-ledger-table [aTransactions]='aTransactions' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf" 
+                    ></app-closed-account-ledger-table>
+                    
+                  </ng-template>
+                </ngb-panel>                
+              </ngb-accordion>              
+            </div>
+          </div>
+        </div>
+      </div>    
+      
+    <div class="row col-12 hide-loan">
+      <div class="col-12 "  >   <!--hide-loan-->
+        <div class="card card-bg" *ngFor="let oCreditLoanmodel of aCreditLoan">
+          <div class="card-body" [ngClass]="{'notvisible' : id !== oCreditLoanmodel.nLoanId  && id !==null}">
+
+            <div class="savings-header printAlign">
+                        
+             
+              <div></div>
+              <button type="button" class="btn btn-primary mr-1"  (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan,oCreditLoanmodel.nLoanId)">
+                print</button>
+                
+            </div>
+
+            <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true" [ngClass]="oCreditLoanmodel.sTypeofLoan.split(' ')[0]">
+              <ngb-panel id="static-1" [ngClass]="''+oCreditLoanmodel.nLoanId">
+                <ng-template ngbPanelTitle class="text-black">
+                  <div class="row">
+                    <h2 [ngClass]="{'notvisible' : !bPdf}" >{{oCreditLoanmodel.sTypeofLoan}} - {{oCreditLoanmodel.nSanctionAmount}}</h2>
+                    <h2 [ngClass]="{'notvisible' : !bPdf}" *ngIf="oCreditLoanmodel.oTransactionInfo.length !== 0" class="loanoutstanding">Loan Amount Outstanding : {{oCreditLoanmodel.oTransactionInfo[oCreditLoanmodel.oTransactionInfo.length-1].nBalanceAmount}}</h2>
+                  </div>
+                  
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="row" [ngClass]="{'notvisible' : !bPdf }">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sDate">Loan Issue Date:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.sDate}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sTypeofLoan">Type of Loan:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.sTypeofLoan}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nSanctionAmount">Sanction Amount:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.nSanctionAmount}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nIntrest">Intrest:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.nIntrest}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nTotalAmount">Total Amount:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.nTotalAmount}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sInstallmentType">Installment Types:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.sInstallmentType}}</label>
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nInstallmentAmount">Installment Amount:</label>
+                        <label class="account-detail">{{oCreditLoanmodel.nInstallmentAmount}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sEndofLoanDate">End of the Loan:</label>
+
+            
+                        <label class="account-detail"> {{oCreditLoanmodel.sEndofLoanDate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <app-closed-account-ledger-table [aTransactions]='oCreditLoanmodel.oTransactionInfo' [bPrintLine]='bPrintLine' 
+                  [bNotPrintHead]="!bPdf"  ></app-closed-account-ledger-table>
+                  
+                </ng-template>
+              </ngb-panel>
+              
+            </ngb-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--savingtype details-->
+    <div class="row col-12 hidesavingdeposit">
+      <div class="col-12 "  >
+        <div class="card card-bg" *ngFor="let oSavingDepositmodel of aSavingDeposit">
+          <div class="card-body " [ngClass]="{'notvisible' : id !== oSavingDepositmodel.nSavingsId && id !== null}">
+
+            <div class="row savings-header notvisible printAlign">
+             <!--&& user.sRole == 'manager'-->
+              <div></div>
+                <button type="button" class="btn btn-primary mr-1"   (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings,oSavingDepositmodel.nSavingsId)">
+                  print</button>
+            </div>
+
+            <ngb-accordion #acc="ngbAccordion" activeIds="static-1" [closeOthers]="true" [ngClass]="oSavingDepositmodel.sTypeofSavings.split(' ')[0]">
+              <ngb-panel id="static-1" [ngClass]="''+oSavingDepositmodel.nSavingsId">
+                <ng-template ngbPanelTitle class="text-black">
+                  <h2 [ngClass]="{'notvisible' : !bPdf}">{{oSavingDepositmodel.sTypeofSavings}} - {{oSavingDepositmodel.nMaturityAmount}}</h2> 
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="row" [ngClass]="{'notvisible' : !bPdf }">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sDate">Created Date:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.sStartDate}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sTypeofLoan">Type of SavingDeposit:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.sTypeofSavings}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nSanctionAmount">Maturity Amount:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.nMaturityAmount}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nIntrest">Intrest:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.nIntrest}}</label>
+                      </div>
+                    </div>
+
+                     <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="nIntrest">Monthly Intrest Add Date:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.sMonthInterestAddDate}}</label>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="sEndofLoanDate">Maturity Date:</label>
+                        <label class="account-detail">{{oSavingDepositmodel.sMaturityDate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <app-closed-account-ledger-table [aTransactions]='oSavingDepositmodel.oTransactionInfo' [bPrintLine]='bPrintLine' [bNotPrintHead]="!bPdf"
+                   ></app-closed-account-ledger-table>
+                  
+                </ng-template>
+              </ngb-panel>
+              
+            </ngb-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>

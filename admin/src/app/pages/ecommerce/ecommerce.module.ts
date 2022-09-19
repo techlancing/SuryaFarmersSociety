@@ -55,6 +55,8 @@ import { ApprovalsDisplayComponent } from './approvals-display/approvals-display
 import { WelcomeMessageComponent } from './welcome-message/welcome-message.component';
 import { LogoutComponent } from './logout/logout.component';
 import { MessageCardComponent } from './message-card/message-card.component';
+import { ViewClosedAccountsComponent } from './view-closed-accounts/view-closed-accounts.component';
+import { ClosedAccountLedgerTableComponent } from './closed-account-ledger-table/closed-account-ledger-table.component';
 
 
 
@@ -100,6 +102,8 @@ const config: DropzoneConfigInterface = {
      WelcomeMessageComponent,
      LogoutComponent,
      MessageCardComponent,
+     ViewClosedAccountsComponent,
+     ClosedAccountLedgerTableComponent,
      ],
   imports: [
     CommonModule,

@@ -1,0 +1,146 @@
+.trans-detail{
+    color: black;
+    font-weight: bold;
+    font-size : 17px;
+}
+.pdfstyle .trans-detail{
+   font-size: 8px;
+   font-weight: normal;
+}
+.pdfstyle .tableheader{
+   font-size: 8px;
+   font-weight: normal;
+}
+.pdfstyle .ledgerString{
+   font-size: 12px;
+}
+
+.pdfstyle .form-group{
+   margin-bottom: 0!important;
+}
+@media print{
+    .notvisible{
+       display : none !important ;
+    }
+    .adjust{
+        justify-content: space-around !important;
+        //padding-right: -15px;
+    }
+    .adjustlines1{
+       margin-top:  5%!important;
+    }
+    .adjustlines2{
+        margin-top: 10% !important;
+     }
+     .adjustlines3{
+        margin-top: 15% !important;
+     }
+     .adjustlines4{
+        margin-top: 20% !important;
+     }
+     .adjustlines5{
+        margin-top: 25% !important;
+     }
+     .adjustlines6{
+        margin-top: 30% !important;
+     }
+     .adjustlines7{
+        margin-top: 35% !important;
+     }
+     .adjustlines8{
+        margin-top: 40% !important;
+     }
+     .adjustlines9{
+        margin-top: 45% !important;
+     }
+     .adjustlines10{
+        margin-top: 50% !important;
+     }
+     .adjustlines11{
+        margin-top: 55% !important;
+     }
+     .adjustlines12{
+        margin-top: 60% !important;
+     }
+     .adjustlines13{
+        margin-top: 65% !important;
+     }
+     .adjustlines14{
+        margin-top: 70% !important;
+     }
+     .adjustlines15{
+        margin-top: 75% !important;
+     }
+     .adjustlines16{
+        margin-top: 80% !important;
+     }
+     .adjustlines17{
+        margin-top: 85% !important;
+     }
+     .adjustlines18{
+        margin-top: 90% !important;
+     }
+     .adjustlines19{
+        margin-top: 95% !important;
+     }
+}
+.notvisiblepdf{
+   display : none !important ;
+}
+.tableheader{
+    font-size: 17px;
+}
+.adjustlines{
+   padding-left: 13px !important;
+}
+
+
+.account-detail{
+   color: orange;
+   margin-left: 15px;
+}
+.img-container{
+   display: grid;
+}
+
+.card-bg{
+   background-color: antiquewhite;
+   }
+
+   h4{
+       text-align: center;
+       margin:10px;
+   }
+
+   img:nth-child(2){
+       width:50px;
+   }
+   img:nth-child(3){
+      
+       width:50px;
+   }
+   img:nth-child(4){
+     
+       width:50px;
+   }
+tr.imagewidth{
+   td{
+       column-width: 150px;
+   }
+
+}
+.photoWidth{
+   width : 145px;
+   height: 120px;
+   
+}
+.signWidth{
+   width : 100px;
+   height: 80px;
+}
+.accountDetails{
+   font-size: 8px;
+}
+.pstyle{
+   color : rgb(8, 177, 189) ;
+}

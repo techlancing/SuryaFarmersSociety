@@ -32,6 +32,7 @@ import { ManagerApprovalComponent } from './manager-approval/manager-approval.co
 import { ApprovalsDisplayComponent } from './approvals-display/approvals-display.component';
 import { WelcomeMessageComponent } from './welcome-message/welcome-message.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ViewClosedAccountsComponent } from './view-closed-accounts/view-closed-accounts.component';
 
 
 
@@ -230,6 +231,10 @@ const routes: Routes = [
     {
         path: 'logout',
         component: LogoutComponent
+    },
+    {
+        path : 'closedaccounts',
+        component : ViewClosedAccountsComponent
     }
    
 ];

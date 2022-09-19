@@ -1,0 +1,107 @@
+<div  class="adjustlines">
+   
+    <div class="hide-ledegr">
+      <h4 class="ledgerString" [ngClass]="{'notvisible' : bNotPrintHead }">Account Transactions</h4>
+      <div class="row tableheader" [ngClass]="{'notvisible' : bNotPrintHead }">
+        <div class="col-1 notvisible" *ngIf="bPrintLine">
+          <div class="form-group">
+            <label for="printLine">L.No</label>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <label for="sBranchCode">Date</label>
+          </div>
+        </div>
+        <div class="col" *ngIf="bShowAccNum">
+          <div class="form-group">
+            <label for="sBranchCode">Account Number</label>
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="form-group">
+            <label for="sAccountNo">Credit</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="sBranchCode">Debit</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="sBranchCode">Balance Amount</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="sBranchCode">Transaction ID</label>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="form-group">
+            <label for="sBranchCode">Narration</label>
+          </div>
+        </div>
+  
+        <div class="col" *ngIf="bShowEmployee">
+          <div class="form-group">
+            <label for="sEmployeeName">Employee Name</label>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+    <div class="row adjust" *ngFor="let otransactionmodel of aTransactions;let i=index">
+      <div class="col-1" *ngIf="bPrintLine" [ngClass]="{'notvisible':bPrintLine}">
+        <div class="form-group">
+          <label for="printLine" class="trans-detail">{{+i +1 }}</label>
+        </div>
+      </div>
+      <div class="col-2" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sDate}}</label>
+        </div>
+      </div>
+  
+      <div class="col" *ngIf="bShowAccNum" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sAccountNo}}</label>
+        </div>
+      </div>
+  
+      <div class="col" >
+        <div class="form-group">
+          <label for="sAccountNo" class="trans-detail">{{otransactionmodel.nCreditAmount.toLocaleString()}}</label>
+        </div>
+      </div>
+      <div class="col" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nDebitAmount.toLocaleString()}}</label>
+        </div>
+      </div>
+      <div class="col" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nBalanceAmount.toLocaleString()}}</label>
+        </div>
+      </div>
+      <div class="col" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.nTransactionId}}</label>
+        </div>
+      </div>
+      <div class="col-2" >
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sNarration}}</label>
+        </div>
+      </div>
+  
+      <div class="col" *ngIf="bShowEmployee">
+        <div class="form-group">
+          <label for="sBranchCode" class="trans-detail">{{otransactionmodel.sEmployeeName}}</label>
+        </div>
+      </div>
+      
+    </div>
+  </div>

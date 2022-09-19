@@ -60,6 +60,13 @@ export const MMENU: MenuItem[] = [
                 link: '/accountClosing',
                 parentId: 35
             },
+            {
+                id: 38,
+                label: 'MENUITEMS.MANAGERCLOSING.LIST.VIEWCLOSEDACCOUNTS',
+                link: '/closedaccounts',
+                parentId: 35
+            }
+            
         ]
     },
     {

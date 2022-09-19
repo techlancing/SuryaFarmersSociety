@@ -21,7 +21,7 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
   console.log('newSavings', newSavings)
   try {
     //checking the savingtype already exists or not
-    const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sTypeofSavings: oReq.body.sTypeofSavings ,sStatus : 'Active'});
+    const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sTypeofSavings: oReq.body.sTypeofSavings, sIsApproved : 'Approved', sStatus : 'Active'});
     if (oSavings) {
       return oRes.json("Exists").send();
     }
@@ -504,6 +504,32 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
     oRes.status(400).send(e);
   }
 }));
+
+// url: ..../savingstype/getallclosedsavingstypeByApproval
+oSavingsTypeRouter.post("/getallclosedsavingstypeByApproval", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
+  try {
+    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", sStatus : 'InActive' })
+      .populate({
+        path: 'oTransactionInfo',
+        match : { 'sIsApproved' : 'Approved' }
+      }).exec((oError, oAllSavingsType) => {
+        if (!oError) {
+          oRes.json(oAllSavingsType);
+        }
+        else {
+          console.log(oError);
+          return oRes.status(400).send({"error" : "No saving deposits found"});
+        }
+      });
+  } catch (e) {
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+
+
+
 
 // url: ..../savingstype/getsavingtype
 oSavingsTypeRouter.post("/getsavingtype", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
