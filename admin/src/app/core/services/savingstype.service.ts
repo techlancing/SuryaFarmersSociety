@@ -63,7 +63,7 @@ export class SavingstypeService {
 
   fnGetSpecificSavingTypeInfo(oSavinsType: SavingsType){
     const sMethodUrl = `${this.sRootUrl}/getsavingtype`;
-    return this.http.post(sMethodUrl, oSavinsType);
+    return this.http.post(sMethodUrl, {sAccountNo : oSavinsType.sAccountNo, nSavingsId : oSavinsType.nSavingsId});
   }
 
   fnDeactivateSavingType(oSavinsType: SavingsType){
