@@ -444,7 +444,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
   }
 
   fnGetSavingTypeInfo() {
-    this.oSavingstypeService.fnGetSpecificSavingTypeInfo(this.oSavingsDeposit).subscribe((data) => {
+    this.oSavingstypeService.fnGetSpecificSavingTypeInfo(this.oSavingsDeposit.sAccountNo,this.oSavingsDeposit.nSavingsId).subscribe((data) => {
       this.oSavingsDeposit = data as any;
       this.aTransactionModel = this.oSavingsDeposit.oTransactionInfo;
       this.oDailySavingDebitModel.nAccountId = this.oSavingsDeposit.nSavingsId;
