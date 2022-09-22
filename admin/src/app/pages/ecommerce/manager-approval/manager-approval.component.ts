@@ -77,35 +77,66 @@ export class ManagerApprovalComponent implements OnInit {
     });
 
   }
-  fnChangeApprovalStatus(approval : any,status : string){
-    if(this.activatedroute.snapshot.data.type === 'savings'){
-      if(status == 'Approved') approval.sStatus = 'Active';
-      approval.sIsApproved = status ;
+  fnChangeApprovalStatus(approval: any, status: string) {
+    if (this.activatedroute.snapshot.data.type === 'savings') {
+      if (status == 'Approved') approval.sStatus = 'Active';
+      approval.sIsApproved = status;
 
-      let msg ='';
-      if(approval.oTransactionInfo[0].sIsApproved == 'Pending')  msg = '<br /> Transaction id "'+approval.oTransactionInfo[0].nTransactionId+'" is need to be Approved';
+      let msg = '';
+     // if (approval.oTransactionInfo[0].sIsApproved == 'Pending') msg = '<br /> Transaction id "' + approval.oTransactionInfo[0].nTransactionId + '" is need to be Approved';
       this.oSavingstypeService.fnChangeSavingTypeStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage(approval.sTypeofSavings+' is '+status+' Successfully'+msg);
-        this.redirectTo('/savingsapproval');
+        if ((data as any).status == "Success") {
+          this.fnSuccessMessage(approval.sTypeofSavings + ' is ' + status + ' Successfully' + msg);
+          this.redirectTo('/savingsapproval');
+        } else{
+          approval.sIsApproved = 'Pending';
+          approval.sStatus = 'InActive';
+          this.fnWarningMessage((data as any).message);
+        } 
+        this.bDisableButton = false;
+      }, (error) => {
+        approval.sIsApproved = 'Pending';
+        approval.sStatus = 'InActive';
+        this.bDisableButton = false;
       });
     }
-    else if (this.activatedroute.snapshot.data.type === 'credit'){
-      approval.sIsApproved = status ;
-      let amount = approval.nDebitAmount !== 0 ? approval.nDebitAmount : approval.nCreditAmount ;
+    else if (this.activatedroute.snapshot.data.type === 'credit') {
+      approval.sIsApproved = status;
+      let amount = approval.nDebitAmount !== 0 ? approval.nDebitAmount : approval.nCreditAmount;
       this.oTransactionService.fnChangeApprovedStatus(approval).subscribe((data) => {
-       this.fnSuccessMessage('Transaction : '+approval.sAccountType+'-'+amount +' is '+status+' Successfully.');
-       this.redirectTo('/creditapproval'); 
+        if ((data as any).status == "Success") {
+          this.fnSuccessMessage('Transaction : ' + approval.sAccountType + '-' + amount + ' is ' + status + ' Successfully.');
+          this.redirectTo('/creditapproval');
+        } else{
+          approval.sIsApproved = 'Pending';
+          this.fnWarningMessage((data as any).message);
+        }
+        this.bDisableButton = false;
+      }, (error) => {
+        approval.sIsApproved = 'Pending';
+        this.bDisableButton = false;
       });
     }
     else {
-      if(status == 'Approved') approval.sLoanStatus = 'Active';
+      if (status == 'Approved') approval.sLoanStatus = 'Active';
       else approval.sLoanStatus = 'InActive';
-      approval.sIsApproved = status ;
-      let msg ='';
-      if(approval.oTransactionInfo[0].sIsApproved == 'Pending')  msg = '<br /> Transaction id "'+approval.oTransactionInfo[0].nTransactionId+'" is need to be Approved';
+      approval.sIsApproved = status;
+      let msg = '';
+      //if (approval.oTransactionInfo[0].sIsApproved == 'Pending') msg = '<br /> Transaction id "' + approval.oTransactionInfo[0].nTransactionId + '" is need to be Approved';
       this.oCreditLoanService.fnChangeCreditLoanStatus(approval).subscribe((data) => {
-        this.fnSuccessMessage(approval.sTypeofLoan+' is '+status+' Successfully'+msg);
-        this.redirectTo('/loanapproval');
+        if ((data as any).status == "Success") {
+          this.fnSuccessMessage(approval.sTypeofLoan + ' is ' + status + ' Successfully' + msg);
+          this.redirectTo('/loanapproval');
+        } else{
+          approval.sIsApproved = 'Pending';
+          approval.sLoanStatus = 'InActive';
+          this.fnWarningMessage((data as any).message);
+        } 
+        this.bDisableButton = false;
+      }, (error) => {
+        approval.sIsApproved = 'Pending';
+        approval.sLoanStatus = 'InActive';
+        this.bDisableButton = false;
       });
     }
   }
@@ -114,6 +145,16 @@ export class ManagerApprovalComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
+      title: msg,
+      showConfirmButton: true,
+     // timer: 3500
+    });
+  }
+
+  fnWarningMessage(msg : string){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
       title: msg,
       showConfirmButton: true,
      // timer: 3500

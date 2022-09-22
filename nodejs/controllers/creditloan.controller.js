@@ -161,8 +161,8 @@ oCreditLoanRouter.post("/setcreditloanapprovalstatus", oAuthentication, asyncMid
     if(!oCreditLoan){
       return oRes.status(400).send({error : 'This Loan does not exists'});
     }
-    await oCreditLoanModel.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved,sLoanStatus : oReq.body.sLoanStatus},{ new: true, runValidators : true});
-    oRes.json("Success");  
+    const loan = await oCreditLoanModel.findByIdAndUpdate(oCreditLoan._id,{sIsApproved: oReq.body.sIsApproved,sLoanStatus : oReq.body.sLoanStatus},{ new: true, runValidators : true});
+    oRes.json({status : "Success",message : loan.sLoanStatus});  
 
   }catch(e){
     console.log(e);

@@ -4,6 +4,8 @@ const http = require('https');
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oAuthentication = require("../middleware/authentication");
 const obankaccountModel = require("../data_base/models/bankaccount.model");
+const oSavingsTypeModel = require("../data_base/models/savingstype.model");
+const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oTransactionRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -136,11 +138,34 @@ oTransactionRouter.post("/gettransactionsbetweendates", oAuthentication, asyncMi
 oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncMiddleware(async(oReq, oRes, oNext) => {
   try{
     
+    const oSavingTypeCheck = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo, nSavingsId : oReq.body.nLoanId });
+    const oCreditLoanCheck = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo, nLoanId : oReq.body.nLoanId});
+    const  oBankAccountCheck = await obankaccountModel.findOne({sAccountNo : oReq.body.sAccountNo, nAccountId : oReq.body.nLoanId});
+    if(oSavingTypeCheck){
+      if(oSavingTypeCheck.sIsApproved !== 'Approved') {
+        return oRes.json({status : "error" ,"message" : `You need to "Approve" the ${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo}"`});
+      }
+      if(oSavingTypeCheck.sStatus !== 'Active'){
+        return oRes.json({status : "error" ,"message" : `You need to Activate the Account ${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo}"`});
+      }
+    }else if(oCreditLoanCheck){
+      if(oCreditLoanCheck.sIsApproved !== 'Approved') {
+        return oRes.json({status : "error" ,"message" : `You need to "Approve" the ${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}"`});
+      }
+      if(oCreditLoanCheck.sLoanStatus !== 'Active'){
+        return oRes.json({status : "error" ,"message" : `You need to Activate the Account ${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}"`});
+      }
+    }else if(oBankAccountCheck){
+      if(oBankAccountCheck.bIsDeactivated !==  false) return oRes.status(400).send({status : "error" ,"message" : `Activate the Bank Account ${oBankAccountCheck.sAccountNo}`});
+    }else  return oRes.json({status : "error" ,"message": "Not Belong to Any Account"});
+
+
     let oTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
     // console.log("transaction",oTransaction)
     if(!oTransaction){
-      return oRes.status(400).send();
+      return oRes.json({status : "error","message" :"This transaction is not exists"});
     }
+    
     await oTransactionModel.findByIdAndUpdate(oTransaction._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
     let oUpdatedTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
     
@@ -237,7 +262,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     }
 
 
-    oRes.json("Success");  
+    oRes.json({status : "Success"});  
 
   }catch(e){
     console.log(e);

@@ -91,7 +91,7 @@ obankaccountRouter.post("/add_bankaccount", oAuthentication, asyncMiddleware(asy
     oTransaction.nDebitAmount = newbankaccount.nAmount;
     oTransaction.nBalanceAmount = newbankaccount.nAmount;
     oTransaction.sDate = newbankaccount.sDate;
-    oTransaction.sNarration = "NewAccountCreated";
+    oTransaction.sNarration = "New_Account_Created";
     oTransaction.sAccountType = 'Savings Account';
     oTransaction.sEmployeeName = newbankaccount.sEmployeeName;
     oTransaction.sIsApproved = 'Pending';

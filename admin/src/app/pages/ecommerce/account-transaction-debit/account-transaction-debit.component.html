@@ -96,7 +96,8 @@
                       <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sEndofLoanDate">End of the Loan:</label>
-                          <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanMonths>0; else days">
+                          <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].sEndofLoanDate}} </label>
+                          <!-- <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanMonths>0; else days">
                             <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanDays>0; else months">
                               <label class="account-detail">{{aCreditLoan[nActiveLoanIndex].nLoanMonths}} Months and {{aCreditLoan[nActiveLoanIndex].nLoanDays}} Days</label>
                             </ng-container>
@@ -108,7 +109,7 @@
                             <ng-container *ngIf="aCreditLoan[nActiveLoanIndex].nLoanDays>0">
                               <label class="account-detail"> {{aCreditLoan[nActiveLoanIndex].nLoanDays}} Days </label>
                             </ng-container>
-                          </ng-template>
+                          </ng-template> -->
 
                         </div>
                       </div>
