@@ -60,7 +60,12 @@ var oUserSchema = new oSchema( {
         type: String,
         required: true
     }
-}]
+}],
+otps:[{
+  otp:{
+    type: Number
+  }
+}],
 },{
   timestamps : true
 });

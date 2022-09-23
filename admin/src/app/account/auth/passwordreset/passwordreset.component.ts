@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { AuthenticationService } from '../../../core/services/auth.service';
+import { AuthenticationService } from '../../../core/services/authentication.service';
+// import { AuthenticationService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-passwordreset',
@@ -21,6 +22,8 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
   error = '';
   success = '';
   loading = false;
+  bEmail = false;
+  bOtp = false ;
 
   // set the currenr year
   year: number = new Date().getFullYear();
@@ -32,6 +35,9 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
 
     this.resetForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      otp : ['', [Validators.required]],
+      password : ['', [Validators.required]],
+      repeatpassword : ['', [Validators.required]],
     });
   }
 
@@ -52,11 +58,66 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
     if (this.resetForm.invalid) {
       return;
     }
-    if (environment.defaultauth === 'firebase') {
-      this.authenticationService.resetPassword(this.f.email.value)
-        .catch(error => {
-          this.error = error ? error : '';
-        });
-    }
+    // if (environment.defaultauth === 'firebase') {
+    //   this.authenticationService.resetPassword(this.f.email.value)
+    //     .catch(error => {
+    //       this.error = error ? error : '';
+    //     });
+    // }
+    if(this.f.password.value === this.f.repeatpassword.value){
+      this.authenticationService.fnSetNewPassword(this.f.email.value,this.f.password.value,this.f.repeatpassword.value).subscribe((data) => {
+        let message = data as any;
+        if(message == 'success'){
+          this.fnSuccessMessage('Password Reset Completed successfully');
+          this.redirectTo('/login');
+        }
+      });
+    }else this.fnWarningMessage("Password Mismatch");
+    
+  }
+
+  fnWarningMessage(message : string){
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title:  message,
+      showConfirmButton: false,
+      timer: 2000
+    }); 
+  }
+  fnSuccessMessage(message : string){
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title:  message,
+      showConfirmButton: false,
+      timer: 2000
+    });  
+}
+  fnEmailAuthentication(){
+    this.authenticationService.fnEmailAuthentication(this.f.email.value).subscribe((data) => {
+      console.log("email authentication data",data);
+      let message = data as any;
+      if(message == 'success'){
+        this.bEmail =true ;
+       // this.fnResetOTP();
+      }
+    })
+  }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
+  fnOTPValidation() {
+    this.authenticationService.fnOTPValidation(this.f.email.value,this.f.otp.value).subscribe((data) => {
+      console.log("otp validation data", data);
+      let message = data as any;
+      if (message == 'success') {
+        this.bEmail = true;
+        this.bOtp = true;
+      }
+
+    });
   }
 }

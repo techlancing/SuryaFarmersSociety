@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const oUserModel = require("../data_base/models/user.model");
 // const oRetailerModel = require("../data_base/models/retailer.model");
 // const oAddressModel = require("../data_base/models/address.model");
+const {sendOtpForForgotPasswordEmail} = require('../emails/emailaccount');
 const oAuthentication = require("../middleware/authentication");
 
 const oAccountRouter = oExpress.Router();
@@ -181,5 +182,85 @@ oAccountRouter.get("/getusers", asyncMiddleware(async (oReq, oRes, oNext) => {
     oRes.status(400).send(e);
   }
 }));
+
+
+
+
+
+
+
+
+//url: ..../account/sendotp_for_forgotpassword
+oAccountRouter.post("/sendotp_for_forgotpassword",asyncMiddleware(async (oReq, oRes, oNext) => {
+
+  try {
+    const oUser = await oUserModel.findOne({sUserEmail:oReq.body.sUserEmail});
+    if(oUser)
+    {
+       
+      const otp = Math.floor(1000 + Math.random() * 9000);
+
+      sendOtpForForgotPasswordEmail(oReq.body.sUserEmail,otp);
+      oUser.otps = oUser.otps.concat({otp} );
+      if(oUser.otps.length > 5)
+      {
+        (oUser.otps).splice(0,oUser.otps.length - 5);
+      } 
+      await oUser.save();
+
+      oRes.json('success');
+    }
+    else
+      oRes.json({'Error' :'This email does not exsit, Please register.'});
+
+  } catch (e) {
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+//url: ..../account/validateotp_for_forgotpassword
+oAccountRouter.post("/validateotp_for_forgotpassword",asyncMiddleware(async (oReq, oRes, oNext) => {
+
+  try {
+    const oUser = await oUserModel.findOne({sUserEmail:oReq.body.sUserEmail});
+    if(!oUser)
+      oRes.json({'Error' :'This email does not exsit, Please register.'});
+    
+      var nLength = oUser.otps.length;
+      if(!(oUser.otps[nLength-1].otp === oReq.body.nOtp))
+      {
+        return oRes.json({'Error' :'OTP does not match'});
+      }
+
+    oRes.json('success');
+
+  } catch (e) {
+    console.log(e);
+    oRes.status(400).send(e);
+  }
+}));
+
+//url: ..../account/saveNewPassword
+oAccountRouter.post("/saveNewPassword",asyncMiddleware(async (oReq, oRes, oNext) => {
+
+  try {
+    const oUser = await oUserModel.findOne({sUserEmail:oReq.body.sUserEmail});
+    if(!oUser)
+      oRes.json({'Error' :'This email does not exsit, Please register.'});
+    
+      oUser.sUserPassword = oReq.body.sUserPassword;
+      
+      await oUser.save(); 
+
+    oRes.json('success');
+
+  } catch (e) {
+    console.log(e); 
+    oRes.status(400).send(e);
+  }
+}));
+
+
 
 module.exports = oAccountRouter;

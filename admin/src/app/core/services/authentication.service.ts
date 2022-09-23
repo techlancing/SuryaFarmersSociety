@@ -113,6 +113,22 @@ export class AuthenticationService {
 //     }
 //   }
 
+
+//password reset service methods
+fnEmailAuthentication(email: string){
+  let sMethodUrl = `${this.sRootUrl}/sendotp_for_forgotpassword`;
+  return this.http.post<User>(sMethodUrl,{ sUserEmail: email });
+}
+fnOTPValidation(email: string,otp: string){
+  let sMethodUrl = `${this.sRootUrl}/validateotp_for_forgotpassword`;
+  return this.http.post<User>(sMethodUrl,{ sUserEmail: email,nOtp: otp });
+}
+fnSetNewPassword(email: string,password : string,repeatpassword : string){
+  let sMethodUrl = `${this.sRootUrl}/saveNewPassword`;
+  return this.http.post<User>(sMethodUrl,{ sUserEmail: email, sUserPassword : password,repeatpassword : repeatpassword });
+}
+
+
   logout() {
     this.oUser = null;
     this.subUser$.next(this.oUser);
