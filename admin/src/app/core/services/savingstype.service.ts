@@ -66,9 +66,9 @@ export class SavingstypeService {
     return this.http.post(sMethodUrl, {sAccountNo : sAccountNo, nSavingsId : nSavingsId});
   }
 
-  fnDeactivateSavingType(oSavinsType: SavingsType){
+  fnDeactivateSavingType(sAccountNo : string, sIsApproved : string, nSavingsId : number){
     const sMethodUrl = `${this.sRootUrl}/deactivate`;
-    return this.http.post(sMethodUrl, oSavinsType);
+    return this.http.post(sMethodUrl,{ sAccountNo : sAccountNo ,sIsApproved : sIsApproved, nSavingsId : nSavingsId });
   }
   fnGetSingleSavingTypeBalance(oSavinsType: SavingsType){
     const sMethodUrl = `${this.sRootUrl}/getsinglesavingtypebalance`;

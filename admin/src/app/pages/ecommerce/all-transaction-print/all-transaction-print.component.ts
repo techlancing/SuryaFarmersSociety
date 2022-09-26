@@ -343,7 +343,7 @@ export class AllTransactionPrintComponent implements OnInit, AfterViewChecked{
   //deactivating the savingtype
   fnDeactivateSavingType(savingtype : SavingsType){
     savingtype.sStatus = 'InActive'
-    this.oSavingstypeService.fnDeactivateSavingType(savingtype).subscribe((data) =>{
+    this.oSavingstypeService.fnDeactivateSavingType(savingtype.sAccountNo,savingtype.sIsApproved, savingtype.nSavingsId).subscribe((data) =>{
       if(data == 'Success'){
         this.fnSuccessMessage(savingtype.sAccountNo +
           ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' is Closed Successfully.')
