@@ -5,17 +5,17 @@
     <app-bank-account-data [headerText]="sHeaderText" 
     (accountDataClicked)="fnGetCreditLoans($event)" [bPdfPrint]="!bPdf"></app-bank-account-data>
 
-    
-
-    <div class="row " [ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
+    <!--[ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
         'agri' : bAgriculturalLoan,'gold' : bGoldLoan,'silver' : bSilverLoan,'temp' : bTemporaryLoan,
       'Daily' : bDaily,'Fixed' : bFixed,'Recuring' : bRecuring,'Monthly' : bMonthly,'Pension' : bPension,
-    'Child' : bChild,'Education' : bEducation}">      
+    'Child' : bChild,'Education' : bEducation}"-->
+
+    <div class="row " >      
       <div class="row col-12 " *ngIf="aTransactions && aTransactions.length > 0">
-        <div class="col-12 " >
+        <div class="col-12 " [ngClass]="{'notvisible' : id !== aTransactions[0].nLoanId  && id !==null}">
           <div class="savings-header printAlign">            
             <div></div>
-            <button type="button" class="btn btn-primary mr-1"    (click)="fnPrintSavingAccount()">
+            <button type="button" class="btn btn-primary mr-1"    (click)="fnPrintSavingAccount(aTransactions[0].nLoanId)">
               print</button>
               
           </div>

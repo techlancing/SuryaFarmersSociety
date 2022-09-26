@@ -6,14 +6,14 @@
     <app-bank-account-data [headerText]="sHeaderText" 
     (accountDataClicked)="fnGetCreditLoans($event)" [bPdfPrint]="!bPdf"></app-bank-account-data>
 
-    
-
-    <div class="row " [ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
+    <!--[ngClass]="{'savings': bFirstButton===true,'emi': bEmiLoan===true,'personal': bPersonalLoan,
         'agri' : bAgriculturalLoan,'gold' : bGoldLoan,'silver' : bSilverLoan,'temp' : bTemporaryLoan,
       'Daily' : bDaily,'Fixed' : bFixed,'Recuring' : bRecuring,'Monthly' : bMonthly,'Pension' : bPension,
-    'Child' : bChild,'Education' : bEducation}">      
+    'Child' : bChild,'Education' : bEducation}"-->
+
+    <div class="row " >      
       <div class="row col-12 " *ngIf="aTransactions && aTransactions.length > 0">
-        <div class="col-12 " >
+        <div class="col-12 " [ngClass]="{'notvisible' : id !== aTransactions[0].nLoanId  && id !==null}">
           <div class="savings-header printAlign">
             <div class="row">
               <div>
@@ -29,7 +29,7 @@
             </div>
             
     
-            <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount()">
+            <button type="button" class="btn btn-primary mr-1"  *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom1 && nInputLineTo1)" (click)="fnPrintSavingAccount(aTransactions[0].nLoanId)">
               print</button>
               <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf && !bClosing"  (click)="fnPrintPdf('savings')">
                 print pdf</button>
@@ -58,7 +58,7 @@
     <div class="row col-12 hide-loan">
       <div class="col-12 "  ><!--hide-loan-->
         <div class="card card-bg" *ngFor="let oCreditLoanmodel of aCreditLoan">
-          <div class="card-body ">
+          <div class="card-body " [ngClass]="{'notvisible' : id !== oCreditLoanmodel.nLoanId  && id !==null}">
 
             <div class="savings-header printAlign">
              <div class="row">
@@ -76,7 +76,7 @@
              
             <button type="button" class="btn btn-primary mr-1"  *ngIf="bClosing"  (click)="fnConfirmationForCreditLoanDeactive(oCreditLoanmodel)">
               Close</button>
-              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan)">
+              <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintLoanAccount(oCreditLoanmodel.sTypeofLoan,oCreditLoanmodel.nLoanId)">
                 print</button>
                 <button type="button" class="btn btn-primary mr-1" *ngIf="bPdf && !bClosing"  (click)="fnPrintPdf(oCreditLoanmodel.sTypeofLoan)">
                  print pdf</button>
@@ -175,7 +175,7 @@
     <div class="row col-12 hidesavingdeposit">
       <div class="col-12 "  >
         <div class="card card-bg" *ngFor="let oSavingDepositmodel of aSavingDeposit">
-          <div class="card-body ">
+          <div class="card-body " [ngClass]="{'notvisible' : id !== oSavingDepositmodel.nSavingsId && id !== null}">
 
             <div class="savings-header printAlign">
             <div class="row ">
@@ -195,7 +195,7 @@
              <!--&& user.sRole == 'manager'-->
              <div class = "notvisible row buttonAlign textAlign">
               
-                <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings)">
+                <button type="button" class="btn btn-primary mr-1" *ngIf="!bPdf && !bClosing" [disabled]="!(nInputLineFrom2 && nInputLineTo2)" (click)="fnPrintSavingDepositAccount(oSavingDepositmodel.sTypeofSavings,oSavingDepositmodel.nSavingsId)">
                   print</button>
              </div>
              <button type="button" class="btn btn-primary mr-1"  *ngIf="bClosing"  (click)="fnConfirmationMessageForDeactive(oSavingDepositmodel)">

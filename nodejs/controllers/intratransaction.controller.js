@@ -124,6 +124,8 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
             // Update total amount in creditloan model
             let oCreditLoan = await oCreditLoanModel.findOne({ nLoanId: oReq.body.nLoanId });
             if (oCreditLoan) {
+              // let type = oCreditLoan.sTypeofLoan.split(" ");
+              // oCreditLoan.sTypeofLoan = type.length >2? type[0]+"_"+type[1]+"_"+type[3] : type[0]+"_"+type[1];
               newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
               await newTransaction.save();
               oCreditLoan.oTransactionInfo.push(newTransaction);

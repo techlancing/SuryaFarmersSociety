@@ -34,7 +34,9 @@ oCreditLoanRouter.post("/add_creditloan", oAuthentication, asyncMiddleware(async
     oTransaction.nDebitAmount = 0;
     oTransaction.nBalanceAmount = newCreditLoan.nTotalAmount;
     oTransaction.sDate = newCreditLoan.sDate;
-    oTransaction.sNarration = newCreditLoan.sTypeofLoan;
+    // oTransaction.sNarration = newCreditLoan.sTypeofLoan;
+    let type = newCreditLoan.sTypeofLoan.split(" ");
+    oTransaction.sNarration = type.length >2? type[0]+"_"+type[1]+"_"+type[3] : type[0]+"_"+type[1];
     oTransaction.sAccountType = newCreditLoan.sTypeofLoan;
     oTransaction.sEmployeeName = newCreditLoan.sEmployeeName;
     oTransaction.sIsApproved = 'Pending';

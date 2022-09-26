@@ -97,9 +97,17 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
         value:'05'
       },
       {
-      displayText: 'Temporary Loan',
+      displayText: 'Small Business Loan',
         value:'06'
-      }             
+      },
+      {
+      displayText: 'Emergency Call Loan',
+        value:'07'
+      },
+      {
+        displayText: 'Vehicle Loan',
+          value:'08'
+      }               
     ];
     this.aInstallmentType = [
       {
@@ -280,7 +288,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       icon: 'success',
       title: loan+' is created sucessfully.'+ '<br /> Transaction id "'+transactionid+'" is need to be Approved.',
       showConfirmButton: false,
-      timer: 1500
+      // timer: 1500
     });
   }
 

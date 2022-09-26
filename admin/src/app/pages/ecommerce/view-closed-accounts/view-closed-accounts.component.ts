@@ -71,49 +71,50 @@ export class ViewClosedAccountsComponent implements OnInit {
     });
   }
 
-  fnPrintSavingAccount(): void {
-    this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-    this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
+  fnPrintSavingAccount(id): void {
+    this.id = id ;
+    // this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    // this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage();
   }
 
-  fnDeactivateNgClasses(b1,b2,b3,b4,b5,b6,b7){
-    this.bFirstButton = b1 ;
-    this.bEmiLoan = b2 ;
-    this.bPersonalLoan = b3 ;
-    this.bAgriculturalLoan = b4 ;
-    this.bGoldLoan = b5 ;
-    this.bSilverLoan = b6 ;
-    this.bTemporaryLoan = b7 ;
-  }
+  // fnDeactivateNgClasses(b1,b2,b3,b4,b5,b6,b7){
+  //   this.bFirstButton = b1 ;
+  //   this.bEmiLoan = b2 ;
+  //   this.bPersonalLoan = b3 ;
+  //   this.bAgriculturalLoan = b4 ;
+  //   this.bGoldLoan = b5 ;
+  //   this.bSilverLoan = b6 ;
+  //   this.bTemporaryLoan = b7 ;
+  // }
 
   fnPrintLoanAccount(type, id): void {
     this.id = id;
     console.log(type);
-    if(type === 'EMI Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
-    } 
-    else if(type === 'Personal Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
-    } 
-    else if(type === 'Agriculture Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
-    } 
-    else if(type === 'Gold Loan') {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
-    }
-    else if(type === 'Silver Loan') {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
-    } 
-    else {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
-    }
+    // if(type === 'EMI Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
+    // } 
+    // else if(type === 'Personal Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
+    // } 
+    // else if(type === 'Agriculture Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
+    // } 
+    // else if(type === 'Gold Loan') {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
+    // }
+    // else if(type === 'Silver Loan') {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
+    // } 
+    // else {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
+    // }
     this.fnConfirmationMessage();
   }
 
@@ -121,46 +122,46 @@ export class ViewClosedAccountsComponent implements OnInit {
   fnPrintSavingDepositAccount(type ,id ){
     this.id = id;
     console.log(type);
-    if(type === 'Daily Deposit'){
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
-    }
-    else if(type === 'Fixed Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
-    }
-    else if(type === 'Recuring Deposit'){
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
-    } 
-    else if(type === 'Monthly Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
-    } 
-    else if(type === 'Pension Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
-    } 
-    else if(type === 'Child Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
-    } 
-    else if(type === 'Education Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
-    } 
+    // if(type === 'Daily Deposit'){
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
+    // }
+    // else if(type === 'Fixed Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
+    // }
+    // else if(type === 'Recuring Deposit'){
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
+    // } 
+    // else if(type === 'Monthly Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
+    // } 
+    // else if(type === 'Pension Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
+    // } 
+    // else if(type === 'Child Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
+    // } 
+    // else if(type === 'Education Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
+    // } 
     this.fnConfirmationMessage();
 
   }
-  fnDeactivateSDNgClasses(b1,b2,b3,b4,b5,b6,b7){
-  this.bDaily  = b1;
-  this.bFixed  = b2 ;
-  this.bRecuring =  b3;
-  this.bMonthly  = b4 ;
-  this.bPension  = b5 ;
-  this.bChild  = b6 ;
-  this.bEducation =  b7;
-  }
+  // fnDeactivateSDNgClasses(b1,b2,b3,b4,b5,b6,b7){
+  // this.bDaily  = b1;
+  // this.bFixed  = b2 ;
+  // this.bRecuring =  b3;
+  // this.bMonthly  = b4 ;
+  // this.bPension  = b5 ;
+  // this.bChild  = b6 ;
+  // this.bEducation =  b7;
+  // }
 
   fnConfirmationMessage() {
    

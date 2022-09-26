@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 import {  EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { BankAccountService } from '../../../core/services/account.service';
 import { BankAccount } from '../../../core/models/bankaccount.model'
@@ -18,7 +18,7 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
   templateUrl: './all-transaction-print.component.html',
   styleUrls: ['./all-transaction-print.component.scss']
 })
-export class AllTransactionPrintComponent implements OnInit {
+export class AllTransactionPrintComponent implements OnInit, AfterViewChecked{
 
   
 
@@ -63,6 +63,7 @@ export class AllTransactionPrintComponent implements OnInit {
   
   bIsBtnActive: boolean;
   bIsAccountData: boolean;
+  id = null;
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
@@ -186,38 +187,40 @@ export class AllTransactionPrintComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
   
-  fnPrintSavingAccount(): void {
-    this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-    this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
+  fnPrintSavingAccount(id): void {
+    this.id = id ;
+    // this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    // this.fnDeactivateNgClasses(true,false,false,false,false,false,false);
     this.fnConfirmationMessage(this.nInputLineFrom1,this.nInputLineTo1);
   }
 
-  fnPrintLoanAccount(type): void {
+  fnPrintLoanAccount(type,id): void {
+    this.id = id ;
     console.log(type);
-    if(type === 'EMI Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
-    } 
-    else if(type === 'Personal Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
-    } 
-    else if(type === 'Agriculture Loan'){
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
-    } 
-    else if(type === 'Gold Loan') {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
-    }
-    else if(type === 'Silver Loan') {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
-    } 
-    else {
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
-    }
+    // if(type === 'EMI Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,true,false,false,false,false,false);
+    // } 
+    // else if(type === 'Personal Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,true,false,false,false,false);
+    // } 
+    // else if(type === 'Agriculture Loan'){
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,true,false,false,false);
+    // } 
+    // else if(type === 'Gold Loan') {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,true,false,false);
+    // }
+    // else if(type === 'Silver Loan') {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,true,false);
+    // } 
+    // else {
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,true);
+    // }
     this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
   }
   
@@ -231,36 +234,37 @@ export class AllTransactionPrintComponent implements OnInit {
     this.bTemporaryLoan = b7 ;
   }
 
-  fnPrintSavingDepositAccount(type){
+  fnPrintSavingDepositAccount(type,id){
     console.log(type);
-    if(type === 'Daily Deposit'){
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
-      this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
-    }
-    else if(type === 'Fixed Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
-    }
-    else if(type === 'Recuring Deposit'){
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
-    } 
-    else if(type === 'Monthly Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
-    } 
-    else if(type === 'Pension Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
-    } 
-    else if(type === 'Child Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
-    } 
-    else if(type === 'Education Deposit') {
-      this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
-      this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
-    } 
+    this.id = id ;
+    // if(type === 'Daily Deposit'){
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false);
+    //   this.fnDeactivateSDNgClasses(true,false,false,false,false,false,false);
+    // }
+    // else if(type === 'Fixed Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,true,false,false,false,false,false);
+    // }
+    // else if(type === 'Recuring Deposit'){
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,true,false,false,false,false);
+    // } 
+    // else if(type === 'Monthly Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,true,false,false,false);
+    // } 
+    // else if(type === 'Pension Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,true,false,false);
+    // } 
+    // else if(type === 'Child Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,true,false);
+    // } 
+    // else if(type === 'Education Deposit') {
+    //   this.fnDeactivateNgClasses(false,false,false,false,false,false,false); 
+    //   this.fnDeactivateSDNgClasses(false,false,false,false,false,false,true);
+    // } 
     this.fnConfirmationMessage(this.nInputLineFrom2,this.nInputLineTo2);
 
   }
@@ -303,6 +307,7 @@ export class AllTransactionPrintComponent implements OnInit {
           this.lineDecide = fromLine % 18 ;
           setTimeout(() => {
             window.print();
+            this.id = null;
           }, 300);
         }
       });
@@ -317,9 +322,24 @@ export class AllTransactionPrintComponent implements OnInit {
     this.aSavingDeposit.map((savings) => {
       if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
     })
+    this.oBankAccountService.accountDetails = this.aSavingDeposit[0];
+    this.oBankAccountService.savings = this.oSelectedAccount;
+    //localStorage.setItem("savingtype",this.aSavingDeposit[0])
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }
 
+  
+  ngAfterViewChecked(): void {
+    // let type = 'Daily Deposit';
+    // this.oBankAccountService.proceed = true ;
+    // this.aCreditLoan.map((loan) => {
+    //   if(loan.sTypeofLoan == type) this.oBankAccountService.sendLoanAccountDetails.next(loan);
+    // })
+    // this.aSavingDeposit.map((savings) => {
+    //   if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
+    // })
+    // this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
+  }
   //deactivating the savingtype
   fnDeactivateSavingType(savingtype : SavingsType){
     savingtype.sStatus = 'InActive'
@@ -330,7 +350,7 @@ export class AllTransactionPrintComponent implements OnInit {
           this.fnGetSavingDepositAccounts(this.oSelectedAccount);
       }
       else if(data === 'Pending'){
-        this.fnWarningMessage('Withdraw the All the Amount in '+savingtype.sAccountNo +
+        this.fnWarningMessage('Withdraw All the Amount in '+savingtype.sAccountNo +
           ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' before Closing it.')
       }
     });
@@ -339,7 +359,7 @@ export class AllTransactionPrintComponent implements OnInit {
 // deactivation creditloan
 fnDeactivateCreditLoan(creditloan : CreditLoan){
   creditloan.sLoanStatus = 'InActive'
-  this.oCreditLoanServcie.fnDeactivateSavingType(creditloan).subscribe((data) =>{
+  this.oCreditLoanServcie.fnDeactivateCreditLoan(creditloan).subscribe((data) =>{
     if(data == 'Success'){
       this.fnSuccessMessage(creditloan.sAccountNo +
         ' - '+creditloan.sTypeofLoan+'( '+creditloan.nSanctionAmount+' )'+' is Closed Successfully.')

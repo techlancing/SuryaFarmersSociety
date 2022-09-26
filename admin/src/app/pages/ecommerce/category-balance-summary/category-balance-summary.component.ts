@@ -29,7 +29,10 @@ export class CategoryBalanceSummaryComponent implements OnInit {
   public aAgricultural = [];
   public aGold = [];
   public aSilver = [];
+  public aEmergency = [];
+  public aSmall = [];
   public aTemporary = [];
+  public aVehicle = [];
   constructor(private oTransactionService: TransactionService,
     private modalService: NgbModal,
     private oUtilitydateService: UtilitydateService) { }
@@ -44,6 +47,9 @@ export class CategoryBalanceSummaryComponent implements OnInit {
       { name: 'Gold Loan', group: this.aGold },
       { name: 'Silver Loan', group: this.aSilver },
       { name: 'Temporary Loan', group: this.aTemporary },
+      { name: 'Small Business Loan', group: this.aSmall },
+      { name: 'Emergency Call Loan', group: this.aEmergency },
+      { name: 'Vehicle Loan', group: this.aVehicle }
     ];
 
   }
@@ -85,7 +91,14 @@ export class CategoryBalanceSummaryComponent implements OnInit {
           this.fnAddToGroup(transaction, this.aGold, t);
         else if (transaction.sAccountType === 'Silver Loan')
           this.fnAddToGroup(transaction, this.aSilver, t);
-        else this.fnAddToGroup(transaction, this.aTemporary, t);
+        else if (transaction.sAccountType === 'Temporary Loan')
+          this.fnAddToGroup(transaction, this.aTemporary, t);
+        else if (transaction.sAccountType === 'Small Business Loan')
+          this.fnAddToGroup(transaction, this.aSmall, t);
+        else if (transaction.sAccountType === 'Emergency Call Loan')
+          this.fnAddToGroup(transaction, this.aEmergency, t);
+        else if (transaction.sAccountType === 'Vehicle Loan')
+          this.fnAddToGroup(transaction, this.aVehicle, t);
 
       });
       this.fnAmountRoundToTwoDigits(this.aSavings);
@@ -95,6 +108,10 @@ export class CategoryBalanceSummaryComponent implements OnInit {
       this.fnAmountRoundToTwoDigits(this.aGold);
       this.fnAmountRoundToTwoDigits(this.aSilver);
       this.fnAmountRoundToTwoDigits(this.aTemporary);
+      this.fnAmountRoundToTwoDigits(this.aSmall);
+      this.fnAmountRoundToTwoDigits(this.aEmergency);
+      this.fnAmountRoundToTwoDigits(this.aVehicle);
+
 
       /* this.uniqueArr = [...new Set(this.aTransactions.map(item => item.sAccountNo))];
        this.aTransactions.map((transaction)=>{

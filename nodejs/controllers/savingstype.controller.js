@@ -36,7 +36,8 @@ oSavingsTypeRouter.post("/add_savingstype", oAuthentication, asyncMiddleware(asy
     oTransaction.nDebitAmount = newSavings.nDepositAmount;
     oTransaction.nBalanceAmount = newSavings.nDepositAmount;
     oTransaction.sDate = newSavings.sStartDate;
-    oTransaction.sNarration = newSavings.sTypeofSavings;
+    let type = newSavings.sTypeofSavings.split(" ");
+    oTransaction.sNarration = type[0]+"_"+type[1];
     oTransaction.sAccountType = newSavings.sTypeofSavings;
     oTransaction.sEmployeeName = newSavings.sEmployeeName;
     oTransaction.sIsApproved = 'Pending';
@@ -244,23 +245,28 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
 
 //url : ..../savingstype/deactivate
 oSavingsTypeRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq ,oRes ,oNext) => {
-  try{
-    const oSavingType = await oSavingsTypeModel.findOne({sAccountNo : oReq.body.sAccountNo ,nSavingsId : oReq.body.nSavingsId, sStatus : 'Active'});
-    if(!oSavingType) {
-      return oRes.status(400).send();
-    }
-    
-    const olasttransaction = await oTransactionModel.find({ nLoanId: oSavingType.nSavingsId,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
-    if (olasttransaction.length > 0) {
-      if(olasttransaction[0].nBalanceAmount !== 0){
-        oRes.json("Pending");
-      }
+  try {
+    let msg = '';
+    const oSavingType = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, sIsApproved: oReq.body.sIsApproved, nSavingsId: oReq.body.nSavingsId, sStatus: 'Active' });
+    if (!oSavingType) {
+      // return oRes.status(400).send("");
+      msg = 'Not Exists';
+    }else {
+      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavingType.nSavingsId, sIsApproved: 'Approved' }).sort({ _id: -1 }).limit(1);
+      if (olasttransaction.length > 0) {
+        if (olasttransaction[0].nBalanceAmount > 0) {
+          // oRes.json("Pending");
+          msg = "Pending";
+        } else {
+          oSavingType.sStatus = oReq.body.sStatus;
+          // await oSavingsTypeModel.findByIdAndUpdate(oSavingType._id, { sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
+          oSavingType.save();
+          msg = 'Success';
+        }
+      }else if(olasttransaction.length == 0) msg = 'No Approved Transactions';
     }
 
-    oSavingType.sStatus = oReq.body.sStatus ;
-    // await oSavingsTypeModel.findByIdAndUpdate(oSavingType._id, { sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
-    oSavingType.save();
-    oRes.json("Success");
+    oRes.json(msg);
   }
   catch(e){
     console.log(e);
