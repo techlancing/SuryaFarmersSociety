@@ -185,7 +185,7 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
     });
   }
   fnFetchSavingTypeBalance(oSavingsTpe : SavingsType){
-    this.oSavingstypeService.fnGetSingleSavingTypeBalance(oSavingsTpe).subscribe((data) => {
+    this.oSavingstypeService.fnGetSingleSavingTypeBalance(oSavingsTpe.sAccountNo, oSavingsTpe.sIsApproved, oSavingsTpe.nSavingsId).subscribe((data) => {
       this.nAccountBalance = data as any;
       this.bShowReciever = true ;
     });

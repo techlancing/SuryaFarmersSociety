@@ -284,7 +284,7 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
        oRes.json("Pending").send();
       }
       else {
-        oCreditLoan.sLoanStatus = oReq.body.sLoanStatus ;
+        oCreditLoan.sLoanStatus = 'InActive' ;
         oCreditLoan.save();
       }
     }

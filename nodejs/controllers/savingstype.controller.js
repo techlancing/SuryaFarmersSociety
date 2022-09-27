@@ -258,7 +258,7 @@ oSavingsTypeRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oRe
           // oRes.json("Pending");
           msg = "Pending";
         } else {
-          oSavingType.sStatus = oReq.body.sStatus;
+          oSavingType.sStatus = 'InActive';
           // await oSavingsTypeModel.findByIdAndUpdate(oSavingType._id, { sStatus : oReq.body.sStatus}, { new: true, runValidators: true });
           oSavingType.save();
           msg = 'Success';
@@ -514,13 +514,13 @@ oSavingsTypeRouter.post("/getallsavingstypeByApproval", oAuthentication, asyncMi
 // url: ..../savingstype/getallclosedsavingstypeByApproval
 oSavingsTypeRouter.post("/getallclosedsavingstypeByApproval", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
-    await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", sStatus : 'InActive' })
+   await oSavingsTypeModel.find({ sAccountNo: oReq.body.sAccountNo, sIsApproved: "Approved", sStatus : 'InActive' })
       .populate({
         path: 'oTransactionInfo',
-        match : { 'sIsApproved' : 'Approved' }
-      }).exec((oError, oAllSavingsType) => {
+       match : { 'sIsApproved' : 'Approved' }
+      }).exec((oError, oAllInActiveSavingsType) => {
         if (!oError) {
-          oRes.json(oAllSavingsType);
+          oRes.json(oAllInActiveSavingsType);
         }
         else {
           console.log(oError);

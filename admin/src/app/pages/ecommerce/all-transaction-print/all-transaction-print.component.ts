@@ -359,7 +359,7 @@ export class AllTransactionPrintComponent implements OnInit, AfterViewChecked{
 // deactivation creditloan
 fnDeactivateCreditLoan(creditloan : CreditLoan){
   creditloan.sLoanStatus = 'InActive'
-  this.oCreditLoanServcie.fnDeactivateCreditLoan(creditloan).subscribe((data) =>{
+  this.oCreditLoanServcie.fnDeactivateCreditLoan(creditloan.sAccountNo,creditloan.nLoanId).subscribe((data) =>{
     if(data == 'Success'){
       this.fnSuccessMessage(creditloan.sAccountNo +
         ' - '+creditloan.sTypeofLoan+'( '+creditloan.nSanctionAmount+' )'+' is Closed Successfully.')
