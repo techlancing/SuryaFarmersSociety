@@ -14,10 +14,10 @@
               </ng-select>
             </div>
           </div>
-          <div class="col-sm-5 btn-container">
+          <div class="col-sm-5 btn-container" >
             <button type="button" class="btn btn-primary mr-1" 
             [disabled]="!bIsBtnActive" 
-            (click)="fnFecthAccountDetails()">
+            (click)="fnFecthAccountDetails()" > <!--(mouseover)="fnChange()" (mouseout)="fnChange1()"-->
             Show Account Details</button>
             
           </div>
@@ -131,6 +131,12 @@
             <div class="form-group"> 
                 <label for="sCustomerId">Customer ID:</label>
                 <label class="account-detail">{{oAlltransactionprintmodel.sCustomerId}}</label>                 
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="sBranchCode">Branch Code : </label>
+              <span class="account-detail">{{oAlltransactionprintmodel.sBranchCode}}</span>
             </div>
           </div>
           

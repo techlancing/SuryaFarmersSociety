@@ -43,6 +43,13 @@ export class BankAccountDataComponent implements OnInit {
     else this.fnGetAllAccounts();
   } 
 
+  // fnChange(){
+  //   this.bIsBtnActive = true;
+  // }
+  
+  // fnChange1(){
+  //   this.bIsBtnActive = false;
+  // }
   fnGetAccountNumber(): void{
     if(this.sSelectedAccount.length > 0 ){
       this.bIsBtnActive = true;
