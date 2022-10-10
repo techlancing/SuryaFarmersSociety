@@ -111,8 +111,10 @@ export class AccountTransactionDebitComponent implements OnInit {
         if((data as any).status == 'Success'){
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/debit');
+        }else if((data as any).status == 'A-Pending'){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDebitModel.sAccountNo}"-"${this.aCreditLoan[this.nActiveLoanIndex].sTypeofLoan}" is Pending`);
         }
-        else this.fnWarningMessage(data);
+        else this.fnWarningMessage((data as any).msg);
         this.bIsAddActive = false;
       },(error) => {
         this.bIsAddActive = false;
@@ -123,6 +125,8 @@ export class AccountTransactionDebitComponent implements OnInit {
         if((data as any).status == 'Success'){  
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/credit');
+        }else if((data as any).status == "A-Pending"){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDebitModel.sAccountNo}"-"${this.aCreditLoan[this.nActiveLoanIndex].sTypeofLoan}" is Pending`);
         }
         this.bIsAddActive = false;
       },(error) => {
@@ -179,8 +183,8 @@ export class AccountTransactionDebitComponent implements OnInit {
       position: 'center',
       icon: 'warning',
       title: msg,
-      showConfirmButton: false,
-      timer: 1500
+      showConfirmButton: true,
+      // timer: 1500
     });
   }
   fnClear(){

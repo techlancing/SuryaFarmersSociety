@@ -353,6 +353,10 @@ export class AllTransactionPrintComponent implements OnInit, AfterViewChecked{
         this.fnWarningMessage('Withdraw All the Amount in '+savingtype.sAccountNo +
           ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' before Closing it.')
       }
+      else if(data === 'Not Exists'){
+        this.fnWarningMessage(savingtype.sAccountNo +
+          ' - '+savingtype.sTypeofSavings+'( '+savingtype.nMaturityAmount+' )'+' Not Exists.')
+      }
     });
   }
 

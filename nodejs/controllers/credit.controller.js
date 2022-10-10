@@ -17,97 +17,106 @@ const asyncMiddleware = fn =>
   };
   
 // url: ..../credit/add_credit
-oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 
+oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
   const newCredit = new oCreditModel(oReq.body);
-  try{
+  try {
     // Save credit Info
-    await newCredit.save(); 
-    
-    //To get last transaction data to get the balance amount
-    let oBalanceAmount = 0;
-    try{
-      const olasttransaction = await oTransactionModel.find({nLoanId: newCredit.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
-      if(olasttransaction.length > 0) {
-        oBalanceAmount = olasttransaction[0].nBalanceAmount;
-       // oRes.send("Success");
+    await newCredit.save();
+
+    //Get the pending transactions
+    const pendingtransaction = await oTransactionModel.find({ nLoanId: newCredit.nLoanId, sIsApproved: 'Pending' }).sort({ _id: -1 }).limit(1);
+    if (pendingtransaction.length > 0) {
+      oRes.json({ status: "A-Pending", id: pendingtransaction[0].nTransactionId });
+    } else {
+      //To get last transaction data to get the balance amount
+      let oBalanceAmount = 0;
+      try {
+
+        const olasttransaction = await oTransactionModel.find({ nLoanId: newCredit.nLoanId, sIsApproved: 'Approved' }).sort({ _id: -1 }).limit(1);
+        if (olasttransaction.length > 0) {
+          oBalanceAmount = olasttransaction[0].nBalanceAmount;
+          // oRes.send("Success");
+        }
+      } catch (e) {
+        console.log(e);
+        oRes.status(400).send(e);
       }
-    }catch(e){
-      console.log(e);
-      oRes.status(400).send(e);
-    }
 
-    //save transaction model
-    let oTransaction = {};
-    oTransaction.sAccountNo = newCredit.sAccountNo;
-    oTransaction.nLoanId = newCredit.nLoanId;
-    oTransaction.nCreditAmount = newCredit.nAmount;
-    oTransaction.nDebitAmount = 0;
-    oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
-    oTransaction.sDate = newCredit.sDate;
-    oTransaction.sNarration = newCredit.sNarration;
-    oTransaction.sAccountType = '';
-    oTransaction.sEmployeeName = newCredit.sReceiverName;
-    oTransaction.sIsApproved = 'Pending';
-    
-    const newTransaction = new oTransactionModel(oTransaction);
-    await newTransaction.save();
+      //save transaction model
+      let oTransaction = {};
+      oTransaction.sAccountNo = newCredit.sAccountNo;
+      oTransaction.nLoanId = newCredit.nLoanId;
+      oTransaction.nCreditAmount = newCredit.nAmount;
+      oTransaction.nDebitAmount = 0;
+      oTransaction.nBalanceAmount = oBalanceAmount + newCredit.nAmount;
+      oTransaction.sDate = newCredit.sDate;
+      oTransaction.sNarration = newCredit.sNarration;
+      oTransaction.sAccountType = '';
+      oTransaction.sEmployeeName = newCredit.sReceiverName;
+      oTransaction.sIsApproved = 'Pending';
 
-    const oCreditLoan = await oCreditLoanModel.findOne({nLoanId: newCredit.nLoanId});
-
-    if(oCreditLoan){
-      newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+      const newTransaction = new oTransactionModel(oTransaction);
       await newTransaction.save();
-      
-      oCreditLoan.oTransactionInfo.push(newTransaction);
-      await oCreditLoan.save();
-    }
-    
+
+      const oCreditLoan = await oCreditLoanModel.findOne({ nLoanId: newCredit.nLoanId });
+
+      if (oCreditLoan) {
+        newTransaction.sAccountType = oCreditLoan.sTypeofLoan;
+        await newTransaction.save();
+
+        oCreditLoan.oTransactionInfo.push(newTransaction);
+        await oCreditLoan.save();
+      }
+
       /* SmS code Start */
-    // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
-    //   //get mobile number from account number 
-    //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
-    //   if (oAccount.sSMSAlert === "Yes") {
-    //     const options = {
-    //       "method": "POST",
-    //       "hostname": "api.msg91.com",
-    //       "port": null,
-    //       "path": "/api/v5/flow/",
-    //       "headers": {
-    //         "authkey": "371253At5xrfgrK62b82597P1",
-    //         "content-type": "application/JSON"
-    //       }
-    //     };
+      // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
+      //   //get mobile number from account number 
+      //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+      //   if (oAccount.sSMSAlert === "Yes") {
+      //     const options = {
+      //       "method": "POST",
+      //       "hostname": "api.msg91.com",
+      //       "port": null,
+      //       "path": "/api/v5/flow/",
+      //       "headers": {
+      //         "authkey": "371253At5xrfgrK62b82597P1",
+      //         "content-type": "application/JSON"
+      //       }
+      //     };
 
-    //     const req = http.request(options, function (res) {
-    //       const chunks = [];
+      //     const req = http.request(options, function (res) {
+      //       const chunks = [];
 
-    //       res.on("data", function (chunk) {
-    //         chunks.push(chunk);
-    //       });
+      //       res.on("data", function (chunk) {
+      //         chunks.push(chunk);
+      //       });
 
-    //       res.on("end", function () {
-    //         const body = Buffer.concat(chunks);
-    //         console.log(body.toString());
-    //       });
-    //     });
+      //       res.on("end", function () {
+      //         const body = Buffer.concat(chunks);
+      //         console.log(body.toString());
+      //       });
+      //     });
 
-    //     //debit message for customers
-    //     req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
-    //   \"sender\": \"ADPNXT\",\n  
-    //   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-    //   \"acno\": \"${newTransaction.sAccountNo}\",\n  
-    //   \"amount\": \"${newTransaction.nCreditAmount}\",\n  
-    //   \"date\":\"${newTransaction.sDate}\",\n  
-    //   \"tid\":\"${newTransaction.nTransactionId}\",\n  
-    //   \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
-    //     req.end();
-    //   }
-    // }
-    /* SmS code End */
+      //     //debit message for customers
+      //     req.write(`{\n  \"flow_id\": \"6205fac89240634a2976bac2\",\n  
+      //   \"sender\": \"ADPNXT\",\n  
+      //   \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+      //   \"acno\": \"${newTransaction.sAccountNo}\",\n  
+      //   \"amount\": \"${newTransaction.nCreditAmount}\",\n  
+      //   \"date\":\"${newTransaction.sDate}\",\n  
+      //   \"tid\":\"${newTransaction.nTransactionId}\",\n  
+      //   \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+      //     req.end();
+      //   }
+      // }
+      /* SmS code End */
 
-    oRes.json({status :"Success",id : newTransaction.nTransactionId});
+      oRes.json({ status: "Success", id: newTransaction.nTransactionId });
 
-  }catch(e){
+    }
+
+
+  } catch (e) {
     console.log(e);
     oRes.status(400).send(e);
 

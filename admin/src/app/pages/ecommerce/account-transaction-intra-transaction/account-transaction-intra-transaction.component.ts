@@ -255,10 +255,18 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
     this.bIsAddActive =true;
     this.oIntraTransactionService.fnAddIntraTransactionInfo(this.ointratransactionModel).subscribe((data) => {
       console.log(data);
-      if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
-      else {
+      if ((data as any).status == 'Success'){
         this.fnSucessMessage((data as any).id);
         this.redirectTo('/intratransaction');
+      } 
+      else if((data as any).status == 'low'){
+        this.fnLowBalanceWarningMessage();
+      }
+      else if((data as any).status == 'A-S-Pending'){
+        this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.ointratransactionModel.sSenderAccountNumber}"-"${this.ointratransactionModel.sSenderAccountType}" is Pending`);
+      }
+      else if((data as any).status == 'A-R-Pending'){
+        this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.ointratransactionModel.sRecieverAccountNumber}"-"${this.ointratransactionModel.sRecieverAccountType}" is Pending`);
       }
       this.bIsAddActive = false;
     },(error) => {
@@ -274,6 +282,15 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
     //       timer: 3000
     //     });
     // });
+  }
+  fnWarningMessage(msg : string) {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: msg,
+      showConfirmButton: true
+      //timer: 1500
+    });
   }
   fnLowBalanceWarningMessage() {
     Swal.fire({

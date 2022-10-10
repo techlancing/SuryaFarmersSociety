@@ -80,10 +80,16 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     if (this.oSavingsDeposit.transactiontype === 'deposit') {
       this.oSavingstypeService.fnAddSavingsDepositTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
-        this.sSuccessMsg = 'Amount Successfully Deposited';
-        this.fnSucessMessage((data as any).id);
-        this.bIsAddActive = false;
-        this.redirectTo('/dailysavingsdeposit');
+        if((data as any).status == 'Success'){
+          this.sSuccessMsg = 'Amount Successfully Deposited';
+          this.fnSucessMessage((data as any).id);
+          this.bIsAddActive = false;
+          this.redirectTo('/dailysavingsdeposit');
+        }
+        // pending transaction code
+        else if((data as any).status == 'A-Pending'){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oSavingsDepositModel.sAccountNo}"-"${this.oSavingsDeposit.sTypeofSavings}" is Pending`);
+        }
       },(error) => {
         this.bIsAddActive = false;
       });
@@ -91,11 +97,17 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
     if (this.oSavingsDeposit.transactiontype === 'withdraw') {
       this.oSavingstypeService.fnAddSavingsWithdrawTransactionInfo(this.oSavingsDepositModel).subscribe((data) => {
         console.log(data);
-        if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
-        else {
+        if ((data as any).status == 'Success'){
           this.sSuccessMsg = 'Amount Withdrawl Successfully Completed';
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/withdrawal');
+        } 
+        // pending transaction code
+        else if((data as any).status == 'A-Pending'){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oSavingsDepositModel.sAccountNo}"-"${this.oSavingsDeposit.sTypeofSavings}" is Pending`);
+        }
+        else if((data as any).status == 'low'){
+          this.fnWarningMessage((data as any).msg);
         }
         this.bIsAddActive = false;
       },(error) => {
@@ -126,6 +138,7 @@ export class SavingsTypeDepositTransactionComponent implements OnInit {
       timer: 2000
     });
   }
+
 fnSucessMessage(transactionid) {
   Swal.fire({
     position: 'center',
@@ -135,16 +148,26 @@ fnSucessMessage(transactionid) {
     //timer: 1500
   });
 }
-fnLowBalanceWarningMessage() {
+
+// fnLowBalanceWarningMessage() {
+//   Swal.fire({
+//     position: 'center',
+//     icon: 'warning',
+//     title: 'Low balance Amount',
+//     showConfirmButton: false,
+//     timer: 1500
+//   });
+// }
+
+fnWarningMessage(msg : string) {
   Swal.fire({
     position: 'center',
     icon: 'warning',
-    title: 'Low balance Amount',
+    title: msg,
     showConfirmButton: false,
     timer: 1500
   });
 }
-
 redirectTo(uri:string){
   this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
   this.router.navigate([uri]));

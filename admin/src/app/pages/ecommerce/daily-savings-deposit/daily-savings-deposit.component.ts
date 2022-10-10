@@ -231,8 +231,10 @@ fnDatediff(first, second) {
         if((data as any).status == 'Success'){
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/dailysavingsdeposit');
+        }else if((data as any).status == 'A-Pending'){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDailySavingsDepositModel.sAccountNo}" is Pending`);   
         }
-        this.bIsAddActive = true;
+        this.bIsAddActive = false;
        
       },(error) => {
         this.bIsAddActive = false;
@@ -264,6 +266,16 @@ fnDatediff(first, second) {
       title: 'Please Fill All the Fields',
       showConfirmButton: false,
       timer: 1500
+    });
+  }
+  
+  fnWarningMessage(msg : string) {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: msg,
+      showConfirmButton: true,
+      // timer: 1500
     });
   }
 

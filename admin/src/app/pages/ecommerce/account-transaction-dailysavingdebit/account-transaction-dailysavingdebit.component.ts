@@ -287,8 +287,15 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       }
       this.bIsAddActive = true;
       this.oDailySavingDebitService.fnAddDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-        this.fnSucessMessage((data as any).id);
-        this.redirectTo('/dailysavingdebit');
+        if((data as any).status == 'Success'){
+          this.fnSucessMessage((data as any).id);
+          this.redirectTo('/dailysavingdebit');
+        }
+        //transaction pending code
+        else if((data as any).status == 'A-Pending'){
+          this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDailySavingDebitModel.sAccountNo}"-"${this.oSavingsDeposit.sTypeofSavings}" is Pending`);
+        }
+        
       },(error) => {
         this.bIsAddActive = false;
       });
@@ -303,10 +310,17 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         }
         this.bIsAddActive = true;
         this.oDailySavingDebitService.fnWithDrawDailySavingDepositInfo(this.oDailySavingDebitModel).subscribe((data) => {
-          if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
-          else {
+          if ((data as any).status == 'Success'){
             this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
+          } 
+          //transaction pending code
+          else if((data as any).status == 'A-Pending') {
+            this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDailySavingDebitModel.sAccountNo}"-"${this.oSavingsDeposit.sTypeofSavings}" is Pending`);   
+          }
+          //low balance code
+          else if((data as any).status == 'low') {
+            this.fnWarningMessage((data as any).msg);
           }
           this.bIsAddActive = false;
         },(error) => {
@@ -323,10 +337,17 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       }
       this.bIsAddActive = true;
         this.oDailySavingDebitService.fnWithDrawSavingsInfo(this.oDailySavingDebitModel).subscribe((data) => {
-          if (data == 'Low Balance') this.fnLowBalanceWarningMessage();
-          else {
+          if ((data as any).status == 'Success'){
             this.fnSucessMessage((data as any).id);
             this.redirectTo('/withdrawal');
+          } 
+          //transaction pending code
+          else if((data as any).status == 'A-Pending'){
+            this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDailySavingDebitModel.sAccountNo}" is Pending`);
+          }
+          //low balance code
+          else if((data as any).status == 'low'){
+            this.fnWarningMessage((data as any).msg);
           }
           this.bIsAddActive = false;
         },(error) => {
@@ -355,21 +376,21 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       //timer: 1500
     });
   }
-  fnLowBalanceWarningMessage() {
-    Swal.fire({
-      position: 'center',
-      icon: 'warning',
-      title: 'Low balance Amount',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  }
+  // fnLowBalanceWarningMessage() {
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'warning',
+  //     title: 'Low balance Amount',
+  //     showConfirmButton: false,
+  //     timer: 1500
+  //   });
+  // }
 
-  fnWarningMessage() {
+  fnWarningMessage(msg : string) {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Please Fill All the Fields',
+      title: msg,
       showConfirmButton: false,
       timer: 1500
     });

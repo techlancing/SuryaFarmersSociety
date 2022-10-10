@@ -65,9 +65,15 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
   try {
     const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, nSavingsId: oReq.body.nLoanId });
     if (!oSavings) {
-      return oRes.status(400).send();
+      return oRes.status(400).send({status : "Error" , msg : `${oReq.body.sAccountNo}- SavingType is not available`});
     }
-    //To get last transaction data to get the balance amount
+    //To find Pending Transaction
+    const opendingtransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved: 'Pending' }).sort({ _id: -1 }).limit(1);
+    if (opendingtransaction.length > 0) {
+      oRes.json({ status: "A-Pending", id: opendingtransaction[0].nTransactionId });
+    }
+    else {
+      //To get last transaction data to get the balance amount
     let oBalanceAmount = 0;
     try {
       const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId ,sIsApproved : 'Approved'}).sort({ _id: -1 }).limit(1);
@@ -142,6 +148,8 @@ oSavingsTypeRouter.post("/addsavingsdeposit_transaction", oAuthentication, async
 
     oRes.json({status : "Success",id : newTransaction.nTransactionId});
 
+    }
+    
   } catch (e) {
     console.log(e);
     oRes.status(400).send(e);
@@ -154,88 +162,96 @@ oSavingsTypeRouter.post("/withdrawsavingsdeposit_transaction", oAuthentication, 
   try {
     const oSavings = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, nSavingsId: oReq.body.nLoanId });
     if (!oSavings) {
-      return oRes.status(400).send();
+      return oRes.status(400).send({status : "Error", msg : `${oReq.body.sAccountNo}- SavingType not available`});
     }
-    //To get last transaction data to get the balance amount
-    let oBalanceAmount = 0;
-    try {
-      const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
-      if (olasttransaction.length > 0) {
-        oBalanceAmount = olasttransaction[0].nBalanceAmount;
-        // send the response if balance is low 
-
-      }
-    } catch (e) {
-      console.log(e);
-      oRes.status(400).send(e);
+    //To find Pending Transaction
+    const opendingtransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved: 'Pending' }).sort({ _id: -1 }).limit(1);
+    if (opendingtransaction.length > 0) {
+      oRes.json({ status: "A-Pending", id: opendingtransaction[0].nTransactionId });
     }
-    if (oBalanceAmount < oReq.body.nAmount) oRes.json("Low Balance");
     else {
-      //save transaction model
-      let oTransaction = {};
-      oTransaction.sAccountNo = oSavings.sAccountNo;
-      oTransaction.nLoanId = oSavings.nSavingsId;
-      oTransaction.nCreditAmount = oReq.body.nAmount;
-      oTransaction.nDebitAmount = 0;
-      oTransaction.nBalanceAmount = oBalanceAmount - oReq.body.nAmount;
-      oTransaction.sDate = oReq.body.sDate;
-      oTransaction.sNarration = oReq.body.sNarration;
-      oTransaction.sEmployeeName = oReq.body.sReceiverName;
-      oTransaction.sAccountType = oSavings.sTypeofSavings;
-      oTransaction.sIsApproved = 'Pending';
+      //To get last transaction data to get the balance amount
+      let oBalanceAmount = 0;
+      try {
+        const olasttransaction = await oTransactionModel.find({ nLoanId: oSavings.nSavingsId, sIsApproved: 'Approved' }).sort({ _id: -1 }).limit(1);
+        if (olasttransaction.length > 0) {
+          oBalanceAmount = olasttransaction[0].nBalanceAmount;
+          // send the response if balance is low 
 
-      const newTransaction = new oTransactionModel(oTransaction);
-      await newTransaction.save();
+        }
+      } catch (e) {
+        console.log(e);
+        oRes.status(400).send(e);
+      }
+      if (oBalanceAmount < oReq.body.nAmount) oRes.json({ status: "low", msg: "Outstanding Balance is Low." });
+      else {
+        //save transaction model
+        let oTransaction = {};
+        oTransaction.sAccountNo = oSavings.sAccountNo;
+        oTransaction.nLoanId = oSavings.nSavingsId;
+        oTransaction.nCreditAmount = oReq.body.nAmount;
+        oTransaction.nDebitAmount = 0;
+        oTransaction.nBalanceAmount = oBalanceAmount - oReq.body.nAmount;
+        oTransaction.sDate = oReq.body.sDate;
+        oTransaction.sNarration = oReq.body.sNarration;
+        oTransaction.sEmployeeName = oReq.body.sReceiverName;
+        oTransaction.sAccountType = oSavings.sTypeofSavings;
+        oTransaction.sIsApproved = 'Pending';
 
-      oSavings.oTransactionInfo.push(newTransaction);
-      oSavings.nDepositAmount = oTransaction.nBalanceAmount;
-      await oSavings.save();
+        const newTransaction = new oTransactionModel(oTransaction);
+        await newTransaction.save();
 
-      /* SmS code Start */
-      // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
-      //   //get mobile number from account number 
-      //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
-      //   if (oAccount.sSMSAlert === "Yes") {
-      //     const options = {
-      //       "method": "POST",
-      //       "hostname": "api.msg91.com",
-      //       "port": null,
-      //       "path": "/api/v5/flow/",
-      //       "headers": {
-      //         "authkey": "371253At5xrfgrK62b82597P1",
-      //         "content-type": "application/JSON"
-      //       }
-      //     };
+        oSavings.oTransactionInfo.push(newTransaction);
+        oSavings.nDepositAmount = oTransaction.nBalanceAmount;
+        await oSavings.save();
 
-      //     const req = http.request(options, function (res) {
-      //       const chunks = [];
+        /* SmS code Start */
+        // if (process.env.IS_PRODUCTION === "YES" && process.env.IS_STAGING === "YES") {
+        //   //get mobile number from account number 
+        //   const oAccount = await obankaccountModel.findOne({ sAccountNo: newTransaction.sAccountNo });
+        //   if (oAccount.sSMSAlert === "Yes") {
+        //     const options = {
+        //       "method": "POST",
+        //       "hostname": "api.msg91.com",
+        //       "port": null,
+        //       "path": "/api/v5/flow/",
+        //       "headers": {
+        //         "authkey": "371253At5xrfgrK62b82597P1",
+        //         "content-type": "application/JSON"
+        //       }
+        //     };
 
-      //       res.on("data", function (chunk) {
-      //         chunks.push(chunk);
-      //       });
+        //     const req = http.request(options, function (res) {
+        //       const chunks = [];
 
-      //       res.on("end", function () {
-      //         const body = Buffer.concat(chunks);
-      //         console.log(body.toString());
-      //       });
-      //     });
+        //       res.on("data", function (chunk) {
+        //         chunks.push(chunk);
+        //       });
 
-      //     //debit message for customers
-      //     req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
-      // \"sender\": \"ADPNXT\",\n  
-      // \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
-      // \"acno\": \"${newTransaction.sAccountNo}\",\n  
-      // \"amount\": \"${newTransaction.nCreditAmount}\",\n  
-      // \"date\":\"${newTransaction.sDate}\",\n  
-      // \"tid\":\"${newTransaction.nTransactionId}\",\n  
-      // \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
-      //     req.end();
-      //   }
-      // }
-      /* SmS code End */
+        //       res.on("end", function () {
+        //         const body = Buffer.concat(chunks);
+        //         console.log(body.toString());
+        //       });
+        //     });
 
-      oRes.json({status : "Success",id : newTransaction.nTransactionId});
+        //     //debit message for customers
+        //     req.write(`{\n  \"flow_id\": \"61ceee30f6ce631ad9204917\",\n  
+        // \"sender\": \"ADPNXT\",\n  
+        // \"mobiles\": \"91${oAccount.sMobileNumber}\",\n  
+        // \"acno\": \"${newTransaction.sAccountNo}\",\n  
+        // \"amount\": \"${newTransaction.nCreditAmount}\",\n  
+        // \"date\":\"${newTransaction.sDate}\",\n  
+        // \"tid\":\"${newTransaction.nTransactionId}\",\n  
+        // \"bal\":\"${newTransaction.nBalanceAmount}\"\n}`);
+        //     req.end();
+        //   }
+        // }
+        /* SmS code End */
+
+        oRes.json({ status: "Success", id: newTransaction.nTransactionId });
+      }
     }
+
   } catch (e) {
     console.log(e);
     oRes.status(400).send(e);
@@ -263,7 +279,12 @@ oSavingsTypeRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oRe
           oSavingType.save();
           msg = 'Success';
         }
-      }else if(olasttransaction.length == 0) msg = 'No Approved Transactions';
+      }else if(olasttransaction.length == 0){
+          oSavingType.sStatus = 'InActive';
+          oSavingType.save();
+          msg = 'Success';
+          //msg = 'No Approved Transactions';
+      } 
     }
 
     oRes.json(msg);
