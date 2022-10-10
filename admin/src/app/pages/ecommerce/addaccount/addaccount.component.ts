@@ -88,8 +88,8 @@ export class AddaccountComponent implements OnInit {
     url: environment.apiUrl + "nodejs/BankAccount/upload_file",//"/nodejs/car/upload_file", 
     maxFilesize: 0.20161290,
     maxFiles: 1,
-    thumbnailWidth:25,
-    thumbnailHeight :25,
+    thumbnailWidth:100,
+    thumbnailHeight :100,
     addRemoveLinks: true,
     init: function () {
      
@@ -374,6 +374,9 @@ export class AddaccountComponent implements OnInit {
       this.fnMessage('Age should be above 18 years','warning');
       return;
     }
+    this.aVillage.map((village) => {
+      if(village.nVillageId == this.oBankAccountModel.nVillageId) this.oBankAccountModel.sBranchName = village.sVillageName;
+    })
     if(this.bankaccounts != undefined && this.bankaccounts !== null){
       if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
       {
