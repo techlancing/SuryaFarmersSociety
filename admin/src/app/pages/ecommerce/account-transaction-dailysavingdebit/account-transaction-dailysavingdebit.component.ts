@@ -142,6 +142,9 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.bIsDeposit = true;
       this.oSavingstypeService.oSavingsDeposit.subscribe((data) => {
         this.oSavingsDeposit = data as any;
+        if( this.oSavingsDeposit == null ||  this.oSavingsDeposit == undefined ||  this.oSavingsDeposit == ''){
+          this.redirectTo("/dailysavingsdeposit");
+        }
       });
       this.oDailySavingDebitService.oDailySavingDepositAccount.subscribe((account) => {
         console.log("account in dailsaving deposit", account);
@@ -169,7 +172,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
       this.bIsDeposit = false;
       this.oCreditModel = new Credit();
     }
-
+    
   }
 
   redirectTo(uri: string) {
@@ -295,7 +298,7 @@ export class AccountTransactionDailysavingdebitComponent implements OnInit {
         else if((data as any).status == 'A-Pending'){
           this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDailySavingDebitModel.sAccountNo}"-"${this.oSavingsDeposit.sTypeofSavings}" is Pending`);
         }
-        
+        this.bIsAddActive = false;
       },(error) => {
         this.bIsAddActive = false;
       });

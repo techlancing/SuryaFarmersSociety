@@ -107,7 +107,11 @@ export class ManagerApprovalComponent implements OnInit {
         if ((data as any).status == "Success") {
           this.fnSuccessMessage('Transaction : ' + approval.sAccountType + '-' + amount + ' is ' + status + ' Successfully.');
           this.redirectTo('/creditapproval');
-        } else{
+        }else if((data as any).status == "A-P-Pending"){
+          approval.sIsApproved = 'Pending';
+          this.fnWarningMessage((data as any).message);
+        } 
+        else{
           approval.sIsApproved = 'Pending';
           this.fnWarningMessage((data as any).message);
         }

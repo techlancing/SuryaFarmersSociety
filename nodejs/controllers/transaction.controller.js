@@ -6,6 +6,7 @@ const oAuthentication = require("../middleware/authentication");
 const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
+const transactionModel = require('../data_base/models/transaction.model');
 const oTransactionRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -107,7 +108,7 @@ oTransactionRouter.get("/approved_Transaction_list", oAuthentication, asyncMiddl
     console.log(e);
     oRes.status(400).send(e);
   }
-}));
+})); 
 
 
 
@@ -162,9 +163,33 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
 
     let oTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
     // console.log("transaction",oTransaction)
-    if(!oTransaction){
-      return oRes.json({status : "error","message" :"This transaction is not exists"});
+    if (!oTransaction) { 
+      return oRes.json({ status: "error", "message": "This transaction is not exists" });
+    } else {
+      //checking dailysaving prevois transaction approved or not. nTransactionId: oTransaction.nTransactionId-1, nLoanId : oTransaction.nLoanId,
+      if (oTransaction.sAccountType == 'Daily Deposit') {
+        const previoustransaction = await oTransactionModel.findOne({nTransactionId : oTransaction.nTransactionId, sIsApproved : "Pending"});
+        if (previoustransaction) {
+          return oRes.json({ status: "A-P-Pending", message: `Transaction ${previoustransaction.nTransactionId} is pending.` });
+        }
+        //  else {
+        //   //handling the rejected transactions in dailysaving deposit
+        //   if (oReq.body.sIsApproved == 'Rejected') {  //{ "sIsApproved": "Rejected" }
+        //     const rejectedabovetransactions = await oTransactionModel.find({ match: { and: [{ "nTransactionId": { $gt: oTransaction.nTransactionId } }, { "nLoanId": oTransaction.nLoanId }] } }).sort(1);
+        //     if (rejectedabovetransactions.length > 0) {
+        //       rejectedabovetransactions.forEach((tranaction) => {
+        //         tranaction.nBalanceAmount -=  oTransaction.nDebitAmount;
+        //         if( tranaction.nBalanceAmount > 0){
+        //           tranaction.save();
+        //         }
+        //       })
+        //     }
+        //   }
+
+        // }
+      }
     }
+
     
     await oTransactionModel.findByIdAndUpdate(oTransaction._id,{sIsApproved: oReq.body.sIsApproved},{ new: true, runValidators : true});
     let oUpdatedTransaction = await oTransactionModel.findOne({nTransactionId: oReq.body.nTransactionId});
@@ -209,7 +234,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
       \"tid\":\"${oUpdatedTransaction.nTransactionId}\",\n  
       \"bal\":\"${oUpdatedTransaction.nBalanceAmount}\"\n}`);
      
-          req.end();
+          req.end(); 
         }
       }
       /* SmS code End */  
