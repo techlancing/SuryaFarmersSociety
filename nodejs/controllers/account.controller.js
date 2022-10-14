@@ -101,7 +101,7 @@ oAccountRouter.get("/me", oAuthentication, asyncMiddleware(async (oReq, oRes, oN
 // url: ..../account/createuseraccount
 oAccountRouter.post("/createuseraccount", asyncMiddleware(async (oReq, oRes, oNext) => {
   try {
-    const user = await oUserModel.addUserByCredentials(oReq.body.sName, oReq.body.sEmail, oReq.body.sPassword, oReq.body.nMobile);
+    const user = await oUserModel.addUserByCredentials(oReq.body.sName, oReq.body.sEmail, oReq.body.sPassword,oReq.body.sRole, oReq.body.nMobile);
 
     if (user) {
       //const token = jwt.sign({_id:oReq.body.sEmail},'thisisuserAutentication');

@@ -13,6 +13,10 @@ var oBankAccountSchema = new oSchema({
     type: String,
     trim: true
    },
+   sMandalBranchName: { 
+    type: String,
+    trim: true
+   },
   sAccountNo: { 
     type: String,
     trim: true,

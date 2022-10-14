@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <!-- <div class="account-pages my-10 pt-sm-10"> -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="card overflow-hidden">
+                    <div class="bg-soft-primary">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="text-primary p-4">
+                                    <h5 class="text-primary">Create a New Account</h5>
+                                    <p>Welcome to Surya Co-Operative Society Limited</p>
+                                </div>
+                            </div>
+                            <div class="col-5 align-self-end">
+                                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div>
+                            <a href="/">
+                                <div class="avatar-md profile-user-wid mb-4">
+                                    <span class="avatar-title rounded-circle bg-light">
+                                        <img src="assets/images/logo-light.svg" alt="" class="rounded-circle"
+                                            height="34">
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="p-2">
+                            <form name="signupForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                                <div class="col-sm-12 row">
+                                    <div class="col-sm-6">
+                                        <label for="username">User Name</label>
+                                        <input type="text" name="sUserName" id="sUsername" class="form-control"
+                                            placeholder="Enter username" formControlName="username">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="email">Email Id</label>
+                                        <input type="email" name="sUserEmail" id="sUserEmail" class="form-control"
+                                            placeholder="Enter Email" formControlName="email">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="email">Password</label>
+                                        <input type="password" name="sUserEmail" id="sUserEmail" class="form-control"
+                                            placeholder="Enter Password" formControlName="password">
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label for="repeatPassword">Repeat password</label>
+                                        <input type="password" name="repeatPassword" id="repeatPassword"
+                                            class="form-control" placeholder="Re-Enter Password"
+                                            formControlName="repeatpassword">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="role">Role</label>
+                                        <ng-select [items]="aRole" name="role"
+                                             bindLabel="sDisplayText"
+                                            bindValue="value" placeholder="Select Role" formControlName="role">
+                                            <ng-template ng-label-tmp let-item="item">
+                                                {{item.sDisplayText}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 adjust">
+                                    <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                                    <button type="button" class="btn btn-secondary " (click)="fnClear()">Clear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->

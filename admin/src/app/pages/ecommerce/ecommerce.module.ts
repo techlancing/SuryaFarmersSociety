@@ -57,6 +57,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { MessageCardComponent } from './message-card/message-card.component';
 import { ViewClosedAccountsComponent } from './view-closed-accounts/view-closed-accounts.component';
 import { ClosedAccountLedgerTableComponent } from './closed-account-ledger-table/closed-account-ledger-table.component';
+import { SignupForEmployeeComponent } from './signup-for-employee/signup-for-employee.component';
 
 
 
@@ -104,6 +105,7 @@ const config: DropzoneConfigInterface = {
      MessageCardComponent,
      ViewClosedAccountsComponent,
      ClosedAccountLedgerTableComponent,
+     SignupForEmployeeComponent,
      ],
   imports: [
     CommonModule,

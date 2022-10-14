@@ -193,6 +193,7 @@
       "TEXT" : "Employee Approval",
       "UPDATETEXT" : "Update Employee",
       "LIST" : {
+        "CREATEEMPLOYEE" : "Create Employee Login",
         "ADDEMPLOYEE" : "Add Employee Approval",
         "UPDATEEMPLOYEE" : "Update Employee"
       }

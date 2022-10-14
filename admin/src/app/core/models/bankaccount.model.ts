@@ -4,6 +4,7 @@ export class BankAccount {
         public sAddress : string = '',
         public sBranchCode : string = '',
         public sBranchName : string = '',
+        public sMandalBranchName : string = '',
         public nAccountId : number = null,//unique: true},
         public sAccountNo : string = null,
         public sState : string = '',

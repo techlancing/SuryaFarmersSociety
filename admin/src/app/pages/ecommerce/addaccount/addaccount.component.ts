@@ -377,6 +377,9 @@ export class AddaccountComponent implements OnInit {
     this.aVillage.map((village) => {
       if(village.nVillageId == this.oBankAccountModel.nVillageId) this.oBankAccountModel.sBranchName = village.sVillageName;
     })
+    this.aMandal.map((mandal) => {
+      if(mandal.nMandalId == this.oBankAccountModel.nMandalId) this.oBankAccountModel.sMandalBranchName = mandal.sMandalName;
+    })
     if(this.bankaccounts != undefined && this.bankaccounts !== null){
       if(this.oBankAccountModel.sState.length === 0 || this.oBankAccountModel.sState.trim().length === 0)
       {

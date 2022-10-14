@@ -102,8 +102,9 @@ export const CMENU: MenuItem[] = [
         label: 'MENUITEMS.CHAIRMANEMPLOYEE.TEXT',
         icon: 'bx-store',
         subItems: [
+           
             {
-                id: 5,
+                id: 6,
                 label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.ADDEMPLOYEE',
                 link: '/addemployeeapproval',
                 parentId: 301
@@ -146,7 +147,13 @@ export const CMENU: MenuItem[] = [
                 label: 'MENUITEMS.ECOMMERCE.LIST.ADDVILLAGE',
                 link: '/addvillage',
                 parentId: 10
-             }
+             },
+             {
+                id: 5,
+                label: 'MENUITEMS.CHAIRMANEMPLOYEE.LIST.CREATEEMPLOYEE',
+                link: '/createemployeelogin',
+                parentId: 10
+            },
 
         ]
     },

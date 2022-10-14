@@ -115,13 +115,14 @@ oUserSchema.methods.generateAuthToken = async function () {
 }
 
 //Adding credentials to create account / To check whether the user existing already
-oUserSchema.statics.addUserByCredentials = async(name,email,password,mobile)=> {
+oUserSchema.statics.addUserByCredentials = async(name,email,password,role,mobile)=> {
   let user = await User.findOne({sUserEmail : email});
   if(!user){
     user = new User();
     user.sUserName = name;
     user.sUserEmail = email;
     user.sUserPassword = password;
+    user.sRole = role;
     user.sUserMobile = mobile;
     await user.save();
     return user;

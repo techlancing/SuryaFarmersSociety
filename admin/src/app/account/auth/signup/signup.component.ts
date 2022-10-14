@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit, AfterViewInit {
     if (this.signupForm.invalid) {
       return;
     } else {
-      this.authenticationService.fnCreateUserAccount(this.f.username.value, this.f.email.value, this.f.password.value,this.f.password.value,1234567890)
+      this.authenticationService.fnCreateUserAccount(this.f.username.value, this.f.email.value, this.f.password.value,this.f.password.value,"chairman",1234567890)
       .subscribe(
         data => {
           this.router.navigate(['/account/login']);

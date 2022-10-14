@@ -33,6 +33,7 @@ import { ApprovalsDisplayComponent } from './approvals-display/approvals-display
 import { WelcomeMessageComponent } from './welcome-message/welcome-message.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ViewClosedAccountsComponent } from './view-closed-accounts/view-closed-accounts.component';
+import { SignupForEmployeeComponent } from './signup-for-employee/signup-for-employee.component';
 
 
 
@@ -108,6 +109,10 @@ const routes: Routes = [
     {
         path:'intratransaction',
         component: IntraTransactionComponent
+    },
+    {
+        path:'createemployeelogin',
+        component: SignupForEmployeeComponent
     },
     {
         path:'alltranactionprint',

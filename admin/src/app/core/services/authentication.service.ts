@@ -27,7 +27,7 @@ export class AuthenticationService {
       return this.subUser$.asObservable();
     }
 
-    fnCreateUserAccount(name: string, email: string, password: string, repeatpassword: string, mobile: number) {
+    fnCreateUserAccount(name: string, email: string, password: string, repeatpassword: string,role: string, mobile: number) {
         let sMethodUrl = `${this.sRootUrl}/createuseraccount`;
         return this.http.post(sMethodUrl,
             {
@@ -35,10 +35,23 @@ export class AuthenticationService {
                 sEmail: email,
                 sPassword: password,
                 sRepeatpassword: repeatpassword,
+                sRole : role,
                 nMobile : mobile
             });
     }
 
+    
+  //   fnCreateEmployeeUserAccount(name: string, email: string, password: string, repeatpassword: string, mobile: number) {
+  //     let sMethodUrl = `${this.sRootUrl}/createuseraccount`;
+  //     return this.http.post(sMethodUrl,
+  //         {
+  //             sName: name,
+  //             sEmail: email,
+  //             sPassword: password,
+  //             sRepeatpassword: repeatpassword,
+  //             nMobile : mobile
+  //         });
+  // }
     fnLogIn(email: string, password: string) {
         let sMethodUrl = `${this.sRootUrl}/login`;
         return this.http.post<User>(sMethodUrl,
