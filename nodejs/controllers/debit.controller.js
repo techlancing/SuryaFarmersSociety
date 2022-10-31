@@ -21,8 +21,14 @@ const asyncMiddleware = fn =>
 
 // url: ..../debit/add_debit
 oDebitRouter.post("/add_debit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
-  const newDebit = new oDebitModel(oReq.body);
   try {
+  
+  //checking the creditloan and account are related
+    const correctcreditloan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo, nLoanId : oReq.body.nLoanId, sIsApproved : "Approved",sLoanStatus : "Active"});
+    if(!correctcreditloan){
+     return oRes.status(404).send({status : "Not Exists",msg : "Please Reload the Page!"})
+    }
+    const newDebit = new oDebitModel(oReq.body);
     // Save Debit Info
     await newDebit.save();
 

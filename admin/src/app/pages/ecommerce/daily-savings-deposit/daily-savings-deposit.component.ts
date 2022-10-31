@@ -149,10 +149,10 @@ export class DailySavingsDepositComponent implements OnInit {
     this.oDailySavingsDepositModel.sAccountNo = oSelectedAccount.sAccountNo;
     this.oDailySavingsDepositModel.nAccountId = oSelectedAccount.nAccountId;
     this.oSelectedBankAccount = oSelectedAccount ;
+    this.sSelectedSavingType = '';
+    this.bShowLoanData = false; 
     this.oBankAccountService.fngetBankAccountSavingsTransactions(oSelectedAccount.nAccountId).subscribe((data) => {
-      this.aTransactionModel = data as any;
-      //this.bShowLoanData = true;
-     
+      this.aTransactionModel = data as any; 
     });
     this.fnGetSavingDepositAccounts(oSelectedAccount);
   }

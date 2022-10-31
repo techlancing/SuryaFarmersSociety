@@ -233,6 +233,7 @@ export class AccountTransactionCreditLoanComponent implements OnInit {
       const diffInMs = +(new Date(this.oCreditLoanModel.sEndofLoanDate.split("-").reverse().join("-"))) - +(new Date(this.oCreditLoanModel.sDate.split("-").reverse().join("-")))
       console.log('months',diffInMs);
       this.oCreditLoanModel.nLoanDays = (diffInMs / (1000 * 60 * 60 * 24)) + 1;
+      this.oCreditLoanModel.nLoanMonths = Number((this.oCreditLoanModel.nLoanDays/30).toFixed(1));
     }
   
     if (typeof this.oCreditLoanModel.sDate === 'object' &&

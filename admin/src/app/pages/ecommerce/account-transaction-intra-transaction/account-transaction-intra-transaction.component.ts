@@ -222,6 +222,10 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
     this.ointratransactionModel.nSenderAccountId = oSelectedAccount.nAccountId;
     this.ointratransactionModel.sSenderAccountType = 'savings';
     this.bSenderSavingType = true;
+    this.bShowReciever = false;
+    this.bShowFormDetails = false;
+    this.sSelectedSenderSavingType = '';
+    this.nAccountBalance = null;
     this.fnOnUpdateNarration();
     this.fnGetSavingDepositAccounts(oSelectedAccount);
     //this.ointratransactionModel.sNarration = `From Acc No: ${this.ointratransactionModel.sSenderAccountNumber}`
@@ -230,6 +234,7 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
    fnGetReceiverAccount(oSelectedAccount : BankAccount){
     this.ointratransactionModel.sRecieverAccountNumber = oSelectedAccount.sAccountNo;
     this.ointratransactionModel.nReceiverAccountId = oSelectedAccount.nAccountId;
+    this.ointratransactionModel.sRecieverAccountType = '';
     this.fnOnUpdateNarration();
     this.bShowFormDetails = true ;
    // this.ointratransactionModel.sNarration = this.ointratransactionModel.sNarration+`   To Acc No: ${this.ointratransactionModel.sRecieverAccountNumber}`

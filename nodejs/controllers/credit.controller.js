@@ -18,8 +18,15 @@ const asyncMiddleware = fn =>
   
 // url: ..../credit/add_credit
 oCreditRouter.post("/add_credit", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
-  const newCredit = new oCreditModel(oReq.body);
   try {
+    const correctcreditloan = await oCreditLoanModel.findOne({sAccountNo : oReq.body.sAccountNo, nLoanId : oReq.body.nLoanId, sIsApproved : "Approved",sLoanStatus : "Active"});
+   if(!correctcreditloan){
+    return oRes.status(404).send({status : "Not Exists",msg : "Please Reload the Page!"})
+   }
+   const newCredit = new oCreditModel(oReq.body);
+  
+    //Checking the creditloan and loan are connected
+
     // Save credit Info
     await newCredit.save();
 

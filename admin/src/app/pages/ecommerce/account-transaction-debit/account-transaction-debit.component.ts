@@ -22,31 +22,32 @@ import { NarrationstringService } from 'src/app/core/services/narrationstring.se
 })
 export class AccountTransactionDebitComponent implements OnInit {
 
-  
+
   @Output() updateClicked = new EventEmitter();
   @Output() addClicked = new EventEmitter();
   @Input() bIsCredit: boolean;
-  public sCaption : string;
-  public aCreditLoan : Array<CreditLoan>;
+  public sCaption: string;
+  public aCreditLoan: Array<CreditLoan>;
   public oDebitModel: Debit;
   nSelectedEditIndex: number;
   bIsAddActive: boolean;
   bIsEditActive: boolean;
-  nActiveLoanIndex : number;
-  bShowLoanData : boolean;
+  nActiveLoanIndex: number;
+  bShowLoanData: boolean;
   aUsers: Array<BankEmployee>;
+  oSelectedAccount: string;
 
   @ViewChild('_BankAccountFormElem')
   public oBankAccountfoFormElem: any;
 
   @ViewChild('addcardropzoneElem')
   public oDropZone: DropzoneComponent;
-  
-  aLoanIssueEmployee : Array<
-  {
-    displayText:string,
-    value:string
-  }>;
+
+  aLoanIssueEmployee: Array<
+    {
+      displayText: string,
+      value: string
+    }>;
   // bread crumb items
   breadCrumbItems: Array<{}>;
   @Input() bHideBreadCrumb: boolean = false;
@@ -58,28 +59,28 @@ export class AccountTransactionDebitComponent implements OnInit {
   constructor(private oDebitService: DebitService,
     private oCreditLoanService: CreditLoanService,
     private oCreditService: CreditService,
-    public activatedroute : ActivatedRoute,
+    public activatedroute: ActivatedRoute,
     private router: Router,
-              private modalService: NgbModal,
-              private oBankEmployeeService: BankEmployeeService,
-              private oUtilitydateService : UtilitydateService,
-              private oNarrationstringService : NarrationstringService) { }
+    private modalService: NgbModal,
+    private oBankEmployeeService: BankEmployeeService,
+    private oUtilitydateService: UtilitydateService,
+    private oNarrationstringService: NarrationstringService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
     console.log(this.activatedroute.snapshot.data.type);
-    if(this.activatedroute.snapshot.data.type === 'credit'){
+    if (this.activatedroute.snapshot.data.type === 'credit') {
       this.sCaption = 'Credit';
       this.bIsCredit = true;
-    }else{
+    } else {
       this.sCaption = 'Debit';
       this.bIsCredit = false;
     }
-    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
-      console.log('users',users);
-       this.aUsers = users;
-     });
-    
+    this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users: any) => {
+      console.log('users', users);
+      this.aUsers = users;
+    });
+
     this.oDebitModel = new Debit();
     this.sButtonText = 'Send SMS & Save & Submit';
     this.bIsAddActive = false;
@@ -89,96 +90,122 @@ export class AccountTransactionDebitComponent implements OnInit {
       // this.oBankAccountModel = tempobj;
       this.sButtonText = 'Update';
     }
-   
+
   }
+  // fnCheckLoanValidation(){
+  //   let truth= true;
+  //   if(this.oSelectedAccount !== this.oDebitModel.sAccountNo){
+  //     this.fnWarningMessage("Please Reload the Page!")
+  //   }
+  //   this.aCreditLoan.forEach((loan) => {
+  //     if(loan.nLoanId == this.oDebitModel.nLoanId){
+  //       truth = false;
+  //       return;
+  //     }
+  //   })
+  //   return truth;
+  // }
 
   fnOnDebitInfoSubmit(): void {
-    if(
-      this.oDebitModel.sDate == ''||
+    if (
+      this.oDebitModel.sDate == '' ||
       this.oDebitModel.nAmount == null ||
       this.oDebitModel.sNarration == '' ||
       this.oDebitModel.sReceiverName == ''
-    ){
+    ) {
       this.fnWarningMessage('Please fill all the fields');
       return;
     }
+    // if(this.fnCheckLoanValidation()){
+    //   this.fnWarningMessage('Please fill all the fields');
+    //   return;
+    // }
     this.bIsAddActive = true;
     this.oDebitModel.sNarration = this.oNarrationstringService.fnNarrationModification(this.oDebitModel.sNarration);
-    this.oDebitModel.sDate= this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
-    if(!this.bIsCredit){
+    this.oDebitModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oDebitModel.sDate);
+    if (!this.bIsCredit) {
       this.oDebitService.fnAddDebitInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
-        if((data as any).status == 'Success'){
+        if ((data as any).status == 'Success') {
           this.fnSucessMessage((data as any).id);
           this.redirectTo('/debit');
-        }else if((data as any).status == 'A-Pending'){
+        } else if ((data as any).status == 'A-Pending') {
           this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDebitModel.sAccountNo}"-"${this.aCreditLoan[this.nActiveLoanIndex].sTypeofLoan}" is Pending`);
+        }
+        else if ((data as any).status == 'Not Exists') {
+          this.fnWarningMessage((data as any).msg);
         }
         else this.fnWarningMessage((data as any).msg);
         this.bIsAddActive = false;
-      },(error) => {
+      }, (error) => {
         this.bIsAddActive = false;
       });
-    }else{
+    } else {
       this.oCreditService.fnAddCreditInfo(this.oDebitModel).subscribe((data) => {
         console.log(data);
-        if((data as any).status == 'Success'){  
-        this.fnSucessMessage((data as any).id);
-        this.redirectTo('/credit');
-        }else if((data as any).status == "A-Pending"){
+        if ((data as any).status == 'Success') {
+          this.fnSucessMessage((data as any).id);
+          this.redirectTo('/credit');
+        } else if ((data as any).status == "A-Pending") {
           this.fnWarningMessage(`Transaction "${(data as any).id}" of A/C "${this.oDebitModel.sAccountNo}"-"${this.aCreditLoan[this.nActiveLoanIndex].sTypeofLoan}" is Pending`);
         }
+        else if ((data as any).status == 'Not Exists') {
+          this.fnWarningMessage((data as any).msg);
+        }
         this.bIsAddActive = false;
-      },(error) => {
+      }, (error) => {
         this.bIsAddActive = false;
       });
     }
-      
+
   }
 
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
 
-  fnGetCreditLoans(oSelectedAccount : BankAccount){
+  fnGetCreditLoans(oSelectedAccount: BankAccount) {
     this.oDebitModel.sAccountNo = oSelectedAccount.sAccountNo;
-    this.oCreditLoanService.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata)=>{
+    this.oSelectedAccount = oSelectedAccount.sAccountNo;
+    this.bShowLoanData = false;
+    this.oDebitModel.nLoanId = null;
+    this.oCreditLoanService.fngetCreditLoanInfo(oSelectedAccount.sAccountNo).subscribe((loandata) => {
       this.aCreditLoan = loandata as any;
     });
   }
 
-  fnFecthLoanData() : void{
-    this.aCreditLoan.map((loan : CreditLoan,index)=>{
-      if(loan.nLoanId === this.oDebitModel.nLoanId){
+  fnFecthLoanData(): void {
+    this.aCreditLoan.map((loan: CreditLoan, index) => {
+      if (loan.nLoanId === this.oDebitModel.nLoanId) {
         this.nActiveLoanIndex = index;
         this.bShowLoanData = true;
-        if(this.bIsCredit){
-          this.oDebitModel.nAmount = Number((Math.round((loan.nInstallmentAmount + (loan.nInstallmentAmount * loan.nLetPenaltyPercentage / 100))*100)/100).toFixed(2));
-        }else{
+        if (this.bIsCredit) {
+          this.oDebitModel.nAmount = Number((Math.round((loan.nInstallmentAmount + (loan.nInstallmentAmount * loan.nLetPenaltyPercentage / 100)) * 100) / 100).toFixed(2));
+        } else {
           this.oDebitModel.nAmount = loan.nInstallmentAmount;
         }
-        
+
       }
-        
+
     })
-    
+
   }
   fnSucessMessage(transactionid) {
     let msg = '';
-    if(this.bIsCredit){
+    if (this.bIsCredit) {
       msg = 'Amount is credited successfully.';
-    }else{
+    } else {
       msg = 'Amount is debited successfully.';
     }
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: msg + '<br /> Transaction id "'+transactionid+ '" is need to be Approved.',
+      title: msg + '<br /> Transaction id "' + transactionid + '" is need to be Approved.',
       showConfirmButton: true
     });
   }
-  fnWarningMessage(msg){
+  fnWarningMessage(msg) {
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -187,7 +214,7 @@ export class AccountTransactionDebitComponent implements OnInit {
       // timer: 1500
     });
   }
-  fnClear(){
+  fnClear() {
     this.oDebitModel.sDate = '';
     this.oDebitModel.nAmount = null;
     this.oDebitModel.sNarration = '';
@@ -201,6 +228,6 @@ export class AccountTransactionDebitComponent implements OnInit {
     this.nSelectedEditIndex = index;
     this.modalService.open(content, { centered: true });
   }
-  
+
 
 }
