@@ -3,7 +3,7 @@
   <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
 
-  <app-bank-account-data headerText='Savings Account' (accountDataClicked)="fnGetSavingsAccountTransactions($event)"
+  <app-bank-account-data headerText='Savings Account Debit' (accountDataClicked)="fnGetSavingsAccountTransactions($event)"
     [bPdfPrint]="bPdfPrint"></app-bank-account-data>
 
   <div class="col-12 card card-bg ">
