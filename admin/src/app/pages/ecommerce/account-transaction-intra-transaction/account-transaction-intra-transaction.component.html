@@ -3,7 +3,7 @@
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
 
-    <app-bank-account-data headerText='Sender Account' 
+    <app-bank-account-data headerText='Intratransaction - Sender Account' 
     (accountDataClicked)="fnGetSenderAccount($event)"></app-bank-account-data>
 
     <div class="col-12 card card-bg " *ngIf="bSenderSavingType">

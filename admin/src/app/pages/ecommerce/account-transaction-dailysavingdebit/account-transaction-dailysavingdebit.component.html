@@ -2,7 +2,7 @@
     <!-- page title -->
     <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
-    <app-bank-account-data headerText='' 
+    <app-bank-account-data headerText='Savings Account' 
     (accountDataClicked)="fnGetAccountDetails($event)" [bPdfPrint]="bPdfPrint"
      *ngIf = "activatedroute.snapshot.data.type === 'withdraw'"></app-bank-account-data>
      <app-bank-account-data [bForDailySavings] = 'true' *ngIf = "activatedroute.snapshot.data.type !== 'withdraw'"></app-bank-account-data>

@@ -110,7 +110,7 @@ import { SavingsType } from 'src/app/core/models/savingstype.model';
                private oSavingstypeService : SavingstypeService) { }
  
    ngOnInit(): void {
-     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
+     this.breadCrumbItems = [{ label: 'Transactions' }, { label: 'Intratransaction', active: true }];
 
      this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users : any)=>{
       console.log('users',users);

@@ -3,12 +3,12 @@
   <app-page-title title="" [breadcrumbItems]="breadCrumbItems" *ngIf='!bHideBreadCrumb'
     bgimageclass="addcategory_header"></app-page-title>
 
-  <app-bank-account-data headerText='' (accountDataClicked)="fnGetSavingsAccountTransactions($event)"
+  <app-bank-account-data headerText='Savings Account' (accountDataClicked)="fnGetSavingsAccountTransactions($event)"
     [bPdfPrint]="bPdfPrint"></app-bank-account-data>
 
   <div class="col-12 card card-bg ">
     <div class="card-body">
-      <div class="row">
+      <div class="row">+
         <div class="col-sm-6">
           <div class="form-group">
             <label class="control-label">Select Type Of Savings</label>

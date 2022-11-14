@@ -69,6 +69,13 @@ export class ManagerApprovalComponent implements OnInit {
   //     if(approval.sIsApproved === 'Pending') this.aApprovals.push(approval);
   //   });
   // }
+
+  fnRefresh(){
+    // this.ngOnInit();
+    if (this.activatedroute.snapshot.data.type === 'savings') this.redirectTo('/savingsapproval');
+    else if(this.activatedroute.snapshot.data.type === 'credit') this.redirectTo('/creditapproval');
+    else this.redirectTo('/loanapproval');
+  }
   fnGetCreditApprovals(){
     this.oTransactionService.fngetNeedToApproveTransactionInfo().subscribe((data) =>{
       this.aApprovals = data as any;

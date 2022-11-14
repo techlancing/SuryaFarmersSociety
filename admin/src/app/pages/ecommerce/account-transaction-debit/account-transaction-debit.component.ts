@@ -70,10 +70,10 @@ export class AccountTransactionDebitComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'New Setup' }, { label: 'Add Account', active: true }];
     console.log(this.activatedroute.snapshot.data.type);
     if (this.activatedroute.snapshot.data.type === 'credit') {
-      this.sCaption = 'Credit';
+      this.sCaption = 'Loan Credit';
       this.bIsCredit = true;
     } else {
-      this.sCaption = 'Debit';
+      this.sCaption = 'Loan Debit';
       this.bIsCredit = false;
     }
     this.oBankEmployeeService.fngetApprovedBankEmployeeInfo().subscribe((users: any) => {
