@@ -233,10 +233,10 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     } else {
       //checking dailysaving prevois transaction approved or not. nTransactionId: oTransaction.nTransactionId-1, nLoanId : oTransaction.nLoanId,
       if (oTransaction.sAccountType == 'Daily Deposit') {
-        const previoustransaction = await oTransactionModel.findOne({ nTransactionId: oTransaction.nTransactionId - 1, sIsApproved: "Pending" });
+        const previoustransaction = await oTransactionModel.findOne({ nTransactionId: oTransaction.nTransactionId - 1,sAccountNo :  oTransaction.sAccountNo,sAccountType : oTransaction.sAccountType, nLoanId : oTransaction.nLoanId,sIsApproved: "Pending" });
+        
         if (previoustransaction) {
-          if(previoustransaction.sAccountType == 'Daily Deposit')
-          return oRes.json({ status: "A-P-Pending", message: `Transaction ${previoustransaction.nTransactionId} is pending.........${previoustransaction.sAccountType}` });
+           return oRes.json({ status: "A-P-Pending", message: `Transaction ${previoustransaction.nTransactionId} is pending.........${previoustransaction.sAccountType}` });
         }
         //  else {
         //   //handling the rejected transactions in dailysaving deposit
