@@ -35,7 +35,14 @@ var oIntraTransactionSchema = new oSchema({
   },
   nAmount: {
     type: Number
+  },
+  senderTransaction: {
+    type: oSchema.Types.ObjectId, ref: 'Transaction'
+  },
+  recieverTransaction: {
+    type: oSchema.Types.ObjectId, ref: 'Transaction'
   }
+ 
 });
 oIntraTransactionSchema.plugin(oAutoIncrement, { inc_field: 'nIntraTransactionId', inc_amount: 1, start_seq: 500000 });
 

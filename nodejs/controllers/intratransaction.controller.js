@@ -44,9 +44,11 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
     let nAccountId = null;
     let sSenderAccountType = '';
     let oSenderSavingType = null;
+    let intratransaction_sender = '';
+    let intratransaction_reciever = '';
     const oBankAccount = await oBankAccountModel.findOne({ sAccountNo: oReq.body.sSenderAccountNumber });
     if (!oBankAccount) {
-      return oRes.status(400).send("Bank Does not Exists!");
+      return oRes.status(400).send("Bank Account Does not Exists!");
     }
 
     if (oReq.body.sSenderAccountType === 'savingtype') {
@@ -101,16 +103,17 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
               // Update total amount in dailysavingdeposit model
               let oSavingsAccount = oDailyDepositModel.findOne({ nAccountId: oReq.body.nReceiverAccountId });
               if (oSavingsAccount)
-                oDailyDepositModel.findByIdAndUpdate(oSavingsAccount._id, { nAmount: oTransaction.nBalanceAmount }, { new: true, runValidators: true });
+               await oDailyDepositModel.findByIdAndUpdate(oSavingsAccount._id, { nAmount: oTransaction.nBalanceAmount }, { new: true, runValidators: true });
 
               // Update total amount in bankaccount model
               let oBankAccount = oBankAccountModel.findOne({ nAccountId: oReq.body.nReceiverAccountId });
               if (oBankAccount)
-                oBankAccountModel.findByIdAndUpdate(oBankAccount._id, { nAmount: oTransaction.nBalanceAmount }, { new: true, runValidators: true });
+               await oBankAccountModel.findByIdAndUpdate(oBankAccount._id, { nAmount: oTransaction.nBalanceAmount }, { new: true, runValidators: true });
 
               const newTransaction = new oTransactionModel(oTransaction);
               await newTransaction.save();
               transactionid += newTransaction.nTransactionId + '-';
+              intratransaction_reciever = newTransaction._id;
             }
             else if (oReq.body.sRecieverAccountType == 'loan')  // credit loan
             {
@@ -128,6 +131,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
               const newTransaction = new oTransactionModel(oTransaction);
               await newTransaction.save();
               transactionid += newTransaction.nTransactionId + '-';
+              intratransaction_reciever = newTransaction._id;            
 
               // Update total amount in creditloan model
               let oCreditLoan = await oCreditLoanModel.findOne({ nLoanId: oReq.body.nLoanId });
@@ -160,6 +164,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
               await newTransaction.save();
 
               transactionid += newTransaction.nTransactionId + '-';
+              intratransaction_reciever = newTransaction._id;
 
               if (oTransaction.nBalanceAmount > 0) {
                 oSavingsType.oTransactionInfo.push(newTransaction);
@@ -204,6 +209,7 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
           await newTransaction.save();
 
           transactionid += newTransaction.nTransactionId + '-';
+          intratransaction_sender = newTransaction._id ;
 
           //if sender account is savingtype, update savingtype transactionInfo  
           if (oTransaction.nBalanceAmount > 0 && oSenderSavingType !== null) {
@@ -220,7 +226,16 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
           let oSenderBankAccount = await oBankAccountModel.findOne({ nAccountId: oReq.body.nSenderAccountId });
           if (oSenderBankAccount)
             await oBankAccountModel.findByIdAndUpdate(oSenderBankAccount._id, { nAmount: oTransactionInfo.nBalanceAmount }, { new: true, runValidators: true });
-
+          // if()
+          let oIntratransactionModel = new oIntraTransactionModel({nAmount : oReq.body.nAmount, nReceiverAccountId : oReq.body.nReceiverAccountId,nSenderAccountId : oReq.body.nSenderAccountId,
+                                    sDate :  oReq.body.sDate, sRecieverAccountNumber : oReq.body.sRecieverAccountNumber, sSenderAccountNumber : oReq.body.sSenderAccountNumber,
+                                    sTransactionEmployee :  oReq.body.sTransactionEmployee, sSenderAccountType : oReq.body.sSenderAccountType, sRecieverAccountType : oReq.body.sRecieverAccountType,
+                                    sNarration : oReq.body.sNarration});
+          // oTrans = intratransaction_sender_reciever.split('-');
+          console.log("intratransaction_sender_reciever",intratransaction_reciever,intratransaction_sender);
+          oIntratransactionModel.recieverTransaction = intratransaction_reciever;
+          oIntratransactionModel.senderTransaction = intratransaction_sender;
+          await oIntratransactionModel.save();
           oRes.json({ status: "Success", id: transactionid });
 
         }

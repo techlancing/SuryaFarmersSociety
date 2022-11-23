@@ -7,6 +7,7 @@ const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oSavingsTypeModel = require("../data_base/models/savingstype.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const transactionModel = require('../data_base/models/transaction.model');
+const oIntraTransactionModel = require("../data_base/models/intratransaction.model");
 const oTransactionRouter = oExpress.Router();
 
 //To remove unhandled promise rejections
@@ -15,6 +16,25 @@ const asyncMiddleware = fn =>
     Promise.resolve(fn(oReq, oRes, oNext))
       .catch(oNext);
   };
+
+  const fnIntratransaction = async (oUpdatedTransaction) => {
+    console.log("updated transaction",oUpdatedTransaction);
+    if(oUpdatedTransaction.sIsApproved == 'Rejected'){
+      const intraRecieverTransaction = await oIntraTransactionModel.findOne({recieverTransaction : oUpdatedTransaction._id});
+      const intraSenderTransaction = await oIntraTransactionModel.findOne({senderTransaction : oUpdatedTransaction._id})
+      if(intraRecieverTransaction){
+          const sender = await oTransactionModel.findOne({_id : intraRecieverTransaction.senderTransaction});
+          sender.sIsApproved = oUpdatedTransaction.sIsApproved;
+          sender.save();
+      }
+      if(intraSenderTransaction){
+        const reciever = await oTransactionModel.findOne({_id : intraSenderTransaction.recieverTransaction});
+        reciever.sIsApproved = oUpdatedTransaction.sIsApproved;
+        reciever.save();
+      }
+      
+    }
+  }
 
 // url: ..../Transaction/add_Transaction
 oTransactionRouter.post("/add_Transaction", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => {
@@ -145,17 +165,25 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     const oSavingTypeCheck = await oSavingsTypeModel.findOne({ sAccountNo: oReq.body.sAccountNo, nSavingsId: oReq.body.nLoanId });
     const oCreditLoanCheck = await oCreditLoanModel.findOne({ sAccountNo: oReq.body.sAccountNo, nLoanId: oReq.body.nLoanId });
     const oBankAccountCheck = await obankaccountModel.findOne({ sAccountNo: oReq.body.sAccountNo, nAccountId: oReq.body.nLoanId });
-    console.log("accounts are",oReq.body.sAccountNo,oReq.body.nLoanId,oSavingTypeCheck,oCreditLoanCheck,oBankAccountCheck);
+    let oTransaction = await oTransactionModel.findOne({ nTransactionId: oReq.body.nTransactionId });
     if (oSavingTypeCheck) {
 
       if (oSavingTypeCheck.sIsApproved !== 'Approved') {
         if(oReq.body.sIsApproved === 'Rejected'){
+          const updatedTransaction = await oTransactionModel.findByIdAndUpdate(oTransaction._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+          if(updatedTransaction){
+            fnIntratransaction(updatedTransaction);
+          }
           return oRes.json({ status: "Success", "message": `${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo} is Rejected Successfully."` });  
         }
         return oRes.json({ status: "error", "message": `You need to "Approve" the ${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo}"` });
       }
       if (oSavingTypeCheck.sStatus !== 'Active') {
         if(oReq.body.sIsApproved === 'Rejected'){
+          const updatedTransaction = await oTransactionModel.findByIdAndUpdate(oTransaction._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+          if(updatedTransaction){
+            fnIntratransaction(updatedTransaction);
+          }
           return oRes.json({ status: "Success", "message": `${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo} is Rejected Successfully."` });  
         }
         return oRes.json({ status: "error", "message": `You need to Activate the Account ${oSavingTypeCheck.sTypeofSavings} (${oSavingTypeCheck.nDepositAmount}) of "${oSavingTypeCheck.sAccountNo}"` });
@@ -165,12 +193,20 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
 
       if (oCreditLoanCheck.sIsApproved !== 'Approved') {
         if(oReq.body.sIsApproved === 'Rejected'){
+          const updatedTransaction = await oTransactionModel.findByIdAndUpdate(oTransaction._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+          if(updatedTransaction){
+            fnIntratransaction(updatedTransaction);
+          }
           return oRes.json({ status: "Success", "message": `${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}" is Rejected Successfully."` });  
         }
         return oRes.json({ status: "error", "message": `You need to "Approve" the ${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}"` });
       }
       if (oCreditLoanCheck.sLoanStatus !== 'Active') {
         if(oReq.body.sIsApproved === 'Rejected'){
+          const updatedTransaction = await oTransactionModel.findByIdAndUpdate(oTransaction._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+          if(updatedTransaction){
+            fnIntratransaction(updatedTransaction);
+          }
           return oRes.json({ status: "Success", "message": `${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}" is Rejected Successfully."` });  
         }
         return oRes.json({ status: "error", "message": `You need to Activate the Account ${oCreditLoanCheck.sTypeofLoan} (${oCreditLoanCheck.nSanctionAmount}) of "${oCreditLoanCheck.sAccountNo}"` });
@@ -179,6 +215,10 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     } else if (oBankAccountCheck) {
 
       if(oReq.body.sIsApproved === 'Rejected'){
+        const updatedTransaction = await oTransactionModel.findByIdAndUpdate(oTransaction._id, { sIsApproved: oReq.body.sIsApproved }, { new: true, runValidators: true });
+        if(updatedTransaction){
+          fnIntratransaction(updatedTransaction);
+        }
         return oRes.json({ status: "Success", "message": `Transaction  of "${oBankAccountCheck.sAccountNo}" is Rejected Successfully."` });  
       }
       if (oBankAccountCheck.bIsDeactivated !== false) return oRes.status(400).send({ status: "error", "message": `Activate the Bank Account ${oBankAccountCheck.sAccountNo}` });
@@ -186,7 +226,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
     } else return oRes.json({ status: "error", "message": "Not Belong to Any Account" });
 
 
-    let oTransaction = await oTransactionModel.findOne({ nTransactionId: oReq.body.nTransactionId });
+   
     // console.log("transaction",oTransaction)
     if (!oTransaction) {
       return oRes.json({ status: "error", "message": "This transaction is not exists" });
@@ -195,7 +235,8 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
       if (oTransaction.sAccountType == 'Daily Deposit') {
         const previoustransaction = await oTransactionModel.findOne({ nTransactionId: oTransaction.nTransactionId - 1, sIsApproved: "Pending" });
         if (previoustransaction) {
-          return oRes.json({ status: "A-P-Pending", message: `Transaction ${previoustransaction.nTransactionId} is pending.` });
+          if(previoustransaction.sAccountType == 'Daily Deposit')
+          return oRes.json({ status: "A-P-Pending", message: `Transaction ${previoustransaction.nTransactionId} is pending.........${previoustransaction.sAccountType}` });
         }
         //  else {
         //   //handling the rejected transactions in dailysaving deposit
@@ -312,7 +353,7 @@ oTransactionRouter.post("/settransactionapprovalstatus", oAuthentication, asyncM
         /* SmS code End */
       }
 
-
+      fnIntratransaction(oUpdatedTransaction);
       oRes.json({ status: "Success" });
     }
 
