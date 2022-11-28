@@ -401,10 +401,13 @@ export class AddaccountComponent implements OnInit {
       this.bIsAddActive = true;
       //In Edit case,the date coming from db is 'dd-mm-yyyy' for which new Date is giving an error
       // So just checking the lenght of the string, temp fix
-      if(this.oBankAccountModel.sDate !== undefined && this.oBankAccountModel.sDate !== '')
+      if(this.oBankAccountModel.sDate !== undefined && this.oBankAccountModel.sDate !== '' && this.oBankAccountModel.sDate !== null)
         this.oBankAccountModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDate);//new Date(this.oBankAccountModel.sDate).toISOString().split('T')[0].split("-").reverse().join("-");
-      if(this.oBankAccountModel.sDOB !== undefined && this.oBankAccountModel.sDate !== '')
+      if(this.oBankAccountModel.sDOB !== undefined && this.oBankAccountModel.sDate !== '' && this.oBankAccountModel.sDate !== null)
         this.oBankAccountModel.sDOB = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDOB);//new Date(this.oBankAccountModel.sDOB).toISOString().split('T')[0].split("-").reverse().join("-");
+      if(this.oBankAccountModel.sDate.length !== 10) this.oBankAccountModel.sDate = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDate);
+      if(this.oBankAccountModel.sDOB.length !== 10) this.oBankAccountModel.sDOB = this.oUtilitydateService.fnChangeDateFormate(this.oBankAccountModel.sDOB);
+
       if (!this.bisEditMode) {
         this.oBankAccountService.fnAddBankAccountInfo(this.oBankAccountModel).subscribe((data) => {
           this.bankaccounts = [];
