@@ -74,6 +74,7 @@ export class SearchService {
       || table.nCreditAmount.toString().toLowerCase().includes(term.toLowerCase())
       || table.nDebitAmount.toString().toLowerCase().includes(term.toLowerCase())
       || table.sNarration.toLowerCase().includes(term.toLowerCase())
+      || table.sDate.toLowerCase().includes(term.toLowerCase())
     }
     else{
       return table.sAccountNo.toLowerCase().includes(term.toLowerCase())

@@ -40,6 +40,7 @@
                     <th *ngIf="sTableContent === 'Saving Deposits'" class="mwidth">Maturity Amount</th>
                     <th *ngIf="sTableContent === 'Loan'">Sanction Amount</th>
                     <th *ngIf="sTableContent === 'Loan'">Total Amount</th>
+                    <th *ngIf="sTableContent === 'Credit and Debit'" class="mwidth">Date</th>
                     <th *ngIf="sTableContent === 'Credit and Debit'">Credit Amount</th>
                     <th *ngIf="sTableContent === 'Credit and Debit'">Debit Amount Amount</th>
                     <th *ngIf="sTableContent === 'Credit and Debit'">Balance Amount</th>
@@ -96,7 +97,10 @@
                       <!-- {{approval.nTotalAmount}} -->
                       <ngb-highlight [result]="approval.nTotalAmount" [term]="service.searchTerm"></ngb-highlight>
                     </td>
-
+                    <td *ngIf="sTableContent === 'Credit and Debit'">
+                      <!-- {{approval.nCreditAmount}} -->
+                      <ngb-highlight [result]="approval.sDate" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
                     <td *ngIf="sTableContent === 'Credit and Debit'">
                       <!-- {{approval.nCreditAmount}} -->
                       <ngb-highlight [result]="approval.nCreditAmount" [term]="service.searchTerm"></ngb-highlight>
@@ -117,6 +121,7 @@
 
                     <!-- <td *ngIf="sTableContent === 'Credit and Debit'"><label for="amount-for-transaction" >{{approval.nDebitAmount}}</label></td> -->
                     <td><label for="employee-status" class="status">{{approval.sIsApproved}}</label></td>
+                    <!-- <td><label for="employee-status" class="status">{{approval.sNarration}}</label></td> -->
                     <td class="buttonDisplay actions">
                       <button class="btn btn-primary" (click)="fnConfirmationMessage(approval,'Approved')"
                         [disabled]="approval.sIsApproved==='Approved' || bDisableButton">Approve</button>
