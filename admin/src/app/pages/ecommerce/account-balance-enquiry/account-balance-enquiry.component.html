@@ -46,9 +46,9 @@
       <h2>Saving Type </h2>
       <p>_______________________________</p>
       <div *ngFor="let type of aSavingType" class="row">
-        <div class="col-sm-12 row" *ngIf="type.nDepositAmount >= 0">
+        <div class="col-sm-12 row" *ngIf="type.oTransactionInfo.length >= 0">
           <h3>{{type.sTypeofSavings}} :</h3>
-          <p class="account-balance"> Rs. {{type.nDepositAmount}}/-</p>
+          <p class="account-balance"> Rs. {{type.oTransactionInfo[type.oTransactionInfo.length-1].nBalanceAmount}}/-</p>
         </div>
       </div>
     </div> 

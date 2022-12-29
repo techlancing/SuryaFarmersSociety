@@ -166,11 +166,11 @@ oIntraTransactionRouter.post("/intraaccounttransaction", oAuthentication, asyncM
               transactionid += newTransaction.nTransactionId + '-';
               intratransaction_reciever = newTransaction._id;
 
-              if (oTransaction.nBalanceAmount > 0) {
+             // if (oTransaction.nBalanceAmount > 0) {
                 oSavingsType.oTransactionInfo.push(newTransaction);
                 oSavingsType.nDepositAmount = oTransaction.nBalanceAmount;
                 await oSavingsType.save();
-              }
+              //}
             }
           } catch (e) {
             console.log(e);
