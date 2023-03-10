@@ -277,7 +277,7 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
       return oRes.status(400).send({error : 'CreditLoan does not exist'});
     }
     
-    const olasttransaction = await oTransactionModel.find({ nLoanId: oCreditLoan.nLoanId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
+    const olasttransaction = await oTransactionModel.find({ sAccountNo : oCreditLoan.sAccountNo,nLoanId: oCreditLoan.nLoanId,sIsApproved : 'Approved' }).sort({ _id: -1 }).limit(1);
 
     if (olasttransaction.length > 0) {
       if(olasttransaction[0].nBalanceAmount !== 0){
@@ -287,6 +287,10 @@ oCreditLoanRouter.post("/deactivate",oAuthentication,asyncMiddleware(async (oReq
         oCreditLoan.sLoanStatus = 'InActive' ;
         oCreditLoan.save();
       }
+    }
+    else if(olasttransaction.length  == 0){
+      oCreditLoan.sLoanStatus = 'InActive' ;
+        oCreditLoan.save();
     }
      oRes.json("Success");
   }
