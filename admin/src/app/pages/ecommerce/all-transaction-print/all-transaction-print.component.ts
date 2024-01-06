@@ -322,8 +322,8 @@ export class AllTransactionPrintComponent implements OnInit, AfterViewChecked{
     this.aSavingDeposit.map((savings) => {
       if(savings.sTypeofSavings == type) this.oBankAccountService.sendSavingDepositDetails.next(savings);
     })
-    this.oBankAccountService.accountDetails = this.aSavingDeposit[0];
-    this.oBankAccountService.savings = this.oSelectedAccount;
+    //this.oBankAccountService.accountDetails = this.aSavingDeposit[0];
+    //this.oBankAccountService.savings = this.oSelectedAccount;
     //localStorage.setItem("savingtype",this.aSavingDeposit[0])
     this.oBankAccountService.pdfGenerationClicked.emit({type : type,Account : this.sAccountNo});
   }

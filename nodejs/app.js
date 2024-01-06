@@ -5,6 +5,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyparser = require('body-parser');
+const scheduler = require('./scheduler');
+
+// Listen for the 'scheduledTask' event and execute a function when it occurs
+scheduler.on('scheduledTask', () => {
+  console.log('in app');
+  // Add your logic here
+});
 
 let sRootPath = process.env.ROOT_PATH;
 
@@ -93,6 +100,7 @@ oServer.get("/", (req, res) => {
   console.log("Node js url is working");
   res.send('<h1>Welcome to surya farmers application</h1>');
 });
+
 
 oServer.listen(oPort, () => {
   console.log('Server started at: ' + oPort);

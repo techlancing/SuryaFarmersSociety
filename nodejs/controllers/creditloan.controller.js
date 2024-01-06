@@ -5,6 +5,7 @@ const obankaccountModel = require("../data_base/models/bankaccount.model");
 const oCreditLoanModel = require("../data_base/models/creditloan.model");
 const oTransactionModel = require("../data_base/models/transaction.model");
 const oAuthentication = require("../middleware/authentication");
+const scheduler = require('../scheduler');
 
 const oCreditLoanRouter = oExpress.Router();
 
@@ -206,6 +207,169 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
     oRes.status(400).send(e);
   }  
 }));
+
+
+
+// Listen for the 'scheduledTask' event and execute a function when it occurs
+scheduler.on('scheduledTask', async() => {
+  console.log('in credit loan');
+  try{
+    let oCreditLoan = await oCreditLoanModel.find( { sIsApproved: "Approved",sLoanStatus : 'Active'});
+    
+    if(oCreditLoan.length > 0){
+      await Promise.all(oCreditLoan.map(async (oLoan) => {
+        let accountBalance = 0;
+        let loans = {
+          sLoanName :'',
+          nLoanBalance : 0
+        };
+        let todayDate = new Date(); 
+        let tempDate = oLoan.sEndofLoanDate.split('-').reverse().join('-') + ' 0:00:00';
+        loanendDate = new Date(tempDate);
+        console.log(oLoan.sPenaltyDate);
+        //If date exceeds the loan end date
+        if(todayDate > loanendDate && (oLoan.sPenaltyDate === '') ){
+          oLoan.sPenaltyDate = oLoan.sEndofLoanDate;
+          await oLoan.save();
+        }
+        if(oLoan.sPenaltyDate !== ''){
+          let tempPenaltyDate = oLoan.sPenaltyDate.split('-').reverse().join('-') + ' 0:00:00';
+          loanPenaltyDate = new Date(tempPenaltyDate);
+          
+          if(todayDate > loanPenaltyDate ){
+            loans.sLoanName = oLoan.sTypeofLoan;
+            //Get credit loan last transacton for balance amount
+            const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
+            console.log('compae', oLoan.sPenaltyDate);
+            if(olasttransaction.length > 0) {
+                accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
+                loans.nLoanBalance = accountBalance;
+                if (accountBalance > 0) {
+                  let tempPenaltyDate = oLoan.sPenaltyDate.split('-').reverse().join('-') + ' 0:00:00';
+                      loanPenaltyDate = new Date(tempPenaltyDate);
+                    let month = new Date(loanPenaltyDate).getMonth();
+                    console.log("mon",month);
+                    if(month === 11){
+                      let year = new Date(loanPenaltyDate).getFullYear();
+                      year = year + 1;
+                      let newDate = new Date(loanPenaltyDate).setFullYear(year,0);
+                      const yr = new Date(newDate).getFullYear();
+                      const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                      const day = String(new Date(newDate).getDate()).padStart(2, '0');
+                      oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
+                      console.log('monh', oLoan.sPenaltyDate);
+                    }else{
+                      month = month + 1;
+                      let newDate = new Date(loanPenaltyDate).setMonth(month);
+                      console.log("new",newDate);
+                      const yr = new Date(newDate).getFullYear();
+                      const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                      const day = String(new Date(newDate).getDate()).padStart(2, '0');
+                      oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
+                      console.log('monh', oLoan.sPenaltyDate);
+                    }
+                  //}
+                  //save transaction model
+                  let oTransaction = {};
+                  oTransaction.sAccountNo = oLoan.sAccountNo;
+                  oTransaction.nLoanId = oLoan.nLoanId;
+                  oTransaction.nCreditAmount = olasttransaction[0].nBalanceAmount * oLoan.nIntrest/100;
+                  oTransaction.nDebitAmount = 0;
+                  oTransaction.nBalanceAmount = olasttransaction[0].nBalanceAmount + oTransaction.nCreditAmount;
+                  oTransaction.sDate = oLoan.sPenaltyDate;
+                  // oTransaction.sNarration = newCreditLoan.sTypeofLoan;
+                  let type = oLoan.sTypeofLoan.split(" ");
+                  oTransaction.sNarration = 'System generated';
+                  oTransaction.sAccountType = oLoan.sTypeofLoan;
+                  oTransaction.sEmployeeName = oLoan.sEmployeeName;
+                  oTransaction.sIsApproved = 'Approved';
+
+
+                  const newTransaction = new oTransactionModel(oTransaction);
+                  await newTransaction.save();
+
+                  //push transaction info and again save credit loan
+                  oLoan.oTransactionInfo.push(newTransaction._id);
+                  oLoan.sLoanStatus = "Active";
+                  await oLoan.save();
+                }
+              }
+              //Add interest
+        
+            
+              
+          }
+      }
+        
+
+      }));
+
+     }
+
+  }catch(e){
+    console.log(e);
+    //oRes.status(400).send(e);
+  } 
+});
+
+// url: ..../creditloan/addinteresttransactiontoaccountcreditloans
+oCreditLoanRouter.get("/addinteresttransactiontoaccountcreditloans",  asyncMiddleware(async(oReq, oRes, oNext) => {
+  try{
+    let oCreditLoan = await oCreditLoanModel.find( {sAccountNo : '010101010002'/*oReq.body.sAccountNo*/, sIsApproved: "Approved",sLoanStatus : 'Active'});
+    
+    if(oCreditLoan.length > 0){
+      await Promise.all(oCreditLoan.map(async (oLoan) => {
+        let accountBalance = 0;
+        let loans = {
+          sLoanName :'',
+          nLoanBalance : 0
+        };
+        loans.sLoanName = oLoan.sTypeofLoan;
+        //Get credit loan last transacton for balance amount
+        const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
+      
+        if(olasttransaction.length > 0) {
+            accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
+            loans.nLoanBalance = accountBalance;
+          }
+          //Add interest
+    
+        //save transaction model
+        let oTransaction = {};
+        oTransaction.sAccountNo = oLoan.sAccountNo;
+        oTransaction.nLoanId = oLoan.nLoanId;
+        oTransaction.nCreditAmount = oLoan.nTotalAmount;
+        oTransaction.nDebitAmount = 0;
+        oTransaction.nBalanceAmount = oLoan.nTotalAmount;
+        oTransaction.sDate = oLoan.sDate;
+        // oTransaction.sNarration = newCreditLoan.sTypeofLoan;
+        let type = oLoan.sTypeofLoan.split(" ");
+        oTransaction.sNarration = type.length >2? type[0]+"_"+type[1]+"_"+type[3] : type[0]+"_"+type[1];
+        oTransaction.sAccountType = oLoan.sTypeofLoan;
+        oTransaction.sEmployeeName = oLoan.sEmployeeName;
+        oTransaction.sIsApproved = 'Approved';
+        
+        
+        const newTransaction = new oTransactionModel(oTransaction);
+        await newTransaction.save();
+
+        //push transaction info and again save credit loan
+        oLoan.oTransactionInfo.push(newTransaction._id);
+        oLoan.sLoanStatus = "Active";
+        await oLoan.save();
+            
+
+      }));
+
+     }
+
+  }catch(e){
+    console.log(e);
+    oRes.status(400).send(e);
+  }  
+}));
+
+
 
 // url: ..../creditloan/delete_creditloan
 oCreditLoanRouter.post("/delete_creditloan", oAuthentication, asyncMiddleware(async (oReq, oRes, oNext) => { 

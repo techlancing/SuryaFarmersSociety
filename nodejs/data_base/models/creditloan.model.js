@@ -51,6 +51,10 @@ var oCreditLoanSchema = new oSchema({
     type: String,
     trim: true
   },
+  sPenaltyDate: {
+    type: String,
+    trim: true
+  }, 
   nLoanDays:{
     type : Number
   },
