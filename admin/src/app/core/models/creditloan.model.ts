@@ -21,6 +21,7 @@ export class CreditLoan {
         public sEndofLoanDate : string = '',       
         public nLetPenaltyPercentage : number = null,        
         public sEmployeeName : string = '',
+        public sPenaltyDate : string = '',
         public oTransactionInfo: any = null
         
     ) {
