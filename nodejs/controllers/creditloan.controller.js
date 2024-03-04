@@ -226,7 +226,6 @@ scheduler.on('scheduledTask', async() => {
         let todayDate = new Date(); 
         let tempDate = oLoan.sEndofLoanDate.split('-').reverse().join('-') + ' 0:00:00';
         loanendDate = new Date(tempDate);
-        console.log(oLoan.sPenaltyDate);
         //If date exceeds the loan end date
         if(todayDate > loanendDate && (oLoan.sPenaltyDate === '') ){
           oLoan.sPenaltyDate = oLoan.sEndofLoanDate;
@@ -240,7 +239,6 @@ scheduler.on('scheduledTask', async() => {
             loans.sLoanName = oLoan.sTypeofLoan;
             //Get credit loan last transacton for balance amount
             const olasttransaction = await oTransactionModel.find({nLoanId: oLoan.nLoanId, sIsApproved : 'Approved'}).sort({_id:-1}).limit(1);
-            console.log('compae', oLoan.sPenaltyDate);
             if(olasttransaction.length > 0) {
                 accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
                 loans.nLoanBalance = accountBalance;
@@ -248,7 +246,7 @@ scheduler.on('scheduledTask', async() => {
                   let tempPenaltyDate = oLoan.sPenaltyDate.split('-').reverse().join('-') + ' 0:00:00';
                       loanPenaltyDate = new Date(tempPenaltyDate);
                     let month = new Date(loanPenaltyDate).getMonth();
-                    console.log("mon",month);
+                    let transactiondate = '';
                     if(month === 11){
                       let year = new Date(loanPenaltyDate).getFullYear();
                       year = year + 1;
@@ -256,17 +254,23 @@ scheduler.on('scheduledTask', async() => {
                       const yr = new Date(newDate).getFullYear();
                       const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
                       const day = String(new Date(newDate).getDate()).padStart(2, '0');
-                      oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
-                      console.log('monh', oLoan.sPenaltyDate);
-                    }else{
-                      month = month + 1;
-                      let newDate = new Date(loanPenaltyDate).setMonth(month);
-                      console.log("new",newDate);
+                      
+                      transactiondate =  `${day}-${mon}-${yr}`;
+                      if(day > Number(28)){
+                        oLoan.sPenaltyDate = `28-${Number(mon)+1}-${yr}`;
+                      }else{
+                        oLoan.sPenaltyDate = `${day}-${Number(mon)+1}-${yr}`;
+                      }
+                    }
+                    else{
+                      let year = new Date(loanPenaltyDate).getFullYear();
+                      let newDate = new Date(loanPenaltyDate).setFullYear(year,month);
                       const yr = new Date(newDate).getFullYear();
                       const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
                       const day = String(new Date(newDate).getDate()).padStart(2, '0');
-                      oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
-                      console.log('monh', oLoan.sPenaltyDate);
+                      oLoan.sPenaltyDate = `${day}-${Number(mon)+1}-${yr}`;
+                      transactiondate =  `${day}-${mon}-${yr}`;
+                      
                     }
                   //}
                   //save transaction model
@@ -276,7 +280,7 @@ scheduler.on('scheduledTask', async() => {
                   oTransaction.nCreditAmount = olasttransaction[0].nBalanceAmount * oLoan.nIntrest/100 * 1/12;
                   oTransaction.nDebitAmount = 0;
                   oTransaction.nBalanceAmount = olasttransaction[0].nBalanceAmount + oTransaction.nCreditAmount;
-                  oTransaction.sDate = oLoan.sPenaltyDate;
+                  oTransaction.sDate = transactiondate;
                   // oTransaction.sNarration = newCreditLoan.sTypeofLoan;
                   let type = oLoan.sTypeofLoan.split(" ");
                   oTransaction.sNarration = 'Monthly_Intrest';
