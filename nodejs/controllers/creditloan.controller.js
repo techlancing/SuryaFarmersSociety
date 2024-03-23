@@ -212,7 +212,7 @@ oCreditLoanRouter.post("/getaccountcreditloans", oAuthentication, asyncMiddlewar
 
 // Listen for the 'scheduledTask' event and execute a function when it occurs
 scheduler.on('scheduledTask', async() => {
-  console.log('in credit loan');
+  
   try{
     let oCreditLoan = await oCreditLoanModel.find( { sIsApproved: "Approved",sLoanStatus : 'Active'});
     
@@ -228,7 +228,43 @@ scheduler.on('scheduledTask', async() => {
         loanendDate = new Date(tempDate);
         //If date exceeds the loan end date
         if(todayDate > loanendDate && (oLoan.sPenaltyDate === '') ){
-          oLoan.sPenaltyDate = oLoan.sEndofLoanDate;
+          let tempPenaltyDate = oLoan.sEndofLoanDate.split('-').reverse().join('-') + ' 0:00:00';
+          let temploanPenaltyDate = new Date(tempPenaltyDate);
+          let month = new Date(temploanPenaltyDate).getMonth();
+          if(month === 11){
+            let year = new Date(temploanPenaltyDate).getFullYear();
+            year = year + 1;
+            let newDate = new Date(temploanPenaltyDate).setFullYear(year,0);
+            const yr = new Date(newDate).getFullYear();
+            const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            
+            const day = String(new Date(newDate).getDate()).padStart(2, '0');
+            
+            //transactiondate =  `${day}-${mon}-${yr}`;
+            if(day > Number(28)){
+              oLoan.sPenaltyDate = `28-${mon}-${yr}`;
+            }else{
+              oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
+            }
+            
+          }else{
+            let year = new Date(temploanPenaltyDate).getFullYear();
+              
+              let newDate = new Date(temploanPenaltyDate).setFullYear(year,month);
+              const yr = new Date(newDate).getFullYear();
+              const mon = String(new Date(newDate).getMonth() + 2).padStart(2, '0'); // Months are zero-based
+              
+              const day = String(new Date(newDate).getDate()).padStart(2, '0');
+
+              if(month === 0){
+                oLoan.sPenaltyDate = `28-${mon}-${yr}`;
+              }else{
+                oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
+              }
+              
+              
+          }
+          
           await oLoan.save();
         }
         if(oLoan.sPenaltyDate !== ''){
@@ -243,8 +279,7 @@ scheduler.on('scheduledTask', async() => {
                 accountBalance = accountBalance + olasttransaction[0].nBalanceAmount;
                 loans.nLoanBalance = accountBalance;
                 if (accountBalance > 0) {
-                  let tempPenaltyDate = oLoan.sPenaltyDate.split('-').reverse().join('-') + ' 0:00:00';
-                      loanPenaltyDate = new Date(tempPenaltyDate);
+                  
                     let month = new Date(loanPenaltyDate).getMonth();
                     let transactiondate = '';
                     if(month === 11){
@@ -253,23 +288,36 @@ scheduler.on('scheduledTask', async() => {
                       let newDate = new Date(loanPenaltyDate).setFullYear(year,0);
                       const yr = new Date(newDate).getFullYear();
                       const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                      
                       const day = String(new Date(newDate).getDate()).padStart(2, '0');
                       
-                      transactiondate =  `${day}-${mon}-${yr}`;
+                      
                       if(day > Number(28)){
-                        oLoan.sPenaltyDate = `28-${Number(mon)+1}-${yr}`;
+                        oLoan.sPenaltyDate = `28-${mon}-${yr}`;
                       }else{
-                        oLoan.sPenaltyDate = `${day}-${Number(mon)+1}-${yr}`;
+                        oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
                       }
+                      
+                      transactiondate =  `${day}-${Number(month)+1}-${Number(year)-1}`;
+                      
                     }
                     else{
                       let year = new Date(loanPenaltyDate).getFullYear();
+                      
                       let newDate = new Date(loanPenaltyDate).setFullYear(year,month);
                       const yr = new Date(newDate).getFullYear();
-                      const mon = String(new Date(newDate).getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                      const mon = String(new Date(newDate).getMonth() + 2).padStart(2, '0'); // Months are zero-based
+                      
                       const day = String(new Date(newDate).getDate()).padStart(2, '0');
-                      oLoan.sPenaltyDate = `${day}-${Number(mon)+1}-${yr}`;
-                      transactiondate =  `${day}-${mon}-${yr}`;
+
+                      if(month === 0){
+                        oLoan.sPenaltyDate = `28-${mon}-${yr}`;
+                      }else{
+                        oLoan.sPenaltyDate = `${day}-${mon}-${yr}`;
+                      }
+                      
+                      
+                      transactiondate =  `${day}-${Number(month)+1}-${year}`;
                       
                     }
                   //}
