@@ -4,7 +4,7 @@ import {
   useEffect,
   useMemo,
   useState,
-  ReactNode,
+  type ReactNode,
 } from 'react'
 
 export type UserRole = 'chairman' | 'manager' | 'employee'
@@ -34,23 +34,25 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null)
 
-  // Hydrate from localStorage on first load (mirrors Angular behaviour)
+  // Hydrate from localStorage on first load (mirrors Angular/Node API behaviour)
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY)
       if (!raw) return
       const parsed = JSON.parse(raw)
-      if (parsed && parsed.sRole && parsed.token) {
+      const token = parsed?.token ?? parsed?._token
+      const role = parsed?.sRole ?? parsed?.role
+      if (parsed && role && token) {
         const normalisedRole: UserRole =
-          parsed.sRole === 'chairman' || parsed.sRole === 'manager'
-            ? parsed.sRole
+          role === 'chairman' || role === 'manager'
+            ? role
             : 'employee'
 
         setUser({
-          id: parsed._id ?? 'unknown',
-          name: parsed.sName ?? parsed.username ?? 'User',
+          id: parsed._id ?? parsed.sUserEmail ?? 'unknown',
+          name: parsed.sName ?? parsed.sUserName ?? parsed.username ?? 'User',
           role: normalisedRole,
-          token: parsed.token,
+          token,
         })
       }
     } catch {
@@ -61,14 +63,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = (authUser: AuthUser) => {
     setUser(authUser)
-    // Store in a shape compatible with existing Angular backend if possible
+    // Store in a shape compatible with Node API and Angular (token for API client)
     window.localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
         _id: authUser.id,
         sName: authUser.name,
+        sUserName: authUser.name,
         sRole: authUser.role,
         token: authUser.token,
+        _token: authUser.token,
       }),
     )
   }

@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Grid,
   MenuItem,
   Table,
@@ -14,78 +15,31 @@ import {
   Typography,
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
-import { useMemo, useState } from 'react'
-
-interface AccountSummary {
-  id: string
-  accountNo: string
-  holderName: string
-}
-
-interface TransactionRow {
-  id: number
-  date: string
-  accountNo: string
-  credit: number
-  debit: number
-  balance: number
-  narration: string
-  employeeName: string
-}
+import { useMemo, useState, useEffect } from 'react'
+import * as bankaccountApi from '../api/services/bankaccount'
+import * as savingstypeApi from '../api/services/savingstype'
+import * as dailysavingdepositApi from '../api/services/dailysavingdeposit'
+import * as transactionApi from '../api/services/transaction'
+import { toApiDate } from '../api/reportUtils'
+import type { BankAccount } from '../api/services/bankaccount'
+import type { Transaction } from '../api/services/transaction'
 
 interface DailySavingsFormValues {
-  date: string
-  amount: string
+  startDate: string
+  dailyAmount: string
+  totalDays: string
   receiverName: string
   narration: string
 }
 
-const MOCK_ACCOUNTS: AccountSummary[] = [
-  { id: '1', accountNo: '010101010001', holderName: 'Ramesh Kumar' },
-  { id: '2', accountNo: '010101010002', holderName: 'Suresh Reddy' },
-]
-
-const MOCK_TRANSACTIONS: Record<string, TransactionRow[]> = {
-  '010101010001': [
-    {
-      id: 1,
-      date: '01-01-2026',
-      accountNo: '010101010001',
-      credit: 0,
-      debit: 500,
-      balance: 500,
-      narration: 'New_Account_Created',
-      employeeName: 'Staff A',
-    },
-    {
-      id: 2,
-      date: '05-01-2026',
-      accountNo: '010101010001',
-      credit: 0,
-      debit: 200,
-      balance: 700,
-      narration: 'Daily_Deposit',
-      employeeName: 'Staff B',
-    },
-  ],
-  '010101010002': [
-    {
-      id: 1,
-      date: '02-01-2026',
-      accountNo: '010101010002',
-      credit: 0,
-      debit: 1000,
-      balance: 1000,
-      narration: 'New_Account_Created',
-      employeeName: 'Staff C',
-    },
-  ],
-}
-
-const MOCK_EMPLOYEES = ['Staff A', 'Staff B', 'Staff C']
-
 export function DailySavingsDepositPage() {
-  const [selectedAccount, setSelectedAccount] = useState<AccountSummary | null>(null)
+  const [accounts, setAccounts] = useState<BankAccount[]>([])
+  const [loading, setLoading] = useState(true)
+  const [selectedAccountNo, setSelectedAccountNo] = useState<string>('')
+  const [dailySavingsId, setDailySavingsId] = useState<number | null>(null)
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [loadingTx, setLoadingTx] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const {
     control,
@@ -93,41 +47,87 @@ export function DailySavingsDepositPage() {
     formState: { errors },
   } = useForm<DailySavingsFormValues>({
     defaultValues: {
-      date: '',
-      amount: '',
+      startDate: '',
+      dailyAmount: '',
+      totalDays: '1',
       receiverName: '',
       narration: '',
     },
   })
 
-  const transactions = useMemo(
-    () =>
-      selectedAccount
-        ? MOCK_TRANSACTIONS[selectedAccount.accountNo] ?? []
-        : [],
-    [selectedAccount],
-  )
+  useEffect(() => {
+    bankaccountApi.getActiveBankAccounts().then((list) => {
+      setAccounts(Array.isArray(list) ? list : [])
+    }).finally(() => setLoading(false))
+  }, [])
 
-  const onSubmit = (values: DailySavingsFormValues) => {
-    if (!selectedAccount) {
-      alert('Please select an account first.')
+  useEffect(() => {
+    if (!selectedAccountNo) {
+      setDailySavingsId(null)
+      setTransactions([])
       return
     }
+    setDailySavingsId(null)
+    savingstypeApi.savingstypeList({ sAccountNo: selectedAccountNo }).then((list) => {
+      const daily = Array.isArray(list) ? list.find((s) => (s.sTypeofSavings ?? '').toLowerCase().includes('daily')) : null
+      setDailySavingsId(daily?.nSavingsId ?? null)
+    })
+  }, [selectedAccountNo])
 
-    if (!values.date || !values.amount || !values.receiverName || !values.narration) {
-      alert('Please fill all the fields.')
+  useEffect(() => {
+    if (!selectedAccountNo || dailySavingsId == null) {
+      setTransactions([])
       return
     }
+    setLoadingTx(true)
+    const end = new Date()
+    const start = new Date(end)
+    start.setFullYear(start.getFullYear() - 1)
+    const from = toApiDate(start.toISOString().slice(0, 10))
+    const to = toApiDate(end.toISOString().slice(0, 10))
+    transactionApi.getTransactionsBetweenDates({ from_date: from, to_date: to }).then((tx) => {
+      const list = Array.isArray(tx) ? tx : []
+      setTransactions(list.filter((t) => t.sAccountNo === selectedAccountNo && t.nLoanId === dailySavingsId))
+    }).finally(() => setLoadingTx(false))
+  }, [selectedAccountNo, dailySavingsId])
 
-    // This mirrors the Angular submit behaviour:
-    // - Validate required fields
-    // - Call service to add daily savings debit
-    // - On Success: show success message with transaction id and note that it needs approval
-    // For now we mock a transaction id.
-    const mockTransactionId = Math.floor(Math.random() * 1000000)
-    alert(
-      `Amount deposited successfully.\nTransaction id "${mockTransactionId}" needs to be approved.`,
-    )
+  const selectedAccount = useMemo(() => accounts.find((a) => a.sAccountNo === selectedAccountNo), [accounts, selectedAccountNo])
+
+  const onSubmit = async (values: DailySavingsFormValues) => {
+    if (!selectedAccountNo || dailySavingsId == null) {
+      alert('Please select an account with Daily Deposit saving type.')
+      return
+    }
+    const dailyAmount = Number(values.dailyAmount)
+    const totalDays = Number(values.totalDays) || 1
+    if (Number.isNaN(dailyAmount) || dailyAmount <= 0 || totalDays < 1) {
+      alert('Daily amount and number of days must be positive.')
+      return
+    }
+    setSubmitting(true)
+    try {
+      const res = await dailysavingdepositApi.addDailydeposittransaction({
+        sAccountNo: selectedAccountNo,
+        nAccountId: dailySavingsId,
+        nDayAmount: dailyAmount,
+        nTotaldays: totalDays,
+        sStartDate: toApiDate(values.startDate),
+        sNarration: values.narration,
+        sReceiverName: values.receiverName,
+      })
+      const id = res?.id ?? '–'
+      if (res?.status === 'A-Pending') {
+        alert(`A previous transaction is pending approval. Transaction id "${id}".`)
+      } else {
+        alert(`Amount deposited successfully. Transaction id "${id}" needs to be approved.`)
+        setTransactions((prev) => prev)
+      }
+    } catch (e: unknown) {
+      const msg = (e as { message?: string })?.message ?? 'Failed to submit'
+      alert(msg)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handlePrint = () => {
@@ -147,6 +147,8 @@ export function DailySavingsDepositPage() {
         Select a savings account to view its transactions and record a new daily savings deposit.
       </Typography>
 
+      {loading && <Box sx={{ py: 2 }}><CircularProgress /></Box>}
+      {!loading && (
       <Grid container spacing={2} sx={{ mb: 2, mt: 0.5 }}>
         <Grid item xs={12} md={6}>
           <TextField
@@ -154,22 +156,26 @@ export function DailySavingsDepositPage() {
             size="small"
             fullWidth
             label="Select Account"
-            value={selectedAccount?.accountNo ?? ''}
-            onChange={(e) => {
-              const account = MOCK_ACCOUNTS.find((a) => a.accountNo === e.target.value) ?? null
-              setSelectedAccount(account)
-            }}
+            value={selectedAccountNo}
+            onChange={(e) => setSelectedAccountNo(e.target.value)}
           >
-            {MOCK_ACCOUNTS.map((a) => (
-              <MenuItem key={a.id} value={a.accountNo}>
-                {a.accountNo} – {a.holderName}
+            <MenuItem value="">Select account</MenuItem>
+            {accounts.map((a) => (
+              <MenuItem key={a.sAccountNo} value={a.sAccountNo ?? ''}>
+                {a.sAccountNo} – {a.sApplicantName ?? a.sApplicantSurName ?? '–'}
               </MenuItem>
             ))}
           </TextField>
         </Grid>
       </Grid>
+      )}
 
-      {selectedAccount && (
+      {selectedAccountNo && dailySavingsId == null && !loading && (
+        <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+          No Daily Deposit saving type found for this account. Select another account.
+        </Typography>
+      )}
+      {selectedAccountNo && dailySavingsId != null && (
         <>
           <Card
             elevation={0}
@@ -203,29 +209,34 @@ export function DailySavingsDepositPage() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {transactions.map((t) => (
-                    <TableRow key={t.id}>
-                      <TableCell>{t.date}</TableCell>
-                      <TableCell>{t.accountNo}</TableCell>
+                  {loadingTx && (
+                    <TableRow>
+                      <TableCell colSpan={8}><CircularProgress size={24} /></TableCell>
+                    </TableRow>
+                  )}
+                  {!loadingTx && transactions.map((t) => (
+                    <TableRow key={t.nTransactionId ?? t._id}>
+                      <TableCell>{t.sDate ?? '–'}</TableCell>
+                      <TableCell>{t.sAccountNo ?? '–'}</TableCell>
                       <TableCell align="right">
-                        {t.credit ? t.credit.toLocaleString() : '-'}
+                        {t.nCreditAmount ? Number(t.nCreditAmount).toLocaleString() : '–'}
                       </TableCell>
                       <TableCell align="right">
-                        {t.debit ? t.debit.toLocaleString() : '-'}
+                        {t.nDebitAmount ? Number(t.nDebitAmount).toLocaleString() : '–'}
                       </TableCell>
                       <TableCell align="right">
-                        {t.balance.toLocaleString()}
+                        {(t.nBalanceAmount != null) ? Number(t.nBalanceAmount).toLocaleString() : '–'}
                       </TableCell>
-                      <TableCell>{t.id}</TableCell>
-                      <TableCell>{t.narration}</TableCell>
-                      <TableCell>{t.employeeName}</TableCell>
+                      <TableCell>{t.nTransactionId ?? '–'}</TableCell>
+                      <TableCell>{t.sNarration ?? '–'}</TableCell>
+                      <TableCell>{t.sEmployeeName ?? '–'}</TableCell>
                     </TableRow>
                   ))}
-                  {transactions.length === 0 && (
+                  {!loadingTx && transactions.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={8}>
                         <Typography variant="body2" color="text.secondary">
-                          No transactions found for this account.
+                          No transactions found for this Daily Deposit.
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -252,37 +263,57 @@ export function DailySavingsDepositPage() {
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
                     <Controller
-                      name="date"
+                      name="startDate"
                       control={control}
-                      rules={{ required: 'Date is required' }}
+                      rules={{ required: 'Start date is required' }}
                       render={({ field }) => (
                         <TextField
                           {...field}
                           type="date"
                           size="small"
                           fullWidth
-                          label="Date"
+                          label="Start Date"
                           InputLabelProps={{ shrink: true }}
-                          error={Boolean(errors.date)}
-                          helperText={errors.date?.message}
+                          error={Boolean(errors.startDate)}
+                          helperText={errors.startDate?.message}
                         />
                       )}
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Controller
-                      name="amount"
+                      name="dailyAmount"
                       control={control}
-                      rules={{ required: 'Total amount is required' }}
+                      rules={{ required: 'Daily amount is required' }}
                       render={({ field }) => (
                         <TextField
                           {...field}
                           type="number"
                           size="small"
                           fullWidth
-                          label="Total Amount"
-                          error={Boolean(errors.amount)}
-                          helperText={errors.amount?.message}
+                          label="Daily Amount"
+                          inputProps={{ min: 0, step: 0.01 }}
+                          error={Boolean(errors.dailyAmount)}
+                          helperText={errors.dailyAmount?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name="totalDays"
+                      control={control}
+                      rules={{ required: 'Number of days is required' }}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          type="number"
+                          size="small"
+                          fullWidth
+                          label="Number of Days"
+                          inputProps={{ min: 1 }}
+                          error={Boolean(errors.totalDays)}
+                          helperText={errors.totalDays?.message}
                         />
                       )}
                     />
@@ -295,19 +326,12 @@ export function DailySavingsDepositPage() {
                       render={({ field }) => (
                         <TextField
                           {...field}
-                          select
                           size="small"
                           fullWidth
                           label="Received Employee"
                           error={Boolean(errors.receiverName)}
                           helperText={errors.receiverName?.message}
-                        >
-                          {MOCK_EMPLOYEES.map((name) => (
-                            <MenuItem key={name} value={name}>
-                              {name}
-                            </MenuItem>
-                          ))}
-                        </TextField>
+                        />
                       )}
                     />
                   </Grid>
@@ -330,8 +354,8 @@ export function DailySavingsDepositPage() {
                   </Grid>
                   <Grid item xs={12} md={8}>
                     <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
-                      <Button type="submit" variant="contained">
-                        Deposit &amp; Send SMS
+                      <Button type="submit" variant="contained" disabled={submitting}>
+                        {submitting ? 'Submitting…' : 'Deposit & Send SMS'}
                       </Button>
                       <Button
                         type="button"
